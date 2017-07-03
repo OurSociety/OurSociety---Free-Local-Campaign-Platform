@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Install Composer Packages
           command: |
-            composer install --optimize-autoloader --prefer-dist --no-interaction
+            composer install --optimize-autoloader --prefer-dist --no-interaction --no-progress
       - run:
           name: Run Unit/Integration Tests
           command: |
