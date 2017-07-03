@@ -11,8 +11,6 @@ $this->layout = false;
 if (!Configure::read('debug')):
     throw new NotFoundException('Please replace src/Template/Pages/home.ctp with your own version.');
 endif;
-
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +18,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>
+        <?= Configure::read('App.namespace') ?>
     </title>
 
     <?= $this->Html->meta('icon') ?>

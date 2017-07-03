@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.1-fpm-node
+    working_directory: /home/circleci/app
+    steps:
+      - checkout
+      - run:
+          name: Install PHP Modules
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y zlib1g-dev libicu-dev
+            sudo docker-php-ext-configure intl
+            sudo docker-php-ext-install intl
+      - run:
+          name: Install Composer
+          command: |
+            sudo chown circleci /usr/local/bin
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+            php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+            php -r "unlink('composer-setup.php');"
+      - restore_cache:
+          name: Restore Compose Packages From Cache
+          key: v1-composer-packages-{{ checksum "composer.lock" }}
+      - run:
+          name: Install Composer Packages
+          command: |
+            composer install --optimize-autoloader --prefer-dist --no-interaction --no-progress
+      - save_cache:
+          name: Save Composer Packages To Cache
+          key: v1-composer-packages-{{ checksum "composer.lock" }}
+          paths:
+            - /home/circleci/app/vendor
+      - run:
+          name: Run Unit/Integration Tests
+          command: |
+            vendor/bin/phpunit
