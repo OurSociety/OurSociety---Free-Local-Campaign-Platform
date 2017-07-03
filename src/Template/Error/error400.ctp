@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var string $message The error message.
+ * @var string $url The URL of the page.
+ */
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 

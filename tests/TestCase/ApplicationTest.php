@@ -21,9 +21,9 @@ class ApplicationTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMiddleware()
+    public function testMiddleware(): void
     {
-        $app = new Application(dirname(dirname(__DIR__)) . '/config');
+        $app = new Application(dirname(__DIR__, 2) . '/config');
         $middleware = new MiddlewareQueue();
 
         $middleware = $app->middleware($middleware);

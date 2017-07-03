@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var string $message The flash message.
+ * @var string[] $params The flash parameters.
+ */
 $class = 'message';
 if (!empty($params['class'])) {
     $class .= ' ' . $params['class'];

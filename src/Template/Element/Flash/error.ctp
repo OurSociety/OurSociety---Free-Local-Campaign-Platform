@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var string $message The flash message.
+ * @var string[] $params The flash parameters.
+ */
 if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
 }

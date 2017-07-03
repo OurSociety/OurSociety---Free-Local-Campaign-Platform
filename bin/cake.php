@@ -11,8 +11,8 @@ if (file_exists('composer.json')) {
         $minVersion = preg_replace('/([^0-9\.])/', '', $composer->require->php);
     }
 }
-if (version_compare(phpversion(), $minVersion, '<')) {
-    fwrite(STDERR, sprintf("Minimum PHP version: %s. You are using: %s.\n", $minVersion, phpversion()));
+if (version_compare(PHP_VERSION, $minVersion, '<')) {
+    fwrite(STDERR, sprintf("Minimum PHP version: %s. You are using: %s.\n", $minVersion, PHP_VERSION));
     exit(-1);
 }
 

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety;
 
-use Cake\Core\Configure;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
@@ -23,7 +23,7 @@ class Application extends BaseApplication
      * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware.
      */
-    public function middleware($middleware)
+    public function middleware($middleware): MiddlewareQueue
     {
         $middleware
             // Catch any exceptions in the lower layers,

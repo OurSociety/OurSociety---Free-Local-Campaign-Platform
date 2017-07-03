@@ -1,5 +1,8 @@
 <?php
-if (!isset($channel)):
+/**
+ * @var string[] $channel
+ */
+if ($channel === null):
     $channel = [];
 endif;
 if (!isset($channel['title'])):

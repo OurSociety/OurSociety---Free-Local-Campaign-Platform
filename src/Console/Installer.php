@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace OurSociety\Console;
 
 use Cake\Utility\Security;
+use Composer\IO\IOInterface as IO;
 use Composer\Script\Event;
-use Exception;
 
 /**
  * Provides installation hooks for when this application is installed via
@@ -21,22 +21,22 @@ class Installer
      * @throws \Exception Exception raised by validator.
      * @return void
      */
-    public static function postInstall(Event $event)
+    public static function postInstall(Event $event): void
     {
         $io = $event->getIO();
 
-        $rootDir = dirname(dirname(__DIR__));
+        $rootDir = dirname(__DIR__, 2);
 
         static::createAppConfig($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
 
         // ask if the permissions should be changed
         if ($io->isInteractive()) {
-            $validator = function ($arg) {
-                if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
+            $validator = function (string $arg) {
+                if (in_array($arg, ['Y', 'y', 'N', 'n'], true)) {
                     return $arg;
                 }
-                throw new Exception('This is not a valid answer. Please choose Y or n.');
+                throw new \RuntimeException('This is not a valid answer. Please choose Y or n.');
             };
             $setFolderPermissions = $io->askAndValidate(
                 '<info>Set Folder Permissions ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
@@ -45,7 +45,7 @@ class Installer
                 'Y'
             );
 
-            if (in_array($setFolderPermissions, ['Y', 'y'])) {
+            if (in_array($setFolderPermissions, ['Y', 'y'], true)) {
                 static::setFolderPermissions($rootDir, $io);
             }
         } else {
@@ -55,6 +55,7 @@ class Installer
         static::setSecuritySalt($rootDir, $io);
 
         if (class_exists('\Cake\Codeception\Console\Installer')) {
+            /** @noinspection PhpUndefinedClassInspection,PhpUndefinedNamespaceInspection */
             \Cake\Codeception\Console\Installer::customizeCodeceptionBinary($event);
         }
     }
@@ -66,7 +67,7 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function createAppConfig($dir, $io)
+    public static function createAppConfig(string $dir, IO $io): void
     {
         $appConfig = $dir . '/config/app.php';
         $defaultConfig = $dir . '/config/app.default.php';
@@ -82,8 +83,9 @@ class Installer
      * @param string $dir The application's root directory.
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
+     * @throws \RuntimeException If race condition while creating directory.
      */
-    public static function createWritableDirectories($dir, $io)
+    public static function createWritableDirectories(string $dir, IO $io): void
     {
         $paths = [
             'logs',
@@ -99,7 +101,9 @@ class Installer
         foreach ($paths as $path) {
             $path = $dir . '/' . $path;
             if (!file_exists($path)) {
-                mkdir($path);
+                if (!@mkdir($path) && !is_dir($path)) {
+                    throw new \RuntimeException(sprintf('Race condition occurred creating directory at %s', $path));
+                }
                 $io->write('Created `' . $path . '` directory');
             }
         }
@@ -114,13 +118,13 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function setFolderPermissions($dir, $io)
+    public static function setFolderPermissions(string $dir, IO $io): void
     {
         // Change the permissions on a path and output the results.
-        $changePerms = function ($path, $perms, $io) {
+        $changePerms = function (string $path, int $perms, IO $io) {
             // Get permission bits from stat(2) result.
             $currentPerms = fileperms($path) & 0777;
-            if (($currentPerms & $perms) == $perms) {
+            if (($currentPerms & $perms) === $perms) {
                 return;
             }
 
@@ -132,8 +136,8 @@ class Installer
             }
         };
 
-        $walker = function ($dir, $perms, $io) use (&$walker, $changePerms) {
-            $files = array_diff(scandir($dir), ['.', '..']);
+        $walker = function (string $dir, int $perms, IO $io) use (&$walker, $changePerms) {
+            $files = array_diff(scandir($dir, SCANDIR_SORT_NONE), ['.', '..']);
             foreach ($files as $file) {
                 $path = $dir . '/' . $file;
 
@@ -146,6 +150,7 @@ class Installer
             }
         };
 
+        /** @var int $worldWritable */
         $worldWritable = bindec('0000000111');
         $walker($dir . '/tmp', $worldWritable, $io);
         $changePerms($dir . '/tmp', $worldWritable, $io);
@@ -159,7 +164,7 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function setSecuritySalt($dir, $io)
+    public static function setSecuritySalt(string $dir, IO $io): void
     {
         $config = $dir . '/config/app.php';
         $content = file_get_contents($config);
@@ -167,7 +172,7 @@ class Installer
         $newKey = hash('sha256', Security::randomBytes(64));
         $content = str_replace('__SALT__', $newKey, $content, $count);
 
-        if ($count == 0) {
+        if ($count === 0) {
             $io->write('No Security.salt placeholder to replace.');
 
             return;
