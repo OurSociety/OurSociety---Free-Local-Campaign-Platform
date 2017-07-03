@@ -37,7 +37,7 @@ return [
      *   paths for plugins, view templates and locale files respectively.
      */
     'App' => [
-        'namespace' => 'App',
+        'namespace' => 'OurSociety',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
         'base' => false,

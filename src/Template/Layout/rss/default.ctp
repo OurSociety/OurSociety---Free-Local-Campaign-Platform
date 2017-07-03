@@ -11,4 +11,3 @@ echo $this->Rss->document(
         [], $channel, $this->fetch('content')
     )
 );
-?>

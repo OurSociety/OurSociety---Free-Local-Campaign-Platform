@@ -1,10 +1,3 @@
-# Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
-#
-# Licensed under The MIT License
-# For full copyright and license information, please see the LICENSE.txt
-# Redistributions of files must retain the above copyright notice.
-# MIT License (http://www.opensource.org/licenses/mit-license.php)
-
 CREATE TABLE i18n (
     id int NOT NULL auto_increment,
     locale varchar(6) NOT NULL,
