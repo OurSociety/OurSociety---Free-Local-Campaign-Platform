@@ -24,6 +24,11 @@ if (!extension_loaded('mbstring')) {
  */
 require __DIR__ . '/paths.php';
 
+/**
+ * Load environment variables.
+ */
+require __DIR__ . '/variables.php';
+
 /*
  * Bootstrap CakePHP.
  *
