@@ -40,16 +40,16 @@ $this->start('navbar');
                 <ul class="nav navbar-nav">
                     <li><a href="#">Login</a></li>
                 </ul>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-collapse collapse">
-                    <?php // TODO: Add some hidden navigation items here ?>
-                </div>
             <?php endif ?>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <?php // TODO: Add some hidden navigation items here ?>
+            </div>
         </div>
     </div>
 </nav>
