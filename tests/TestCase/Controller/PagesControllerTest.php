@@ -34,7 +34,7 @@ class PagesControllerTest extends IntegrationTestCase
         $this->get('/pages/home');
         $this->assertResponseOk();
         $this->assertResponseContains('OurSociety');
-        $this->assertResponseContains('<html>');
+        $this->assertResponseContains('<html lang="en">');
     }
 
     /**
