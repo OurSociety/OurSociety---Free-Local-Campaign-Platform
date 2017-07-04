@@ -13,6 +13,18 @@
     height: 50px; /* Force image to fit in default navbar height */
 }
 
+section:nth-of-type(2) {
+    margin-top: 100px; /* Add whitespace between sections */
+}
+
+section {
+    margin-bottom: 100px; /* Add whitespace between sections */
+}
+
+section:last-of-type {
+    margin-bottom: 0; /* Add whitespace between sections */
+}
+
 hr {
     border-top: 5px #7e62a3 solid; /* Make horizontal rules a thick purple line */
 }
