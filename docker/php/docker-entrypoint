@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+# Install missing Composer packages on startup
+composer install
+
+# Load default PHP entrypoint
+exec docker-php-entrypoint "$@"
