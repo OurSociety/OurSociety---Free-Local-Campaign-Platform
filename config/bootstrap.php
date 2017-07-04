@@ -212,4 +212,9 @@ if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
+Plugin::load('BootstrapUI');
+Plugin::load('CakeDC/Enum');
+Plugin::load('Crud');
+Plugin::load('CrudUsers');
 Plugin::load('CrudView');
+Plugin::load('Muffin/Slug');

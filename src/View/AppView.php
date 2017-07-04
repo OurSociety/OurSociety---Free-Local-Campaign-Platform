@@ -3,14 +3,17 @@ declare(strict_types = 1);
 
 namespace OurSociety\View;
 
+use BootstrapUI\View\Helper\FormHelper;
+use BootstrapUI\View\Helper\HtmlHelper;
 use CrudView\View\CrudView;
 
 /**
  * Application View
  *
- * Your application’s default view class
+ * Your application’s default view class, based on CrudView.
  *
- * @link http://book.cakephp.org/3.0/en/views.html#the-app-view
+ * @property FormHelper $Form
+ * @property HtmlHelper $Html
  */
 class AppView extends CrudView
 {

@@ -1,40 +1,74 @@
+<?php
+/**
+ * @var \OurSociety\View\AppView $this
+ * @var string $siteTitle The site title.
+ * @var string $siteTitleImage The site title image.
+ * @var bool $disableSidebar True if sidebar disabled, false otherwise.
+ */
+?>
 <!DOCTYPE html>
-<html>
+<html lang="<?= \Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
 <head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= \Cake\Core\Configure::read('App.namespace') ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->charset(); ?>
+    <title><?= $this->get('siteTitle');?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?= $this->Html->meta('icon', $this->Url->image($siteTitleImage)); ?>
+    <?= $this->fetch('meta'); ?>
+    <?= $this->fetch('css'); ?>
+    <?= $this->fetch('headjs'); ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <?php
+            $siteTitleContent = $siteTitle;
+            if (!empty($siteTitleImage)) {
+                $siteTitleContent = $this->Html->image($siteTitleImage, [
+                    'title' => $siteTitleContent,
+                    'alt' => 'League logo'
+                ]);
+            }
+            if (empty($siteTitleLink)) {
+                echo $this->Html->tag('span', $siteTitleContent, ['class' => 'navbar-brand', 'escape' => false]);
+            } else {
+                echo $this->Html->link($siteTitleContent, $siteTitleLink, ['class' => 'navbar-brand', 'escape' => false]);
+            }
+            ?>
         </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
+
+        <?= $this->element('topbar'); ?>
     </div>
-    <footer>
-    </footer>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <?php if ($disableSidebar) : ?>
+            <div class="col-sm-12">
+                <?= $this->Flash->render(); ?>
+                <?= $this->fetch('content'); ?>
+                <?= $this->fetch('action_link_forms'); ?>
+            </div>
+        <?php else : ?>
+            <div class="col-xs-0 col-sm-2 col-lg-2">
+                <?= $this->element('sidebar'); ?>
+            </div>
+            <div class="col-xs-12 col-sm-10 col-lg-10">
+                <?= $this->Flash->render(); ?>
+                <?= $this->fetch('content'); ?>
+                <?= $this->fetch('action_link_forms'); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?= $this->fetch('script'); ?>
 </body>
 </html>
