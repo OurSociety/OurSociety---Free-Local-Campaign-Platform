@@ -15,15 +15,15 @@
 <div class="row">
     <div class="col-xs-4 text-center">
         <?= $this->Html->image('icon/1.png') ?>
-        <p>2 million voters</p>
+        <h4>2 million voters</h4>
     </div>
     <div class="col-xs-4 text-center">
         <?= $this->Html->image('icon/3.png') ?>
-        <p>50 NJ politicians</p>
+        <h4>50 NJ politicians</h4>
     </div>
     <div class="col-xs-4 text-center">
         <?= $this->Html->image('icon/2.png') ?>
-        <p># of something</p>
+        <h4># of something</h4>
     </div>
 </div>
 
@@ -81,15 +81,15 @@
     <div class="row">
         <div class="col-xs-4 text-center">
             <?= $this->Html->image('icon/4.png') ?>
-            <p>Impact Report</p>
+            <h4>Impact Report</h4>
         </div>
         <div class="col-xs-4 text-center">
             <?= $this->Html->image('icon/5.png') ?>
-            <p>Governance</p>
+            <h4>Governance</h4>
         </div>
         <div class="col-xs-4 text-center">
             <?= $this->Html->image('icon/6.png') ?>
-            <p>Mission</p>
+            <h4>Mission</h4>
         </div>
     </div>
 </section>
