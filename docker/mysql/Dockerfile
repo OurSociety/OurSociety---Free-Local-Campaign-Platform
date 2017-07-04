@@ -6,7 +6,13 @@
 FROM mysql:5.7.17
 
 # Hard-coded credentials for development
+#
+# https://github.com/docker-library/docs/tree/master/mysql#environment-variables
 ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=app
 ENV MYSQL_USER=app
 ENV MYSQL_PASSWORD=secret
+
+# Add database initializating script
+#
+# https://github.com/docker-library/docs/tree/master/mysql#initializing-a-fresh-instance
+COPY initdb.sh /docker-entrypoint-initdb.d/
