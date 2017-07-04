@@ -1,5 +1,22 @@
 version: "3.2"
 services:
-
+  web:
+    build: docker/nginx
+    image: oursociety/web:dev
+    networks: [ front, back ]
+    ports: [ "80:80" ]
+    volumes: [ "./webroot:/app/webroot:ro" ]
+  app:
+    build: docker/php
+    image: oursociety/app:dev
+    networks: [ back ]
+    ports: [ "9000:9000" ]
+    volumes: [ ".:/app:rw" ]
   db:
-    image: mysql:5.7.17
+    build: docker/mysql
+    image: oursociety/db:dev
+    networks: [ back ]
+    ports: [ "3306:3306" ]
+networks:
+  front: {}
+  back: {}
