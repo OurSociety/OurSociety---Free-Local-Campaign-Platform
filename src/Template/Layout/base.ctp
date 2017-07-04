@@ -11,7 +11,7 @@ use Cake\I18n\I18n;
 <head>
     <?= $this->Html->charset(); ?>
     <title><?= $this->get('siteTitle', Configure::read('App.namespace'));?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <?= $this->Html->meta('icon', $this->Url->image('logo.png')); ?>
     <?= $this->fetch('meta'); ?>
