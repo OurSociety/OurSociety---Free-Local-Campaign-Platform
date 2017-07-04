@@ -351,7 +351,7 @@ return [
      * TODO: Use asset compress with local assets rather than remote CDN.
      */
     'CrudView' => [
-        'siteTitle' => 'Crud View',
+        'siteTitle' => 'OurSociety',
         'css' => [
             'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css',
             'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css',

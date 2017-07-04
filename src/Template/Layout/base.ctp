@@ -1,5 +1,4 @@
 <?php
-use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
 /**
@@ -10,7 +9,7 @@ use Cake\I18n\I18n;
 <html lang="<?= Locale::getPrimaryLanguage(I18n::locale()) ?>">
 <head>
     <?= $this->Html->charset(); ?>
-    <title><?= $this->get('siteTitle', Configure::read('App.namespace'));?></title>
+    <title><?= $this->get('siteTitle') ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <?= $this->Html->meta('icon', $this->Url->image('logo.png')); ?>
@@ -19,8 +18,8 @@ use Cake\I18n\I18n;
     <?= $this->fetch('headjs'); ?>
 </head>
 <body>
-<?= $this->fetch('content') ?>
-<?= $this->fetch('modal'); ?>
-<?= $this->fetch('script'); ?>
+    <?= $this->fetch('content') ?>
+    <?= $this->fetch('modal'); ?>
+    <?= $this->fetch('script'); ?>
 </body>
 </html>
