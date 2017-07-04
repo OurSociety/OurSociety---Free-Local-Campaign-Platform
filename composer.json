@@ -14,10 +14,11 @@
         "roave/security-advisories": "dev-master"
     },
     "require-dev": {
-        "psy/psysh": "@stable",
-        "cakephp/debug_kit": "~3.2",
         "cakephp/bake": "~1.1",
-        "phpunit/phpunit": "^6.2"
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "cakephp/debug_kit": "~3.2",
+        "phpunit/phpunit": "^6.2",
+        "psy/psysh": "@stable"
     },
     "config": {
         "sort-packages": true

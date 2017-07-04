@@ -1,15 +1,10 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
-use OurSociety\Controller\PagesController;
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\TestSuite\IntegrationTestCase;
-use Cake\View\Exception\MissingTemplateException;
 
 /**
  * PagesControllerTest class
