@@ -2,7 +2,8 @@
 /**
  * Default layout.
  *
- * @var \OurSociety\View\AppView $this
+ * @var \OurSociety\View\AppView $this The view class.
+ * @var array $currentUser The current user.
  */
 $this->extend('base');
 
@@ -25,17 +26,31 @@ $this->start('navbar');
         <div class="container">
             <div class="navbar-header">
                 <?= $this->Html->link(
-                    $this->Html->image('banner.png', ['title' => $this->get('siteTitle'), 'alt' => 'Brand']),
-                    '/',
+                    $this->Html->image('../images/banner.png', ['title' => $this->get('siteTitle'), 'alt' => 'Brand']),
+                    ['_name' => 'pages:home'],
                     ['class' => 'navbar-brand', 'escape' => false]
                 ); ?>
             </div>
             <div class="navbar-right">
                 <?php if ($this->get('currentUser')): ?>
-                    <p class="navbar-text">Signed in as <a href="#" class="navbar-link">Ron Rivers</a></p>
+                    <p class="navbar-text text-muted small">
+                        <?= __('Signed in as {name}', [
+                            'name' => $this->Html->link(
+                                $currentUser['name'],
+                                ['_name' => 'users:profile']
+                            )
+                        ]) ?>
+                    </p>
+                    <?=''// $this->element('topbar'); ?>
+                    <ul class="nav navbar-nav">
+                        <li><?= $this->Html->link('Citizen', ['_name' => 'citizen:dashboard']) ?></li>
+                        <li><?= $this->Html->link('Politician', ['_name' => 'politician:dashboard']) ?></li>
+                        <li><?= $this->Html->link('Admin', ['_name' => 'admin:dashboard']) ?></li>
+                        <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
+                    </ul>
                 <?php else: ?>
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Login</a></li>
+                        <li><?= $this->Html->link('Login', ['_name' => 'users:login']) ?></li>
                     </ul>
                 <?php endif ?>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -44,9 +59,6 @@ $this->start('navbar');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-collapse collapse">
-                    <?php // TODO: Add some hidden navigation items here ?>
-                </div>
             </div>
         </div>
     </nav>

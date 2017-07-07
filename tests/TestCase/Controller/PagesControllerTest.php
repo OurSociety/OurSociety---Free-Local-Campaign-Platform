@@ -12,29 +12,29 @@ use Cake\TestSuite\IntegrationTestCase;
 class PagesControllerTest extends IntegrationTestCase
 {
     /**
-     * testMultipleGet method
-     *
-     * @return void
-     */
-    public function testMultipleGet()
-    {
-        $this->get('/');
-        $this->assertResponseOk();
-        $this->get('/');
-        $this->assertResponseOk();
-    }
-
-    /**
      * testDisplay method
      *
      * @return void
      */
-    public function testDisplay()
+    public function testDisplay(): void
     {
-        $this->get('/pages/home');
+        $this->get('/');
         $this->assertResponseOk();
         $this->assertResponseContains('OurSociety');
         $this->assertResponseContains('<html lang="en">');
+    }
+
+    /**
+     * testMultipleGet method
+     *
+     * @return void
+     */
+    public function testMultipleGet(): void
+    {
+        $this->get('/');
+        $this->assertResponseOk();
+        $this->get('/');
+        $this->assertResponseOk();
     }
 
     /**
@@ -42,7 +42,7 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMissingTemplate()
+    public function testMissingTemplate(): void
     {
         Configure::write('debug', false);
         $this->get('/pages/not_existing');
@@ -56,15 +56,15 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testMissingTemplateInDebug()
+    public function testMissingTemplateInDebug(): void
     {
         Configure::write('debug', true);
-        $this->get('/pages/not_existing');
+        $this->get('/missing');
 
         $this->assertResponseFailure();
         $this->assertResponseContains('Missing Template');
         $this->assertResponseContains('Stacktrace');
-        //$this->assertResponseContains('not_existing.ctp'); // TODO: CrudView is reporting `display.ctp` instead.
+        $this->assertResponseContains('display.ctp'); // TODO: CrudView reports `display.ctp` instead of `missing.ctp`.
     }
 
     /**
@@ -72,9 +72,9 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testDirectoryTraversalProtection()
+    public function testDirectoryTraversalProtection(): void
     {
-        $this->get('/pages/../Layout/ajax');
+        $this->get('/../Layout/ajax');
         $this->assertResponseCode(403);
         $this->assertResponseContains('Forbidden');
     }

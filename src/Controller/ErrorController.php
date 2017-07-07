@@ -11,7 +11,7 @@ use Cake\Http\Response;
  *
  * Controller used by ExceptionRenderer to render error responses.
  */
-class ErrorController extends AppController
+final class ErrorController extends AppController
 {
     /**
      * Initialization hook method.

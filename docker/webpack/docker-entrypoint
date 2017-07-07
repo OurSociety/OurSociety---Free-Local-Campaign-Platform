@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+# Install missing Node packages
+yarn install --non-interactive
+
+# Start asset builder/watcher
+exec yarn run watch

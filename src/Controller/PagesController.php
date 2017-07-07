@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller;
 
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
@@ -19,6 +19,17 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
+    /**
+     * {@inheritdoc}.
+     *
+     * - Grants public access to all static pages.
+     */
+    public function beforeFilter(Event $event): void
+    {
+        parent::beforeFilter($event);
+
+        $this->Auth->allow('display');
+    }
 
     /**
      * Displays a view

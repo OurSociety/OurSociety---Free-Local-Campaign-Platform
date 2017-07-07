@@ -1,5 +1,7 @@
 /logs/*
+/node_modules/*
 /tmp/*
 /vendor/*
+/webroot/assets/*
 /.env*
 !/.env.dist

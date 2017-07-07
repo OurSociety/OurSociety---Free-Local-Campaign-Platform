@@ -46,6 +46,7 @@ return [
         'wwwRoot' => WWW_ROOT,
         // 'baseUrl' => env('SCRIPT_NAME'),
         'fullBaseUrl' => false,
+        // TODO: Adjust following paths without breaking plugin assets.
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
@@ -341,6 +342,7 @@ return [
      * To use database sessions, load the SQL file located at config/Schema/sessions.sql
      */
     'Session' => [
+        'cookie' => 'app',
         'defaults' => 'php',
     ],
     /**
@@ -353,11 +355,12 @@ return [
     'CrudView' => [
         'siteTitle' => 'OurSociety',
         'css' => [
-            'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css',
+            //'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css', // Bootstrap 3
+            'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css', // Bootstrap 3 w/ Journal theme
             'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css',
             'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/css/selectize.bootstrap3.min.css',
             'CrudView.local', // vendor/friendsofcake/crud-view/webroot/css/local
-            'app', // webroot/css/app.css
+            '../assets/app', // webroot/assets/app.css
         ],
         'js' => [
             'headjs' => [
@@ -370,7 +373,7 @@ return [
                 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/js/standalone/selectize.min.js',
                 'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.2/jquery.dirtyforms.min.js',
                 'CrudView.local', // vendor/friendsofcake/crud-view/webroot/js/local
-                'app', // webroot/js/app.js
+                '../assets/app', // webroot/assets/app.js
             ],
         ],
         'timezoneAwareDateTimeWidget' => false,

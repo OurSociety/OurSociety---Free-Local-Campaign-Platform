@@ -1,71 +1,65 @@
 <?php
-/**
- * Routes configuration
- *
- * In this file, you set up routes to your controllers and their actions.
- * Routes are very important mechanism that allows you to freely connect
- * different URLs to chosen controllers and their actions (functions).
- */
+declare(strict_types=1);
 
-use Cake\Core\Plugin;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
 /**
- * The default class to use for all routes
+ * Default route class used by scopes.
  *
- * The following route classes are supplied with CakePHP and are appropriate
- * to set as the default:
- *
- * - Route
- * - InflectedRoute
- * - DashedRoute
- *
- * If no call is made to `Router::defaultRouteClass()`, the class used is
- * `Route` (`Cake\Routing\Route\Route`)
- *
- * Note that `Route` does not do any inflections on URLs which will result in
- * inconsistently cased URLs when used with `:plugin`, `:controller` and
- * `:action` markers.
- *
+ * Set to DashedRoute for `/urls/with-dashes/in-them`.
  */
 Router::defaultRouteClass(DashedRoute::class);
 
+/**
+ * Default scope.
+ */
 Router::scope('/', function (RouteBuilder $routes) {
-    /**
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Pages/home.ctp)...
-     */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'pages:home']);
+    $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
+    $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
+    $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
+    $routes->connect('/reset', ['controller' => 'Users', 'action' => 'reset'], ['_name' => 'users:reset']);
+    $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
+    $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
+});
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
-    /**
-     * Connect catchall routes for all controllers.
-     *
-     * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
-     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
-     *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
-     *
-     * Any route class can be used with this method, such as:
-     * - DashedRoute
-     * - InflectedRoute
-     * - Route
-     * - Or your own route class
-     *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
-     */
+/**
+ * Citizen prefixed routes.
+ *
+ * All routes here will have URLs prefixed with `/citizen` and names prefixed with `citizen:`.
+ */
+Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
     $routes->fallbacks(DashedRoute::class);
 });
 
 /**
- * Load all plugin routes. See the Plugin documentation on
- * how to customize the loading of plugin routes.
+ * Politician prefixed routes.
+ *
+ * All routes here will have URLs prefixed with `/politician` and names prefixed with `politician:`.
  */
-Plugin::routes();
+Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->fallbacks(DashedRoute::class);
+});
+
+/**
+ * Admin prefixed routes.
+ *
+ * All routes here will have URLs prefixed with `/admin` and names prefixed with `admin:`.
+ */
+Router::prefix('admin', ['_namePrefix' => 'admin:'], function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->fallbacks(DashedRoute::class);
+});
+
+/**
+ * Plugin routes.
+ *
+ * Uncomment if you use `Plugin::load(..., ['routes' => true])` in `bootstrap.php`.
+ */
+//\Cake\Core\Plugin::routes();
