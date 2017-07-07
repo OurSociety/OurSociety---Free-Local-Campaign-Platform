@@ -19,6 +19,13 @@ RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7af
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN php -r "unlink('composer-setup.php');"
 
+# Install Dockerize (to wait for MySQL)
+ENV DOCKERIZE_VERSION v0.5.0
+RUN apk add --no-cache openssl \
+    && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 # Add custom entrypoint that runs Composer at startup and redeclare default command
 COPY docker-entrypoint /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint"]

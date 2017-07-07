@@ -4,5 +4,11 @@ set -e
 # Install missing Composer packages on startup
 composer install
 
+# Wait for MySQL
+dockerize -wait tcp://db:3306 -timeout 30s
+
+# Run database migrations
+bin/cake migrations migrate
+
 # Load default PHP entrypoint
 exec docker-php-entrypoint "$@"
