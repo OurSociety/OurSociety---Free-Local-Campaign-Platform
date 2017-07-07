@@ -5,5 +5,7 @@
 </head>
 <body>
     <?= $this->fetch('content') ?>
+    <p><?= __('Thank you') ?>,</p>
+    <p><?= __('OurSociety Team') ?></p>
 </body>
 </html>

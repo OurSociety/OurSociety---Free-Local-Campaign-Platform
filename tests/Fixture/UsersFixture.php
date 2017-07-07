@@ -5,6 +5,7 @@ namespace OurSociety\Test\Fixture;
 
 use Cake\Auth\AbstractPasswordHasher;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\Time;
 use Cake\TestSuite\Fixture\TestFixture;
 use Faker\Factory as GeneratorFactory;
 use Faker\Generator;
@@ -18,7 +19,9 @@ class UsersFixture extends TestFixture
     public const EMAIL_ADMIN = 'team@oursociety.org';
     public const EMAIL_CITIZEN = 'citizen@example.net';
     public const EMAIL_POLITICIAN = 'politician@example.org';
-    public const DEFAULT_PASSWORD = 'password';
+    public const TOKEN_CITIZEN = 'ABC123';
+    public const PASSWORD_DEFAULT = 'password';
+    public const PASSWORD_RESET = 'new password';
 
     /**
      * @var Generator
@@ -82,6 +85,7 @@ class UsersFixture extends TestFixture
             'name' => 'Citizenfour',
             'slug' => 'citizenfour',
             'email' => self::EMAIL_CITIZEN,
+            'token' => self::TOKEN_CITIZEN,
         ],
         [
             'role' => UsersTable::ROLE_POLITICIAN,
@@ -89,40 +93,19 @@ class UsersFixture extends TestFixture
             'slug' => 'augustus-octavius-bacon',
             'email' => self::EMAIL_POLITICIAN,
         ],
-        /*
-         * 'id' => '1cc7712e-e0f8-4704-9c04-1601d70abceb',
-         * 'slug' => 'Lorem ipsum dolor sit amet',
-         * 'email' => 'Lorem ipsum dolor sit amet',
-         * 'password' => 'Lorem ipsum dolor sit amet',
-         * 'name' => 'Lorem ipsum dolor sit amet',
-         * 'first_name' => 'Lorem ipsum dolor sit amet',
-         * 'last_name' => 'Lorem ipsum dolor sit amet',
-         * 'token' => 'Lorem ipsum dolor sit amet',
-         * 'token_expires' => '2017-07-07 11:08:36',
-         * 'api_token' => 'Lorem ipsum dolor sit amet',
-         * 'activation_date' => '2017-07-07 11:08:36',
-         * 'tos_date' => '2017-07-07 11:08:36',
-         * 'active' => 1,
-         * 'is_superuser' => 1,
-         * 'role' => 'Lorem ipsum dolor sit amet',
-         * 'last_seen' => '2017-07-07 11:08:36',
-         * 'created' => '2017-07-07 11:08:36',
-         * 'modified' => '2017-07-07 11:08:36'
-         */
     ];
 
     public function init(): void
     {
         $this->generator = GeneratorFactory::create();
-        $this->generator->seed(1234);
-
         $this->passwordHasher = new DefaultPasswordHasher;
 
         $this->records = collection($this->records)->map(function (array $record) {
             return $record + [
                     'active' => true,
                     'id' => $this->generator->uuid,
-                    'password' => $this->passwordHasher->hash(self::DEFAULT_PASSWORD),
+                    'password' => $this->passwordHasher->hash(self::PASSWORD_DEFAULT),
+                    'token_expires' => Time::now()->addHours(24),
                 ];
         });
 

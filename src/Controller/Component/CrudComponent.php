@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace OurSociety\Controller\Component;
 
@@ -23,6 +23,7 @@ class CrudComponent extends Crud\CrudComponent
     public function execute($controllerAction = null, $args = []): Response
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
+
         return parent::execute($controllerAction, $args);
     }
 }

@@ -6,8 +6,6 @@ namespace OurSociety\Test\TestCase\Model\Table;
 use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Text;
-use OurSociety\Model\Table\AppTable;
-use OurSociety\TestSuite\FixturesTrait;
 
 /**
  * OurSociety\Model\Table\AppTable Test Case

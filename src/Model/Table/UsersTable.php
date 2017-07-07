@@ -3,12 +3,9 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use OurSociety\Model\Entity\User;
 
@@ -40,7 +37,7 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
+        //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
     }
 
     /**

@@ -9,7 +9,11 @@ use OurSociety\TestSuite\IntegrationTestCase;
 
 class UsersControllerTest extends IntegrationTestCase
 {
-    public function testForgot(): void
+    /**
+     * @dataProvider provideForgot
+     * @param bool $expected The expected case.
+     */
+    public function testForgot(bool $expected): void
     {
         $this->get(['_name' => 'users:forgot']);
         $this->assertResponseOk();
@@ -17,22 +21,42 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Email');
         $this->assertResponseContains('Submit');
 
-        $expected = true;
         switch ($expected) {
             case true:
+                /** @noinspection SpellCheckingInspection */
+                $token = 'FEKRPJ';
+                mt_srand(1);
                 $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::EMAIL_CITIZEN]);
+                mt_srand();
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
-                $this->assertRedirect(['_name' => 'users:login']);
+                $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => 'citizen@example.net']]);
+                $this->assertFlash(UsersController::MESSAGE_FORGOT_SUCCESS);
+                $this->assertEmailTo('citizen@example.net');
+                $this->assertEmailSubject('Forgot password');
+                $this->assertEmailBody('Citizenfour', <<<EMAIL
+Your verification code is: ${token}
 
-                $this->session((array)$this->_requestSession->read());
-                $this->get(['_name' => 'users:login']);
-                $this->assertResponseContains(UsersController::MESSAGE_FORGOT_SUCCESS);
+Alternatively, click or copy the following address into your web browser:
+
+https://test.oursociety.org/reset?email=citizen%40example.net&token=${token}
+EMAIL
+                );
                 break;
             case false:
-                $this->markTestIncomplete('Missing negative case.'); // TODO: Implement failure case.
+                $this->post(['_name' => 'users:forgot'], ['email' => 'unknown@example.com']);
+                $this->assertResponseOk();
+                $this->assertResponseContains(UsersController::MESSAGE_FORGOT_ERROR);
                 break;
         }
+    }
+
+    public function provideForgot(): array
+    {
+        return [
+            'success' => ['expected' => true],
+            'error (wrong email)' => ['expected' => false],
+        ];
     }
 
     /**
@@ -49,6 +73,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Email');
         $this->assertResponseContains('Password');
         $this->assertResponseContains('Login');
+        $this->assertResponseContains('Remember me');
+        $this->assertResponseContains('Forgot Password');
 
         $this->post(['_name' => 'users:login'], $data);
         switch ($expected) {
@@ -56,9 +82,7 @@ class UsersControllerTest extends IntegrationTestCase
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect($redirect);
-
-                $authenticatedSession = (array)$this->_requestSession->read();
-                $this->session($authenticatedSession);
+                $this->resumeSession();
                 $this->get($redirect);
                 $this->assertResponseOk();
                 $this->assertResponseContains(UsersController::MESSAGE_LOGIN_SUCCESS);
@@ -66,8 +90,7 @@ class UsersControllerTest extends IntegrationTestCase
                 $this->assertResponseContains('Signed in as');
                 $this->assertResponseContains('Logout');
                 $this->assertResponseNotContains('Login');
-
-                $this->session($authenticatedSession);
+                $this->resumeSession();
                 $this->get(['_name' => 'users:login']);
                 // TODO: Should redirect if they visit login page while logged in?
                 $this->assertResponseOk();
@@ -87,7 +110,7 @@ class UsersControllerTest extends IntegrationTestCase
             'success (citizen)' => [
                 'data' => [
                     'email' => UsersFixture::EMAIL_CITIZEN,
-                    'password' => UsersFixture::DEFAULT_PASSWORD,
+                    'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
                 'redirect' => ['_name' => 'citizen:dashboard'],
@@ -95,7 +118,7 @@ class UsersControllerTest extends IntegrationTestCase
             'success (politician)' => [
                 'data' => [
                     'email' => UsersFixture::EMAIL_POLITICIAN,
-                    'password' => UsersFixture::DEFAULT_PASSWORD,
+                    'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
                 'redirect' => ['_name' => 'politician:dashboard'],
@@ -103,7 +126,7 @@ class UsersControllerTest extends IntegrationTestCase
             'success (admin)' => [
                 'data' => [
                     'email' => UsersFixture::EMAIL_ADMIN,
-                    'password' => UsersFixture::DEFAULT_PASSWORD,
+                    'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
                 'redirect' => ['_name' => 'admin:dashboard'],
@@ -120,7 +143,7 @@ class UsersControllerTest extends IntegrationTestCase
 
     public function testLogout(): void
     {
-        $this->loginAsAdmin();
+        $this->auth(UsersFixture::EMAIL_ADMIN);
         $this->get(['_name' => 'users:logout']);
         $this->assertResponseSuccess();
         $this->assertResponseCode(302);
@@ -149,11 +172,7 @@ class UsersControllerTest extends IntegrationTestCase
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect(['_name' => 'pages:home']);
-
-                $this->session((array)$this->_requestSession->read());
-                $this->get(['_name' => 'pages:home']);
-                $this->assertResponseOk();
-                $this->assertResponseContains('Account successfully created');
+                $this->assertFlash('Account successfully created');
                 break;
             case 'error':
                 $this->assertResponseOk();
@@ -183,6 +202,117 @@ class UsersControllerTest extends IntegrationTestCase
             //        'password' => 'password',
             //    ],
             //    'error' => 'This email is already in use',
+            //],
+        ];
+    }
+
+    /**
+     * @dataProvider provideReset
+     * @param string $case The expected case.
+     * @param array $query The query string parameters, if any.
+     * @param array $data The form data.
+     * @param string|null $user The user to authenticate as, if any.
+     * @return void
+     */
+    public function testReset(string $case, array $query = [], array $data = [], string $user = null): void
+    {
+        $this->auth($user);
+        $this->get(['_name' => 'users:reset', '?' => $query]);
+        $this->assertResponseOk();
+        if ($user === null) {
+            if (!isset($query['token'])) {
+                $this->assertResponseContains('Verification code');
+            }
+            if (!isset($query['email'])) {
+                $this->assertResponseContains('Email');
+            }
+        } else {
+            $this->assertResponseContains('Current password');
+        }
+        $this->assertResponseContains('New password');
+        $this->post(['_name' => 'users:reset', '?' => $query], ['_method' => 'POST'] + $data);
+        switch ($case) {
+            case 'success':
+                $this->assertResponseSuccess();
+                $this->assertResponseCode(302);
+                $this->assertRedirect(['_name' => 'users:login', '?' => ['email' => UsersFixture::EMAIL_CITIZEN]]);
+                $this->assertFlash(UsersController::MESSAGE_RESET_SUCCESS);
+                $this->testLogin([
+                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'password' => UsersFixture::PASSWORD_RESET,
+                ], 'success', ['_name' => 'citizen:dashboard']);
+                break;
+            case 'error':
+            case 'tokenNotFound':
+                $this->assertResponseError();
+                $this->assertResponseCode(404);
+                $this->assertResponseContains('Token not found');
+                break;
+            case 'tokenExpired':
+                $this->assertResponseError();
+                $this->assertResponseCode(400);
+                $this->assertResponseContains('Token has expired');
+                break;
+        }
+    }
+
+    public function provideReset(): array
+    {
+        return [
+            'success (no query string)' => [
+                'case' => 'success',
+                'query' => [],
+                'data' => [
+                    'token' => UsersFixture::TOKEN_CITIZEN,
+                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'password' => UsersFixture::PASSWORD_RESET,
+                ],
+            ],
+            'success (email in query string)' => [
+                'case' => 'success',
+                'query' => [
+                    'email' => UsersFixture::EMAIL_CITIZEN,
+                ],
+                'data' => [
+                    'token' => UsersFixture::TOKEN_CITIZEN,
+                    'password' => UsersFixture::PASSWORD_RESET,
+                ],
+            ],
+            'success (token in query string)' => [
+                'case' => 'success',
+                'query' => [
+                    'token' => UsersFixture::TOKEN_CITIZEN,
+                ],
+                'data' => [
+                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'password' => UsersFixture::PASSWORD_RESET,
+                ],
+            ],
+            'success (email and token in query string)' => [
+                'case' => 'success',
+                'query' => [
+                    'token' => UsersFixture::TOKEN_CITIZEN,
+                    'email' => UsersFixture::EMAIL_CITIZEN,
+                ],
+                'data' => [
+                    'password' => UsersFixture::PASSWORD_RESET,
+                ],
+            ],
+            'error (token not found)' => [
+                'case' => 'tokenNotFound',
+                'query' => [],
+                'data' => [],
+            ],
+            'error (token expired)' => [
+                'case' => 'tokenExpired',
+                'query' => [],
+                'data' => ['token' => 'expired'],
+            ],
+            //'success (authenticated user)' => [
+            //    'case' => 'success',
+            //    'query' => [],
+            //    'data' => [],
+            //    'user' => UsersFixture::EMAIL_CITIZEN, // TODO: Password change page for authenticated users.
             //],
         ];
     }
