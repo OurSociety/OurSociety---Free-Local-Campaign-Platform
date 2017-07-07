@@ -6,7 +6,8 @@ workflows:
       - build
       - deploy_staging:
           requires: [ build ]
-          filters: { branches: { only: master } }
+          # TODO: Uncomment after finishing CI/CD, but before merging PR to master
+          #filters: { branches: { only: master } }
 jobs:
   build:
     docker:
@@ -68,11 +69,12 @@ jobs:
       - run:
           name: Fetch ansible recipes
           command: |
+            # TODO: Coordinate with @benbakelaar to set up GitHub deploy key for access to following repo:
             # git clone "git@github.com:${CIRCLE_PROJECT_USERNAME}/oursociety-infra.git" /home/circleci/infra
       - deploy:
           name: Deploy to Staging Environment
           command: |
-            # TODO: Coordinate with @jason for commands to run.
+            # TODO: Coordinate with @jason for exact Ansible commands to run:
             # ansible-playbook app.yml -i staging
       - deploy:
           name: "Notify #development Slack channel"
