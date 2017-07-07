@@ -14,7 +14,7 @@ foreach ($filenames as $filename) {
         continue;
     }
 
-    (new Dotenv($filename))->parse()->toEnv();
+    (new Dotenv($filename))->parse()->skipExisting()->toEnv();
 
     return;
 }

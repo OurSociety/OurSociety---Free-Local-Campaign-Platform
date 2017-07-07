@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace OurSociety\Controller;
 
 use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\Http\Response;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
@@ -17,17 +19,28 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
+    /**
+     * {@inheritdoc}.
+     *
+     * - Grants public access to all static pages.
+     */
+    public function beforeFilter(Event $event): void
+    {
+        parent::beforeFilter($event);
+
+        $this->Auth->allow('display');
+    }
 
     /**
      * Displays a view
      *
-     * @param string ...$path Path segments.
-     * @return void|\Cake\Network\Response
-     * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
-     * @throws \Cake\Network\Exception\NotFoundException When the view file could not
-     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
+     * @param string|string[] ...$path Path segments.
+     * @return Response|null
+     * @throws ForbiddenException When a directory traversal attempt.
+     * @throws NotFoundException When the view file could not and debug mode is disabled.
+     * @throws MissingTemplateException When the view file could not be found and debug mode is enabled.
      */
-    public function display(...$path)
+    public function display(string ...$path): ?Response
     {
         $count = count($path);
         if (!$count) {
@@ -47,7 +60,7 @@ class PagesController extends AppController
         $this->set(compact('page', 'subpage'));
 
         try {
-            $this->render(implode('/', $path));
+            return $this->render(implode('/', $path));
         } catch (MissingTemplateException $e) {
             if (Configure::read('debug')) {
                 throw $e;
