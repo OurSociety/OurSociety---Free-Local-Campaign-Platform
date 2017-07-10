@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+################################################################################
+#
+# Cake is a shell script for invoking CakePHP shell commands
+#
+################################################################################
+
+# Canonicalize by following every symlink of the given name recursively
+canonicalize() {
+	NAME="$1"
+	if [ -f "$NAME" ]
+	then
+		DIR=$(dirname -- "$NAME")
+		NAME=$(cd -P "$DIR" > /dev/null && pwd -P)/$(basename -- "$NAME")
+	fi
+	while [ -h "$NAME" ]; do
+		DIR=$(dirname -- "$NAME")
+		SYM=$(readlink "$NAME")
+		NAME=$(cd "$DIR" > /dev/null && cd $(dirname -- "$SYM") > /dev/null && pwd)/$(basename -- "$SYM")
+	done
+	echo "$NAME"
+}
+
+CONSOLE=$(dirname -- "$(canonicalize "$0")")
+APP=$(dirname "$CONSOLE")
+
+if [ $(basename $0) != 'cake' ]
+then
+    exec php "$CONSOLE"/cake.php $(basename $0) "$@"
+else
+    exec php "$CONSOLE"/cake.php "$@"
+fi
+
+exit
