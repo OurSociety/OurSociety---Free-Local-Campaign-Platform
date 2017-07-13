@@ -14,6 +14,7 @@
         "friendsofcake/crud-view": "^0.8",
         "fzaninotto/faker": "^1.6",
         "josegonzalez/dotenv": "^3.0",
+        "league/csv": "^9.0@dev",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/slug": "^1.1",
         "roave/security-advisories": "dev-master"

@@ -54,6 +54,7 @@ Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBu
  */
 Router::prefix('admin', ['_namePrefix' => 'admin:'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->fallbacks(DashedRoute::class);
 });
 
