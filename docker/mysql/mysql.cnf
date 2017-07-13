@@ -1,0 +1,16 @@
+[mysqld]
+
+# Full UTF-8 multibyte settings to support every character in the world
+init_connect = 'SET NAMES "utf8mb4" COLLATE "utf8mb4_unicode_ci"'
+character_set_server = utf8mb4
+collation_server = utf8mb4_unicode_ci
+
+# Enable strict mode
+sql_mode = ANSI,TRADITIONAL
+
+# Enable verbose logging
+general_log = 1
+general_log_file = /var/log/mysql/general.log
+log_output = FILE
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow_query.log

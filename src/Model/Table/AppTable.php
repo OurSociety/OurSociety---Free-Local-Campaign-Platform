@@ -33,6 +33,7 @@ abstract class AppTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         return $validator
+            // id
             ->uuid('id')
             ->allowEmpty('id', 'create');
     }

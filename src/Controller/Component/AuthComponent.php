@@ -24,12 +24,12 @@ class AuthComponent extends Cake\AuthComponent
                 'Form' => [
                     'finder' => 'auth',
                     'fields' => ['username' => 'email'],
-                    'scope' => ['Users.active' => 1],
+                    'scope' => ['active IS NOT' => null], // TODO: Fix fixtures/scope
                 ],
             ],
             'flash' => ['key' => 'flash', 'element' => 'info'],
             'loginAction' => ['_name' => 'users:login'],
-            'loginRedirect' => ['_name' => 'admin:dashboard'], // TODO: Fix redirect URL for non-admin users.
+            'loginRedirect' => ['_name' => 'citizen:dashboard'],
             'unauthorizedRedirect' => false,
         ], $config));
 

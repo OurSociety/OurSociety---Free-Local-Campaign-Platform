@@ -16,6 +16,7 @@ class DatabaseSeed extends App\AbstractSeed
      * @var string[]
      */
     private static $seeders = [
+        UsersSeed::class,
         CategoriesSeed::class,
         QuestionsSeed::class,
     ];

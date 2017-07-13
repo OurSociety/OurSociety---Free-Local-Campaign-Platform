@@ -3,12 +3,17 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
+use Cake\ORM\TableRegistry;
 use OurSociety\Controller\UsersController;
+use OurSociety\Model\Entity\User;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
+use OurSociety\TestSuite\Traits;
 
 class UsersControllerTest extends IntegrationTestCase
 {
+    use Traits\EmailAssertionsTrait;
+
     /**
      * @dataProvider provideForgot
      * @param bool $expected The expected case.
@@ -24,17 +29,17 @@ class UsersControllerTest extends IntegrationTestCase
         switch ($expected) {
             case true:
                 /** @noinspection SpellCheckingInspection */
-                $token = 'FEKRPJ';
-                mt_srand(1);
+                $token = 'K31X67';
+                mt_srand(SEED);
                 $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::EMAIL_CITIZEN]);
                 mt_srand();
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => 'citizen@example.net']]);
                 $this->assertFlash(UsersController::MESSAGE_FORGOT_SUCCESS);
-                $this->assertEmailTo('citizen@example.net');
-                $this->assertEmailSubject('Forgot password');
-                $this->assertEmailBody('Citizenfour', <<<EMAIL
+                self::assertEmailTo('citizen@example.net');
+                self::assertEmailSubject('Forgot password');
+                self::assertEmailBody('Citizenfour', <<<EMAIL
 Your verification code is: ${token}
 
 Alternatively, click or copy the following address into your web browser:
@@ -82,6 +87,7 @@ EMAIL
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect($redirect);
+                self::assertTimeWithinLast('1 second', self::findRecord($data['email'])->last_seen);
                 $this->resumeSession();
                 $this->get($redirect);
                 $this->assertResponseOk();
@@ -92,9 +98,9 @@ EMAIL
                 $this->assertResponseNotContains('Login');
                 $this->resumeSession();
                 $this->get(['_name' => 'users:login']);
-                // TODO: Should redirect if they visit login page while logged in?
-                $this->assertResponseOk();
-                $this->assertResponseContains('Please enter your email and password');
+                $this->assertResponseSuccess();
+                $this->assertResponseCode(302);
+                $this->assertRedirect($redirect);
                 break;
             case 'error':
                 $this->assertResponseOk();
@@ -141,13 +147,25 @@ EMAIL
         ];
     }
 
-    public function testLogout(): void
+    /**
+     * @dataProvider provideLogout
+     * @param string|null $email The email of user to authenticate as, if any.
+     */
+    public function testLogout(?string $email = null): void
     {
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth($email);
         $this->get(['_name' => 'users:logout']);
         $this->assertResponseSuccess();
         $this->assertResponseCode(302);
         $this->assertRedirect(['_name' => 'users:login']);
+    }
+
+    public function provideLogout(): array
+    {
+        return [
+            'success (logged in)' => ['email' => UsersFixture::EMAIL_ADMIN],
+            'success (NOT logged in)' => ['email' => null],
+        ];
     }
 
     /**
@@ -211,12 +229,11 @@ EMAIL
      * @param string $case The expected case.
      * @param array $query The query string parameters, if any.
      * @param array $data The form data.
-     * @param string|null $user The user to authenticate as, if any.
+     * @param User|null $user The user to authenticate as, if any.
      * @return void
      */
-    public function testReset(string $case, array $query = [], array $data = [], string $user = null): void
+    public function testReset(string $case, array $query = [], array $data = [], ?User $user = null): void
     {
-        $this->auth($user);
         $this->get(['_name' => 'users:reset', '?' => $query]);
         $this->assertResponseOk();
         if ($user === null) {
@@ -230,6 +247,7 @@ EMAIL
             $this->assertResponseContains('Current password');
         }
         $this->assertResponseContains('New password');
+
         $this->post(['_name' => 'users:reset', '?' => $query], ['_method' => 'POST'] + $data);
         switch ($case) {
             case 'success':
@@ -315,5 +333,13 @@ EMAIL
             //    'user' => UsersFixture::EMAIL_CITIZEN, // TODO: Password change page for authenticated users.
             //],
         ];
+    }
+
+    private static function findRecord(string $email): User
+    {
+        /** @var User $user */
+        $user = TableRegistry::get('Users')->find()->where(['email' => $email])->firstOrFail();
+
+        return $user;
     }
 }

@@ -1,11 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-namespace OurSociety\TestSuite;
+namespace OurSociety\TestSuite\Traits;
 
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
+/**
+ * Trait TableAwareTrait
+ *
+ * @method static void assertInstanceOf(string $expected, mixed $actual, string $message = '')
+ */
 trait TableAwareTrait
 {
 
@@ -22,9 +27,10 @@ trait TableAwareTrait
         return TableRegistry::get($alias);
     }
 
-    private function assertAssociationExists(string $expectedAssociation, string $expectedType): void
+    protected function assertAssociationExists(string $expectedAssociation, string $expectedType): void
     {
         $association = $this->table()->association($expectedAssociation);
+
         self::assertInstanceOf($expectedType, $association);
     }
 }

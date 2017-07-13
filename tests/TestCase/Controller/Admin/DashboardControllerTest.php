@@ -21,7 +21,7 @@ class DashboardControllerTest extends IntegrationTestCase
         switch ($expected) {
             case 'success':
                 $this->assertResponseOk();
-                $this->assertResponseContains('Dashboard');
+                $this->assertResponseContains('Admin Dashboard');
                 $this->assertResponseContains('Recently Created Users');
                 $this->assertResponseContains('Recently Active Users');
                 break;

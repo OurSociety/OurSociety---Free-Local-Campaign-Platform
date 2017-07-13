@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Utility\Text;
 use OurSociety\Migration as App;
+use OurSociety\Utility\Csv;
 
 /**
  * Questions seeder.
@@ -14,7 +15,10 @@ class QuestionsSeed extends App\AbstractSeed
     public function run(): void
     {
         $table = $this->table('questions');
-        $this->assertEmptyTable($table);
+        $abort = $this->assertEmptyTable($table);
+        if ($abort) {
+            return;
+        }
 
         $categoryIds = [];
         foreach ($table->getAdapter()->fetchAll('SELECT id, name FROM categories') as $row) {
@@ -22,7 +26,7 @@ class QuestionsSeed extends App\AbstractSeed
         }
 
         $data = [];
-        foreach ($this->getCsvRecords('questions.csv') as $record) {
+        foreach (Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray() as $record) {
             $data[] = [
                 'id' => Text::uuid(),
                 'question' => $record['Question'],

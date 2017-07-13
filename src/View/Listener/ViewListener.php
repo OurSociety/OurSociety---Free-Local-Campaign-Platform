@@ -5,11 +5,11 @@ namespace OurSociety\View\Listener;
 
 use Cake\Core\Configure;
 use Crud\Action\BaseAction;
-use CrudView\Listener\ViewListener as CrudViewListener;
+use CrudView\Listener as CrudView;
 use CrudView\Menu\MenuItem;
 use OurSociety\Controller\CrudController;
 
-class ViewListener extends CrudViewListener
+class ViewListener extends CrudView\ViewListener
 {
     /**
      * {@inheritdoc}

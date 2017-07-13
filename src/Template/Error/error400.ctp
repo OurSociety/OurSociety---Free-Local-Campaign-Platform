@@ -2,6 +2,7 @@
 /**
  * @var string $message The error message.
  * @var string $url The URL of the page.
+ * @var \OurSociety\View\AppView $this
  */
 use Cake\Core\Configure;
 use Cake\Error\Debugger;

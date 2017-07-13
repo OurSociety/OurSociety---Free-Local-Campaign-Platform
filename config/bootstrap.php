@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 // You can remove this if you are confident that your PHP version is sufficient.
 if (version_compare(PHP_VERSION, '5.6.0') < 0) {
     trigger_error('Your PHP version must be equal or higher than 5.6.0 to use CakePHP.', E_USER_ERROR);
@@ -19,7 +21,7 @@ if (!extension_loaded('mbstring')) {
 }
 
 /*
- * Configure paths required to find CakePHP + general filepath
+ * Configure paths required to find CakePHP + general file path
  * constants
  */
 require __DIR__ . '/paths.php';
@@ -28,6 +30,11 @@ require __DIR__ . '/paths.php';
  * Load environment variables.
  */
 require __DIR__ . '/variables.php';
+
+/**
+ * Custom helper functions.
+ */
+require __DIR__ . '/functions.php';
 
 /*
  * Bootstrap CakePHP.
@@ -42,7 +49,6 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Core\Plugin;
@@ -52,7 +58,6 @@ use Cake\Error\ErrorHandler;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Network\Request;
-use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
 /*
@@ -156,11 +161,13 @@ Security::salt(Configure::consume('Security.salt'));
 /*
  * Setup detectors for mobile and tablet.
  */
+/** @noinspection PhpUnusedParameterInspection */
 Request::addDetector('mobile', function ($request) {
     $detector = new \Detection\MobileDetect();
 
     return $detector->isMobile();
 });
+/** @noinspection PhpUnusedParameterInspection */
 Request::addDetector('tablet', function ($request) {
     $detector = new \Detection\MobileDetect();
 
@@ -175,14 +182,11 @@ Request::addDetector('tablet', function ($request) {
  * locale specific date formats. For details see
  * @link http://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
-Type::build('time')
-    ->useImmutable();
-Type::build('date')
-    ->useImmutable();
-Type::build('datetime')
-    ->useImmutable();
-Type::build('timestamp')
-    ->useImmutable();
+foreach (['time', 'date', 'datetime', 'timestamp'] as $name) {
+    /** @var \Cake\Database\Type\DateTimeType $type */
+    $type = Type::build($name);
+    $type->useImmutable();
+}
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -191,7 +195,7 @@ Type::build('timestamp')
  */
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
-//Inflector::rules('uninflected', ['dontinflectme']);
+//Inflector::rules('uninflected', ['do_not_inflect_me']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
 /*
@@ -203,6 +207,11 @@ Type::build('timestamp')
  * Plugin::load('Migrations'); //Loads a single plugin named Migrations
  *
  */
+
+/*
+ * Disable Kint debugger in production.
+ */
+Kint::$enabled_mode = Configure::read('debug');
 
 /*
  * Only try to load DebugKit in development mode

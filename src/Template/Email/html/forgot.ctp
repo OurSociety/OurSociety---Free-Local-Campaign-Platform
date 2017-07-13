@@ -3,6 +3,7 @@
  * @var string $name The name of the user.
  * @var string $token The verification token.
  * @var array $url The reset password URL.
+ * @var \OurSociety\View\AppView $this
  */
 ?>
 <p>

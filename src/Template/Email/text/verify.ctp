@@ -2,6 +2,7 @@
 /**
  * @var string $name The name of the user.
  * @var string $token The verification token.
+ * @var \OurSociety\View\AppView $this
  */
 ?>
 <?= __('Hi {0}', $name) ?>,

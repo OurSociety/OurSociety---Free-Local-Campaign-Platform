@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Admin;
 
-use Cake\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
 
 /**

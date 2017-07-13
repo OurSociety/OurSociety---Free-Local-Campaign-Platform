@@ -6,6 +6,7 @@ namespace OurSociety\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -18,11 +19,16 @@ use Cake\ORM\Entity;
  * @property bool $active True if active, false otherwise.
  * @property string $token The verification token.
  * @property \Cake\I18n\Time $token_expires The expiry timestamp.
+ * @property \Cake\I18n\Time $last_seen The last time the user logged in.
  * @property \Cake\I18n\Time $created The created timestamp.
  * @property \Cake\I18n\Time $modified The modified timestamp.
  */
 class User extends Entity
 {
+    public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_CITIZEN = 'citizen';
+    public const ROLE_POLITICIAN = 'politician';
     public const TOKEN_LENGTH = 6;
     public const TOKEN_EXPIRY_HOURS = 24;
 
@@ -37,13 +43,6 @@ class User extends Entity
         $this->_hidden = ['password'];
     }
 
-    protected function _setPassword($password): ?string
-    {
-        return mb_strlen($password) > 0
-            ? (new DefaultPasswordHasher)->hash($password)
-            : null;
-    }
-
     /**
      * Is token expired?
      *
@@ -54,6 +53,21 @@ class User extends Entity
         $expires = $this->token_expires ?? Time::now();
 
         return $expires->lte(Time::now());
+    }
+
+    /**
+     * With last seen.
+     *
+     * Populates `last_seen` value with current time.
+     *
+     * @return User
+     */
+    private function withLastSeen(): User
+    {
+        $user = clone $this;
+        $user->last_seen = Time::now();
+
+        return $user;
     }
 
     /**
@@ -72,5 +86,32 @@ class User extends Entity
         $user->token_expires = Time::now()->addHours(self::TOKEN_EXPIRY_HOURS);
 
         return $user;
+    }
+
+    /**
+     * Seen.
+     *
+     * Convenience method to set a user as seen, which updated the last_seen timestamp.
+     *
+     * @return void
+     */
+    public function seen(): void
+    {
+        TableRegistry::get('Users')->saveOrFail($this->withLastSeen());
+    }
+
+    /**
+     * Set password mutator.
+     *
+     * Automatically hashes password if not empty.
+     *
+     * @param string|null $password The plain text password.
+     * @return string|null The hashed password.
+     */
+    protected function _setPassword(?string $password): ?string
+    {
+        return mb_strlen($password) > 0
+            ? (new DefaultPasswordHasher)->hash($password)
+            : null;
     }
 }

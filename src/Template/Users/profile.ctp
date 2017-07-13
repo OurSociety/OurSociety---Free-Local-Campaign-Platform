@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \OurSociety\View\AppView $this
+ * @var \OurSociety\Model\Entity\User $user
+ */
 use OurSociety\Model\Entity\User;
 
 /**

@@ -1,6 +1,7 @@
 <?php
 /**
  * @var string[] $channel
+ * @var \OurSociety\View\AppView $this
  */
 if ($channel === null):
     $channel = [];

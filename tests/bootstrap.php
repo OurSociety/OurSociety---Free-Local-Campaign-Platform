@@ -30,3 +30,13 @@ Configure::write('App.fullBaseUrl', 'https://test.oursociety.org');
  */
 Email::dropTransport('default');
 Email::setConfigTransport('default', ['className' => TestTransport::class]);
+
+/**
+ * Kint debugger customisations.
+ */
+Kint::$enabled_mode = true;
+
+/**
+ * Seed for predictable randomness during testing.
+ */
+define('SEED', 42);

@@ -14,7 +14,10 @@ class CategoriesSeed extends App\AbstractSeed
     public function run(): void
     {
         $table = $this->table('categories');
-        $this->assertEmptyTable($table);
+        $abort = $this->assertEmptyTable($table);
+        if ($abort) {
+            return;
+        }
 
         $categories = [];
         foreach ($this->getCsvRecords('questions.csv') as $record) {

@@ -26,7 +26,6 @@ services:
     build: docker/webpack
     image: oursociety/assets:dev
     network_mode: host
-    tty: true
     volumes: [ ".:/app:rw", "/app/node_modules", "~/.cache/yarn/:/root/.cache/yarn/:ro" ]
 networks:
   public: {}
