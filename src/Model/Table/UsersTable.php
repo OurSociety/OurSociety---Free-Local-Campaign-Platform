@@ -22,10 +22,6 @@ use OurSociety\Model\Entity\User;
  */
 class UsersTable extends AppTable
 {
-    public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
-    public const ROLE_ADMIN = 'admin';
-    public const ROLE_CITIZEN = 'citizen';
-    public const ROLE_POLITICIAN = 'politician';
     public const LIMIT_DASHBOARD = 10;
     public const ERROR_ROLE_NOT_IN_LIST = 'The only valid roles are "{0}".';
     public const ERROR_EMAIL_UNIQUE = 'This email address is already in use.';
@@ -48,8 +44,9 @@ class UsersTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         return parent::validationDefault($validator)
-            ->inList('role', self::ROLES, __(self::ERROR_ROLE_NOT_IN_LIST, implode('", "', self::ROLES)))
+            ->inList('role', User::ROLES, __(self::ERROR_ROLE_NOT_IN_LIST, implode('", "', User::ROLES)))
             ->email('email')->notEmpty('email')->requirePresence('email', 'create')
+            ->notEmpty('name')->notBlank('name')->requirePresence('name', 'create')
             ->add('email', [
                 'unique' => [
                     'rule' => 'validateUnique',

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \OurSociety\View\AppView $this
+ */
 if (empty($mainNavigation)) {
     return;
 }

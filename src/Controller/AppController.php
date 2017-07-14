@@ -5,10 +5,9 @@ namespace OurSociety\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Table\UsersTable;
 
 /**
  * Application controller.
@@ -43,27 +42,10 @@ abstract class AppController extends Controller
     public function beforeRender(Event $event): ?Response
     {
         if ($this->components()->has('Auth')) {
-            $this->set('currentUser', $this->getUser());
+            $this->set('currentUser', $this->Auth->user());
         }
 
         return parent::beforeRender($event);
-    }
-
-    /**
-     * TODO: Make Auth::user() return User?
-     *
-     * @param array|null $user
-     * @return null|User
-     */
-    public function getUser(array $user = null): ?User
-    {
-        $user = $user ?: $this->Auth->user();
-
-        if ($user === null) {
-            return null;
-        }
-
-        return new User($user);
     }
 
     /**
@@ -71,16 +53,16 @@ abstract class AppController extends Controller
      *
      * - Adds simple role-based permission checking.
      */
-    public function isAuthorized(array $user = null, ServerRequest $request = null): bool
+    public function isAuthorized(User $user, ?ServerRequest $request = null): bool
     {
         $request = $request ?: $this->request;
 
-        switch ($this->getUser($user)->role) {
-            case UsersTable::ROLE_ADMIN:
+        switch ($user->role) {
+            case User::ROLE_ADMIN:
                 return true;
-            case UsersTable::ROLE_CITIZEN:
+            case User::ROLE_CITIZEN:
                 return in_array($request->getParam('prefix'), [false, 'citizen'], true);
-            case UsersTable::ROLE_POLITICIAN:
+            case User::ROLE_POLITICIAN:
                 return in_array($request->getParam('prefix'), [false, 'citizen', 'politician'], true);
             default:
                 return false;

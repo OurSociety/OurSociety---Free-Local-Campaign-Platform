@@ -4,11 +4,12 @@ declare(strict_types = 1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
-use Cake\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Cake\I18n\Time;
 use Cake\Mailer\MailerAwareTrait;
 use Crud\Action as Crud;
 use CrudUsers\Action as CrudUsers;
+use OurSociety\Controller\Action\LoginAction;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 
@@ -39,7 +40,7 @@ class UsersController extends CrudController
 
         collection([
             'forgot' => CrudUsers\ForgotPasswordAction::class,
-            'login' => CrudUsers\LoginAction::class,
+            'login' => LoginAction::class,
             'logout' => CrudUsers\LogoutAction::class,
             'profile' => Crud\ViewAction::class,
             'register' => CrudUsers\RegisterAction::class,
@@ -49,7 +50,7 @@ class UsersController extends CrudController
             $this->Crud->mapAction($actionName, $actionClass);
         });
 
-        $this->Auth->allow(['forgot', 'login', 'register', 'reset', 'verify']);
+        $this->Auth->allow(['forgot', 'login', 'logout', 'register', 'reset', 'verify']);
     }
 
     /**
@@ -99,7 +100,10 @@ class UsersController extends CrudController
 
         $this->Crud->on('afterLogin', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $redirectRouteName = sprintf('%s:dashboard', $event->getSubject()->user['role']);
+                /** @var User $user */
+                $user = $event->getSubject()->user;
+                $user->seen();
+                $redirectRouteName = sprintf('%s:dashboard', $user->role);
                 $this->Auth->setConfig('loginRedirect', ['_name' => $redirectRouteName]);
             }
         });

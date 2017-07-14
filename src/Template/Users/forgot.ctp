@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \OurSociety\View\AppView $this
+ */
+?>
 <section class="users form">
     <?= $this->Form->create('User') ?>
     <fieldset>

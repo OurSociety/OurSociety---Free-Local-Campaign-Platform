@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Citizen;
 
-use Cake\Http\Response;
+use OurSociety\Model\Table\QuestionsTable;
+use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
 
 class DashboardController extends AppController
@@ -14,6 +15,13 @@ class DashboardController extends AppController
      */
     public function index(): ?Response
     {
-        return null; // TODO: Set some view variables.
+        /** @var QuestionsTable $questions */
+        $questions = $this->loadModel('Questions');
+
+        $this->set([
+            'questions' => $questions->findBatch(),
+        ]);
+
+        return null;
     }
 }

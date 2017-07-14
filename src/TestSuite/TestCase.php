@@ -4,13 +4,16 @@ declare(strict_types = 1);
 namespace OurSociety\TestSuite;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\TestCase as BaseTestCase;
+use Cake\TestSuite as Cake;
 
-class TestCase extends BaseTestCase
+class TestCase extends Cake\TestCase
 {
+    use Traits\AssertionsTrait;
+
     public function setUp(): void
     {
         parent::setUp();
+
         TableRegistry::clear();
     }
 }

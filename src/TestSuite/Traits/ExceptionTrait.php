@@ -1,8 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace OurSociety\TestSuite;
+namespace OurSociety\TestSuite\Traits;
 
+/**
+ * Trait ExceptionTrait
+ *
+ * @method void expectException(string $exception)
+ * @method void expectExceptionMessage(string $exceptionMessage)
+ */
 trait ExceptionTrait
 {
     /**

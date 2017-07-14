@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eo pipefail
+shopt -s nullglob
+
+exec dockerize \
+  -stdout /var/log/mysql/general.log \
+  -stdout /var/log/mysql/slow_query.log \
+  /usr/local/bin/docker-entrypoint.sh "${@}"

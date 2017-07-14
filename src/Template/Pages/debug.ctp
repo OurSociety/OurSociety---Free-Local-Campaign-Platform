@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \OurSociety\View\AppView $this
+ */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;

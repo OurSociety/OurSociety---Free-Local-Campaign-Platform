@@ -3,14 +3,15 @@ declare(strict_types = 1);
 
 namespace OurSociety\TestSuite;
 
-use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase as TestCase;
 use OurSociety\Model\Entity\User;
 
 class IntegrationTestCase extends TestCase
 {
-    use FixturesTrait;
+    use Traits\FixturesTrait;
+    use Traits\IntegrationAssertionsTrait;
+    use Traits\AssertionsTrait;
 
     /**
      * {@inheritdoc}
@@ -39,88 +40,12 @@ class IntegrationTestCase extends TestCase
 
         /** @var User $user */
         $user = TableRegistry::get('Users')->find('auth')->where(compact('email'))->firstOrFail();
-        $this->session(['Auth' => ['User' => $userData + $user->toArray()]]);
-    }
 
-    /**
-     * Assert email body.
-     *
-     * @param string $name The expected name of the user.
-     * @param string $body The expected email body.
-     * @return void
-     */
-    protected function assertEmailBody(string $name, string $body): void
-    {
-        $template = <<<EMAIL
-Hi ${name},
+        foreach ($userData as $field => $value) {
+            $user->{$field} = $value;
+        }
 
-${body}
-
-Thank you,
-
-OurSociety Team
-EMAIL;
-
-        $this->assertEmailContains($template);
-    }
-
-    /**
-     * Assert email contains.
-     *
-     * @param string $string The expected string for email to contain.
-     * @return void
-     */
-    protected function assertEmailContains(string $string): void
-    {
-        self::assertContains(str_replace("\n", "\r\n", $string), Configure::read('EmailTransport.test.message'));
-    }
-
-    /**
-     * Assert email to.
-     *
-     * @param string $email The expected To: email address.
-     * @return void
-     */
-    protected function assertEmailTo(string $email): void
-    {
-        $this->assertEmailHeader('To', $email);
-    }
-
-    /**
-     * Assert email header.
-     *
-     * @param string $header The email header name.
-     * @param string $value The expected email header value.
-     * @return void
-     */
-    protected function assertEmailHeader(string $header, string $value): void
-    {
-        self::assertContains(sprintf("%s: %s\r\n", $header, $value), Configure::read('EmailTransport.test.headers'));
-    }
-
-    /**
-     * Assert email subject.
-     *
-     * @param string $subject The expected email subject.
-     * @return void
-     */
-    protected function assertEmailSubject(string $subject): void
-    {
-        $this->assertEmailHeader('Subject', $subject);
-    }
-
-    /**
-     * Assert flash.
-     *
-     * Checks that a flash message exists in the session.
-     *
-     * @param string $expected The expected flash message.
-     * @return void
-     */
-    protected function assertFlash(string $expected): void
-    {
-        $key = 'Flash.flash.0.message';
-        $this->assertSession($expected, $key, sprintf('Found "%s"', $this->_requestSession->read($key)));
+        $this->session(['Auth' => ['User' => $user]]);
     }
 
     /**

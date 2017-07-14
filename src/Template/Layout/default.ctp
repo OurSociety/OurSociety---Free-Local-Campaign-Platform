@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \OurSociety\View\AppView $this
+ */
+?>
 <!DOCTYPE html>
 <html lang="<?= \Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
 <head>

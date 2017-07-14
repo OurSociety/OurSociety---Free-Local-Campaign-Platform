@@ -58,7 +58,7 @@ jobs:
           environment:
             DATABASE_TEST_URL: mysql://app:secret@127.0.0.1/test?encoding=utf8mb4
           command: |
-            vendor/bin/phpunit
+            composer test
   deploy_staging:
     docker:
       - image: circleci/php:7.1-fpm-node

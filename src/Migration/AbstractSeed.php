@@ -12,15 +12,19 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class AbstractSeed extends Migrations\AbstractSeed
 {
-    protected function assertEmptyTable(Table $table): void
+    protected function assertEmptyTable(Table $table): bool
     {
         if (!$this->isTableEmpty($table)) {
             if ($this->confirm('Do you want to truncate the table first')) {
                 $this->truncateTable($table);
             } else {
-                $this->error('Questions seed already imported');
+                $this->error('Table already seeded');
+
+                return true;
             }
         }
+
+        return false;
     }
 
     protected function confirm(string $message)
@@ -45,8 +49,6 @@ abstract class AbstractSeed extends Migrations\AbstractSeed
     protected function error(string $message): void
     {
         $this->getOutput()->writeln(sprintf(' <error>%s</error>', $message));
-
-        exit(1);
     }
 
     protected function getCsvRecords(string $filename): Iterator

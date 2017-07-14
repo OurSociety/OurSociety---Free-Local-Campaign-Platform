@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
-use Cake\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Error Handling Controller
@@ -24,21 +24,10 @@ final class ErrorController extends AppController
     }
 
     /**
-     * beforeFilter callback.
-     *
-     * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Http\Response|null
-     */
-    public function beforeFilter(Event $event): ?Response
-    {
-        return null;
-    }
-
-    /**
      * beforeRender callback.
      *
      * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Http\Response|null
+     * @return Response|null
      */
     public function beforeRender(Event $event): ?Response
     {
@@ -47,15 +36,5 @@ final class ErrorController extends AppController
         $this->viewBuilder()->setTemplatePath('Error');
 
         return null;
-    }
-
-    /**
-     * afterFilter callback.
-     *
-     * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Network\Response|null|void
-     */
-    public function afterFilter(Event $event)
-    {
     }
 }

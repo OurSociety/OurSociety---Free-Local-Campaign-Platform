@@ -5,16 +5,16 @@
 set -e
 
 # Install PHP packages
-composer install
+composer install --ansi
 
 # Wait for MySQL
 dockerize -wait tcp://db:3306 -timeout 30s
 
 # Migrate database
-bin/cake migrations migrate
+bin/cake migrations migrate --ansi
 
 # Seed database
-bin/cake migrations seed --seed=DatabaseSeed
+bin/cake migrations seed --ansi --seed=DatabaseSeed || true
 
 # Run PHP entrypoint
 exec docker-php-entrypoint "$@"

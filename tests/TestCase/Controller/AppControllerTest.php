@@ -5,7 +5,6 @@ namespace OurSociety\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Table\UsersTable;
 use OurSociety\TestSuite\IntegrationTestCase;
 
 /**
@@ -42,62 +41,62 @@ class AppControllerTest extends IntegrationTestCase
         return [
             'citizen role can access public prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_CITIZEN,
+                'role' => User::ROLE_CITIZEN,
                 'url' => '/logout',
             ],
             'citizen role can access citizen prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_CITIZEN,
+                'role' => User::ROLE_CITIZEN,
                 'url' => '/citizen',
             ],
             'citizen role can NOT access politician prefix' => [
                 'expected' => false,
-                'role' => UsersTable::ROLE_CITIZEN,
+                'role' => User::ROLE_CITIZEN,
                 'url' => '/politician',
             ],
             'citizen role can NOT access admin prefix' => [
                 'expected' => false,
-                'role' => UsersTable::ROLE_CITIZEN,
+                'role' => User::ROLE_CITIZEN,
                 'url' => '/admin',
             ],
             'politician role can access public prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_POLITICIAN,
+                'role' => User::ROLE_POLITICIAN,
                 'url' => '/logout',
             ],
             'politician role can access citizen prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_POLITICIAN,
+                'role' => User::ROLE_POLITICIAN,
                 'url' => '/citizen',
             ],
             'politician role can access politician prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_POLITICIAN,
+                'role' => User::ROLE_POLITICIAN,
                 'url' => '/politician',
             ],
             'politician role can NOT access admin prefix' => [
                 'expected' => false,
-                'role' => UsersTable::ROLE_POLITICIAN,
+                'role' => User::ROLE_POLITICIAN,
                 'url' => '/admin',
             ],
             'admin role can access public prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_ADMIN,
+                'role' => User::ROLE_ADMIN,
                 'url' => '/logout',
             ],
             'admin role can access citizen prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_ADMIN,
+                'role' => User::ROLE_ADMIN,
                 'url' => '/citizen',
             ],
             'admin role can access politician prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_ADMIN,
+                'role' => User::ROLE_ADMIN,
                 'url' => '/politician',
             ],
             'admin role can access admin prefix' => [
                 'expected' => true,
-                'role' => UsersTable::ROLE_ADMIN,
+                'role' => User::ROLE_ADMIN,
                 'url' => '/admin',
             ],
         ];
