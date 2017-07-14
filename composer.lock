@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b93b0acbb30ff0dafed8dd63b299792",
+    "content-hash": "02a45d8daf71fdfd609da3da81fa1370",
     "packages": [
         {
             "name": "aura/intl",
@@ -92,16 +92,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.4.9",
+            "version": "3.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "a9eb22193e8df235ec71f4ed4a71158efa5e0b23"
+                "reference": "3bf71a5d5ebf54ff9d5cfca477db11e34c3e3a3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/a9eb22193e8df235ec71f4ed4a71158efa5e0b23",
-                "reference": "a9eb22193e8df235ec71f4ed4a71158efa5e0b23",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/3bf71a5d5ebf54ff9d5cfca477db11e34c3e3a3f",
+                "reference": "3bf71a5d5ebf54ff9d5cfca477db11e34c3e3a3f",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2017-06-26T02:03:42+00:00"
+            "time": "2017-07-10T01:29:15+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -664,6 +664,70 @@
             "time": "2017-01-03T02:23:08+00:00"
         },
         {
+            "name": "league/csv",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "7fd45d78c9b869ab361fe0614fd9a659a2e55e18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/7fd45d78c9b869ab361fe0614fd9a659a2e55e18",
+                "reference": "7fd45d78c9b869ab361fe0614fd9a659a2e55e18",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.0.10"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "suggest": {
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Csv data manipulation made easy in PHP",
+            "homepage": "http://csv.thephpleague.com",
+            "keywords": [
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "write"
+            ],
+            "time": "2017-07-12 07:33:43"
+        },
+        {
             "name": "m1/env",
             "version": "2.1.0",
             "source": {
@@ -775,16 +839,16 @@
         },
         {
             "name": "muffin/slug",
-            "version": "v1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UseMuffin/Slug.git",
-                "reference": "ede2aa55440098450571ebcee80f1e23b83d77e4"
+                "reference": "f0fd10e2a4616d3380f923a733259c422a52272c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UseMuffin/Slug/zipball/ede2aa55440098450571ebcee80f1e23b83d77e4",
-                "reference": "ede2aa55440098450571ebcee80f1e23b83d77e4",
+                "url": "https://api.github.com/repos/UseMuffin/Slug/zipball/f0fd10e2a4616d3380f923a733259c422a52272c",
+                "reference": "f0fd10e2a4616d3380f923a733259c422a52272c",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +857,7 @@
             "require-dev": {
                 "cakephp/cakephp": "^3.2.7",
                 "cocur/slugify": "^1.2",
-                "phpunit/phpunit": "4.1.*"
+                "phpunit/phpunit": "<6.0"
             },
             "type": "cakephp-plugin",
             "autoload": {
@@ -829,7 +893,7 @@
                 "orm",
                 "slug"
             ],
-            "time": "2016-04-20T20:20:55+00:00"
+            "time": "2017-07-10T19:44:21+00:00"
         },
         {
             "name": "psr/http-message",
@@ -934,12 +998,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0b18b6bbeed070fb900ad78e81ffa1182a57a752"
+                "reference": "c1bdf69b424087447dc8e12d95b373c2b1cc77f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0b18b6bbeed070fb900ad78e81ffa1182a57a752",
-                "reference": "0b18b6bbeed070fb900ad78e81ffa1182a57a752",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c1bdf69b424087447dc8e12d95b373c2b1cc77f2",
+                "reference": "c1bdf69b424087447dc8e12d95b373c2b1cc77f2",
                 "shasum": ""
             },
             "conflict": {
@@ -953,7 +1017,8 @@
                 "codeigniter/framework": "<=3.0.6",
                 "composer/composer": "<=1.0.0-alpha11",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
-                "contao/core": ">=2.11,<3.5.15",
+                "contao/core": ">=2,<3.5.28",
+                "contao/core-bundle": ">=4,<4.4.1",
                 "doctrine/annotations": ">=1,<1.2.7",
                 "doctrine/cache": ">=1,<1.3.2|>=1.4,<1.4.2",
                 "doctrine/common": ">=2,<2.4.3|>=2.5,<2.5.1",
@@ -1062,7 +1127,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2017-06-22T16:43:17+00:00"
+            "time": "2017-07-12T12:45:47+00:00"
         },
         {
             "name": "robmorgan/phinx",
@@ -4117,6 +4182,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "league/csv": 20,
         "roave/security-advisories": 20,
         "psy/psysh": 0
     },

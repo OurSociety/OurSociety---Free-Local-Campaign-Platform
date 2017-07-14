@@ -12,6 +12,8 @@
 
 <h1>Admin Dashboard</h1>
 
+<?= $this->Html->link('Questions', ['_name' => 'admin:questions'], ['class' => 'btn btn-default']) /* TODO: Move to navbar */ ?>
+
 <section class="row">
     <div class="col-md-6">
         <div class="panel panel-default">

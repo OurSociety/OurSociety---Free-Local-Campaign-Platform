@@ -1,14 +1,20 @@
 #!/bin/sh
+# Docker entrypoint
+#
+# Runs when container is started. Prepares development environment at runtime.
 set -e
 
-# Install missing Composer packages on startup
+# Install PHP packages
 composer install
 
 # Wait for MySQL
 dockerize -wait tcp://db:3306 -timeout 30s
 
-# Run database migrations
+# Migrate database
 bin/cake migrations migrate
 
-# Load default PHP entrypoint
+# Seed database
+bin/cake migrations seed --seed=DatabaseSeed
+
+# Run PHP entrypoint
 exec docker-php-entrypoint "$@"
