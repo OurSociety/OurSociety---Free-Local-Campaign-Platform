@@ -1,18 +1,32 @@
 <?php
 /**
- * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $user
- */
-use OurSociety\Model\Entity\User;
-
-/**
- * @var User $user The user.
+ * @var \OurSociety\View\AppView $this The view class.
+ * @var \OurSociety\Model\Entity\User $user The user.
  */
 ?>
+<ol class="breadcrumb">
+    <li><?= $this->Html->link(__('Account profile'), ['_name' => 'users:profile']) ?></li>
+    <li><?= $user->name ?></li>
+</ol>
+
 <h1>Profile</h1>
-<h2><?= $user->name ?></h2>
-<dl>
-    <dt>Email</dt>
-    <dd><?= $user->email ?></dd>
-</dl>
+
+<div class="media">
+    <div class="media-left">
+        <?= $this->Html->gravatar($user->email) ?>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading"><?= $user->name ?></h4>
+        <dl>
+            <dt>Phone number</dt>
+            <dd><?= $user->phone ?? $this->Html->tag('span', '&mdash;', ['class' => 'text-muted']) ?></dd>
+            <dt>Email</dt>
+            <dd><?= $this->Html->link($user->email, 'mailto:' . $user->email) ?></dd>
+            <dt>Member since</dt>
+            <dd><abbr title="<?= $user->created ?>"><?= $user->created->timeAgoInWords() ?></abbr></dd>
+        </dl>
+    </div>
+</div>
+
+<?= $this->Html->link(__('Edit details'), ['_name' => 'users:edit'], ['class' => 'btn btn-sm btn-default']) ?>
 <?= $this->Html->link(__('Change password'), ['_name' => 'users:reset'], ['class' => 'btn btn-sm btn-default']) ?>

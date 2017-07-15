@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Component;
 
+use OurSociety\Auth as AppAuth;
+use OurSociety\Controller\AppController;
 use Cake\Controller\Component as Cake;
 
 /**
@@ -18,19 +20,23 @@ class AuthComponent extends Cake\AuthComponent
         $this->setConfig(array_merge([
             'authorize' => ['Controller'], // TODO: Move a11n logic.
             'authError' => $this->user()
-                ? __(self::ERROR_AUTH_UNAUTHENTICATED)
-                : __(self::ERROR_AUTH_UNAUTHORIZED),
+                ? __(self::ERROR_AUTH_UNAUTHORIZED)
+                : __(self::ERROR_AUTH_UNAUTHENTICATED),
             'authenticate' => [
-                'Form' => [
+                self::ALL => [
                     'finder' => 'auth',
                     'fields' => ['username' => 'email'],
-                    'scope' => ['active IS NOT' => null], // TODO: Fix fixtures/scope
+                    //'scope' => ['active IS NOT' => null], // TODO: active IS NOT NULL AND created < week(?) ago
                 ],
+                AppAuth\CookieAuthenticate::class => [
+                    'cookie' => ['name' => AppController::COOKIE_NAME_REMEMBER_ME,
+                ]],
+                AppAuth\FormAuthenticate::class,
             ],
             'flash' => ['key' => 'flash', 'element' => 'info'],
             'loginAction' => ['_name' => 'users:login'],
             'loginRedirect' => ['_name' => 'citizen:dashboard'],
-            'unauthorizedRedirect' => false,
+            'unauthorizedRedirect' => false, //$this->request->referer(), // TODO: Redirect loop.
         ], $config));
 
         parent::initialize($config);

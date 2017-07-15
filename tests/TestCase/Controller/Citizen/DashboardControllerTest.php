@@ -12,33 +12,25 @@ class DashboardControllerTest extends IntegrationTestCase
      * @dataProvider provideIndex
      * @param string $expected The expected case.
      * @param string|null $email The email of the user to authenticate as, if any.
+     * @param array $userData The extra user data.
+     * @param array|null $redirectUrl The redirect URL, if any.
      */
-    public function testIndex(string $expected, string $email = null): void
+    public function testIndex(string $expected, string $email = null, ?array $userData = [], ?array $redirectUrl = null): void
     {
-        $this->auth($email);
+        $this->auth($email, $userData);
         $this->get(['_name' => 'citizen:dashboard']);
 
         switch ($expected) {
             case 'success':
-                $this->assertResponseOk();
-                $this->assertResponseContains('Citizen Dashboard');
-                $this->assertResponseContains('Questions');
-                $questions = [
-                    ['question' => 'Multiculturalism is a crucial part of forming a better country and world.'],
-                    ['question' => 'Education is best provided by the free market, achieving greater quality, accountability, and efficiency with a more diversity of choice.'],
-                    ['question' => 'The government should increase the minimum wage to ensure a living wage.'],
-                    ['question' => 'Corporate media is sensationalized in order to generate more views but does not take into account the harm being done to the populace.'],
-                    ['question' => 'The U.S. should increase military spending.'],
-                    ['question' => 'Provision of the internet should be socialised and made available free of charge.'],
-                    ['question' => 'Strict environmental laws and regulations harm the economy and cost jobs.'],
-                    ['question' => 'Inheritance tax should increase significantly after reaching a specific dollar amount.'],
-                    ['question' => 'Public education should have a stronger focus on analytics capability rather than fact memorization.'],
-                    ['question' => 'We should continue to provide tax incentives for individuals purchasing electric cars.'],
-                ];
-                // TODO: Fix RAND(seed) in CI, or perhaps it's an issue with Generator::seed().
-                //foreach ($questions as $question) {
-                //    $this->assertResponseContains($question['question']);
-                //}
+                if ($redirectUrl === null) {
+                    $this->assertResponseOk();
+                    $this->assertResponseContains('Citizen Dashboard');
+                    $this->assertResponseContains('What should OurSociety be thinking about?');
+                } else {
+                    $this->assertResponseSuccess();
+                    $this->assertResponseCode(302);
+                    $this->assertRedirect($redirectUrl);
+                }
                 break;
             case 'error':
                 $this->assertResponseSuccess();
@@ -51,9 +43,22 @@ class DashboardControllerTest extends IntegrationTestCase
     public function provideIndex(): array
     {
         return [
-            'success' => [
+            'success (no zip => onboarding)' => [
                 'expected' => 'success',
                 'email' => UsersFixture::EMAIL_ADMIN,
+                'userData' => ['zip' => null],
+                'redirectUrl' => ['_name' => 'users:onboarding'],
+            ],
+            'success (no answers => questions)' => [
+                'expected' => 'success',
+                'email' => UsersFixture::EMAIL_ADMIN,
+                'userData' => ['zip' => 12345],
+                'redirectUrl' => ['_name' => 'citizen:questions'],
+            ],
+            'success (dashboard)' => [
+                'expected' => 'success',
+                'email' => UsersFixture::EMAIL_ADMIN,
+                'userData' => ['zip' => 12345, 'answer_count' => 10],
             ],
             'error (unauthenticated)' => [
                 'expected' => 'error',

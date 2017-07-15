@@ -2,6 +2,14 @@
 /node_modules/*
 /tmp/*
 /vendor/*
-/webroot/assets/*
+/webroot/css/app.css
+/webroot/css/landing.css
+/webroot/fonts/vendor/*
+/webroot/hot
+/webroot/images/*
+/webroot/js/app.js
+/webroot/js/landing.js
+/webroot/mix-manifest.json
 /.env*
-!/.env.dist
+!/.env.default
+/hot

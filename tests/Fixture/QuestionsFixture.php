@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\Fixture;
 
+use OurSociety\Model\Entity\Question;
+use OurSociety\Model\Table\CategoriesTable;
 use OurSociety\TestSuite\Fixture as App;
 use OurSociety\Utility\Csv;
 
@@ -43,31 +45,22 @@ class QuestionsFixture extends App\TestFixture
         'politician_answer_count' => 0,
     ];
 
-    /**
-     * Records
-     *
-     * @var array
-     */
-    public $records = [
-        [
-            'category_id' => '2d65b348-5442-414a-8aff-a45a4e160f60',
-            'question' => 'Lorem ipsum dolor sit amet',
-            'type' => 'Lorem ip',
-        ],
-    ];
-
     public function init(): void
     {
+        $categoryIds = CategoriesTable::instance()->find()->find('list', [
+            'keyField' => 'name',
+            'valueField' => 'id'
+        ])->toArray();
+
         collection(Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray())
-            ->each(function (array $record) {
+            ->each(function (array $record) use ($categoryIds) {
                 $this->records[] = [
-                    'category_id' => $record['Type'],
+                    'category_id' => $categoryIds[$record['Type']],
                     'question' => $record['Question'],
-                    'type' => $record['Answer A'] === 'Yes' ? 'yes/no' : 'scale',
+                    'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
                 ];
             });
 
         parent::init();
-
     }
 }

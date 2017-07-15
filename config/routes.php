@@ -16,14 +16,17 @@ Router::defaultRouteClass(DashedRoute::class);
  * Default scope.
  */
 Router::scope('/', function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'pages:home']);
+    $routes->redirect('/', '/index.html');
+    $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'pages:home']);
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
+    $routes->connect('/profile/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/reset', ['controller' => 'Users', 'action' => 'reset'], ['_name' => 'users:reset']);
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
+    $routes->connect('/onboarding', ['controller' => 'Users', 'action' => 'onboarding'], ['_name' => 'users:onboarding']);
     $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
 });
 
@@ -34,6 +37,7 @@ Router::scope('/', function (RouteBuilder $routes) {
  */
 Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/your-voice', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->fallbacks(DashedRoute::class);
 });
 
@@ -44,6 +48,7 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
  */
 Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->fallbacks(DashedRoute::class);
 });
 

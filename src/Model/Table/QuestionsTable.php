@@ -1,22 +1,24 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
 use Cake\Datasource\EntityInterface as Entity;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\BelongsToMany;
-use Cake\ORM\Behavior\CounterCacheBehavior;
+use Cake\ORM\Association;
+use Cake\ORM\Behavior;
+use Cake\ORM\Exception\PersistenceFailedException;
+use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use OurSociety\Model\Entity\Question;
 
 /**
  * Questions Model
  *
- * @property CategoriesTable|BelongsTo $Categories
- * @property UsersTable|BelongsToMany $Users
+ * @property CategoriesTable|Association\BelongsTo $Categories
+ * @property AnswersTable|Association\HasMany $Answers
  *
  * @method Question get($primaryKey, $options = [])
  * @method Question newEntity($data = null, array $options = [])
@@ -25,17 +27,14 @@ use OurSociety\Model\Entity\Question;
  * @method Question patchEntity(Entity $entity, array $data, array $options = [])
  * @method Question[] patchEntities($entities, array $data, array $options = [])
  * @method Question findOrCreate($search, callable $callback = null, $options = [])
+ * @method static QuestionsTable instance(?string $alias = null, ?array $options = [])
  *
- * @mixin CounterCacheBehavior
+ * @mixin Behavior\CounterCacheBehavior
  */
 class QuestionsTable extends AppTable
 {
-
     /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
+     * {@inheritdoc}
      */
     public function initialize(array $config): void
     {
@@ -46,40 +45,34 @@ class QuestionsTable extends AppTable
         $this->addBehavior('CounterCache', ['Categories' => ['question_count']]);
 
         $this->belongsTo('Categories');
-        $this->belongsToMany('Users');
+        $this->hasMany('Answers');
+        //$this->belongsToMany('Users', ['through' => 'Answers']);
     }
 
     /**
-     * Default validation rules.
-     *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * {@inheritdoc}
      */
     public function validationDefault(Validator $validator): Validator
     {
         return parent::validationDefault($validator)
             // question
-            ->requirePresence('question', 'create')
             ->notEmpty('question')
+            ->requirePresence('question', 'create')
             // type
-            ->requirePresence('type', 'create')
             ->notEmpty('type')
-            // citizen answer count
+            ->requirePresence('type', 'create')
+            // citizen_answer_count
             ->integer('citizen_answer_count')
-            ->requirePresence('citizen_answer_count', 'create')
             ->notEmpty('citizen_answer_count')
-            // politician answer count
+            ->requirePresence('citizen_answer_count', 'create')
+            // politician_answer_count
             ->integer('politician_answer_count')
-            ->requirePresence('politician_answer_count', 'create')
-            ->notEmpty('politician_answer_count');
+            ->notEmpty('politician_answer_count')
+            ->requirePresence('politician_answer_count', 'create');
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * {@inheritdoc}
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -87,10 +80,39 @@ class QuestionsTable extends AppTable
             ->add($rules->existsIn(['category_id'], 'Categories'));
     }
 
-    public function findBatch(): ResultSet
+    /**
+     * @param Query|null $query
+     * @return ResultSet|Question[]
+     */
+    public function getBatch(?Query $query = null): ResultSet
     {
+        $query = $query ?: $this->find();
         $order = defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()';
 
-        return $this->find()->order($order)->limit(10)->all();
+        return $query->contain(['Categories' => ['fields' => ['name']]])->order($order)->limit(10)->all();
+    }
+
+    public function saveAnswers(array $formData): void
+    {
+        $data = collection($formData)->filter(function ($question) {
+            return !empty($question['answers'][0]['answer']);
+        })->toArray();
+        $ids = Hash::extract($formData, '{n}.id');
+        $questions = $this->find()->where(['id IN' => $ids])->all();
+        $questions = $this->patchEntities($questions, $data, ['validate' => false, 'associated' => ['Answers']]);
+        $this->getConnection()->transactional(function () use ($questions) {
+            foreach ($questions as $question) {
+                /** @var Question $question */
+                $question = $this->saveOrFail($question, ['atomic' => false]);
+                if (count($question->answers) === 0) {
+                    throw new PersistenceFailedException($question, 'Answer was not saved');
+                }
+            }
+        });
+    }
+
+    public function getQuestionTotal(): int
+    {
+        return $this->find()->count();
     }
 }

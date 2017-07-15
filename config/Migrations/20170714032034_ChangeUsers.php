@@ -12,6 +12,10 @@ class ChangeUsers extends AbstractMigration
         $table = $this->table('users');
 
         $table
+            ->addColumn('zip', 'integer', ['null' => true, 'default' => null, 'signed' => false, 'after' => 'email'])
+            ->addColumn('phone', 'string', ['null' => true, 'default' => null, 'after' => 'zip'])
+            ->changeColumn('email', 'string', ['null' => false])
+            ->changeColumn('name', 'string', ['null' => false])
             ->changeColumn('role', 'string', ['default' => User::ROLE_CITIZEN, 'limit' => 10, 'null' => false])
             ->changeColumn('last_seen', 'datetime', ['null' => true, 'default' => null])
             ->removeColumn('first_name')
@@ -40,6 +44,10 @@ class ChangeUsers extends AbstractMigration
     {
         $table = $this->table('users');
         $table
+            ->removeColumn('zip')
+            ->removeColumn('phone')
+            ->changeColumn('email', 'string', ['null' => true])
+            ->changeColumn('name', 'string', ['null' => true])
             ->changeColumn('role', 'string', ['default' => 'user', 'limit' => 255, 'null' => true])
             ->changeColumn('last_seen', 'datetime', ['null' => true, 'default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('first_name', 'string', ['default' => null, 'limit' => 50, 'null' => true, 'after' => 'name'])

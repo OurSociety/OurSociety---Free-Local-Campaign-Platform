@@ -5,4 +5,4 @@ set -e
 yarn install --non-interactive
 
 # Start asset builder/watcher
-exec yarn run watch
+exec yarn run server

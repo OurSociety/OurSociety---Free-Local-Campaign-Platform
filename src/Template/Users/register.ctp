@@ -8,8 +8,8 @@
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Register an account') ?></legend>
-        <?= $this->Form->control('name') ?>
-        <?= $this->Form->control('email') ?>
+        <?= $this->Form->control('name', ['label' => __('Full name')]) ?>
+        <?= $this->Form->control('email', ['label' => __('Email address')]) ?>
         <?= $this->Form->control('password') ?>
     </fieldset>
     <?= $this->Form->button(__('Register')); ?>

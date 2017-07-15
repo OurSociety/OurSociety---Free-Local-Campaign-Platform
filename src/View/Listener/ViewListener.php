@@ -91,7 +91,7 @@ class ViewListener extends CrudView\ViewListener
      */
     protected function _getSiteTitleImage(): string
     {
-        return '../images/banner.png';
+        return '../img/banner.png';
     }
 
     /**

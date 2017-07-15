@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\Fixture;
 
+use OurSociety\Model\Entity\Answer;
 use OurSociety\TestSuite\Fixture as App;
 
 /**
@@ -45,7 +46,7 @@ class AnswersFixture extends App\TestFixture
             'id' => 'f64e16e5-e5e2-4e59-beab-a3e76ab5f943',
             'question_id' => '4099e304-4c93-4993-b16d-c753a2c7b1f3',
             'user_id' => 'f4e3bed3-3b56-416a-8765-6d90cf9a5409',
-            'answer' => 'Lorem ip',
+            'answer' => Answer::ANSWER_STRONGLY_AGREE,
             'created' => '2017-07-13 17:57:00',
             'modified' => '2017-07-13 17:57:00'
         ],

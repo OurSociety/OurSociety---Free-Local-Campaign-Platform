@@ -1,33 +1,33 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\ORM\Table;
+use Cake\Datasource\EntityInterface as Entity;
+use Cake\ORM\Association;
+use Cake\ORM\Behavior;
+use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
+use OurSociety\Model\Entity\Category;
 
 /**
  * Categories Model
  *
- * @property \OurSociety\Model\Table\QuestionsTable|\Cake\ORM\Association\HasMany $Questions
- * @property \OurSociety\Model\Table\UsersTable|\Cake\ORM\Association\BelongsToMany $Users
+ * @property QuestionsTable|Association\HasMany $Questions
+ * @property UsersTable|Association\BelongsToMany $Users
  *
- * @method \OurSociety\Model\Entity\Category get($primaryKey, $options = [])
- * @method \OurSociety\Model\Entity\Category newEntity($data = null, array $options = [])
- * @method \OurSociety\Model\Entity\Category[] newEntities(array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Category|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \OurSociety\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Category[] patchEntities($entities, array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Category findOrCreate($search, callable $callback = null, $options = [])
+ * @method Category get($primaryKey, $options = [])
+ * @method Category newEntity($data = null, array $options = [])
+ * @method Category[] newEntities(array $data, array $options = [])
+ * @method Category|bool save(Entity $entity, $options = [])
+ * @method Category patchEntity(Entity $entity, array $data, array $options = [])
+ * @method Category[] patchEntities($entities, array $data, array $options = [])
+ * @method Category findOrCreate($search, callable $callback = null, $options = [])
  */
-class CategoriesTable extends Table
+class CategoriesTable extends AppTable
 {
-
     /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
+     * {@inheritdoc}
      */
     public function initialize(array $config): void
     {
@@ -38,20 +38,17 @@ class CategoriesTable extends Table
     }
 
     /**
-     * Default validation rules.
-     *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * {@inheritdoc}
      */
     public function validationDefault(Validator $validator): Validator
     {
         return parent::validationDefault($validator)
             // name
-            ->requirePresence('name', 'create')
             ->notEmpty('name')
+            ->requirePresence('name', 'create')
             // question_count
             ->integer('question_count')
-            ->requirePresence('question_count', 'create')
-            ->notEmpty('question_count');
+            ->notEmpty('question_count')
+            ->requirePresence('question_count', 'create');
     }
 }

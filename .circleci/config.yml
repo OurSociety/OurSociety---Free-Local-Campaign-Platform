@@ -18,7 +18,6 @@ jobs:
           MYSQL_USER: app
           MYSQL_PASSWORD: secret
           MYSQL_DATABASE: test
-    working_directory: /home/circleci/app
     steps:
       - checkout
       - run:
@@ -48,7 +47,7 @@ jobs:
           name: Save Composer Packages To Cache
           key: v1-composer-packages-{{ checksum "composer.lock" }}
           paths:
-            - /home/circleci/app/vendor
+            - ~/project/vendor
       - run:
           name: Check MySQL Connection
           command: |
@@ -62,7 +61,6 @@ jobs:
   deploy_staging:
     docker:
       - image: circleci/php:7.1-fpm-node
-    working_directory: /home/circleci/app
     steps:
       - checkout
       - add_ssh_keys

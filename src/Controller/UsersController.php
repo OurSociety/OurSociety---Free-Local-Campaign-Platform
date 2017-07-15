@@ -4,14 +4,14 @@ declare(strict_types = 1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
-use Psr\Http\Message\ResponseInterface as Response;
 use Cake\I18n\Time;
 use Cake\Mailer\MailerAwareTrait;
 use Crud\Action as Crud;
 use CrudUsers\Action as CrudUsers;
-use OurSociety\Controller\Action\LoginAction;
+use OurSociety\Controller\Action;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * @property UsersTable $Users
@@ -40,10 +40,11 @@ class UsersController extends CrudController
 
         collection([
             'forgot' => CrudUsers\ForgotPasswordAction::class,
-            'login' => LoginAction::class,
+            'login' => Action\LoginAction::class,
             'logout' => CrudUsers\LogoutAction::class,
+            'onboarding' => Crud\EditAction::class,
             'profile' => Crud\ViewAction::class,
-            'register' => CrudUsers\RegisterAction::class,
+            'register' => Action\RegisterAction::class,
             'reset' => CrudUsers\ResetPasswordAction::class,
             'verify' => CrudUsers\VerifyAction::class,
         ])->each(function (string $actionClass, string $actionName) {
@@ -61,6 +62,19 @@ class UsersController extends CrudController
         $this->config('scaffold.sidebar_navigation', false);
 
         return parent::beforeFilter($event);
+    }
+
+    /**
+     * @route GET /edit
+     * @routeName users:edit
+     */
+    public function edit(): ?Response
+    {
+        $this->Crud->on('beforeFind', function (Event $event) {
+            $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);
+        });
+
+        return $this->Crud->execute();
     }
 
     /**
@@ -102,9 +116,24 @@ class UsersController extends CrudController
             if ($event->getSubject()->success === true) {
                 /** @var User $user */
                 $user = $event->getSubject()->user;
+
+                // Last seen time
                 $user->seen();
-                $redirectRouteName = sprintf('%s:dashboard', $user->role);
-                $this->Auth->setConfig('loginRedirect', ['_name' => $redirectRouteName]);
+
+                // Set redirect URL to correct dashboard
+                $this->Auth->setConfig('loginRedirect', ['_name' => sprintf('%s:dashboard', $user->role)]);
+
+                // Remember me cookie
+                if ((bool)$this->request->getData('remember_me') === true) {
+                    $this->Cookie->configKey('remember', [
+                        'expires' => '+1 year',
+                        'httpOnly' => true
+                    ]);
+                    $this->Cookie->write('remember', [
+                        'email' => $this->request->getData('email'),
+                        'password' => $this->request->getData('password')
+                    ]);
+                }
             }
         });
 
@@ -130,6 +159,22 @@ class UsersController extends CrudController
     {
         $this->Crud->on('beforeFind', function (Event $event) {
             $event->subject->query = $event->subject->repository->find()->where(['id' => $this->Auth->user('id')]);
+        });
+
+        return $this->Crud->execute();
+    }
+
+    /**
+     * @route GET /profile
+     * @routeName users:profile
+     */
+    public function register(): ?Response
+    {
+        $this->Crud->on('afterRegister', function (Event $event) {
+            if ($event->getSubject()->success === true) {
+                $this->refreshAuth($event->getSubject()->entity);
+                $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
+            }
         });
 
         return $this->Crud->execute();
@@ -182,6 +227,28 @@ class UsersController extends CrudController
         $this->config('messages.error.text', __(self::MESSAGE_LOGIN_ERROR));
 
         $this->Crud->on('verifyToken', [$this, '_verifyToken']);
+
+        return $this->Crud->execute();
+    }
+
+    /**
+     * @route GET /onboarding
+     * @routeName users:onboarding
+     */
+    public function onboarding(): ?Response
+    {
+        $this->Crud->action()->setConfig('messages.success.text', 'Thanks!');
+
+        $this->Crud->on('beforeFind', function (Event $event) {
+            $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);
+        });
+
+        $this->Crud->on('beforeRedirect', function (Event $event) {
+            if ($event->getSubject()->success === true) {
+                $this->refreshAuth();
+                $event->getSubject()->url = ['_name' => 'citizen:dashboard'];
+            }
+        });
 
         return $this->Crud->execute();
     }

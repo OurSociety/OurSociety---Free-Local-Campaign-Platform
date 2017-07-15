@@ -3,13 +3,13 @@ services:
   web:
     build: docker/nginx
     image: oursociety/web:dev
-    networks: [ public ]
+    networks: [ public, internal ]
     ports: [ "80:80" ]
     volumes: [ "./webroot:/app/webroot:ro" ]
   app:
     build: docker/php
     image: oursociety/app:dev
-    networks: [ public, internal, secure ]
+    networks: [ internal, secure ]
     ports: [ "9000:9000" ]
     volumes: [ ".:/app:rw" ]
   db:
@@ -22,11 +22,11 @@ services:
     image: oursociety/mail:dev
     networks: [ internal ]
     ports: [ "1025:1025", "8025:8025" ]
-  assets:
-    build: docker/webpack
-    image: oursociety/assets:dev
-    network_mode: host
-    volumes: [ ".:/app:rw", "/app/node_modules", "~/.cache/yarn/:/root/.cache/yarn/:ro" ]
+#  assets:
+#    build: docker/webpack
+#    image: oursociety/assets:dev
+#    networks: [ public ]
+#    volumes: [ ".:/app:rw", "/app/node_modules", "~/.cache/yarn/:/root/.cache/yarn/:ro" ]
 networks:
   public: {}
   internal: {}

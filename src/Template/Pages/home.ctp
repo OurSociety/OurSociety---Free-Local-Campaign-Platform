@@ -24,15 +24,15 @@
 
 <section class="row">
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/1.png') ?>
+        <?= $this->Html->image('../img/icon/1.png') ?>
         <h4>2 million voters</h4>
     </div>
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/3.png') ?>
+        <?= $this->Html->image('../img/icon/3.png') ?>
         <h4>50 NJ politicians</h4>
     </div>
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/2.png') ?>
+        <?= $this->Html->image('../img/icon/2.png') ?>
         <h4># of something</h4>
     </div>
 </section>
@@ -94,15 +94,15 @@
 
 <section class="row">
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/4.png') ?>
+        <?= $this->Html->image('../img/icon/4.png') ?>
         <h4>Impact Report</h4>
     </div>
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/5.png') ?>
+        <?= $this->Html->image('../img/icon/5.png') ?>
         <h4>Governance</h4>
     </div>
     <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../images/icon/6.png') ?>
+        <?= $this->Html->image('../img/icon/6.png') ?>
         <h4>Mission</h4>
     </div>
 </section>
@@ -113,28 +113,13 @@
 
         <ul class="list-unstyled">
             <li>
-                <?= $this->Html->image('../images/icon/tw.png') ?>
+                <?= $this->Html->image('../img/icon/tw.png') ?>
                 Follow us on Twitter
             </li>
             <li>
-                <?= $this->Html->image('../images/icon/fb.png') ?>
+                <?= $this->Html->image('../img/icon/fb.png') ?>
                 Follow us on Facebook
             </li>
         </ul>
     </div>
 </section>
-
-<hr>
-
-<footer class="row">
-    <div class="col-xs-12">
-        <p><?= $this->Html->image('../images/banner.png', ['style' => 'height: 50px']) ?></p>
-        <ul class="list-unstyled">
-            <li><a href="#">info@oursociety.org</a></li>
-            <li><a href="#">Menu Item #1</a></li>
-            <li><a href="#">Menu Item #2</a></li>
-            <li><a href="#">Menu Item #3</a></li>
-        </ul>
-        <p class="text-center text-muted small">Disclaimer, copyright</p>
-    </div>
-</footer>

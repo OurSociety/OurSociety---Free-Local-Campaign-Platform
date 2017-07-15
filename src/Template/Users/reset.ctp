@@ -5,6 +5,10 @@
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user.
  */
 ?>
+<ol class="breadcrumb">
+    <li><?= $currentUser ? $this->Html->link(__('Account profile'), ['_name' => 'users:profile']) : __('Account profile') ?></li>
+    <li>Password reset</li>
+</ol>
 <section class="users form">
     <?= $this->Form->create($user) ?>
     <fieldset>

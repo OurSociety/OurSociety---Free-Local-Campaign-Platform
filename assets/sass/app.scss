@@ -1,0 +1,90 @@
+//@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+body {
+    //background: $brand-primary;
+}
+
+$brand-purple: #852c92;
+$brand-purple-light: #7e62a3;
+$white: white;
+$black: black;
+
+@media (min-width: 768px) {
+    .navbar-toggle {
+        display: inherit; /* Make hamburger visible on desktop */
+    }
+}
+
+.navbar-brand {
+    //background: url('../img/banner.png') no-repeat center center;
+    //background-size: cover;
+    padding: 5px; /* Reduce padding to make the most of the image and make even on all sides.. */
+    margin: 0 10px; /* ..and compensate with horizontal margin so width/spacing is maintained */
+}
+
+.navbar-brand {
+    > img {
+        height: 100%; /* Force image to fit in default navbar height */
+    }
+}
+
+section:nth-of-type(2) {
+    margin-top: 100px; /* Add whitespace between sections */
+}
+
+section {
+    margin-bottom: 100px; /* Add whitespace between sections */
+}
+
+section:last-of-type {
+    margin-bottom: 0; /* Add whitespace between sections */
+}
+
+hr {
+    border-top: 5px $brand-purple-light solid; /* Make horizontal rules a thick purple line */
+}
+
+/** Start hack for vertical align until BS4 - **/
+.row-xs-flex-center {
+    display:flex;
+    align-items:center;
+}
+@media (min-width:768px) {
+    .row-sm-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+@media (min-width: 992px) {
+    .row-md-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+@media (min-width: 1200px) {
+    .row-lg-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+/** End hack **/
+
+.form-question-answers {
+    .radio {
+        .radio {
+            label {
+                background-color: $brand-purple;
+                border: 1px solid $black;
+                color: $white;
+                font-size: $blockquote-font-size;
+                padding: ($line-height-computed / 2) $line-height-computed;
+                width: 100%;
+                input {
+                    right: $line-height-computed;
+                    top: ($line-height-computed / 2);
+                }
+            }
+        }
+    }
+}
