@@ -5,11 +5,12 @@
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  */
 ?>
-<section>
-    <h1>Questions</h1>
-    <?= $this->Form->create($questions) ?>
-    <?php foreach ($questions as $question): ?>
-        <?= $this->element('Questions/single', ['question' => $question]) ?>
-    <?php endforeach ?>
-    <?= $this->Form->end() ?>
-</section>
+<?= $this->Form->create($questions) ?>
+<?php foreach ($questions as $index => $question): ?>
+    <?= $this->element('Questions/single', ['question' => $question, 'number' => $index + 1]) ?>
+<?php endforeach ?>
+<?= $this->Form->submit('Submit your voice', ['class' => ['btn-primary', 'pull-right']]) ?>
+<?= $this->Form->end() ?>
+
+<br>
+<br>

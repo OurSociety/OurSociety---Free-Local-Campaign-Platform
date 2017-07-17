@@ -14,6 +14,25 @@ class DashboardController extends AppController
      */
     public function index(): ?Response
     {
-        return null; // TODO: Set some view variables.
+        if ($this->Auth->user('answer_count') === 0) {
+            $this->Flash->success('Please answer the following questions before we take you to the dashboard.');
+
+            return $this->redirect(['_name' => 'politician:questions']);
+        }
+
+        $this->set([
+            'answers' => $this->loadModel('Answers')
+                ->find()
+                ->contain(['Questions'])
+                ->where(['Answers.user_id' => $this->Auth->user('id')])
+                ->orderDesc('Questions.modified')
+                ->all(),
+            'categories' => $this->loadModel('Categories')
+                ->find()
+                ->orderAsc('Categories.name')
+                ->all(),
+        ]);
+
+        return null;
     }
 }

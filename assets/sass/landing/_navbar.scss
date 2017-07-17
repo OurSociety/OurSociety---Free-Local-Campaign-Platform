@@ -1,0 +1,72 @@
+
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+//.navbar-wrapper {
+//    position: absolute;
+//    top: 0;
+//    right: 0;
+//    left: 0;
+//    z-index: 20;
+//    /* Flip around the padding for proper display in narrow viewports */
+//    //> .container {
+//    //    padding-right: 0;
+//    //    padding-left: 0;
+//    //}
+//    //.navbar {
+//    //    padding-right: 15px;
+//    //    padding-left: 15px;
+//    //    .container {
+//    //        width: auto;
+//    //    }
+//    //}
+//}
+
+//.navbar {
+//    @include media-breakpoint-up(sm) {
+//        margin: 20px;
+//    }
+//    @include media-breakpoint-up(lg) {
+//        @include make-col(4);
+//    }
+//}
+
+
+//@import '~bootstrap/scss/mixins/breakpoints';
+//@import '~bootstrap/scss/mixins/grid';
+//@import '~bootstrap/scss/variables';
+
+.navbar-container {
+    @include media-breakpoint-up(md) {
+        margin-top: $spacer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 20;
+        /* Flip around the padding for proper display in narrow viewports */
+        > .container {
+            //padding-right: 0;
+            //padding-left: 0;
+        }
+        .navbar {
+            border-radius: $border-radius !important;
+            //padding-right: 15px;
+            //padding-left: 15px;
+            .container {
+                //width: auto;
+            }
+        }
+        @include make-container();
+        @include make-container-max-widths();
+    }
+}
+
+.navbar-row {
+    @include media-breakpoint-up(lg) {
+        //margin: 20px;
+        @include make-col(12);
+    }
+}

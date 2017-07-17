@@ -1,5 +1,7 @@
-import 'bootstrap';
-import './main.scss';
+// import 'popper.js';
+// import 'bootstrap';
+// import 'tether';
+// import './main.scss';
 
 class Welcome {
   constructor() {

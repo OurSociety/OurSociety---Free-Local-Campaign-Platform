@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\View;
 
-use BootstrapUI\View\Helper\FormHelper;
-use BootstrapUI\View\Helper\HtmlHelper;
+use BootstrapUI\View\Helper as BootstrapUI;
 use CrudView\View\CrudView;
 
 /**
@@ -12,8 +11,8 @@ use CrudView\View\CrudView;
  *
  * Your application’s default view class, based on CrudView.
  *
- * @property FormHelper $Form
- * @property HtmlHelper $Html
+ * @property BootstrapUI\FormHelper $Form
+ * @property Helper\HtmlHelper $Html
  */
 class AppView extends CrudView
 {

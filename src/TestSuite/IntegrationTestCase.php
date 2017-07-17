@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace OurSociety\TestSuite;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase as TestCase;
+use Cake\TestSuite as Cake;
 use OurSociety\Model\Entity\User;
 
-class IntegrationTestCase extends TestCase
+class IntegrationTestCase extends Cake\IntegrationTestCase
 {
     use Traits\FixturesTrait;
     use Traits\IntegrationAssertionsTrait;

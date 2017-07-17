@@ -11,17 +11,21 @@ use Cake\ORM\TableRegistry;
 /**
  * User Entity
  *
- * @property int $id The UUID.
- * @property string $role The role.
- * @property string $name The name.
+ * @property string $id The UUID.
+ * @property string $slug The slug.
  * @property string $email The email address.
+ * @property int $zip The zip code.
+ * @property string $phone The phone number.
  * @property string $password The password.
- * @property bool $active True if active, false otherwise.
- * @property string $token The verification token.
- * @property \Cake\I18n\Time $token_expires The expiry timestamp.
- * @property \Cake\I18n\Time $last_seen The last time the user logged in.
- * @property \Cake\I18n\Time $created The created timestamp.
- * @property \Cake\I18n\Time $modified The modified timestamp.
+ * @property string $name The name.
+ * @property string|null $token The verification token.
+ * @property \Cake\I18n\FrozenTime|null $token_expires The expiry timestamp.
+ * @property \Cake\I18n\FrozenTime|null $active The account activation timestamp.
+ * @property string $role The role.
+ * @property int $answer_count The amount of questions answered.
+ * @property \Cake\I18n\FrozenTime|null $last_seen The last time the user logged in.
+ * @property \Cake\I18n\FrozenTime $created The created timestamp.
+ * @property \Cake\I18n\FrozenTime $modified The modified timestamp.
  */
 class User extends Entity
 {
@@ -40,7 +44,7 @@ class User extends Entity
         parent::__construct($properties, $options);
 
         $this->_accessible = ['*' => true, 'id' => false];
-        $this->_hidden = ['password'];
+        $this->_hidden = ['password', 'token'];
     }
 
     /**

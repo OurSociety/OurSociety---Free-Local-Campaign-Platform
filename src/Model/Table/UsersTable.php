@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\Datasource\EntityInterface;
+use Cake\Datasource\EntityInterface as Entity;
+use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -12,11 +13,14 @@ use OurSociety\Model\Entity\User;
 /**
  * Users Model
  *
+ * @property AnswersTable|Association\HasMany $Answers
+ * @property CategoriesTable|Association\BelongsToMany $Categories
+ *
  * @method User get($primaryKey, $options = [])
  * @method User newEntity($data = null, array $options = [])
  * @method User[] newEntities(array $data, array $options = [])
- * @method User|bool save(EntityInterface $entity, $options = [])
- * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method User|bool save(Entity $entity, $options = [])
+ * @method User patchEntity(Entity $entity, array $data, array $options = [])
  * @method User[] patchEntities($entities, array $data, array $options = [])
  * @method User findOrCreate($search, callable $callback = null, $options = [])
  */
@@ -33,6 +37,9 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->hasMany('Answers');
+        $this->belongsToMany('Categories');
+
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
     }
 
@@ -44,17 +51,36 @@ class UsersTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         return parent::validationDefault($validator)
+            // email
+            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => __(self::ERROR_EMAIL_UNIQUE)])
+            ->email('email')
+            ->notBlank('email')
+            ->requirePresence('email', 'create')
+            // password
+            ->notEmpty('password')
+            ->requirePresence('password', 'create')
+            // name
+            ->notBlank('name')
+            ->requirePresence('name', 'create')
+            // token
+            ->allowEmpty('token')
+            // token_expires
+            ->allowEmpty('token_expires')
+            ->dateTime('token_expires')
+            // active
+            ->allowEmpty('active')
+            ->dateTime('active')
+            // role
             ->inList('role', User::ROLES, __(self::ERROR_ROLE_NOT_IN_LIST, implode('", "', User::ROLES)))
-            ->email('email')->notEmpty('email')->requirePresence('email', 'create')
-            ->notEmpty('name')->notBlank('name')->requirePresence('name', 'create')
-            ->add('email', [
-                'unique' => [
-                    'rule' => 'validateUnique',
-                    'provider' => 'table',
-                    'message' => __(self::ERROR_EMAIL_UNIQUE),
-                ],
-            ])
-            ->notEmpty('password')->requirePresence('password', 'create');
+            ->notBlank('role')
+            //->requirePresence('role', 'create') // TODO: Breaks registration
+            // answer_count
+            ->integer('answer_count')
+            ->notEmpty('answer_count')
+            //->requirePresence('answer_count', 'create') // TODO: Breaks registration
+            // last_seen
+            ->allowEmpty('last_seen')
+            ->dateTime('last_seen');
     }
 
     /**

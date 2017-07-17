@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "196d135bbe1f5792ea8ee83ddbefeaf4",
+    "content-hash": "24609ab12a3bab63566dc83ae5b159dd",
     "packages": [
         {
             "name": "aura/intl",
@@ -611,22 +611,76 @@
             "time": "2016-04-29T12:21:54+00:00"
         },
         {
-            "name": "josegonzalez/dotenv",
-            "version": "3.0.0",
+            "name": "gravatarphp/gravatar",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/josegonzalez/php-dotenv.git",
-                "reference": "a46e973d6f8ddc2ced8ff79981ef78d2983a09b2"
+                "url": "https://github.com/gravatarphp/gravatar.git",
+                "reference": "21b760c50bcdddd8e65d3a4b3981b7ec9b3d44aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/a46e973d6f8ddc2ced8ff79981ef78d2983a09b2",
-                "reference": "a46e973d6f8ddc2ced8ff79981ef78d2983a09b2",
+                "url": "https://api.github.com/repos/gravatarphp/gravatar/zipball/21b760c50bcdddd8e65d3a4b3981b7ec9b3d44aa",
+                "reference": "21b760c50bcdddd8e65d3a4b3981b7ec9b3d44aa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.11",
+                "henrikbjorn/phpspec-code-coverage": "^2.0",
+                "phpspec/phpspec": "^2.5",
+                "sllh/php-cs-fixer-styleci-bridge": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gravatar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Gravatar URL builder which is most commonly called as a Gravatar library",
+            "homepage": "http://gravatarphp.com",
+            "keywords": [
+                "avatar",
+                "gravatar",
+                "image",
+                "profile"
+            ],
+            "time": "2016-06-25T11:20:11+00:00"
+        },
+        {
+            "name": "josegonzalez/dotenv",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/josegonzalez/php-dotenv.git",
+                "reference": "81382dad3b63d54c985ee44d0d21572d7d291164"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/josegonzalez/php-dotenv/zipball/81382dad3b63d54c985ee44d0d21572d7d291164",
+                "reference": "81382dad3b63d54c985ee44d0d21572d7d291164",
                 "shasum": ""
             },
             "require": {
                 "m1/env": "2.*",
-                "php": ">=7.0.0"
+                "php": ">=5.5.0"
             },
             "require-dev": {
                 "php-mock/php-mock-phpunit": "^1.1",
@@ -661,7 +715,39 @@
                 "dotenv",
                 "php"
             ],
-            "time": "2017-01-03T02:23:08+00:00"
+            "time": "2017-07-14T04:43:57+00:00"
+        },
+        {
+            "name": "kminek/email-obfuscator",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kminek/email-obfuscator.git",
+                "reference": "ae3019c34a587bca28b2a36ce5ff1060ee66b619"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kminek/email-obfuscator/zipball/ae3019c34a587bca28b2a36ce5ff1060ee66b619",
+                "reference": "ae3019c34a587bca28b2a36ce5ff1060ee66b619",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kminek\\": "src"
+                },
+                "files": [
+                    "src/helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Effective email obfuscation in PHP",
+            "homepage": "https://github.com/kminek/email-obfuscator",
+            "keywords": [
+                "email",
+                "obfuscation"
+            ],
+            "time": "2016-04-03T11:02:13+00:00"
         },
         {
             "name": "league/csv",
@@ -669,12 +755,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/csv.git",
-                "reference": "7fd45d78c9b869ab361fe0614fd9a659a2e55e18"
+                "reference": "9fb6840f3fb522391f731b0ff452bc734b46ea9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/7fd45d78c9b869ab361fe0614fd9a659a2e55e18",
-                "reference": "7fd45d78c9b869ab361fe0614fd9a659a2e55e18",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/9fb6840f3fb522391f731b0ff452bc734b46ea9a",
+                "reference": "9fb6840f3fb522391f731b0ff452bc734b46ea9a",
                 "shasum": ""
             },
             "require": {
@@ -725,7 +811,7 @@
                 "read",
                 "write"
             ],
-            "time": "2017-07-12 07:33:43"
+            "time": "2017-07-14 07:02:11"
         },
         {
             "name": "m1/env",
@@ -1544,6 +1630,58 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2017-06-15T12:58:50+00:00"
+        },
+        {
+            "name": "xety/cake3-cookieauth",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Xety/Cake3-CookieAuth.git",
+                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Xety/Cake3-CookieAuth/zipball/3fb54c89759dbfbc53c1f921d86855f85befcfc1",
+                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0",
+                "php": ">=5.4.16"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "master-dev",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Xety\\Cake3CookieAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Xety",
+                    "email": "zoro.fmt@gmail.com",
+                    "homepage": "https://github.com/Xety"
+                }
+            ],
+            "description": "A simple Cake3 plugin to authenticate users with Cookies.",
+            "homepage": "https://github.com/Xety/Cake3-CookieAuth",
+            "keywords": [
+                "auth",
+                "authenticate",
+                "cake3",
+                "cakephp",
+                "cookie",
+                "login",
+                "plugin"
+            ],
+            "time": "2016-10-25T06:10:13+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -2670,22 +2808,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
+                "reference": "46f7e8bb075036c92695b15a1ddb6971c751e585"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/46f7e8bb075036c92695b15a1ddb6971c751e585",
+                "reference": "46f7e8bb075036c92695b15a1ddb6971c751e585",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.2.0",
+                "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -2711,24 +2849,24 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30T07:12:33+00:00"
+            "time": "2017-07-15T11:38:20+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.2.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb"
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^5.5 || ^7.0",
                 "phpdocumentor/reflection-common": "^1.0"
             },
             "require-dev": {
@@ -2758,7 +2896,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25T06:54:22+00:00"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpspec/prophecy",

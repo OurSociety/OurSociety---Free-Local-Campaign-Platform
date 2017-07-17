@@ -3,23 +3,11 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Model\Table;
 
-use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
-use OurSociety\Model\Table\UsersTable;
-
 /**
  * OurSociety\Model\Table\UsersTable Test Case
  */
 class UsersTableTest extends AppTableTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected static function instance(): Table
-    {
-        return TableRegistry::get('Users', TableRegistry::exists('Users') ? [] : ['className' => UsersTable::class]);
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -52,6 +40,7 @@ class UsersTableTest extends AppTableTest
      */
     public function testBuildRules(): void
     {
+        $this->markTestIncomplete();
         parent::testBuildRules(); // TODO: Implement.
     }
 

@@ -3,7 +3,9 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
+use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use OurSociety\Controller\UsersController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Test\Fixture\UsersFixture;
@@ -90,6 +92,9 @@ EMAIL
                 self::assertTimeWithinLast('1 second', self::findRecord($data['email'])->last_seen);
                 $this->resumeSession();
                 $this->get($redirect);
+                if ($this->_response->getStatusCode() === 302) {
+                    $this->get(parse_url($this->_response->getHeader('Location')[0])['path']);
+                }
                 $this->assertResponseOk();
                 $this->assertResponseContains(UsersController::MESSAGE_LOGIN_SUCCESS);
                 $this->assertResponseNotContains(UsersController::MESSAGE_LOGIN_ERROR);
@@ -179,8 +184,8 @@ EMAIL
         $this->get(['_name' => 'users:register']);
         $this->assertResponseOk();
         $this->assertResponseContains('Register an account');
-        $this->assertResponseContains('Name');
-        $this->assertResponseContains('Email');
+        $this->assertResponseContains('Full name');
+        $this->assertResponseContains('Email address');
         $this->assertResponseContains('Password');
         $this->assertResponseContains('Register');
 
@@ -189,8 +194,11 @@ EMAIL
             case 'success':
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
-                $this->assertRedirect(['_name' => 'pages:home']);
+                $this->assertRedirect(['_name' => 'citizen:dashboard']);
                 $this->assertFlash('Account successfully created');
+                $this->resumeSession();
+                $this->get(['_name' => 'citizen:dashboard']);
+                $this->assertResponseSuccess();
                 break;
             case 'error':
                 $this->assertResponseOk();

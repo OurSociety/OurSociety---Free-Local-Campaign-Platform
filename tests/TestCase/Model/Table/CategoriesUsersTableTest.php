@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace OurSociety\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -35,7 +37,7 @@ class CategoriesUsersTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::exists('CategoriesUsers') ? [] : ['className' => CategoriesUsersTable::class];
@@ -47,7 +49,7 @@ class CategoriesUsersTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CategoriesUsers);
 
@@ -59,7 +61,7 @@ class CategoriesUsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -69,7 +71,7 @@ class CategoriesUsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -79,7 +81,7 @@ class CategoriesUsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

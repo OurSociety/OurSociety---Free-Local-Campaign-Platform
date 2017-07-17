@@ -343,31 +343,19 @@ return [
      * CrudView settings
      *
      * Overrides values in `vendor/friendsofcake/crud-view/config/default.php`.
-     *
-     * TODO: Use asset compress with local assets rather than remote CDN.
      */
     'CrudView' => [
         'siteTitle' => 'OurSociety',
         'css' => [
-            //'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css', // Bootstrap 3
-            'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css', // Bootstrap 3 w/ Journal theme
-            'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css',
-            'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/css/selectize.bootstrap3.min.css',
-            'CrudView.local', // vendor/friendsofcake/crud-view/webroot/css/local
-            '../assets/app', // webroot/assets/app.css
+            mix('css/app.css'),
         ],
         'js' => [
             'headjs' => [
             ],
             'script' => [
-                'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.2/js/standalone/selectize.min.js',
-                'https://cdn.jsdelivr.net/jquery.dirtyforms/1.2.2/jquery.dirtyforms.min.js',
-                'CrudView.local', // vendor/friendsofcake/crud-view/webroot/js/local
-                '../assets/app', // webroot/assets/app.js
+                //mix('assets/manifest.js'),
+                //mix('assets/vendor.js'),
+                mix('js/app.js'),
             ],
         ],
         'timezoneAwareDateTimeWidget' => false,

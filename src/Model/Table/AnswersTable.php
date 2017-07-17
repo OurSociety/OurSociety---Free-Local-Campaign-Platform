@@ -1,42 +1,41 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
+use Cake\Datasource\EntityInterface as Entity;
+use Cake\ORM\Association;
+use Cake\ORM\Behavior;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use OurSociety\Model\Entity\Answer;
 
 /**
  * Answers Model
  *
- * @property \OurSociety\Model\Table\QuestionsTable|\Cake\ORM\Association\BelongsTo $Questions
- * @property \OurSociety\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property QuestionsTable|Association\BelongsTo $Questions
+ * @property UsersTable|Association\BelongsTo $Users
  *
- * @method \OurSociety\Model\Entity\Answer get($primaryKey, $options = [])
- * @method \OurSociety\Model\Entity\Answer newEntity($data = null, array $options = [])
- * @method \OurSociety\Model\Entity\Answer[] newEntities(array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Answer|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \OurSociety\Model\Entity\Answer patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Answer[] patchEntities($entities, array $data, array $options = [])
- * @method \OurSociety\Model\Entity\Answer findOrCreate($search, callable $callback = null, $options = [])
+ * @method Answer get($primaryKey, $options = [])
+ * @method Answer newEntity($data = null, array $options = [])
+ * @method Answer[] newEntities(array $data, array $options = [])
+ * @method Answer|bool save(Entity $entity, $options = [])
+ * @method Answer patchEntity(Entity $entity, array $data, array $options = [])
+ * @method Answer[] patchEntities($entities, array $data, array $options = [])
+ * @method Answer findOrCreate($search, callable $callback = null, $options = [])
  *
- * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
+ * @mixin Behavior\CounterCacheBehavior
  */
-class AnswersTable extends Table
+class AnswersTable extends AppTable
 {
-
     /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
+     * {@inheritdoc}
      */
     public function initialize(array $config): void
     {
         parent::initialize($config);
 
-        $this->setDisplayField('answer');
+        $this->setDisplayField('name');
 
         $this->addBehavior('CounterCache', [
             'Users' => ['answer_count'],
@@ -49,25 +48,26 @@ class AnswersTable extends Table
     }
 
     /**
-     * Default validation rules.
-     *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * {@inheritdoc}
      */
     public function validationDefault(Validator $validator): Validator
     {
         return parent::validationDefault($validator)
+            // question_id
+            ->uuid('question_id')
+            ->notEmpty('question_id')
+            ->requirePresence('question_id', 'create')
+            // user_id
+            ->uuid('user_id')
+            ->notEmpty('user_id')
+            ->requirePresence('user_id', 'create')
             // answer
-            ->requirePresence('answer', 'create')
-            ->notEmpty('answer');
+            ->notBlank('answer')
+            ->requirePresence('answer', 'create');
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * {@inheritdoc}
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

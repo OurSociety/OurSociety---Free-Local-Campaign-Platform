@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Utility\Text;
 use OurSociety\Migration as App;
+use OurSociety\Model\Entity\Question;
 use OurSociety\Utility\Csv;
 
 /**
@@ -30,7 +31,7 @@ class QuestionsSeed extends App\AbstractSeed
             $data[] = [
                 'id' => Text::uuid(),
                 'question' => $record['Question'],
-                'type' => $record['Answer A'] === 'Yes' ? 'yes/no' : 'scale',
+                'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
                 'category_id' => $categoryIds[$record['Type']],
             ];
         }

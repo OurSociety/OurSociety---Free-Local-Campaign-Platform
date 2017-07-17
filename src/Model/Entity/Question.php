@@ -16,10 +16,16 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \OurSociety\Model\Entity\Category $category
- * @property \OurSociety\Model\Entity\User[] $users
+ * @property \OurSociety\Model\Entity\Answer[] $answers
  */
 class Question extends Entity
 {
+    const TYPE_BOOL = 'yes/no';
+    const TYPE_SCALE = 'scale';
+    const TYPES = [
+        self::TYPE_BOOL => 'Yes or No',
+        self::TYPE_SCALE => 'Sliding scale',
+    ];
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

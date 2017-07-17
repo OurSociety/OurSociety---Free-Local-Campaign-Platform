@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Test\Fixture;
 
 use OurSociety\TestSuite\Fixture as App;
+use OurSociety\Utility\Csv;
 
 /**
  * CategoriesFixture
@@ -34,18 +35,24 @@ class CategoriesFixture extends App\TestFixture
     ];
     // @codingStandardsIgnoreEnd
 
-    /**
-     * Records
-     *
-     * @var array
-     */
-    public $records = [
-        [
-            'id' => 'e8b23534-4d8e-4723-89ca-e8dbe70b6870',
-            'name' => 'Lorem ipsum dolor sit amet',
-            'question_count' => 1,
-            'created' => '2017-07-13 06:52:27',
-            'modified' => '2017-07-13 06:52:27'
-        ],
-    ];
+    //public $defaults = [
+        //'citizen_answer_count' => 0,
+        //'politician_answer_count' => 0,
+    //];
+
+    public function init(): void
+    {
+        collection(Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray())
+            ->each(function (array $record) {
+                $name = $record['Type'];
+                $this->records[$name] = [
+                    'name' => $name,
+                    'question_count' => isset($this->records[$name]['question_count'])
+                        ? ++$this->records[$name]['question_count']
+                        : 0,
+                ];
+            });
+
+        parent::init();
+    }
 }

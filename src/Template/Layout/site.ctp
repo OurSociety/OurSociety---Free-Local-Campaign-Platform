@@ -26,7 +26,7 @@ $this->start('navbar');
         <div class="container">
             <div class="navbar-header">
                 <?= $this->Html->link(
-                    $this->Html->image('../images/banner.png', ['title' => $this->get('siteTitle'), 'alt' => 'Brand']),
+                    $this->Html->image('banner.png', ['title' => 'OurSociety', 'alt' => 'Brand']),
                     ['_name' => 'pages:home'],
                     ['class' => 'navbar-brand', 'escape' => false]
                 ); ?>
@@ -72,4 +72,5 @@ $this->end();
 <?= $this->fetch('navbar'); ?>
 <div class="container">
     <?= $this->fetch('page') ?>
+    <?= $this->element('footer') ?>
 </div>
