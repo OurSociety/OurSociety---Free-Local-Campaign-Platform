@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 29 29" xml:space="preserve">
+    <g transform="translate(-30 -200)">
+        <g xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <polygon points="43,209 46,209 46,207.414 47.707,205.707 47,205 46,206 45,206 45,204 44,204 44,206 43,206 42,205     41.293,205.707 43,207.414   "/>
+            <polygon points="38,203 39,203 39,202 38,202 38,200 37,200 37,202 36,202 36,203 37,203   "/>
+            <path d="M50,228v-1h-2v-1h-1v-1h-1v-1h1v-6.471l-1-0.682v2.466l-3,1.286v-6.19l-3.404-6.312L42.391,211h3.195l1.708,1.707    l0.573-0.841L46,210h-3.184L38,205v-1h-1v3h0.867L42,214.662V224h1v1h-1v1h-1v1h-2v1h-2v2h15v-2H50z M46,220.4v2.6h-3v-1.313    L46,220.4z M45,224v1h-1v-1H45z M43,226h3v1h-3V226z M49,229h-9v-1h9V229z"/>
+            <rect x="46.081" y="213.371" transform="matrix(-0.5628 0.8266 -0.8266 -0.5628 253.1181 294.8643)" width="5" height="2"/>
+        </g>
+    </g>
+    <text x="0" y="45" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Hea Poh Lin</text>
+    <text x="0" y="50" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+</svg>

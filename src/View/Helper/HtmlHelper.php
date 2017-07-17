@@ -57,6 +57,19 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
         return $this->link($title, ['_name' => $routeName]);
     }
 
+    public function icon($name, array $options = []): string
+    {
+        if ($options['iconSet'] ?? null === 'topic') {
+            unset($options['iconSet']);
+
+            return $this->tag('svg', $this->tag('use', '', [
+                'xlink:href' => $this->Url->image(sprintf('icons-topics.svg#%s', $name)),
+            ]), $options + ['class' => ['icon']]);
+        }
+
+        return parent::icon($name, $options);
+    }
+
     public function politicianLink(User $politician, string $title = null, array $options = []): string
     {
         $title = $title ?: $politician->name;

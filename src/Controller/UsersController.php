@@ -124,12 +124,12 @@ class UsersController extends CrudController
                 $this->Auth->setConfig('loginRedirect', ['_name' => sprintf('%s:dashboard', $user->role)]);
 
                 // Remember me cookie
-                if ((bool)$this->request->getData('remember_me') === true) {
-                    $this->Cookie->configKey('remember', [
+                if ((bool)$this->request->getData(self::COOKIE_NAME_REMEMBER_ME) === true) {
+                    $this->Cookie->configKey(self::COOKIE_NAME_REMEMBER_ME, [
                         'expires' => '+1 year',
                         'httpOnly' => true
                     ]);
-                    $this->Cookie->write('remember', [
+                    $this->Cookie->write(self::COOKIE_NAME_REMEMBER_ME, [
                         'email' => $this->request->getData('email'),
                         'password' => $this->request->getData('password')
                     ]);

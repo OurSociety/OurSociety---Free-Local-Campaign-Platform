@@ -13,18 +13,21 @@ $watermark = $currentUser !== null && !$currentUser->isCitizen();
 ?>
 <?php if ($watermark === true): ?>
 <div style="display: flex;">
-    <div class="watermark" data-watermark="Example Match" style="align-items: stretch;">
+    <div class="watermark" data-watermark="Example Match" style="align-items: stretch; width: 100%">
         <?php endif ?>
 
         <h3><?= __('{percentage}% Value Match', ['percentage' => $match]) ?></h3>
 
-        <div class="row">
-            <div class="col-xs-6">
+        <div class="row text-left">
+            <div class="col-xs-offset-1 col-xs-5">
                 <?= $this->cell('Profile/ValueMatch::topics', ['Similarities', $similarities]) ?>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-offset-1 col-xs-5">
                 <?= $this->cell('Profile/ValueMatch::topics', ['Differences', $differences]) ?>
             </div>
+        </div>
+
+        <div class="row">
             <?php if ($watermark): ?>
                 <?= $this->Html->link(__('Learn More'), '#', ['class' => ['btn', 'btn-primary', 'disabled']]) ?>
             <?php elseif ($limit !== null): ?>

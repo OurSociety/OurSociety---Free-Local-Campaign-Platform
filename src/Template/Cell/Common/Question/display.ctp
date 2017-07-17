@@ -16,6 +16,7 @@ use OurSociety\Model\Entity\Answer;
         <div class="row row-md-flex-center">
             <div class="col-md-6">
                 <blockquote>
+                    <?= $this->Html->icon($question->category->slug, ['iconSet' => 'topic', 'height' => 100, 'width' => 100]) ?>
                     <p><?= $question->question ?></p>
                     <footer>Category: <cite><?= $question->category->name ?></cite></footer>
                 </blockquote>
