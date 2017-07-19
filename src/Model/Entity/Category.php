@@ -7,8 +7,10 @@ use Cake\ORM\Entity;
  * Category Entity
  *
  * @property string $id
+ * @property string $slug
  * @property string $name
  * @property int $question_count
+ * @property int $match The value match percentage for a user (not persisted, but sometimes stored here) TODO: decide
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *

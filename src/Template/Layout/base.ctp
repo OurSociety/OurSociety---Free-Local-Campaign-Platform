@@ -17,7 +17,7 @@ use Cake\I18n\I18n;
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('headjs'); ?>
 </head>
-<body>
+<body class="<?= $this->fetch('scope') ?> <?= $this->fetch('theme') ?>">
     <?= $this->fetch('content') ?>
     <?= $this->fetch('modal'); ?>
     <?= $this->fetch('script'); ?>

@@ -6,6 +6,7 @@ namespace OurSociety\TestSuite\Fixture;
 use Cake\TestSuite\Fixture as Cake;
 use Faker\Factory as GeneratorFactory;
 use Faker\Generator;
+use Muffin\Slug\Slugger\CakeSlugger;
 
 class TestFixture extends Cake\TestFixture
 {
@@ -29,6 +30,9 @@ class TestFixture extends Cake\TestFixture
 
         $setDates = function (array $record) {
             foreach ($record as $field => $value) {
+                if (!isset($this->fields[$field])) {
+                    continue;
+                }
                 if (is_string($value) && $this->fields[$field]['type'] === 'datetime') {
                     $record[$field] = strtotime($value);
                 }
@@ -45,9 +49,21 @@ class TestFixture extends Cake\TestFixture
             return $record;
         };
 
+        $setSlugs = function (array $record) {
+            if (!array_key_exists('slug', $this->fields)) {
+                return $record;
+            }
+
+            $record['slug'] = $record['slug'] ?? (new CakeSlugger)->slug($record['name']);
+
+            return $record;
+        };
+
         $this->records = collection($this->records)
             ->map($setIds)
             ->map($setDefaults)
-            ->map($setDates);
+            ->map($setSlugs)
+            ->map($setDates)
+            ->toArray();
     }
 }

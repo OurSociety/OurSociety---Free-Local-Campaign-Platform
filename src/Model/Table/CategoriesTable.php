@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace OurSociety\Model\Table;
 
 use Cake\Datasource\EntityInterface as Entity;
+use Cake\Datasource\ResultSetInterface as ResultSet;
 use Cake\ORM\Association;
-use Cake\ORM\Behavior;
-use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use OurSociety\Model\Entity\Category;
+use OurSociety\Model\Entity\User;
 
 /**
  * Categories Model
@@ -50,5 +50,15 @@ class CategoriesTable extends AppTable
             ->integer('question_count')
             ->notEmpty('question_count')
             ->requirePresence('question_count', 'create');
+    }
+
+    public function getMatchPercentages(User $citizen, User $politician, bool $inverse = false, ?int $limit = null): ResultSet
+    {
+        return $this->find()->limit($limit)->page(1)->formatResults(function (ResultSet $results) {
+            return $results->map(function (Category $category) {
+                $category->match = 100;
+                return $category;
+            });
+        })->all();
     }
 }

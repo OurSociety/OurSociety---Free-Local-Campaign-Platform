@@ -78,6 +78,9 @@ class UsersTable extends AppTable
             ->integer('answer_count')
             ->notEmpty('answer_count')
             //->requirePresence('answer_count', 'create') // TODO: Breaks registration
+            // born
+            ->allowEmpty('born')
+            ->date('born')
             // last_seen
             ->allowEmpty('last_seen')
             ->dateTime('last_seen');
@@ -102,9 +105,62 @@ class UsersTable extends AppTable
      * @param Query $query The original query.
      * @return Query The updated query.
      */
-    public function findAuth(Query $query): Query
+    protected function findAuth(Query $query): Query
     {
         return $query;
+    }
+
+    protected function findHasAnsweredQuestions(Query $query): Query
+    {
+        return $query->where(['answer_count' > 0]);
+    }
+
+    protected function findIsActive(Query $query): Query
+    {
+        return $query->where(['active IS NOT' => null]);
+    }
+
+    protected function findIsPolitician(Query $query): Query
+    {
+        return $query->where(['role' => User::ROLE_POLITICIAN]);
+    }
+
+    protected function findPolitician(Query $query): Query
+    {
+        $this->hasMany('Articles', [
+            'className' => PoliticianArticlesTable::class,
+            'foreignKey' => 'politician_id'
+        ]);
+        $this->hasMany('Awards', [
+            'className' => PoliticianAwardsTable::class,
+            'foreignKey' => 'politician_id'
+        ]);
+        $this->hasMany('Positions', [
+            'className' => PoliticianPositionsTable::class,
+            'foreignKey' => 'politician_id'
+        ]);
+        $this->hasMany('Qualifications', [
+            'className' => PoliticianQualificationsTable::class,
+            'foreignKey' => 'politician_id'
+        ]);
+        $this->hasMany('Videos', [
+            'className' => PoliticianVideosTable::class,
+            'foreignKey' => 'politician_id',
+            'conditions' => ['featured' => false] // TODO: Move to finder
+        ]);
+        $this->hasOne('FeaturedVideos', [
+            'className' => PoliticianVideosTable::class,
+            'foreignKey' => 'politician_id',
+            'conditions' => ['featured' => true] // TODO: Move to finder
+        ]);
+
+        return $query->find('isPolitician')
+            ->contain(['Articles', 'Awards', 'Positions', 'Qualifications', 'Videos', 'FeaturedVideos']);
+    }
+
+    protected function findPoliticianForCitizen(Query $query): Query
+    {
+        return $query->find('politician', ['role' => 'citizen'])->find('isActive')->find('hasAnsweredQuestions');
     }
 
     /**
@@ -115,7 +171,7 @@ class UsersTable extends AppTable
      * @param Query $query The original query.
      * @return Query The updated query.
      */
-    public function findRecentlyCreated(Query $query): Query
+    protected function findRecentlyCreated(Query $query): Query
     {
         return $query->orderDesc('created')->limit(self::LIMIT_DASHBOARD);
     }
@@ -128,8 +184,13 @@ class UsersTable extends AppTable
      * @param Query $query The original query.
      * @return Query The updated query.
      */
-    public function findRecentlyActive(Query $query): Query
+    protected function findRecentlyActive(Query $query): Query
     {
         return $query->orderDesc('last_seen')->limit(self::LIMIT_DASHBOARD);
+    }
+
+    public function getMatchPercentage(User $citizenUser, User $politicianUser)
+    {
+        return 100; // TODO: Calculate real match.
     }
 }

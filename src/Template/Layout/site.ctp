@@ -72,5 +72,6 @@ $this->end();
 <?= $this->fetch('navbar'); ?>
 <div class="container">
     <?= $this->fetch('page') ?>
+    <?= $this->fetch('action_link_forms') // For CrudView delete links to work ?>
     <?= $this->element('footer') ?>
 </div>

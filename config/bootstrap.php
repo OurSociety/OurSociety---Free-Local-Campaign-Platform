@@ -217,14 +217,16 @@ Kint::$enabled_mode = Configure::read('debug');
  * Only try to load DebugKit in development mode
  * Debug Kit should not be installed on a production system
  */
-//if (Configure::read('debug')) {
-//    Plugin::load('DebugKit', ['bootstrap' => true]);
-//}
+if (Configure::read('debug')) {
+    Plugin::load('DebugKit', ['bootstrap' => true]);
+}
 
 Plugin::load('BootstrapUI');
 Plugin::load('CakeDC/Enum');
 Plugin::load('Crud');
 Plugin::load('CrudUsers');
 Plugin::load('CrudView');
+Plugin::load('Muffin/Orderly');
 Plugin::load('Muffin/Slug');
+Plugin::load('VideoEmbed');
 Plugin::load('Xety/Cake3CookieAuth');

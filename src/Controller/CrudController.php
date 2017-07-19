@@ -8,6 +8,7 @@ use Crud\Controller as Crud;
 use Crud\Listener as CrudListener;
 use OurSociety\Controller\Component as App;
 use OurSociety\View\Listener as AppListener;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * CRUD controller.

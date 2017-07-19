@@ -10,11 +10,19 @@
     <li>Dashboard</li>
 </ol>
 
-<h1>Politician Dashboard</h1>
+<h2>Politician Dashboard</h2>
+
+<hr>
+
 <div class="jumbotron">
     <?= $this->Html->link(
-        __('Answer More Questions!'),
+        __('Answer Questions'),
         ['_name' => 'politician:questions'],
+        ['class' => 'btn btn-primary']
+    ) ?>
+    <?= $this->Html->link(
+        __('View Profile'),
+        ['_name' => 'politician:profile'],
         ['class' => 'btn btn-primary']
     ) ?>
 </div>

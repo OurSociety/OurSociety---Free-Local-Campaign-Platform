@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\View\Listener;
 
 use Cake\Core\Configure;
+use Cake\ORM\Table;
 use Crud\Action\BaseAction;
 use CrudView\Listener as CrudView;
 use CrudView\Menu\MenuItem;
@@ -69,6 +70,16 @@ class ViewListener extends CrudView\ViewListener
     {
         return str_replace(sprintf(' #%s', $this->_primaryKeyValue()), '', parent::_getPageTitle());
     }
+
+    //protected function _getPageVariables(): array
+    //{
+    //    /** @var Table $table */
+    //    $table = $this->_table();
+    //
+    //    return [
+    //        'primaryKey' => $table->getSchema()->column('slug') !== null ? 'slug' : $table->getPrimaryKey(),
+    //    ] + parent::_getPageVariables();
+    //}
 
     /**
      * {@inheritdoc}
