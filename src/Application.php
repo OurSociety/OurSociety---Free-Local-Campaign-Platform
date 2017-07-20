@@ -8,6 +8,7 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use OurSociety\Middleware\ScreenshotMiddleware;
 
 /**
  * Application setup class.
@@ -34,7 +35,11 @@ class Application extends BaseApplication
             ->add(AssetMiddleware::class)
 
             // Add routing middleware.
-            ->add(new RoutingMiddleware($this));
+            ->add(new RoutingMiddleware($this))
+
+            // Allow screenshots into application
+            ->add(ScreenshotMiddleware::class)
+        ;
 
         return $middlewareQueue;
     }
