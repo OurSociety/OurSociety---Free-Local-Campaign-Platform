@@ -68,11 +68,12 @@ class UsersController extends CrudController
      * @route GET /edit
      * @routeName users:edit
      */
-    public function edit(): ?Response
+    public function edit(string $slug = null): ?Response
     {
-        $this->Crud->on('beforeFind', function (Event $event) {
-            $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);
-        });
+        if ($slug === null) {
+            $slug = $this->getCurrentUser()->slug;
+            $this->request->addParams(['pass' => [$slug]]);
+        }
 
         return $this->Crud->execute();
     }
