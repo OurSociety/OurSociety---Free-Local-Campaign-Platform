@@ -165,8 +165,8 @@ class UsersController extends CrudController
     }
 
     /**
-     * @route GET /profile
-     * @routeName users:profile
+     * @route GET /register
+     * @routeName users:register
      */
     public function register(): ?Response
     {

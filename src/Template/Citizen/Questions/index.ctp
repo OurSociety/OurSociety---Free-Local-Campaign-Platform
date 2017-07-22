@@ -10,7 +10,7 @@
         __('{role} Dashboard', ['role' => ucfirst($currentUser->role)]),
         ['_name' => sprintf('%s:dashboard', $currentUser->role)
     ]) ?></li>
-    <li>Your Voice</li>
+    <li>My Voice</li>
 </ol>
 
 <h3><?= __("Let's find common ground, share your perspective.") ?></h3>
@@ -19,5 +19,5 @@
         ['count' => count($questions)]
     ) ?></p>
 <section class="well well-sm">
-    <?= $this->element('Questions/batch', ['questions' => $questions]) ?>
+    <?= $this->cell('Common/Question::batch', [$questions]) ?>
 </section>

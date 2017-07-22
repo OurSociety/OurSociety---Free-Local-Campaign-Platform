@@ -24,8 +24,8 @@ class QuestionsFixture extends App\TestFixture
     public $fields = [
         'id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'category_id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'question' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'type' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'question' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'type' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'citizen_answer_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => true, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'politician_answer_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => true, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
@@ -35,7 +35,7 @@ class QuestionsFixture extends App\TestFixture
         ],
         '_options' => [
             'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
+            'collation' => 'utf8mb4_general_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -47,20 +47,41 @@ class QuestionsFixture extends App\TestFixture
 
     public function init(): void
     {
+        $questions = Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray();
+
+        collection($questions)->each(function (array $record) {
+            $this->records[] = [
+                'category_name' => $record['Type'],
+                'question' => $record['Question'],
+                'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
+            ];
+        });
+
+        parent::init();
+    }
+
+    public function _getRecords(): array
+    {
         $categoryIds = CategoriesTable::instance()->find()->find('list', [
             'keyField' => 'name',
             'valueField' => 'id'
-        ])->toArray();
+        ])->orderAsc('name')->toArray();
 
-        collection(Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray())
-            ->each(function (array $record) use ($categoryIds) {
-                $this->records[] = [
-                    'category_id' => $categoryIds[$record['Type']],
-                    'question' => $record['Question'],
-                    'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
-                ];
-            });
+        if (count($categoryIds) === 0) {
+            throw new \RuntimeException('Categories fixture needs loaded before Questions fixture');
+        }
 
-        parent::init();
+        $this->records = collection($this->records)->map(function (array $record) use ($categoryIds) {
+            if (!isset($record['category_name'])) {
+                return $record;
+            }
+
+            $record['category_id'] = $categoryIds[$record['category_name']];
+            unset($record['category_name']);
+
+            return $record;
+        });
+
+        return parent::_getRecords();
     }
 }

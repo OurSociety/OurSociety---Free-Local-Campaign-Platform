@@ -9,11 +9,13 @@
     <li><?= $user->name ?></li>
 </ol>
 
-<h1>Profile</h1>
+<h2>Profile</h2>
+
+<hr>
 
 <div class="media">
     <div class="media-left">
-        <?= $this->Html->gravatar($user->email) ?>
+        <?= $this->Html->image($user->picture) ?>
     </div>
     <div class="media-body">
         <h4 class="media-heading"><?= $user->name ?></h4>

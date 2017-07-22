@@ -3,17 +3,19 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\ORM\Behavior;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+use Muffin\Orderly\Model\Behavior\OrderlyBehavior;
+use Muffin\Slug\Model\Behavior\SlugBehavior;
 
 /**
  * Application table.
  *
  * Base class for all tables in the application.
  *
- * @mixin Behavior\TimestampBehavior
+ * @mixin TimestampBehavior
  */
 abstract class AppTable extends Table
 {
@@ -32,8 +34,12 @@ abstract class AppTable extends Table
     {
         parent::initialize($config);
 
-        $this->addBehavior('Muffin/Slug.Slug');
-        $this->addBehavior('Timestamp');
+        $this->addBehavior(OrderlyBehavior::class);
+        $this->addBehavior(TimestampBehavior::class);
+
+        if ($this->getSchema()->column('slug') !== null) {
+            $this->addBehavior(SlugBehavior::class);
+        }
     }
 
     /**

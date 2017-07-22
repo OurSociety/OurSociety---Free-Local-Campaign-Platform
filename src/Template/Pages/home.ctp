@@ -2,6 +2,8 @@
 /**
  * @var \OurSociety\View\AppView $this
  */
+
+$this->assign('scope', 's-home');
 ?>
 <section class="jumbotron text-center">
     <?= $this->Html->image('http://via.placeholder.com/780x350?text=Image%20Coming%20Soon') ?>

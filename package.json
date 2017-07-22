@@ -16,6 +16,7 @@
     "browser-sync-webpack-plugin": "^1.2.0",
     "laravel-mix": "^1.2.2",
     "popper.js": "^1.10.8",
+    "trumbowyg": "^2.7.0",
     "webpack-notifier": "^1.5.0"
   }
 }

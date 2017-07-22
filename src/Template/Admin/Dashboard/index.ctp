@@ -10,7 +10,9 @@
     <li>Dashboard</li>
 </ol>
 
-<h1>Admin Dashboard</h1>
+<h2>Admin Dashboard</h2>
+
+<hr>
 
 <?= $this->Html->link('Questions', ['_name' => 'admin:questions'], ['class' => 'btn btn-default']) /* TODO: Move to navbar */ ?>
 

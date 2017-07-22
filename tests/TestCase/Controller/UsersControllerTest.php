@@ -3,9 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
-use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use OurSociety\Controller\UsersController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Test\Fixture\UsersFixture;

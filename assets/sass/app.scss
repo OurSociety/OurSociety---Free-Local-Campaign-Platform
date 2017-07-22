@@ -1,5 +1,6 @@
-//@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+//@import '~bootstrap/scss/bootstrap'; // Bootstrap v4
+@import '~bootstrap-sass/assets/stylesheets/bootstrap'; // Bootstrap v3
+@import 'app/editor';
 
 body {
     //background: $brand-primary;
@@ -29,16 +30,18 @@ $black: black;
     }
 }
 
-section:nth-of-type(2) {
-    margin-top: 100px; /* Add whitespace between sections */
-}
+.s-home {
+    section:nth-of-type(2) {
+        margin-top: 100px; /* Add whitespace between sections */
+    }
 
-section {
-    margin-bottom: 100px; /* Add whitespace between sections */
-}
+    section {
+        margin-bottom: 100px; /* Add whitespace between sections */
+    }
 
-section:last-of-type {
-    margin-bottom: 0; /* Add whitespace between sections */
+    section:last-of-type {
+        margin-bottom: 0; /* Add whitespace between sections */
+    }
 }
 
 hr {
