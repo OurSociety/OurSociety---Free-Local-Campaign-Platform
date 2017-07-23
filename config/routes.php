@@ -60,6 +60,7 @@ Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBu
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
     $routes->connect('/profile', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'Politicians', 'action' => 'edit'], ['_name' => 'profile:edit']);
+    $routes->connect('/profile/picture', ['controller' => 'Politicians', 'action' => 'picture'], ['_name' => 'profile:picture']);
     $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'register']);
 

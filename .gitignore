@@ -10,6 +10,7 @@
 /webroot/img/icons-topics.svg
 /webroot/js/app.js
 /webroot/js/landing.js
+/webroot/upload/*
 /webroot/mix-manifest.json
 /.env*
 !/.env.default

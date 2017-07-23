@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
+ * @var \OurSociety\Model\Entity\User $currentUser
  * @var \OurSociety\Model\Entity\Answer[] $answers The answers to questions.
  * @var \OurSociety\Model\Entity\Category[] $categories The question categories.
  */
@@ -20,7 +21,7 @@
     <?= $this->Html->link(
         __('Answer Questions'),
         ['_name' => 'politician:questions'],
-        ['class' => 'btn btn-primary']
+        ['class' => ['btn', 'btn-primary', $currentUser->answer_count === 50 ? 'disabled' : '']]
     ) ?>
     <?= $this->Html->link(
         __('View Profile'),

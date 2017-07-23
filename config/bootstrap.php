@@ -227,6 +227,7 @@ Plugin::load('CakeDC/Enum');
 Plugin::load('Crud');
 Plugin::load('CrudUsers');
 Plugin::load('CrudView');
+Plugin::load('Josegonzalez/Upload');
 Plugin::load('Muffin/Orderly');
 Plugin::load('Muffin/Slug');
 Plugin::load('VideoEmbed');

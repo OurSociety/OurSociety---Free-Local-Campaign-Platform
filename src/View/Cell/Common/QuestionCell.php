@@ -6,7 +6,6 @@ namespace OurSociety\View\Cell\Common;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\ORM\ResultSet;
 use Cake\View\Cell;
 use OurSociety\Model\Entity\Question;
 

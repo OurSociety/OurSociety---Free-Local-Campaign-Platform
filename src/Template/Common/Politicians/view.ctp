@@ -26,7 +26,7 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
 <section>
     <div class="row text-center">
         <div class="col-sm-4">
-            <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
+            <?= $this->fetch('profile_picture') ?>
             <p><?= $politician->phone ?></p>
             <p><?= $this->Html->link($email, sprintf('mailto:%s', $email)) ?></p>
         </div>

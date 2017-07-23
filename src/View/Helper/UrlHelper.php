@@ -4,14 +4,24 @@ declare(strict_types=1);
 namespace OurSociety\View\Helper;
 
 use Cake\View\Helper as Cake;
-use Gravatar\Gravatar;
+use OurSociety\Model\Entity\User;
 
 class UrlHelper extends Cake\UrlHelper
 {
-    public function gravatarUrl(string $email, ?array $defaults = []): string
+    public function image($path, array $options = []): string
     {
-        $gravatar = new Gravatar(['d' => 'identicon', 's' => 500] + $defaults, true);
+        if ($path instanceof User) {
+            return $this->profilePicture($path, $options);
+        }
 
-        return $gravatar->avatar($email);
+        return parent::image($path, $options);
+    }
+
+    public function profilePicture(User $user, array $options = []): string
+    {
+        $path = $user->picture;
+        $pathPrefix = sprintf('upload/profile/picture/%s/', $user->id);
+
+        return $this->assetUrl($path, $options + compact('pathPrefix'));
     }
 }
