@@ -5,6 +5,7 @@ namespace OurSociety\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
 
@@ -154,5 +155,75 @@ class UsersControllerTest extends IntegrationTestCase
         // TODO: Fix timestamp columns
         //$this->assertResponseContains((string)$user->created);
         //$this->assertResponseContains((string)$user->modified);
+    }
+
+    /**
+     * @dataProvider provideSwitch
+     *
+     * @param string $expected The expected case.
+     * @param array $sessionBefore The session beforehand.
+     * @param array $formData The form data.
+     * @param array $sessionAfter The session afterwards.
+     * @return void
+     */
+    public function testSwitch(string $expected, array $sessionBefore, array $formData, array $sessionAfter): void
+    {
+        $this->session($sessionBefore);
+        $this->post(['_name' => 'admin:users:switch'], $formData);
+
+        switch ($expected) {
+            case 'success':
+                /** @var User $expectedUser */
+                $expectedUser = $sessionAfter['Auth']['User'];
+
+                $this->assertResponseSuccess();
+                $this->assertRedirect(['_name' => sprintf('%s:dashboard', $expectedUser->role)]);
+                $this->assertFlash(sprintf('You have assumed the role of %s.', $expectedUser->name));
+
+                foreach (['User', 'Admin'] as $key) {
+                    /** @var User|null $possibleSessionUser */
+                    $possibleSessionUser = $this->_requestSession->read(sprintf('Auth.%s', $key));
+                    if ($possibleSessionUser === null) {
+                        $this->assertFalse(isset($sessionAfter['Auth'][$key]));
+                    } elseif ($possibleSessionUser instanceof User) {
+                        $this->assertEquals($sessionAfter['Auth'][$key]->id, $possibleSessionUser->id);
+                    }
+                }
+                break;
+            case 'error':
+                $this->assertResponseCode(403);
+                break;
+        }
+    }
+
+    public function provideSwitch(): array
+    {
+        /** @var UsersTable $users */
+        $users = TableRegistry::get('Users');
+        /** @var User $politician */
+        $politician = $users->get(UsersFixture::ID_POLITICIAN);
+        /** @var User $admin */
+        $admin = $users->find()->where(['email' => UsersFixture::EMAIL_ADMIN])->firstOrFail();
+
+        return [
+            'error (NOT admin)' => [
+                'expected' => 'error',
+                'sessionBefore' => ['Auth' => ['User' => $politician, 'Admin' => null]],
+                'formData' => [],
+                'sessionAfter' => ['Auth' => ['User' => $politician, 'Admin' => null]],
+            ],
+            'success (switch to user)' => [
+                'expected' => 'success',
+                'sessionBefore' => ['Auth' => ['User' => $admin, 'Admin' => null]],
+                'formData' => ['user' => $politician->slug],
+                'sessionAfter' => ['Auth' => ['User' => $politician, 'Admin' => $admin]],
+            ],
+            'success (revert to admin)' => [
+                'expected' => 'success',
+                'sessionBefore' => ['Auth' => ['User' => $politician, 'Admin' => $admin]],
+                'formData' => ['user' => $admin->slug],
+                'sessionAfter' => ['Auth' => ['User' => $admin]],
+            ],
+        ];
     }
 }
