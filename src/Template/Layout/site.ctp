@@ -39,8 +39,8 @@ $this->start('navbar');
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="navbar-right">
-                    <?= $this->cell('Navbar/User') ?>
                     <?php if ($this->get('currentUser')): ?>
+                        <?= $this->cell('Navbar/User') ?>
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
                             <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_CITIZEN) ?></li>
