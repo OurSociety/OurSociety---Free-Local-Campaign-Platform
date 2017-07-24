@@ -7,7 +7,6 @@ use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianVideo;
 use OurSociety\Model\Entity\PoliticianArticle;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -48,13 +47,17 @@ class ArticlesController extends CrudController
 
     public function view(): ?Response
     {
-        $this->Crud->on('afterFind', function (Event $event) {
-            /** @var PoliticianVideo $video */
-            $video = $event->getSubject()->entity;
+        $this->Crud->on('beforeRender', function (Event $event) {
+            /** @var PoliticianArticle $article */
+            $article = $event->getSubject()->entity;
 
-            return $event->getSubject()->success === true
-                ? $this->redirect($video->youtube_video_url)
-                : null;
+            if ($article->published === null) {
+                $this->Flash->error('This article is currently unpublished. Please publish it so it can be viewed by citizens.');
+            }
+
+            if ($article->approved === null) {
+                $this->Flash->warning('This article is currently awaiting moderation. Once approved it will be available to citizens.');
+            }
         });
 
         return $this->Crud->execute();

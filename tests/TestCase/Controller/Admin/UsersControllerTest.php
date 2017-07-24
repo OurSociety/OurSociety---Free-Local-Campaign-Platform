@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
@@ -178,7 +179,7 @@ class UsersControllerTest extends IntegrationTestCase
 
                 $this->assertResponseSuccess();
                 $this->assertRedirect(['_name' => sprintf('%s:dashboard', $expectedUser->role)]);
-                $this->assertFlash(sprintf('You have assumed the role of %s.', $expectedUser->name));
+                $this->assertFlash(Hash::get($sessionAfter, 'Flash.flash.0.message'));
 
                 foreach (['User', 'Admin'] as $key) {
                     /** @var User|null $possibleSessionUser */
@@ -216,13 +217,19 @@ class UsersControllerTest extends IntegrationTestCase
                 'expected' => 'success',
                 'sessionBefore' => ['Auth' => ['User' => $admin, 'Admin' => null]],
                 'formData' => ['user' => $politician->slug],
-                'sessionAfter' => ['Auth' => ['User' => $politician, 'Admin' => $admin]],
+                'sessionAfter' => [
+                    'Auth' => ['User' => $politician, 'Admin' => $admin],
+                    'Flash' => ['flash' => [['message' => sprintf('You have assumed the identity of %s.', $politician->name)]]],
+                ],
             ],
             'success (revert to admin)' => [
                 'expected' => 'success',
                 'sessionBefore' => ['Auth' => ['User' => $politician, 'Admin' => $admin]],
                 'formData' => ['user' => $admin->slug],
-                'sessionAfter' => ['Auth' => ['User' => $admin]],
+                'sessionAfter' => [
+                    'Auth' => ['User' => $admin],
+                    'Flash' => ['flash' => [['message' => sprintf('Your identity has been reverted back to %s.', $admin->name)]]],
+                ],
             ],
         ];
     }

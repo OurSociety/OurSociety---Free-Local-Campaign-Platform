@@ -27,7 +27,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/reset', ['controller' => 'Users', 'action' => 'reset'], ['_name' => 'users:reset']);
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
     $routes->connect('/onboarding', ['controller' => 'Users', 'action' => 'onboarding'], ['_name' => 'users:onboarding']);
-    $routes->fallbacks(DashedRoute::class);
     $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
 });
 

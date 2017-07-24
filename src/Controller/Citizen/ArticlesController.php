@@ -10,6 +10,7 @@ use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianArticle;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\PoliticianArticlesTable;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -87,15 +88,28 @@ class ArticlesController extends CrudController
         return $this->Crud->execute();
     }
 
-    public function view(string $politician, string $article): ?Response
+    public function view(string $politicianSlug, string $articleSlug): ?Response
     {
+        /** @var UsersTable $users */
+        $users = $this->loadModel('Users');
+        /** @var PoliticianArticlesTable $articles */
+        $articles = $this->loadModel('PoliticianArticles');
+
+        $politician = $users->getBySlug($politicianSlug, $this->Auth->user()->role);
+        $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
+
+        if ($article->approved === null || $article->published === null) {
+            return $this->redirect([
+                'prefix' => 'politician/profile',
+                'controller' => 'Articles',
+                'action' => 'view',
+                $article->id,
+            ]);
+        }
+
         $this->set([
-            'politician' => $this->loadModel('Users')->find('politicianForCitizen')->where([
-                'slug' => $politician,
-            ])->firstOrFail(),
-            'article' => $this->loadModel('PoliticianArticles')->find('forCitizen')->where([
-                'slug' => $article,
-            ])->firstOrFail(),
+            'politician' => $politician,
+            'article' => $article,
         ]);
 
         return null;

@@ -49,7 +49,7 @@ class UserCellTest extends TestCase
                 $this->assertNotContains('<form', $html);
                 break;
             case 'admin':
-                $this->assertNotContains('<a href="/profile"', $html);
+                $this->assertContains('<a href="/profile"', $html);
                 $this->assertContains('<form', $html);
                 $this->assertContains('onchange="this.form.submit()"', $html);
                 $this->assertContains('<select', $html);

@@ -26,11 +26,18 @@ class PoliticiansController extends CrudController
 
     public function view(): ?Response
     {
+        /** @var User $politician */
+        $politician = $this->loadModel('Users')
+            ->find('politician')
+            ->where(['slug' => $this->Auth->user('slug')])
+            ->firstOrFail();
+
+        if ($politician->active === null) {
+            $this->Flash->warning('The account associated with this profile has not been activated.');
+        }
+
         $this->set([
-            'politician' => $this->loadModel('Users')
-                ->find('politician')
-                ->where(['slug' => $this->Auth->user('slug')])
-                ->firstOrFail(),
+            'politician' => $politician,
         ]);
 
         return null;

@@ -9,6 +9,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -69,6 +70,12 @@ class PoliticianArticlesTable extends AppTable
             ->add($rules->existsIn(['politician_id'], 'Politicians'));
     }
 
+    public function getBySlug(string $slug, string $role = User::ROLE_CITIZEN): PoliticianArticle
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->find('forCitizen', ['role' => $role])->where(['slug' => $slug])->firstOrFail();
+    }
+
     protected function findApproved(Query $query): Query
     {
         return $query->where(['PoliticianArticles.approved IS NOT' => null]);
@@ -95,11 +102,14 @@ class PoliticianArticlesTable extends AppTable
         return $query->where(['PoliticianArticles.published IS NOT' => null]);
     }
 
-    protected function findForCitizen(Query $query): Query
+    protected function findForCitizen(Query $query, array $options = []): Query
     {
-        return $query
-            ->find('approved')
-            ->find('published')
-            ->find('latest');
+        $options += ['role' => User::ROLE_CITIZEN];
+
+        if ($options['role'] === User::ROLE_CITIZEN) {
+            $query->find('approved')->find('published');
+        }
+
+        return $query->find('latest');
     }
 }
