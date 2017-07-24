@@ -4,10 +4,11 @@ declare(strict_types = 1);
 namespace OurSociety\Model\Table;
 
 use Cake\Datasource\EntityInterface as Entity;
+use Cake\Localized\Validation\UsValidation;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator as CakeValidator;
+use Cake\Validation as Cake;
 use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
 
@@ -49,14 +50,18 @@ class UsersTable extends AppTable
      *
      * @see \Cake\ORM\Table::validateUnique
      */
-    public function validationDefault(CakeValidator $validator): AppValidator
+    public function validationDefault(Cake\Validator $validator): AppValidator
     {
         return parent::validationDefault($validator)
+            ->setProvider('default', new Cake\Validation) // TODO: Find out why our validation class breaks email validation.
             // email
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => __(self::ERROR_EMAIL_UNIQUE)])
-            ->email('email')
+            //->email('email', false, 'Please enter a valid email address')
             ->notBlank('email')
             ->requirePresence('email', 'create')
+            // zip
+            ->setProvider('us', UsValidation::class)
+            ->add('zip', 'zip', ['rule' => 'postal', 'provider' => 'us', 'message' => 'Please enter a valid ZIP code (e.g. 12345 or 12345-6789)'])
             // password
             ->notEmpty('password')
             ->requirePresence('password', 'create')

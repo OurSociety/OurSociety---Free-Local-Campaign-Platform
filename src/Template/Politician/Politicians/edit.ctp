@@ -16,7 +16,7 @@ use OurSociety\Model\Entity\User;
 <h2>
     <?= __('Edit Profile') ?>
     <?php if ($currentUser->isPolitician()): ?>
-        <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-default']) ?>
+        <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-default pull-right']) ?>
     <?php endif ?>
 </h2>
 

@@ -35,7 +35,7 @@ abstract class AppTable extends Table
     {
         parent::initialize($config);
 
-        $this->_validatorClass = \OurSociety\Validation\Validator::class;
+        $this->_validatorClass = AppValidator::class;
 
         $this->addBehavior(OrderlyBehavior::class);
         $this->addBehavior(TimestampBehavior::class);
@@ -50,6 +50,8 @@ abstract class AppTable extends Table
      */
     public function validationDefault(CakeValidator $validator): AppValidator
     {
+        /** @var $validator AppValidator */
+
         $validator
             // id
             ->uuid('id')
