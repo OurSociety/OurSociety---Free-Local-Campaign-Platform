@@ -28,7 +28,7 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
 
     public function dashboardLink(): string
     {
-        $prefix = $this->request->getParam('prefix');
+        [$prefix] = explode('/', $this->request->getParam('prefix'));
 
         return $this->link(
             __('{role} Dashboard', ['role' => ucfirst($prefix)]),

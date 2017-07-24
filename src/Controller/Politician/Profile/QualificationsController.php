@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Controller\Politician;
+namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
 use Cake\Utility\Text;

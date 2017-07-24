@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Test\TestCase\Controller\Admin;
+namespace OurSociety\Test\TestCase\Controller\Politician;
 
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
 
 /**
- * OurSociety\Controller\Admin\PoliticiansController Test Case
+ * OurSociety\Controller\Politician\PoliticiansController Test Case
  */
 class PoliticiansControllerTest extends IntegrationTestCase
 {

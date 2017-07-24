@@ -6,6 +6,6 @@
 $prefix = $this->request->getParam('prefix');
 ?>
 <ol class="breadcrumb">
-    <li><?= $this->Html->link(ucfirst($prefix), ['_name' => sprintf('%s:dashboard', $prefix)]) ?></li>
+    <li><?= $this->Html->dashboardLink() ?></li>
     <li><?= $pluralHumanName ?></li>
 </ol>
