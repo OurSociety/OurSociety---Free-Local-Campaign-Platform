@@ -6,9 +6,17 @@
  */
 ?>
 <?php if ($users !== null): ?>
+    <p class="visible-xs navbar-text text-muted">
+        <?= __('Signed in as {name}', [
+            'name' => $this->Html->link(
+                $user['name'],
+                ['_name' => 'users:profile']
+            )
+        ]) ?>
+    </p>
     <?= $this->Form->create($user, [
         'url' => ['_name' => 'admin:users:switch'],
-        'class' => ['form-inline'],
+        'class' => ['form-inline', 'hidden-xs'],
         'style' => 'float: left; margin-top: 8px;',
     ]) ?>
     <?= $this->Form->control('user', [
@@ -19,7 +27,7 @@
     ]) ?>
     <?= $this->Form->end() ?>
 <?php else: ?>
-    <p class="navbar-text text-muted small">
+    <p class="navbar-text text-muted">
         <?= __('Signed in as {name}', [
             'name' => $this->Html->link(
                 $user['name'],

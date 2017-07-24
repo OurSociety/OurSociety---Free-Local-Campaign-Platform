@@ -13,6 +13,6 @@ class ChangeZip extends AbstractMigration
 
     public function down(): void
     {
-        $this->table('users')->changeColumn('zip', 'integer');
+        // No rolling back as it truncates ZIP code data (e.g. (string)"07501-1234" => (int)75011234)
     }
 }
