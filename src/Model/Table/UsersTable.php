@@ -95,6 +95,13 @@ class UsersTable extends AppTable
             ->add($rules->isUnique(['email'], __(self::ERROR_EMAIL_UNIQUE)));
     }
 
+    public function getListGroupedByRole(): Query
+    {
+        return $this
+            ->find('list', ['keyField' => 'slug', 'groupField' => 'role'])
+            ->order(['Users.role' => 'ASC', 'Users.name' => 'ASC']);
+    }
+
     /**
      * Find for auth.
      *
