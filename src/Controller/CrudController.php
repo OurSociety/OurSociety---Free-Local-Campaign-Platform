@@ -44,4 +44,23 @@ abstract class CrudController extends AppController
             ],
         ]);
     }
+
+    /**
+     * Get field options for year month fields.
+     *
+     * TODO: Create a custom `YearMonthWidget` and map it in `AppView`.
+     *
+     * @return array
+     */
+    protected function getFieldOptionsForYearMonth(): array
+    {
+        return [
+            'maxYear' => date('Y'),
+            'minYear' => $this->Auth->user('born') ? $this->Auth->user('born')->year : 1900,
+            'placeholder' => 'asd',
+            'empty' => ['month' => 'Month', 'year' => 'Year'],
+            'style' => ['year' => 'display: none'],
+            'day' => false,
+        ];
+    }
 }

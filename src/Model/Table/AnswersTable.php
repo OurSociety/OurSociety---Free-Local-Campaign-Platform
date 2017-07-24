@@ -7,8 +7,9 @@ use Cake\Datasource\EntityInterface as Entity;
 use Cake\ORM\Association;
 use Cake\ORM\Behavior;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
+use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Answer;
+use OurSociety\Validation\Validator as AppValidator;
 
 /**
  * Answers Model
@@ -50,7 +51,7 @@ class AnswersTable extends AppTable
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
             // question_id

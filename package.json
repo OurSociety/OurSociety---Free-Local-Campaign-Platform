@@ -14,9 +14,11 @@
     "bootstrap-sass": "^3.3.7",
     "browser-sync": "^2.18.12",
     "browser-sync-webpack-plugin": "^1.2.0",
+    "inputmask": "^3.3.7",
     "laravel-mix": "^1.2.2",
     "popper.js": "^1.10.8",
     "trumbowyg": "^2.7.0",
+    "vue": "^2.4.2",
     "webpack-notifier": "^1.5.0"
   }
 }

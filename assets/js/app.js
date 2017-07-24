@@ -5,10 +5,11 @@
 
 import './app/editor.js';
 
-class Welcome {
-  constructor() {
-    console.log('Welcome to OurSociety!');
-  }
-}
-
-new Welcome();
+// window.Vue = require('vue');
+// window.Inputmask = require('inputmask');
+//
+// Vue.directive('input-mask', function(el, binding) {
+//   new Inputmask({ mask: binding.expression }).mask(el);
+// });
+//
+//new Vue({ el: '#app' });

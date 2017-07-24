@@ -8,6 +8,7 @@
         "php": ">=7.1",
         "cakedc/enum": "^1.1",
         "cakephp/cakephp": "3.4.*",
+        "cakephp/localized": "^3.3",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "~1.0",
         "drmonkeyninja/cakephp-video-helper": "^3.0",

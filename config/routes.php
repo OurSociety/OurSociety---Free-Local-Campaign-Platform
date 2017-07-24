@@ -55,15 +55,19 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
 Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
     $routes->connect('/profile', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'profile']);
-    $routes->connect('/profile/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'profile:articles']);
-    $routes->connect('/profile/awards', ['controller' => 'Awards', 'action' => 'index'], ['_name' => 'profile:awards']);
     $routes->connect('/profile/edit', ['controller' => 'Politicians', 'action' => 'edit'], ['_name' => 'profile:edit']);
-    $routes->connect('/profile/positions', ['controller' => 'Positions', 'action' => 'index'], ['_name' => 'profile:positions']);
-    $routes->connect('/profile/qualifications', ['controller' => 'Qualifications', 'action' => 'index'], ['_name' => 'profile:qualifications']);
-    $routes->connect('/profile/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'profile:videos']);
     $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'register']);
-    $routes->fallbacks(DashedRoute::class);
+
+    $routes->prefix('profile', ['_namePrefix' => 'profile:'], function (RouteBuilder $routes) {
+        $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'articles']);
+        $routes->connect('/awards', ['controller' => 'Awards', 'action' => 'index'], ['_name' => 'awards']);
+        $routes->connect('/positions', ['controller' => 'Positions', 'action' => 'index'], ['_name' => 'positions']);
+        $routes->connect('/qualifications', ['controller' => 'Qualifications', 'action' => 'index'], ['_name' => 'qualifications']);
+        $routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
+
+        $routes->fallbacks(DashedRoute::class);
+    });
 });
 
 /**

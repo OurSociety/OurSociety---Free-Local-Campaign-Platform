@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Controller\Politician;
+namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
 use Cake\Utility\Text;
@@ -67,8 +67,8 @@ class PositionsController extends CrudController
                 'fields' => [
                     'name' => ['label' => 'Position Title'],
                     'company' => ['label' => 'Company Name'],
-                    'started' => ['label' => 'Date Started'],
-                    'ended' => ['label' => 'Date Ended'],
+                    'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
+                    'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
             ]
         ]);

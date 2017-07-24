@@ -83,7 +83,7 @@ abstract class AppController extends Controller
             case User::ROLE_CITIZEN:
                 return in_array($request->getParam('prefix'), [false, 'citizen'], true);
             case User::ROLE_POLITICIAN:
-                return in_array($request->getParam('prefix'), [false, 'citizen', 'politician'], true);
+                return in_array($request->getParam('prefix'), [false, 'citizen', 'politician', 'politician/profile'], true);
             default:
                 return false;
         }

@@ -9,15 +9,14 @@ use OurSociety\Model\Entity\User;
 ?>
 <ol class="breadcrumb">
     <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'citizen:politicians']) ?></li>
-    <li><?= $this->Html->politicianLink($politician) ?></li>
-    <li><?= __('Edit Information') ?></li>
+    <li><?= $this->Html->link(__('Profile'), ['_name' => 'politician:profile']) ?></li>
+    <li><?= __('Edit Profile') ?></li>
 </ol>
 
 <h2>
-    <?= __('Edit Details') ?>
+    <?= __('Edit Profile') ?>
     <?php if ($currentUser->isPolitician()): ?>
-        <?= $this->Html->politicianLink($politician, 'Back to Profile', ['class' => 'btn btn-default']) ?>
+        <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-default pull-right']) ?>
     <?php endif ?>
 </h2>
 
@@ -41,15 +40,15 @@ use OurSociety\Model\Entity\User;
         <?= $this->Form->control('address_1', ['label' => __('Address Line 1')]) ?>
         <?= $this->Form->control('address_2', ['label' => __('Address Line 2')]) ?>
         <?= $this->Form->control('city', ['label' => __('City')]) ?>
-        <?= $this->Form->control('state', ['label' => __('State'), 'options' => User::STATES]) ?>
-        <?= $this->Form->control('zip', ['label' => __('ZIP Code')]) ?>
+        <?= $this->Form->control('state', ['label' => __('State'), 'options' => User::STATES, 'empty' => true]) ?>
+        <?= $this->Form->control('zip', ['label' => __('ZIP Code'), 'type' => 'zip']) ?>
         <?= $this->Form->control('phone', ['label' => __('Phone Number')]) ?>
     </fieldset>
     <fieldset>
         <legend><?= __('Birth Information') ?></legend>
         <?= $this->Form->control('birth_name', ['label' => 'Full Name at Birth', 'help' => 'e.g. John Doe II']) ?>
         <?= $this->Form->control('birth_city', ['label' => 'City of Birth']) ?>
-        <?= $this->Form->control('birth_state', ['label' => 'State of Birth', 'options' => User::STATES]) ?>
+        <?= $this->Form->control('birth_state', ['label' => 'State of Birth', 'options' => User::STATES, 'empty' => true]) ?>
         <?= $this->Form->control('birth_country', ['label' => 'Country of Birth', 'options' => User::COUNTRIES]) ?>
         <?= $this->Form->control('born', [
             'label' => 'Date of Birth',
@@ -57,7 +56,7 @@ use OurSociety\Model\Entity\User;
             'default' => '1900-01-01',
         ]) ?>
     </fieldset>
-    <?= $this->Form->button(__('Register'), ['class' => ['btn', 'btn-primary', 'pull-right']]); ?>
+    <?= $this->Form->button(__('Update Profile'), ['class' => ['btn', 'btn-primary', 'pull-right']]); ?>
     <?= $this->Form->end() ?>
 </section>
 

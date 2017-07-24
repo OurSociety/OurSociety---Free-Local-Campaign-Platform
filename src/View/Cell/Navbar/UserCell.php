@@ -5,6 +5,7 @@ namespace OurSociety\View\Cell\Navbar;
 
 use Cake\View\Cell;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
 
 /**
  * User cell.
@@ -45,9 +46,9 @@ class UserCell extends Cell
             return null;
         }
 
-        return $this->loadModel('Users')
-            ->find('list', ['keyField' => 'slug', 'groupField' => 'role'])
-            ->order(['role' => 'asc', 'name' => 'asc'])
-            ->toArray();
+        /** @var UsersTable $users */
+        $users = $this->loadModel('Users');
+
+        return $users->getListGroupedByRole()->toArray();
     }
 }

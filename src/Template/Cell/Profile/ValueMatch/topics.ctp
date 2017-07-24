@@ -8,9 +8,8 @@
 <ol class="list-unstyled">
     <?php foreach ($topics as $topic): ?>
         <li>
-            <i class="topic topic-<?= $topic->slug ?>">ICON</i>
-            <?= __('{percentage}% value match', ['percentage' => $topic->match]) ?>
-            <?= $topic->name ?>
+            <b class="topic topic-<?= $topic->slug ?>">[ICON]</b>
+            <?= __('{percentage}% {topic_name}', ['percentage' => $topic->match, 'topic_name' => $topic->name]) ?>
         </li>
     <?php endforeach ?>
 </ol>

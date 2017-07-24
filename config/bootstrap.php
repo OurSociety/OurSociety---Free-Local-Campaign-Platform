@@ -222,6 +222,7 @@ if (Configure::read('debug')) {
 }
 
 Plugin::load('BootstrapUI');
+Plugin::load('Cake/Localized');
 Plugin::load('CakeDC/Enum');
 Plugin::load('Crud');
 Plugin::load('CrudUsers');

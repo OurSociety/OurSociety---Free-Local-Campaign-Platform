@@ -1,26 +1,26 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Controller\Politician;
+namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
 use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianAward;
+use OurSociety\Model\Entity\PoliticianQualification;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Awards Controller
+ * Qualifications Controller
  *
- * @method PoliticianAward[] paginate($object = null, array $settings = [])
+ * @method PoliticianQualification[] paginate($object = null, array $settings = [])
  */
-class AwardsController extends CrudController
+class QualificationsController extends CrudController
 {
     public function initialize(): void
     {
         parent::initialize();
 
-        $this->modelClass = 'PoliticianAwards';
+        $this->modelClass = 'PoliticianQualifications';
     }
 
     public function index(): ?Response
@@ -28,9 +28,10 @@ class AwardsController extends CrudController
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
-                    'name' => ['title' => 'Award Title'],
-                    'description' => ['title' => 'Description of Award'],
-                    'obtained' => ['title' => 'Date Obtained'],
+                    'name' => ['title' => 'Qualification Title'],
+                    'institution' => ['title' => 'Institution Name'],
+                    'started' => ['title' => 'Date Started'],
+                    'ended' => ['title' => 'Date Ended'],
                 ],
             ],
         ]);
@@ -64,18 +65,19 @@ class AwardsController extends CrudController
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
-                    'name' => ['label' => 'Award Title'],
-                    'description' => ['label' => 'Description of Award'],
-                    'obtained' => ['label' => 'Date Obtained'],
+                    'name' => ['label' => 'Qualification Title'],
+                    'institution' => ['label' => 'Institution Name'],
+                    'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
+                    'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
             ]
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
-            /** @var PoliticianAward $award */
-            $award = $event->getSubject()->entity;
-            $award->id = Text::uuid();
-            $award->politician_id = $this->Auth->user('id');
+            /** @var PoliticianQualification $qualification */
+            $qualification = $event->getSubject()->entity;
+            $qualification->id = Text::uuid();
+            $qualification->politician_id = $this->Auth->user('id');
         });
 
         return $this->Crud->execute();

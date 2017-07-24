@@ -7,7 +7,7 @@
  * @var int|null $limit The limit for each list of topics.
  */
 ?>
-<h3><?= __('{percentage}% value match', ['percentage' => $match]) ?></h3>
+<h3><?= __('{percentage}% Value Match', ['percentage' => $match]) ?></h3>
 <div class="row">
     <div class="col-xs-6">
         <?= $this->cell('Profile/ValueMatch::topics', ['Similarities', $similarities]) ?>
