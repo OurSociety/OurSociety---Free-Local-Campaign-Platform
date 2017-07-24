@@ -91,3 +91,13 @@ hr {
         }
     }
 }
+
+.form-control:invalid {
+    border-color: $state-warning-text;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075)); // Redeclare so transitions work
+    &:focus {
+        border-color: darken($state-warning-text, 10%);
+        $shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten($state-warning-text, 20%);
+        @include box-shadow($shadow);
+    }
+}

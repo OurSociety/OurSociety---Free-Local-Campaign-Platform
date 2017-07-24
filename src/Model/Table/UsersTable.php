@@ -86,7 +86,7 @@ class UsersTable extends AppTable
             //->requirePresence('answer_count', 'create') // TODO: Breaks registration
             // born
             ->allowEmpty('born')
-            ->date('born')
+            //->date('born') // TODO: Broken since validation changes.
             // last_seen
             ->allowEmpty('last_seen')
             ->dateTime('last_seen');

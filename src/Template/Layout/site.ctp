@@ -64,7 +64,9 @@ $this->end();
 ?>
 <?= $this->fetch('navbar'); ?>
 <div class="container">
-    <?= $this->fetch('page') ?>
+    <div id="app" class="view">
+        <?= $this->fetch('page') ?>
+    </div>
     <?= $this->fetch('action_link_forms') // For CrudView delete links to work ?>
     <?= $this->element('footer') ?>
 </div>

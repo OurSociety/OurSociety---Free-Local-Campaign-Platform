@@ -5,8 +5,8 @@ namespace OurSociety\View;
 
 use BootstrapUI\View\Helper as BootstrapUI;
 use CrudView\View\CrudView;
-use CrudView\View\Widget as CrudViewWidget;
 use OurSociety\View\Widget\EditorWidget;
+use OurSociety\View\Widget\ZipWidget;
 use VideoEmbed\View\Helper as VideoEmbed;
 
 /**
@@ -46,6 +46,7 @@ class AppView extends CrudView
         $this->loadHelper('Html', ['className' => Helper\HtmlHelper::class]);
         $this->loadHelper('Form', ['className' => BootstrapUI\FormHelper::class, 'widgets' => [
             'editor' => [EditorWidget::class],
+            'zip' => [ZipWidget::class, 'text'],
             // TODO: Implement better date/time widget with following requirements:
             // - Supports "date" also (not just "datetime"
             // - Easy to select DOB (a date many years in the past)
