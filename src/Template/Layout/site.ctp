@@ -25,33 +25,36 @@ $this->start('navbar');
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle visible-xs collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <?= $this->Html->link(
                     $this->Html->image('banner.png', ['title' => 'OurSociety', 'alt' => 'Brand']),
                     ['_name' => 'pages:home'],
                     ['class' => 'navbar-brand', 'escape' => false]
                 ); ?>
             </div>
-            <div class="navbar-right">
-                <?php if ($this->get('currentUser')): ?>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="navbar-right">
                     <?= $this->cell('Navbar/User') ?>
-                    <?=''// $this->element('topbar'); ?>
-                    <ul class="nav navbar-nav">
-                        <li><?= $this->Html->link('Citizen', ['_name' => 'citizen:dashboard']) ?></li>
-                        <li><?= $this->Html->link('Politician', ['_name' => 'politician:dashboard']) ?></li>
-                        <li><?= $this->Html->link('Admin', ['_name' => 'admin:dashboard']) ?></li>
-                        <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
-                    </ul>
-                <?php else: ?>
-                    <ul class="nav navbar-nav">
-                        <li><?= $this->Html->link('Login', ['_name' => 'users:login']) ?></li>
-                    </ul>
-                <?php endif ?>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                    <?php if ($this->get('currentUser')): ?>
+                        <?=''// $this->element('topbar'); ?>
+                        <ul class="nav navbar-nav">
+                            <li><?= $this->Html->link('Citizen', ['_name' => 'citizen:dashboard']) ?></li>
+                            <li><?= $this->Html->link('Politician', ['_name' => 'politician:dashboard']) ?></li>
+                            <li><?= $this->Html->link('Admin', ['_name' => 'admin:dashboard']) ?></li>
+                            <li role="separator" class="divider"></li>
+                            <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
+                        </ul>
+                    <?php else: ?>
+                        <ul class="nav navbar-nav">
+                            <li><?= $this->Html->link('Login', ['_name' => 'users:login']) ?></li>
+                        </ul>
+                    <?php endif ?>
+                </div>
             </div>
         </div>
     </nav>

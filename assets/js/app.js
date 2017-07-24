@@ -3,6 +3,7 @@
 // import 'tether';
 // import './main.scss';
 
+import 'bootstrap-sass';
 import './app/editor.js';
 
 // window.Vue = require('vue');
