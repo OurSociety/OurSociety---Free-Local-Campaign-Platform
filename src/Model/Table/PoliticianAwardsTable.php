@@ -6,8 +6,9 @@ namespace OurSociety\Model\Table;
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\ORM\Association;
 use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
+use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\PoliticianAward;
+use OurSociety\Validation\Validator as AppValidator;
 
 /**
  * PoliticianAwards Model
@@ -37,7 +38,7 @@ class PoliticianAwardsTable extends AppTable
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
             // name
@@ -47,7 +48,7 @@ class PoliticianAwardsTable extends AppTable
             ->notEmpty('description')
             ->requirePresence('description', 'create')
             // obtained
-            ->date('obtained')
+            ->yearMonth('obtained')
             ->notEmpty('obtained')
             ->requirePresence('obtained', 'create');
     }

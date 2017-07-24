@@ -66,7 +66,7 @@ class AwardsController extends CrudController
                 'fields' => [
                     'name' => ['label' => 'Award Title'],
                     'description' => ['label' => 'Description of Award'],
-                    'obtained' => ['label' => 'Date Obtained'],
+                    'obtained' => ['label' => 'Date Obtained'] + $this->getFieldOptionsForYearMonth(),
                 ],
             ]
         ]);

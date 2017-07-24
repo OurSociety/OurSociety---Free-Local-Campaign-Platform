@@ -67,8 +67,8 @@ class QualificationsController extends CrudController
                 'fields' => [
                     'name' => ['label' => 'Qualification Title'],
                     'institution' => ['label' => 'Institution Name'],
-                    'started' => ['label' => 'Date Started'],
-                    'ended' => ['label' => 'Date Ended'],
+                    'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
+                    'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
             ]
         ]);

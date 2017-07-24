@@ -34,8 +34,9 @@ $uses = [
     'use Cake\Datasource\EntityInterface as Entity;',
     'use Cake\ORM\Association;',
     'use Cake\ORM\RulesChecker;',
-    'use Cake\Validation\Validator;',
+    'use Cake\Validation\Validator as CakeValidator;',
     "use {$namespace}\\Model\\Entity\\{$entity};",
+    "use {$namespace}\\Validation\\Validator as AppValidator;",
 ];
 if (count($behaviors)) {
     $uses[] = 'use Cake\ORM\Behavior;';
@@ -81,7 +82,7 @@ class <%= $name %>Table extends AppTable
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
 <%

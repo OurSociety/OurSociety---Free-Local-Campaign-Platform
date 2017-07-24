@@ -6,9 +6,10 @@ namespace OurSociety\Model\Table;
 use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
-use Cake\Validation\Validator;
+use Cake\Validation\Validator as CakeValidator;
 use Muffin\Orderly\Model\Behavior\OrderlyBehavior;
 use Muffin\Slug\Model\Behavior\SlugBehavior;
+use OurSociety\Validation\Validator as AppValidator;
 
 /**
  * Application table.
@@ -34,6 +35,8 @@ abstract class AppTable extends Table
     {
         parent::initialize($config);
 
+        $this->_validatorClass = \OurSociety\Validation\Validator::class;
+
         $this->addBehavior(OrderlyBehavior::class);
         $this->addBehavior(TimestampBehavior::class);
 
@@ -45,7 +48,7 @@ abstract class AppTable extends Table
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         $validator
             // id

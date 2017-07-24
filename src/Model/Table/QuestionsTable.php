@@ -11,8 +11,9 @@ use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Hash;
-use Cake\Validation\Validator;
+use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Question;
+use OurSociety\Validation\Validator as AppValidator;
 
 /**
  * Questions Model
@@ -52,7 +53,7 @@ class QuestionsTable extends AppTable
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
             // question

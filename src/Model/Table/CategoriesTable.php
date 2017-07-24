@@ -6,9 +6,10 @@ namespace OurSociety\Model\Table;
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\Datasource\ResultSetInterface as ResultSet;
 use Cake\ORM\Association;
-use Cake\Validation\Validator;
+use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Category;
 use OurSociety\Model\Entity\User;
+use OurSociety\Validation\Validator as AppValidator;
 
 /**
  * Categories Model
@@ -40,7 +41,7 @@ class CategoriesTable extends AppTable
     /**
      * {@inheritdoc}
      */
-    public function validationDefault(Validator $validator): Validator
+    public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
             // name
