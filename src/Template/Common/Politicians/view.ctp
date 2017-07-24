@@ -36,21 +36,21 @@
 
 <section>
     <h3>
-        My platform
+        <?= __('My platform') ?>
         <?= $this->fetch('edit_videos') ?>
         <?= $this->fetch('edit_articles') ?>
     </h3>
     <div class="row">
         <div class="col-md-6 text-center">
             <?php if ($politician->featured_video === null): ?>
-                <p>This politician hasn't featured a YouTube video.</p>
+                <p><?= __("This politician hasn't featured a YouTube video.") ?></p>
             <?php else: ?>
                 <?= $this->Video->embed(
                     $politician->featured_video->youtube_video_url,
                     ['width' => '100%', 'height' => 300, 'failSilently' => true]) ?>
             <?php endif ?>
             <?php if (count($politician->videos) === 0): ?>
-                <p class="text-muted small">This politician hasn't linked any additional YouTube videos.</p>
+                <p class="text-muted small"><?= __("This politician hasn't linked any additional YouTube videos.") ?></p>
             <?php else: ?>
                 <div class="row">
                     <?php foreach ($politician->videos as $video): ?>
@@ -65,17 +65,25 @@
         </div>
         <div class="col-md-6" id="articles">
             <?php if (count($politician->articles) === 0): ?>
-                <p>This politician hasn't posted any articles.</p>
+                <p><?= __("This politician hasn't posted any articles.") ?></p>
             <?php else: ?>
                 <?php foreach ($politician->articles as $article): ?>
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <?= $this->Html->link($article->name, [
-                                    '_name' => 'citizen:politician:article',
-                                    'politician' => $politician->slug,
-                                    'article' => $article->slug,
-                                ]) ?>
+                                <?php if ($this->request->getParam('prefix') === 'citizen'): ?>
+                                    <?= $this->Html->link($article->name, [
+                                        '_name' => 'citizen:politician:article',
+                                        'politician' => $politician->slug,
+                                        'article' => $article->slug,
+                                    ]) ?>
+                                <?php elseif ($this->request->getParam('prefix') === 'politician'): ?>
+                                    <?= $this->Html->link($article->name, [
+                                        '_name' => 'citizen:politician:article',
+                                        'politician' => $politician->slug,
+                                        'article' => $article->slug,
+                                    ]) ?>
+                                <?php endif ?>
                                 <span class="text-muted small">
                                     <?= $article->published
                                         ? $article->published->toFormattedDateString()
@@ -104,7 +112,7 @@
                         <?= $this->fetch('edit_positions') ?>
                     </h4>
                     <?php if (count($politician->positions) === 0): ?>
-                        <p>This politician hasn't added any positions.</p>
+                        <p><?= __("This politician hasn't added any positions.") ?></p>
                     <?php else: ?>
                         <ul>
                             <?php foreach ($politician->positions as $position): ?>
@@ -131,7 +139,7 @@
                         <?= $this->fetch('edit_education') ?>
                     </h4>
                     <?php if (count($politician->qualifications) === 0): ?>
-                        <p>This politician hasn't added any qualifications.</p>
+                        <p><?= __("This politician hasn't added any qualifications.") ?></p>
                     <?php else: ?>
                         <ul>
                             <?php foreach ($politician->qualifications as $qualification): ?>
@@ -158,7 +166,7 @@
                         <?= $this->fetch('edit_awards') ?>
                     </h4>
                     <?php if (count($politician->awards) === 0): ?>
-                        <p>This politician hasn't added any awards.</p>
+                        <p><?= __("This politician hasn't added any awards.") ?></p>
                     <?php else: ?>
                         <ul>
                             <?php foreach ($politician->awards as $award): ?>
@@ -183,19 +191,19 @@
                         <?= $this->fetch('edit_born') ?>
                     </h4>
                     <p>
-                        <?= $politician->birth_name ?>
+                        <?= $politician->birth_name ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']) ?>
                         <br>
                         <?= $politician->born
                             ? $politician->born->toFormattedDateString()
-                            : __('Unknown') ?>
+                            : $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']) ?>
                         <span class="text-muted small">
                             (<?= __('{age} years old', ['age' => $politician->age])?>)
                         </span>
                         <br>
                         <?= __('{city}, {state}, {country}', [
-                            'city' => $politician->birth_city,
-                            'state' => $politician->birth_state,
-                            'country' => $politician->birth_country,
+                            'city' => $politician->birth_city ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
+                            'state' => $politician->birth_state ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
+                            'country' => $politician->birth_country ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
                         ])?>
                     </p>
                 </div>

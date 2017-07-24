@@ -26,13 +26,13 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
         return $this->image($url, $options);
     }
 
-    public function dashboardLink(): string
+    public function dashboardLink(string $role = null, string $title = null): string
     {
-        [$prefix] = explode('/', $this->request->getParam('prefix'));
+        [$prefix] = explode('/', $this->request->getParam('prefix') ?: User::ROLE_CITIZEN);
 
         return $this->link(
-            __('{role} Dashboard', ['role' => ucfirst($prefix)]),
-            ['_name' => sprintf('%s:dashboard', $prefix)
+            $title ?: __('{role} Dashboard', ['role' => ucfirst($role ?: $prefix)]),
+            ['_name' => sprintf('%s:dashboard', $role ?: $prefix)
         ]);
     }
 

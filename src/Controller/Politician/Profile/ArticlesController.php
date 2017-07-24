@@ -7,7 +7,6 @@ use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianVideo;
 use OurSociety\Model\Entity\PoliticianArticle;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -48,15 +47,6 @@ class ArticlesController extends CrudController
 
     public function view(): ?Response
     {
-        $this->Crud->on('afterFind', function (Event $event) {
-            /** @var PoliticianVideo $video */
-            $video = $event->getSubject()->entity;
-
-            return $event->getSubject()->success === true
-                ? $this->redirect($video->youtube_video_url)
-                : null;
-        });
-
         return $this->Crud->execute();
     }
 

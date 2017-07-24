@@ -10,6 +10,7 @@ use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianArticle;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\PoliticianArticlesTable;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -89,13 +90,14 @@ class ArticlesController extends CrudController
 
     public function view(string $politician, string $article): ?Response
     {
+        /** @var UsersTable $users */
+        $users = $this->loadModel('Users');
+        /** @var PoliticianArticlesTable $articles */
+        $articles = $this->loadModel('PoliticianArticles');
+
         $this->set([
-            'politician' => $this->loadModel('Users')->find('politicianForCitizen')->where([
-                'slug' => $politician,
-            ])->firstOrFail(),
-            'article' => $this->loadModel('PoliticianArticles')->find('forCitizen')->where([
-                'slug' => $article,
-            ])->firstOrFail(),
+            'politician' => $users->getBySlug($politician, $this->Auth->user()->role),
+            'article' => $articles->getBySlug($article, $this->Auth->user()->role),
         ]);
 
         return null;

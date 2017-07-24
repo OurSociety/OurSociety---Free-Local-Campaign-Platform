@@ -108,6 +108,15 @@ class UsersTable extends AppTable
             ->order(['Users.role' => 'ASC', 'Users.name' => 'ASC']);
     }
 
+    public function getBySlug(string $slug, string $role = User::ROLE_CITIZEN): User
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this
+            ->find('politicianForCitizen', ['role' => $role])
+            ->where(['slug' => $slug])
+            ->firstOrFail();
+    }
+
     /**
      * Find for auth.
      *
@@ -171,9 +180,15 @@ class UsersTable extends AppTable
             ->contain(['Articles', 'Awards', 'Positions', 'Qualifications', 'Videos', 'FeaturedVideos']);
     }
 
-    protected function findPoliticianForCitizen(Query $query): Query
+    protected function findPoliticianForCitizen(Query $query, array $options = []): Query
     {
-        return $query->find('politician', ['role' => 'citizen'])->find('isActive')->find('hasAnsweredQuestions');
+        $options += ['role' => User::ROLE_CITIZEN];
+
+        if ($options['role'] === User::ROLE_CITIZEN) {
+            $query->find('isActive')->find('hasAnsweredQuestions');
+        }
+
+        return $query->find('politician', ['role' => 'citizen']);
     }
 
     /**

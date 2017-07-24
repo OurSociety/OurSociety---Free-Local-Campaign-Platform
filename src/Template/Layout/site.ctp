@@ -3,7 +3,7 @@
  * Default layout.
  *
  * @var \OurSociety\View\AppView $this The view class.
- * @var array $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User $currentUser The current user.
  */
 $this->extend('base');
 
@@ -43,9 +43,13 @@ $this->start('navbar');
                     <?php if ($this->get('currentUser')): ?>
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
-                            <li><?= $this->Html->link('Citizen', ['_name' => 'citizen:dashboard']) ?></li>
-                            <li><?= $this->Html->link('Politician', ['_name' => 'politician:dashboard']) ?></li>
-                            <li><?= $this->Html->link('Admin', ['_name' => 'admin:dashboard']) ?></li>
+                            <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_CITIZEN) ?></li>
+                            <?php if ($currentUser->isPolitician() || $currentUser->isAdmin()): ?>
+                                <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_POLITICIAN) ?></li>
+                            <?php endif ?>
+                            <?php if ($currentUser->isAdmin()): ?>
+                                <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_ADMIN) ?></li>
+                            <?php endif ?>
                             <li role="separator" class="divider"></li>
                             <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
                         </ul>

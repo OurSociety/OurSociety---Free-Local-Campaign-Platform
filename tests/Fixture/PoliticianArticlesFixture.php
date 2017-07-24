@@ -20,7 +20,10 @@ class PoliticianArticlesFixture extends App\TestFixture
 </p>
 
 HTML;
-    const SLUG = 'the-long-road-ahead';
+    const ACTIVE_ID = 'approved_and_published';
+    const ACTIVE_SLUG = 'the-long-road-ahead';
+    const UNPUBLISHED_ID = 'unpublished';
+    const UNAPPROVED_ID = 'unapproved';
 
     /**
      * Fields
@@ -56,8 +59,9 @@ HTML;
      */
     public $records = [
         [
+            'id' => self::ACTIVE_ID,
             'politician_id' => UsersFixture::ID_POLITICIAN,
-            'slug' => self::SLUG,
+            'slug' => self::ACTIVE_SLUG,
             'name' => 'The Long Road Ahead',
             'version' => 2,
             'approved' => '2017-07-11 10:00:00',
@@ -65,7 +69,7 @@ HTML;
         ],
         [
             'politician_id' => UsersFixture::ID_POLITICIAN,
-            'slug' => self::SLUG, // need an identifier that matches new version
+            'slug' => self::ACTIVE_SLUG, // need an identifier that matches new version
             'name' => 'The Long Road Ahead (old version)',
             'version' => 1,
             'approved' => '2017-07-08 16:00:00',
@@ -86,6 +90,7 @@ HTML;
             'published' => '2017-05-03 20:00:00',
         ],
         [
+            'id' => self::UNAPPROVED_ID,
             'politician_id' => UsersFixture::ID_POLITICIAN,
             'name' => 'Published Article (Not Approved)',
             'version' => 1,
@@ -93,6 +98,7 @@ HTML;
             'published' => '2017-05-01 20:00:00',
         ],
         [
+            'id' => self::UNPUBLISHED_ID,
             'politician_id' => UsersFixture::ID_POLITICIAN,
             'name' => 'Approved Article (Not Published)',
             'version' => 1,

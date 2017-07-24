@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller\Citizen;
 
+use Cake\ORM\TableRegistry;
+use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Table\PoliticianArticlesTable;
 use OurSociety\Test\Fixture\PoliticianArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
@@ -33,22 +36,94 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains(sprintf(
             '/citizen/politicians/%s/article/%s',
             UsersFixture::SLUG_POLITICIAN,
-            PoliticianArticlesFixture::SLUG
+            PoliticianArticlesFixture::ACTIVE_SLUG
         ));
     }
 
-    public function testView(): void
+    /**
+     * @dataProvider provideView
+     * @param string $expected The expected case.
+     * @param string $user The logged in user.
+     * @param string $articleId The article ID to view.
+     */
+    public function testView(string $expected, string $user, string $articleId): void
     {
-        $this->auth(UsersFixture::EMAIL_CITIZEN);
+        /** @var PoliticianArticle $article */
+        $article = TableRegistry::get('PoliticianArticles')
+            ->find()
+            ->contain(['Politicians'])
+            ->where(['PoliticianArticles.id' => $articleId])
+            ->firstOrFail();
+
+        $this->auth($user);
         $this->get([
             '_name' => 'citizen:politician:article',
-            'politician' => UsersFixture::SLUG_POLITICIAN,
-            'article' => PoliticianArticlesFixture::SLUG,
+            'politician' => $article->politician->slug,
+            'article' => $article->slug,
         ]);
-        $this->assertResponseOk();
-        $this->assertResponseContains('Articles');
-        $this->assertResponseContains(UsersFixture::NAME_POLITICIAN);
-        $this->assertResponseContains('The Long Road Ahead');
-        $this->assertResponseContains(PoliticianArticlesFixture::BODY_PARAGRAPH);
+
+        switch ($expected) {
+            case 'success':
+                $this->assertResponseOk();
+                $this->assertResponseContains('Articles');
+                $this->assertResponseContains($article->politician->name);
+                $this->assertResponseContains($article->name);
+                $this->assertResponseContains($article->body);
+                break;
+            case 'error':
+                $this->assertResponseError();
+                break;
+        }
+    }
+
+    public function provideView(): array
+    {
+        return [
+            'success (citizen @ published & approved)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_CITIZEN,
+                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+            ],
+            'error (citizen @ unpublished)' => [
+                'expected' => 'error',
+                'user' => UsersFixture::EMAIL_CITIZEN,
+                'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
+            ],
+            'error (citizen @ unapproved)' => [
+                'expected' => 'error',
+                'user' => UsersFixture::EMAIL_CITIZEN,
+                'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
+            ],
+            'success (politician @ published & approved)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+            ],
+            'success (politician @ unpublished)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
+            ],
+            'success (politician @ unapproved)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
+            ],
+            'success (admin @ published & approved)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_ADMIN,
+                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+            ],
+            'success (admin @ unpublished)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_ADMIN,
+                'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
+            ],
+            'success (admin @ unapproved)' => [
+                'expected' => 'success',
+                'user' => UsersFixture::EMAIL_ADMIN,
+                'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
+            ],
+        ];
     }
 }

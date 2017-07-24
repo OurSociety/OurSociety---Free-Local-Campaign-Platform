@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller\Politician\Profile;
 
+use Cake\ORM\TableRegistry;
+use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Test\Fixture\PoliticianArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
 
@@ -11,6 +14,19 @@ use OurSociety\TestSuite\IntegrationTestCase;
  */
 class ArticlesControllerTest extends IntegrationTestCase
 {
+    public function testView(): void
+    {
+        /** @var PoliticianArticle $article */
+        $article = TableRegistry::get('Users')
+            ->find()
+            ->where(['slug' => PoliticianArticlesFixture::ACTIVE_SLUG])
+            ->firstOrFail();
+
+        $this->auth(UsersFixture::EMAIL_POLITICIAN);
+        $this->get(sprintf('/politician/profile/article/%s', $article->slug));
+        $this->assertResponseOk();
+    }
+
     public function testAdd(): void
     {
         $this->auth(UsersFixture::EMAIL_POLITICIAN);
