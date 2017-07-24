@@ -88,16 +88,28 @@ class ArticlesController extends CrudController
         return $this->Crud->execute();
     }
 
-    public function view(string $politician, string $article): ?Response
+    public function view(string $politicianSlug, string $articleSlug): ?Response
     {
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
         /** @var PoliticianArticlesTable $articles */
         $articles = $this->loadModel('PoliticianArticles');
 
+        $politician = $users->getBySlug($politicianSlug, $this->Auth->user()->role);
+        $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
+
+        if ($article->approved === null || $article->published === null) {
+            return $this->redirect([
+                'prefix' => 'politician/profile',
+                'controller' => 'Articles',
+                'action' => 'view',
+                $article->id,
+            ]);
+        }
+
         $this->set([
-            'politician' => $users->getBySlug($politician, $this->Auth->user()->role),
-            'article' => $articles->getBySlug($article, $this->Auth->user()->role),
+            'politician' => $politician,
+            'article' => $article,
         ]);
 
         return null;

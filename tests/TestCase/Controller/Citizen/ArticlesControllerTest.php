@@ -5,7 +5,6 @@ namespace OurSociety\Test\TestCase\Controller\Citizen;
 
 use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\PoliticianArticle;
-use OurSociety\Model\Table\PoliticianArticlesTable;
 use OurSociety\Test\Fixture\PoliticianArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
@@ -73,6 +72,18 @@ class ArticlesControllerTest extends IntegrationTestCase
             case 'error':
                 $this->assertResponseError();
                 break;
+            case 'redirect':
+                $this->assertResponseSuccess();
+                $this->assertRedirect([
+                    'prefix' => 'politician/profile',
+                    'controller' => 'Articles',
+                    'action' => 'view',
+                    $article->id,
+                ]);
+                break;
+            default:
+                $this->fail('Unexpected case');
+                break;
         }
     }
 
@@ -99,13 +110,13 @@ class ArticlesControllerTest extends IntegrationTestCase
                 'user' => UsersFixture::EMAIL_POLITICIAN,
                 'article' => PoliticianArticlesFixture::ACTIVE_ID,
             ],
-            'success (politician @ unpublished)' => [
-                'expected' => 'success',
+            'redirect (politician @ unpublished)' => [
+                'expected' => 'redirect',
                 'user' => UsersFixture::EMAIL_POLITICIAN,
                 'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
             ],
-            'success (politician @ unapproved)' => [
-                'expected' => 'success',
+            'redirect (politician @ unapproved)' => [
+                'expected' => 'redirect',
                 'user' => UsersFixture::EMAIL_POLITICIAN,
                 'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
             ],
@@ -114,13 +125,13 @@ class ArticlesControllerTest extends IntegrationTestCase
                 'user' => UsersFixture::EMAIL_ADMIN,
                 'article' => PoliticianArticlesFixture::ACTIVE_ID,
             ],
-            'success (admin @ unpublished)' => [
-                'expected' => 'success',
+            'redirect (admin @ unpublished)' => [
+                'expected' => 'redirect',
                 'user' => UsersFixture::EMAIL_ADMIN,
                 'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
             ],
-            'success (admin @ unapproved)' => [
-                'expected' => 'success',
+            'redirect (admin @ unapproved)' => [
+                'expected' => 'redirect',
                 'user' => UsersFixture::EMAIL_ADMIN,
                 'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
             ],
