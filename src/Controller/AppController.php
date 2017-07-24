@@ -5,6 +5,7 @@ namespace OurSociety\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Routing\Router;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 use OurSociety\Model\Entity\User;
@@ -13,6 +14,8 @@ use OurSociety\Model\Entity\User;
  * Application controller.
  *
  * Base class for all controllers in the application. Configures essentials such as authentication.
+ *
+ * @property Component\FlashComponent $Flash
  */
 abstract class AppController extends Controller
 {
@@ -27,7 +30,7 @@ abstract class AppController extends Controller
 
         $this->loadComponent('Auth', ['className' => Component\AuthComponent::class]);
         $this->loadComponent('Cookie');
-        $this->loadComponent('Flash');
+        $this->loadComponent('Flash', ['className' => Component\FlashComponent::class]);
         $this->loadComponent('RequestHandler');
 
         /*
@@ -70,6 +73,10 @@ abstract class AppController extends Controller
     {
         $request = $request ?: $this->request;
 
+        if ($this->isAdminSwitchingUsers()) {
+            return true;
+        }
+
         switch ($user->role) {
             case User::ROLE_ADMIN:
                 return true;
@@ -80,6 +87,32 @@ abstract class AppController extends Controller
             default:
                 return false;
         }
+    }
+
+    /**
+     * Is admin switching users?
+     *
+     * Detects if the request:
+     *
+     *  - matches the URL for the switch users action
+     *  - session indicates an admin who is currently acting as another user
+     *
+     * @return bool True if request is an admin trying to switch users.
+     */
+    private function isAdminSwitchingUsers(): bool
+    {
+        if ($this->request->getUri()->getPath() !== Router::reverse(['_name' => 'admin:users:switch'])) {
+            return false;
+        }
+
+        /** @var User|null $admin */
+        $admin = $this->request->session()->read('Auth.Admin');
+
+        if ($admin === null) {
+            return false;
+        }
+
+        return $admin->role === User::ROLE_ADMIN;
     }
 
     protected function rememberMe(): void

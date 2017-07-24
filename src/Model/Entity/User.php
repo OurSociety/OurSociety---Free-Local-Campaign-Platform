@@ -193,6 +193,11 @@ class User extends Entity
         return $this->role === self::ROLE_POLITICIAN;
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;

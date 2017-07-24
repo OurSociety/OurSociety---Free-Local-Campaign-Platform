@@ -33,14 +33,7 @@ $this->start('navbar');
             </div>
             <div class="navbar-right">
                 <?php if ($this->get('currentUser')): ?>
-                    <p class="navbar-text text-muted small">
-                        <?= __('Signed in as {name}', [
-                            'name' => $this->Html->link(
-                                $currentUser['name'],
-                                ['_name' => 'users:profile']
-                            )
-                        ]) ?>
-                    </p>
+                    <?= $this->cell('Navbar/User') ?>
                     <?=''// $this->element('topbar'); ?>
                     <ul class="nav navbar-nav">
                         <li><?= $this->Html->link('Citizen', ['_name' => 'citizen:dashboard']) ?></li>
