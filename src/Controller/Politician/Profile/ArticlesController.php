@@ -47,6 +47,19 @@ class ArticlesController extends CrudController
 
     public function view(): ?Response
     {
+        $this->Crud->on('beforeRender', function (Event $event) {
+            /** @var PoliticianArticle $article */
+            $article = $event->getSubject()->entity;
+
+            if ($article->published === null) {
+                $this->Flash->error('This article is currently unpublished. Please publish it so it can be viewed by citizens.');
+            }
+
+            if ($article->approved === null) {
+                $this->Flash->warning('This article is currently awaiting moderation. Once approved it will be available to citizens.');
+            }
+        });
+
         return $this->Crud->execute();
     }
 

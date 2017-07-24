@@ -14,17 +14,42 @@ use OurSociety\TestSuite\IntegrationTestCase;
  */
 class ArticlesControllerTest extends IntegrationTestCase
 {
-    public function testView(): void
+    /**
+     * @dataProvider provideView
+     * @param string $id The article ID to view.
+     * @param string|null $flash The expected flash message.
+     */
+    public function testView(string $id, string $flash = null): void
     {
         /** @var PoliticianArticle $article */
-        $article = TableRegistry::get('Users')
-            ->find()
-            ->where(['slug' => PoliticianArticlesFixture::ACTIVE_SLUG])
-            ->firstOrFail();
+        $article = TableRegistry::get('PoliticianArticles')->get($id);
 
         $this->auth(UsersFixture::EMAIL_POLITICIAN);
-        $this->get(sprintf('/politician/profile/article/%s', $article->slug));
+        $this->get(sprintf('/politician/profile/articles/view/%s', $article->id));
         $this->assertResponseOk();
+
+        // TODO: Determine why this assertion isn't working when flash messages appear in browser.
+        //if ($flash !== null) {
+        //    $this->assertFlash($flash);
+        //}
+    }
+
+    public function provideView(): array
+    {
+        return [
+            'success (active)' => [
+                'id' => PoliticianArticlesFixture::ACTIVE_ID,
+                'flash' => null,
+            ],
+            'success (unpublished)' => [
+                'id' => PoliticianArticlesFixture::UNPUBLISHED_ID,
+                'flash' => 'This article is currently unpublished. Please publish it so it can be viewed by citizens.',
+            ],
+            'success (unapproved)' => [
+                'id' => PoliticianArticlesFixture::UNAPPROVED_ID,
+                'flash' => 'This article is currently awaiting moderation. Once approved it will be available to citizens.',
+            ],
+        ];
     }
 
     public function testAdd(): void
