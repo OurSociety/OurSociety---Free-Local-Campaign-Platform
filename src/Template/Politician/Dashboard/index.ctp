@@ -10,6 +10,8 @@
     <li>Dashboard</li>
 </ol>
 
+<?= $this->Html->link(__('View Profile'), ['_name' => 'politician:profile'], ['class' => ['btn btn-default pull-right']]) ?>
+
 <h2>Politician Dashboard</h2>
 
 <hr>
