@@ -22,7 +22,7 @@
 <section>
     <div class="row text-center">
         <div class="col-sm-4">
-            <?= $this->cell('Profile/Picture', [], ['user' => $currentUser]) ?>
+            <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
             <p><?= $politician->phone ?></p>
             <p><?= $this->Html->link($politician->email, sprintf('mailto:%s', $politician->email)) ?></p>
         </div>

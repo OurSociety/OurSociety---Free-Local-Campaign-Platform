@@ -205,7 +205,7 @@ class User extends Entity
 
     protected function _getPicture(): string
     {
-        return $this->picture ?? self::PICTURE_DEFAULT;
+        return $this->_properties['picture'] ?? self::PICTURE_DEFAULT;
     }
 
     /**

@@ -8,7 +8,6 @@ use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\View\Cell;
 use OurSociety\Model\Entity\User;
-use OurSociety\View\AppView;
 
 /**
  * Picture cell
