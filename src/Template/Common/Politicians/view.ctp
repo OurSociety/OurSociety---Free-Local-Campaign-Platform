@@ -79,9 +79,10 @@
                                     ]) ?>
                                 <?php elseif ($this->request->getParam('prefix') === 'politician'): ?>
                                     <?= $this->Html->link($article->name, [
-                                        '_name' => 'citizen:politician:article',
-                                        'politician' => $politician->slug,
-                                        'article' => $article->slug,
+                                        'prefix' => 'politician/profile',
+                                        'controller' => 'Articles',
+                                        'action' => 'view',
+                                        $article->id,
                                     ]) ?>
                                 <?php endif ?>
                                 <span class="text-muted small">
