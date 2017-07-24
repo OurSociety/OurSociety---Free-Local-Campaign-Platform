@@ -31,7 +31,7 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
         $prefix = $this->request->getParam('prefix');
 
         return $this->link(
-            __('{role} dashboard', ['role' => ucfirst($prefix)]),
+            __('{role} Dashboard', ['role' => ucfirst($prefix)]),
             ['_name' => sprintf('%s:dashboard', $prefix)
         ]);
     }

@@ -9,15 +9,14 @@ use OurSociety\Model\Entity\User;
 ?>
 <ol class="breadcrumb">
     <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'citizen:politicians']) ?></li>
-    <li><?= $this->Html->politicianLink($politician) ?></li>
-    <li><?= __('Edit Information') ?></li>
+    <li><?= $this->Html->link(__('Profile'), ['_name' => 'politician:profile']) ?></li>
+    <li><?= __('Edit Profile') ?></li>
 </ol>
 
 <h2>
-    <?= __('Edit Details') ?>
+    <?= __('Edit Profile') ?>
     <?php if ($currentUser->isPolitician()): ?>
-        <?= $this->Html->politicianLink($politician, 'Back to Profile', ['class' => 'btn btn-default']) ?>
+        <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-default']) ?>
     <?php endif ?>
 </h2>
 
