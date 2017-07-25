@@ -60,7 +60,7 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
     public function politicianLink(User $politician, string $title = null, array $options = []): string
     {
         $title = $title ?: $politician->name;
-        $url = ['_name' => 'politicians:view', 'politician' => $politician->slug];
+        $url = ['_name' => 'politician', 'politician' => $politician->slug];
 
         if (isset($options['#'])) {
             $url['#'] = $options['#'];
