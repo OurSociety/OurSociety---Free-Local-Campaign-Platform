@@ -117,6 +117,20 @@ class UsersFixture extends App\TestFixture
             'birth_country' => 'US',
             'born' => '1984-01-01',
         ],
+        [
+            'role' => User::ROLE_POLITICIAN,
+            'name' => 'Imported Politician',
+            'slug' => 'imported-politician',
+            'email' => 'imported-politician@example.com',
+            'email_temp' => 'possible.real.email@example.com',
+            'phone' => '(123) 456-7890 x1234 / 123-213-2345',
+            'password' => 'not-set',
+            'token' => '123456',
+            'token_expires' => null,
+            'address_1' => '123 Street, Town, ST 01234',
+            'position' => 'State Senate District 8',
+            'incumbent' => false,
+        ],
     ];
 
     public function init(): void
