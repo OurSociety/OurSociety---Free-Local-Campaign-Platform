@@ -8,7 +8,6 @@ use Cake\ORM\TableRegistry;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\TestCase;
-use OurSociety\Model\Entity\User;
 use OurSociety\View\Cell\Navbar\UserCell;
 use Cake\Network\Request;
 use Cake\Network\Response;

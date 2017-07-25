@@ -28,18 +28,39 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
 
     public function dashboardLink(string $role = null, string $title = null): string
     {
-        [$prefix] = explode('/', $this->request->getParam('prefix') ?: User::ROLE_CITIZEN);
+        if ($role === null && $this->request->getParam('prefix') === false) {
+            return $this->link(__($title ?: 'Home'), ['_name' => 'pages:home']);
+        }
 
-        return $this->link(
-            $title ?: __('{role} Dashboard', ['role' => ucfirst($role ?: $prefix)]),
-            ['_name' => sprintf('%s:dashboard', $role ?: $prefix)
-        ]);
+        if ($role === null) {
+            switch ($this->request->getParam('prefix')) {
+                case 'citizen':
+                    $role = User::ROLE_CITIZEN;
+                    break;
+                case 'politician':
+                case 'politician/profile':
+                    $role = User::ROLE_POLITICIAN;
+                    break;
+                case 'admin':
+                    $role = User::ROLE_ADMIN;
+            }
+        }
+
+        if ($title === null) {
+            /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+            $title = $role === null
+                ? __('Home')
+                : __('{role} Dashboard', ['role' => ucfirst($role)]);
+        }
+        $routeName = sprintf('%s:dashboard', $role);
+
+        return $this->link($title, ['_name' => $routeName]);
     }
 
     public function politicianLink(User $politician, string $title = null, array $options = []): string
     {
         $title = $title ?: $politician->name;
-        $url = ['_name' => 'citizen:politicians:view', 'slug' => $politician->slug];
+        $url = ['_name' => 'politicians:view', 'slug' => $politician->slug];
 
         if (isset($options['#'])) {
             $url['#'] = $options['#'];

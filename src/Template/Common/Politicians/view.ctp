@@ -71,18 +71,18 @@
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <?php if ($this->request->getParam('prefix') === 'citizen'): ?>
-                                    <?= $this->Html->link($article->name, [
-                                        '_name' => 'citizen:politician:article',
-                                        'politician' => $politician->slug,
-                                        'article' => $article->slug,
-                                    ]) ?>
-                                <?php elseif ($this->request->getParam('prefix') === 'politician'): ?>
+                                <?php if ($this->request->getParam('prefix') === 'politician'): ?>
                                     <?= $this->Html->link($article->name, [
                                         'prefix' => 'politician/profile',
                                         'controller' => 'Articles',
                                         'action' => 'view',
                                         $article->id,
+                                    ]) ?>
+                                <?php else: ?>
+                                    <?= $this->Html->link($article->name, [
+                                        '_name' => 'politician:article',
+                                        'politician' => $politician->slug,
+                                        'article' => $article->slug,
                                     ]) ?>
                                 <?php endif ?>
                                 <span class="text-muted small">

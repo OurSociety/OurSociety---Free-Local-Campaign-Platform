@@ -18,7 +18,7 @@ class ArticlesControllerTest extends IntegrationTestCase
     {
         $this->auth(UsersFixture::EMAIL_CITIZEN);
         $this->get([
-            '_name' => 'citizen:politician:articles',
+            '_name' => 'politician:articles',
             'politician' => UsersFixture::SLUG_POLITICIAN,
         ]);
         $this->assertResponseOk();
@@ -33,7 +33,7 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains(substr(PoliticianArticlesFixture::BODY_PARAGRAPH, 0, 100));
         $this->assertResponseContains('Page 1 of 1, showing 3 records out of 3 total.');
         $this->assertResponseContains(sprintf(
-            '/citizen/politicians/%s/article/%s',
+            'politicians/%s/article/%s',
             UsersFixture::SLUG_POLITICIAN,
             PoliticianArticlesFixture::ACTIVE_SLUG
         ));
@@ -56,7 +56,7 @@ class ArticlesControllerTest extends IntegrationTestCase
 
         $this->auth($user);
         $this->get([
-            '_name' => 'citizen:politician:article',
+            '_name' => 'politician:article',
             'politician' => $article->politician->slug,
             'article' => $article->slug,
         ]);

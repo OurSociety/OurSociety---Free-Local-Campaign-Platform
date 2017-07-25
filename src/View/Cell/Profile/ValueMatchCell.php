@@ -29,6 +29,7 @@ class ValueMatchCell extends Cell
         $users = $this->loadModel('Users');
 
         $this->set([
+            'currentUser' => $this->request->session()->read('Auth.User'),
             'match' => $users->getMatchPercentage($citizen, $politician),
             'similarities' => $users->Categories->getMatchPercentages($citizen, $politician, false, $limit),
             'differences' => $users->Categories->getMatchPercentages($citizen, $politician, true, $limit),

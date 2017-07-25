@@ -11,7 +11,7 @@ $this->start('breadcrumbs');
 ?>
 <ol class="breadcrumb">
     <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'citizen:politicians']) ?></li>
+    <li><?= $this->Html->link('Politicians', ['_name' => 'politicians']) ?></li>
     <li><?= $this->Html->politicianLink($politician) ?></li>
     <li><?= $this->Html->politicianLink($politician, __('Articles'), ['#' => 'articles']) ?></li>
     <li><?= $article->name ?></li>

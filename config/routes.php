@@ -21,6 +21,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
+    $routes->connect('/politicians', ['controller' => 'Politicians', 'action' => 'index'], ['_name' => 'politicians']);
+    $routes->connect('/politicians/:slug', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politicians:view', 'pass' => ['slug']]);
+    $routes->connect('/politicians/:politician/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'politician:article', 'pass' => ['politician', 'article']]);
+    $routes->connect('/politicians/:politician/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'politician:articles', 'pass' => ['politician']]);
     $routes->connect('/profile/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
@@ -37,10 +41,6 @@ Router::scope('/', function (RouteBuilder $routes) {
  */
 Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
-    $routes->connect('/politicians', ['controller' => 'Politicians', 'action' => 'index'], ['_name' => 'politicians']);
-    $routes->connect('/politicians/:slug', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politicians:view', 'pass' => ['slug']]);
-    $routes->connect('/politicians/:politician/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'politician:article', 'pass' => ['politician', 'article']]);
-    $routes->connect('/politicians/:politician/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'politician:articles', 'pass' => ['politician']]);
     $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);
     $routes->fallbacks(DashedRoute::class);

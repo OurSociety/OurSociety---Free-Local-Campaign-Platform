@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Controller\Citizen;
+namespace OurSociety\Controller;
 
 use Cake\View\CellTrait;
-use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;

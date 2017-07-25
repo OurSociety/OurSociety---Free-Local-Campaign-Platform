@@ -188,14 +188,19 @@ class User extends Entity
         TableRegistry::get('Users')->saveOrFail($this->withLastSeen());
     }
 
-    public function isPolitician(): bool
-    {
-        return $this->role === self::ROLE_POLITICIAN;
-    }
-
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isCitizen(): bool
+    {
+        return $this->role === self::ROLE_CITIZEN;
+    }
+
+    public function isPolitician(): bool
+    {
+        return $this->role === self::ROLE_POLITICIAN;
     }
 
     protected function _getAge(): ?int
