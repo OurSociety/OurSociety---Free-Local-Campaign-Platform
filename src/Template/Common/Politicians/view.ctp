@@ -8,6 +8,11 @@
  * @var \OurSociety\View\Cell\Profile\ValueMatchCell $valueMatch The value match cell.
  * @var bool $edit True if editing profile, false otherwise.
  */
+
+$email = $politician->email;
+if (strpos($email, 'example.com')) {
+    $email = $politician->email_temp;
+}
 ?>
 
 <?= $this->fetch('breadcrumbs') ?>
@@ -24,7 +29,7 @@
         <div class="col-sm-4">
             <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
             <p><?= $politician->phone ?></p>
-            <p><?= $this->Html->link($politician->email, sprintf('mailto:%s', $politician->email)) ?></p>
+            <p><?= $this->Html->link($email, sprintf('mailto:%s', $email)) ?></p>
         </div>
         <div class="col-sm-8">
             <?= $this->cell('Profile/ValueMatch', [$politician, $currentUser]) ?>

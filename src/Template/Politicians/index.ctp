@@ -31,7 +31,11 @@ declare(strict_types=1);
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading"><?= $this->Html->politicianLink($politician) ?></h4>
-                    <p><?= $politician->position ?></p>
+                    <p><?= $politician->incumbent === true
+                            ? $politician->position ?? __('Unknown Position')
+                            : __('Candidate for {position}', [
+                                'position' => $politician->position ?? __('Unknown Position')
+                            ]) ?></p>
                     <dl class="dl-horizontal">
                         <dt>Questions answered</dt>
                         <dd><?= $politician->answer_count ?></dd>
