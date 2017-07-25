@@ -210,6 +210,13 @@ class User extends Entity
         return $this->role === self::ROLE_POLITICIAN;
     }
 
+    public function isClaimed(): bool
+    {
+        $email = $this->_properties['email'] ?: $this->email;
+
+        return strpos($email, '@example.com') === false;
+    }
+
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;

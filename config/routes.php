@@ -22,7 +22,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
     $routes->connect('/politicians', ['controller' => 'Politicians', 'action' => 'index'], ['_name' => 'politicians']);
-    $routes->connect('/politicians/:slug', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politicians:view', 'pass' => ['slug']]);
+    $routes->connect('/politicians/:politician', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politicians:view', 'pass' => ['politician']]);
+    $routes->connect('/politicians/:politician/claim', ['controller' => 'Politicians', 'action' => 'claim'], ['_name' => 'politician:claim', 'pass' => ['politician']]);
     $routes->connect('/politicians/:politician/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'politician:article', 'pass' => ['politician', 'article']]);
     $routes->connect('/politicians/:politician/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'politician:articles', 'pass' => ['politician']]);
     $routes->connect('/profile/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);

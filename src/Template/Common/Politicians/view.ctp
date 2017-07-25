@@ -9,10 +9,9 @@
  * @var bool $edit True if editing profile, false otherwise.
  */
 
-$email = $politician->email;
-if (strpos($email, 'example.com')) {
-    $email = $politician->email_temp;
-}
+$email = $politician->isClaimed()
+    ? $politician->email
+    : $politician->email_temp;
 ?>
 
 <?= $this->fetch('breadcrumbs') ?>
@@ -20,6 +19,13 @@ if (strpos($email, 'example.com')) {
 <h2>
     <?= $politician->name ?>
     <?= $this->fetch('edit_profile') ?>
+    <?php if (!$politician->isClaimed()): ?>
+        <?= $this->Html->link(
+            __('Claim Your Profile'),
+            ['_name' => 'politician:claim', $politician->slug],
+            ['class' => ['btn', 'btn-danger', 'pull-right']]
+        ) ?>
+    <?php endif ?>
 </h2>
 
 <hr>
