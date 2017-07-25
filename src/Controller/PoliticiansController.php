@@ -27,6 +27,7 @@ class PoliticiansController extends CrudController
         parent::initialize();
 
         $this->modelClass = 'Users';
+        $this->Auth->allow('index');
     }
 
     public function index(): ?Response

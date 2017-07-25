@@ -14,6 +14,9 @@ use Cake\ORM\TableRegistry;
  * @property string $id The UUID.
  * @property string $slug The slug.
  * @property string $email The email address.
+ * @property string $email_temp The temporary email address for imported candidates.
+ * @property string $position The position for politicians.
+ * @property int $incumbent True if currently in office, false otherwise.
  * @property int $zip The zip code.
  * @property string $phone The phone number.
  * @property string $password The password.
