@@ -30,7 +30,7 @@ class UsersTable extends AppTable
 {
     public const LIMIT_DASHBOARD = 10;
     public const ERROR_ROLE_NOT_IN_LIST = 'The only valid roles are "{0}".';
-    public const ERROR_EMAIL_UNIQUE = 'This email address is already in use.';
+    public const ERROR_EMAIL_UNIQUE = 'This email address is already in use. Each account must have a unique email address.';
 
     /**
      * {@inheritdoc}

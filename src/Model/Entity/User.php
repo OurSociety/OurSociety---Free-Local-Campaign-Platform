@@ -169,8 +169,12 @@ class User extends Entity
     {
         $user = clone $this;
 
+        $minInteger = '1' . str_repeat('0', self::TOKEN_LENGTH - 1);
+        $maxInteger = str_repeat('9', self::TOKEN_LENGTH);
+        $randomInteger = (string)random_int((int)$minInteger, (int)$maxInteger);
+
         /** @noinspection SpellCheckingInspection */
-        $user->token = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, self::TOKEN_LENGTH);
+        $user->token = str_pad($randomInteger, self::TOKEN_LENGTH, '0', STR_PAD_LEFT);
         $user->token_expires = Time::now()->addHours(self::TOKEN_EXPIRY_HOURS);
 
         return $user;

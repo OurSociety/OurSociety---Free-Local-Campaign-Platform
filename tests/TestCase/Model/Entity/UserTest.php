@@ -37,7 +37,8 @@ class UserTest extends TestCase
         self::assertNull($user->token_expires);
 
         $user = $user->withToken();
-        self::assertRegExp(sprintf('/^[A-Z0-9]{%d}$/', User::TOKEN_LENGTH), $user->token);
+        self::assertInternalType('string', $user->token);
+        self::assertRegExp(sprintf('/^[1-9]\d{%d}$/', User::TOKEN_LENGTH - 1), $user->token);
         self::assertEquals(User::TOKEN_EXPIRY_HOURS, $user->token_expires->diffInHours());
     }
 }
