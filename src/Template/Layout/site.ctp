@@ -44,13 +44,16 @@ $this->start('navbar');
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
                             <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
                             <li><?= $this->Html->dashboardLink($currentUser->role, __('Dashboard')) ?></li>
                             <li role="separator" class="divider"></li>
-                            <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
+                            <li><?= $this->Html->link(__('Logout'), ['_name' => 'users:logout']) ?></li>
                         </ul>
                     <?php else: ?>
                         <ul class="nav navbar-nav">
-                            <li><?= $this->Html->link('Login', ['_name' => 'users:login']) ?></li>
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
+                            <li><?= $this->Html->link(__('Login'), ['_name' => 'users:login']) ?></li>
                         </ul>
                     <?php endif ?>
                 </div>
