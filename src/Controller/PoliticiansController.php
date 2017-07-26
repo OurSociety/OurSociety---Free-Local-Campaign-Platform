@@ -64,23 +64,25 @@ class PoliticiansController extends CrudController
             ->where(compact('slug'))
             ->firstOrFail();
 
-        $link = function (string $text, array $url): string {
-            /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
-            return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
-        };
+        if ($politician->verified === null) {
+            $link = function (string $text, array $url): string {
+                /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
+                return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
+            };
 
-        $this->Flash->warning(__(
-            'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
-                'example_profile' => $link(__('an example profile'), [
-                    '_name' => 'politician',
-                    'politician' => 'seth-kaper-dale'
-                ]),
-                'claim_profile' => $link(__('Claim Profile'), [
-                    '_name' => 'politician:claim',
-                    'politician' => $politician->slug
-                ]),
-            ]
-        ), ['params' => ['escape' => false]]);
+            $this->Flash->warning(__(
+                'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
+                    'example_profile' => $link(__('an example profile'), [
+                        '_name' => 'politician',
+                        'politician' => 'seth-kaper-dale'
+                    ]),
+                    'claim_profile' => $link(__('Claim Profile'), [
+                        '_name' => 'politician:claim',
+                        'politician' => $politician->slug
+                    ]),
+                ]
+            ), ['params' => ['escape' => false]]);
+        }
 
         $this->set(compact('politician'));
 
