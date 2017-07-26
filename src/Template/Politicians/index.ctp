@@ -52,8 +52,8 @@ declare(strict_types=1);
             </div>
         </div>
     <?php endforeach ?>
-    <?= $this->Paginator->numbers() ?>
 </section>
+
 <div class="text-muted small text-center">
-<?= $this->element('index/pagination') ?>
+    <?= $this->element('index/pagination') ?>
 </div>
