@@ -93,7 +93,7 @@ class PoliticiansController extends CrudController
         $users = $this->loadModel('Users');
         $politician = $users->getBySlug($slug);
 
-        if ($politician->isClaimed()) {
+        if ($politician->verified !== null) {
             throw new NotFoundException('This profile has been claimed.');
         }
 
