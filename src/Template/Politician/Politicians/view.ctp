@@ -14,7 +14,10 @@
 <?php $this->end() ?>
 
 <?php $this->start('actions_heading') ?>
-<?= $this->Html->link('Edit Profile', ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-default pull-right']) ?>
+<div class="pull-right">
+    <?= $this->Html->link(__('Getting Started'), '/docs/onboarding', ['class' => 'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Complete Profile'), ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-warning']) ?>
+</div>
 <?php $this->end() ?>
 
 <?php $this->start('actions_articles') ?>
