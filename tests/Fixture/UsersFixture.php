@@ -22,7 +22,7 @@ class UsersFixture extends App\TestFixture
     public const TOKEN_CITIZEN = '123456';
     public const PASSWORD_DEFAULT = 'democracy';
     public const PASSWORD_RESET = 'new password';
-    public const SLUG_POLITICIAN = 'augustus-octavius-bacon';
+    public const SLUG_POLITICIAN = 'seth-kaper-dale';
     public const NAME_POLITICIAN = 'Augustus Octavius Bacon';
 
     /**
