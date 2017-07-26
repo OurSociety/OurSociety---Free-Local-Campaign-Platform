@@ -38,7 +38,7 @@ class UsersControllerTest extends IntegrationTestCase
                 //$this->assertResponseContains($record['created']);
                 //$this->assertResponseContains($record['modified']);
             });
-        $this->assertResponseContains('Page 1 of 1, showing 3 records out of 3 total.');
+        $this->assertResponseContains('Page 1 of 1, showing 4 records out of 4 total.');
     }
 
     public function testAdd(): void
