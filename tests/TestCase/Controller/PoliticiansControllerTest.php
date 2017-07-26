@@ -92,8 +92,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
 
         $politician = $users->getBySlug('imported-politician');
         self::assertNotNull($politician->verified);
-
-        (new DefaultPasswordHasher)->check($expectedPassword, $politician->password);
+        self::assertTrue((new DefaultPasswordHasher)->check($expectedPassword, $politician->password));
 
         $this->resumeSession();
         $this->get(['_name' => 'politician:profile']);
@@ -106,8 +105,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         ]);
         $this->assertResponseSuccess();
 
-        // TODO: Fix this test.
-        //$this->assertResponseCode(302);
-        //$this->assertRedirect(['_name' => 'politician:dashboard']);
+        $this->assertResponseCode(302);
+        $this->assertRedirect(['_name' => 'politician:dashboard']);
     }
 }

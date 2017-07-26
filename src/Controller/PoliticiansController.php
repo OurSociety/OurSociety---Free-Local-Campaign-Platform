@@ -78,6 +78,7 @@ class PoliticiansController extends CrudController
             } else {
                 $formData = [
                     'email' => $this->request->getData('email'),
+                    'password' => $this->request->getData('password'),
                     'verified' => Time::now(),
                 ];
                 $entity = $this->Users->patchEntity($politician, $formData);
