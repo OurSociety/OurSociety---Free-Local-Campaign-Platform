@@ -17,6 +17,7 @@ Router::defaultRouteClass(DashedRoute::class);
  */
 Router::scope('/', function (RouteBuilder $routes) {
     $routes->redirect('/', '/index.html');
+
     $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'pages:home']);
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
@@ -32,6 +33,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/reset', ['controller' => 'Users', 'action' => 'reset'], ['_name' => 'users:reset']);
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
     $routes->connect('/onboarding', ['controller' => 'Users', 'action' => 'onboarding'], ['_name' => 'users:onboarding']);
+
+    $routes->redirect('/docs/onboarding', 'https://drive.google.com/file/d/0BwuM2zudya6ub0Y2Zm5meWdwN00/view');
+
     $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
 });
 

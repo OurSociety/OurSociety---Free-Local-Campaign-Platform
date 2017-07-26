@@ -5,6 +5,7 @@ namespace OurSociety\Controller;
 
 use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Routing\Router;
 use Cake\View\CellTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
@@ -53,11 +54,35 @@ class PoliticiansController extends CrudController
 
     public function view(string $slug = null): ?Response
     {
-        $this->set([
-            'politician' => $this->loadModel('Users')->find('politicianForCitizen')->where([
-                'slug' => $slug ?: $this->Auth->user('slug'),
-            ])->firstOrFail(),
-        ]);
+        /** @var User $user */
+        $user = $this->Auth->user();
+        $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
+
+        /** @var User $politician */
+        $politician = $this->loadModel('Users')
+            ->find('politicianForCitizen')
+            ->where(compact('slug'))
+            ->firstOrFail();
+
+        $link = function (string $text, array $url): string {
+            /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
+            return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
+        };
+
+        $this->Flash->warning(__(
+            'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
+                'example_profile' => $link(__('an example profile'), [
+                    '_name' => 'politician',
+                    'politician' => 'seth-kaper-dale'
+                ]),
+                'claim_profile' => $link(__('Claim Profile'), [
+                    '_name' => 'politician:claim',
+                    'politician' => $politician->slug
+                ]),
+            ]
+        ), ['params' => ['escape' => false]]);
+
+        $this->set(compact('politician'));
 
         return null;
     }
@@ -86,10 +111,18 @@ class PoliticiansController extends CrudController
                     $saved = $this->Users->save($this->Users->patchEntity($politician, $formData));
                     if ($saved) {
                         $this->refreshAuth($politician);
-                        $this->Flash->success(sprintf(
-                            'You have claimed the profile of %s and are now logged in. Please update the remaining sections.',
-                            $politician->name
-                        ));
+                        $this->Flash->success(__(
+                            'You have claimed the profile of {politician_name} and are now logged in. '
+                            . 'Please update the remaining sections and see the {getting_started} guide.',
+                            [
+                                'politician_name' => $politician->name,
+                                'getting_started' => sprintf(
+                                    '<a href="%s">%s</a>',
+                                    '/docs/onboarding',
+                                    __('Getting Started')
+                                )
+                            ]
+                        ), ['params' => ['escape' => false]]);
                         return $this->redirect(['_name' => 'politician:profile']);
                     }
                 }
