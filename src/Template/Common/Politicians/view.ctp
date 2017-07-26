@@ -16,14 +16,9 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
 
 <h2>
     <?= $politician->name ?>
-    <?= $this->fetch('actions_heading') ?>
-    <?php if ($politician->verified === null): ?>
-        <?= $this->Html->link(
-            __('Claim Your Profile'),
-            ['_name' => 'politician:claim', $politician->slug],
-            ['class' => ['btn', 'btn-danger', 'pull-right']]
-        ) ?>
-    <?php endif ?>
+    <div class="pull-right">
+        <?= $this->fetch('actions_heading') ?>
+    </div>
 </h2>
 
 <hr>
