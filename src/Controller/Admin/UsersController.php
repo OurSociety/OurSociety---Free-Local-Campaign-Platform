@@ -12,28 +12,28 @@ class UsersController extends CrudController
 {
     public function index(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'created', 'modified', 'active']);
+        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'created', 'modified', 'verified']);
 
         return $this->Crud->execute();
     }
 
     public function add(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'active']);
+        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'verified']);
 
         return $this->Crud->execute();
     }
 
     public function edit(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['id', 'name', 'email', 'active']);
+        $this->Crud->action()->setConfig('scaffold.fields', ['id', 'name', 'email', 'verified']);
 
         return $this->Crud->execute();
     }
 
     public function view(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'active', 'created', 'modified']);
+        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'verified', 'created', 'modified']);
 
         return $this->Crud->execute();
     }

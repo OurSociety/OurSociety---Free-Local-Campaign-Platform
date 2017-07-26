@@ -29,7 +29,7 @@ class UsersSeed extends App\AbstractSeed
                 'email' => 'team@oursociety.org',
                 'password' => (new PasswordHasher)->hash(\OurSociety\Test\Fixture\UsersFixture::PASSWORD_DEFAULT),
                 'name' => 'OurSociety Team',
-                'active' => Time::now()->format('Y-m-d H:i:s'),
+                'verified' => Time::now()->format('Y-m-d H:i:s'),
                 'role' => User::ROLE_ADMIN,
                 'picture' => 'logo.png'
             ],
@@ -39,7 +39,7 @@ class UsersSeed extends App\AbstractSeed
                 'email' => 'team+politician@oursociety.org',
                 'password' => (new PasswordHasher)->hash(\OurSociety\Test\Fixture\UsersFixture::PASSWORD_DEFAULT),
                 'name' => 'Test Politician',
-                'active' => Time::now()->format('Y-m-d H:i:s'),
+                'verified' => Time::now()->format('Y-m-d H:i:s'),
                 'role' => User::ROLE_POLITICIAN,
                 'zip' => 12345,
                 'picture' => 'example-politician.png'
@@ -50,7 +50,7 @@ class UsersSeed extends App\AbstractSeed
                 'email' => 'team+citizen@oursociety.org',
                 'password' => (new PasswordHasher)->hash(\OurSociety\Test\Fixture\UsersFixture::PASSWORD_DEFAULT),
                 'name' => 'Test Citizen',
-                'active' => Time::now()->format('Y-m-d H:i:s'),
+                'verified' => Time::now()->format('Y-m-d H:i:s'),
                 'role' => User::ROLE_CITIZEN,
                 'zip' => 12345,
             ],

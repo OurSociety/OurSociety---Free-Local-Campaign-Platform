@@ -26,7 +26,7 @@ class AuthComponent extends Cake\AuthComponent
                 self::ALL => [
                     'finder' => 'auth',
                     'fields' => ['username' => 'email'],
-                    //'scope' => ['active IS NOT' => null], // TODO: active IS NOT NULL AND created < week(?) ago
+                    //'scope' => ['verified IS NOT' => null], // TODO: verified IS NOT NULL AND created < week(?) ago
                 ],
                 AppAuth\CookieAuthenticate::class => [
                     'cookie' => ['name' => AppController::COOKIE_NAME_REMEMBER_ME,

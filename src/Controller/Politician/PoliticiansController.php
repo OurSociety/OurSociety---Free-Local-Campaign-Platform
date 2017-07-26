@@ -32,8 +32,8 @@ class PoliticiansController extends CrudController
             ->where(['slug' => $this->Auth->user('slug')])
             ->firstOrFail();
 
-        if ($politician->active === null) {
-            $this->Flash->warning('The account associated with this profile has not been activated.');
+        if ($politician->verified === null) {
+            $this->Flash->warning('The email address for this profile has not been verified.');
         }
 
         $this->set([

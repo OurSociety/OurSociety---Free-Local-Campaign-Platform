@@ -23,7 +23,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Name');
         $this->assertResponseContains('Email');
         $this->assertResponseNotContains('Password');
-        $this->assertResponseContains('Active');
+        $this->assertResponseContains('Verified');
         $this->assertResponseContains('Created');
         $this->assertResponseContains('Modified');
         $this->assertResponseContains('Edit');
@@ -51,7 +51,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Name');
         $this->assertResponseContains('Email');
         $this->assertResponseNotContains('Password'); // TODO: Generate and email a random password.
-        $this->assertResponseContains('Active');
+        $this->assertResponseContains('Verified');
         // TODO: Fix timestamp columns
         $this->assertResponseNotContains('Created');
         $this->assertResponseNotContains('Modified');
@@ -64,7 +64,7 @@ class UsersControllerTest extends IntegrationTestCase
             '_method' => 'POST',
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'active' => true,
+            'verified' => true,
         ]);
         $this->assertResponseSuccess();
         //$this->assertResponseNotContains('Could not create user'); // Fix validation issue.
@@ -88,7 +88,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Name');
         $this->assertResponseContains('Email');
         $this->assertResponseNotContains('Password'); // TODO: Generate and email password reset link.
-        $this->assertResponseContains('Active');
+        $this->assertResponseContains('Verified');
         // TODO: Fix timestamp columns
         $this->assertResponseNotContains('Created');
         $this->assertResponseNotContains('Modified');
@@ -103,7 +103,7 @@ class UsersControllerTest extends IntegrationTestCase
             'id' => $user->id,
             'name' => 'Augustus O. Bacon',
             'email' => 'politician@example.org',
-            'active' => true,
+            'verified' => true,
             '_save' => '',
         ]);
         $this->assertResponseSuccess();
@@ -124,7 +124,7 @@ class UsersControllerTest extends IntegrationTestCase
             '_method' => 'DELETE',
             'name' => 'Augustus O. Bacon',
             'email' => 'politician@example.org',
-            'active' => true,
+            'verified' => true,
         ]);
         $this->assertResponseSuccess();
         //$this->assertResponseCode(302); // Fix DELETE request.
@@ -152,7 +152,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains($user->name);
         $this->assertResponseContains($user->email);
         $this->assertResponseNotContains($user->password);
-        $this->assertResponseContains('Active');
+        $this->assertResponseContains('Verified');
         // TODO: Fix timestamp columns
         //$this->assertResponseContains((string)$user->created);
         //$this->assertResponseContains((string)$user->modified);

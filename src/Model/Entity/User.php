@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
  * @property string $name The name.
  * @property string|null $token The verification token.
  * @property \Cake\I18n\FrozenTime|null $token_expires The expiry timestamp.
- * @property \Cake\I18n\FrozenTime|null $active The account activation timestamp.
+ * @property \Cake\I18n\FrozenTime|null $verified The email verification timestamp.
  * @property string $role The role.
  * @property int $answer_count The amount of questions answered.
  * @property string|null $picture The profile picture.
