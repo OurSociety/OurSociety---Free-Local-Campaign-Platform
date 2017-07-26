@@ -81,6 +81,8 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->assertResponseContains(UsersTable::ERROR_EMAIL_UNIQUE);
 
         // success
+        $claimMessage = 'You have claimed the profile of Imported Politician and are now logged in. ' .
+            'Please update the remaining sections and see the <a href="/docs/onboarding">Getting Started</a> guide.';
         $this->post(['_name' => 'politician:claim', 'politician' => 'imported-politician'], [
             'token' => '123456',
             'email' => $expectedEmail,
@@ -88,6 +90,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         ]);
         $this->assertResponseSuccess();
         $this->assertRedirect(['_name' => 'politician:profile']);
+        $this->assertFlash($claimMessage);
 
         $politician = $users->getBySlug('imported-politician');
         self::assertNotNull($politician->verified);
@@ -96,8 +99,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->resumeSession();
         $this->get(['_name' => 'politician:profile']);
         $this->assertResponseOk();
-        $this->assertResponseContains('You have claimed the profile of Imported Politician and are now logged in.');
-        $this->assertResponseContains('Please update the remaining sections and see the <a href="/docs/onboarding">Getting Started</a> guide.');
+        $this->assertResponseContains($claimMessage);
 
         $this->post(['_name' => 'users:login'], [
             'email' => $expectedEmail,
@@ -107,5 +109,6 @@ class PoliticiansControllerTest extends IntegrationTestCase
 
         $this->assertResponseCode(302);
         $this->assertRedirect(['_name' => 'politician:dashboard']);
+        $this->assertFlash($claimMessage);
     }
 }
