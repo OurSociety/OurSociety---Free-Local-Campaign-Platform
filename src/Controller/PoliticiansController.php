@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller;
 
+use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\CellTrait;
 use OurSociety\Model\Entity\User;
@@ -75,13 +76,13 @@ class PoliticiansController extends CrudController
             if ($this->request->getData('token') !== $politician->token) {
                 $politician->setError('token', 'Sorry, the code you have entered does not match our records.');
             } else {
-                $entity = $this->Users->patchEntity($politician, [
+                $formData = [
                     'email' => $this->request->getData('email'),
-                ]);
+                    'verified' => Time::now(),
+                ];
+                $entity = $this->Users->patchEntity($politician, $formData);
                 if (empty($entity->getErrors())) {
-                    $saved = $this->Users->save($this->Users->patchEntity($politician, [
-                        'email' => $this->request->getData('email'),
-                    ]));
+                    $saved = $this->Users->save($this->Users->patchEntity($politician, $formData));
                     if ($saved) {
                         $this->refreshAuth($politician);
                         $this->Flash->success(sprintf(

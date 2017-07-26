@@ -91,6 +91,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->assertFlash($message);
 
         $politician = $users->getBySlug('imported-politician');
+        self::assertNotNull($politician->verified);
 
         (new DefaultPasswordHasher)->check($expectedPassword, $politician->password);
 
