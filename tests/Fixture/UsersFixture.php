@@ -5,7 +5,6 @@ namespace OurSociety\Test\Fixture;
 
 use Cake\Auth\AbstractPasswordHasher;
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\I18n\Time;
 use OurSociety\TestSuite\Fixture as App;
 use Faker\Factory as GeneratorFactory;
 use Faker\Generator;
@@ -20,7 +19,7 @@ class UsersFixture extends App\TestFixture
     public const EMAIL_ADMIN = 'team@oursociety.org';
     public const EMAIL_CITIZEN = 'citizen@example.net';
     public const EMAIL_POLITICIAN = 'politician@example.org';
-    public const TOKEN_CITIZEN = 'ABC123';
+    public const TOKEN_CITIZEN = '123456';
     public const PASSWORD_DEFAULT = 'democracy';
     public const PASSWORD_RESET = 'new password';
     public const SLUG_POLITICIAN = 'augustus-octavius-bacon';
@@ -83,7 +82,6 @@ class UsersFixture extends App\TestFixture
     // @codingStandardsIgnoreEnd
 
     public $defaults = [
-        'verified' => 'now',
         'password' => self::PASSWORD_DEFAULT,
     ];
 
@@ -97,15 +95,17 @@ class UsersFixture extends App\TestFixture
             'role' => User::ROLE_ADMIN,
             'name' => 'OurSociety Team',
             'email' => self::EMAIL_ADMIN,
-            'picture' => 'logo.png'
+            'picture' => 'logo.png',
+            'verified' => 'now',
         ],
         [
             'role' => User::ROLE_CITIZEN,
             'name' => 'Citizenfour',
             'email' => self::EMAIL_CITIZEN,
+            'picture' => 'example-politician.png',
             'token' => self::TOKEN_CITIZEN,
             'token_expires' => '1 hour',
-            'picture' => 'example-politician.png'
+            'verified' => 'now',
         ],
         [
             'id' => self::ID_POLITICIAN,
@@ -119,6 +119,7 @@ class UsersFixture extends App\TestFixture
             'birth_state' => 'NJ',
             'birth_country' => 'US',
             'born' => '1984-01-01',
+            'verified' => 'now',
         ],
         [
             'role' => User::ROLE_POLITICIAN,
@@ -128,11 +129,12 @@ class UsersFixture extends App\TestFixture
             'email_temp' => 'possible.real.email@example.com',
             'phone' => '(123) 456-7890 x1234 / 123-213-2345',
             'password' => 'unclaimed',
-            'token' => '123456',
-            'token_expires' => null,
             'address_1' => '123 Street, Town, ST 01234',
             'position' => 'State Senate District 8',
             'incumbent' => false,
+            'token' => '123456',
+            'token_expires' => null,
+            'verified' => null,
         ],
     ];
 
@@ -155,16 +157,7 @@ class UsersFixture extends App\TestFixture
             return $record;
         };
 
-        $setTokenExpires = function (array $record) {
-            if (isset($record['token'])) {
-                $record['token_expires'] = Time::now()->addHours(24);
-            }
-
-            return $record;
-        };
-
         $this->records = collection($this->records)
-            ->map($hashPasswords)
-            ->map($setTokenExpires);
+            ->map($hashPasswords);
     }
 }
