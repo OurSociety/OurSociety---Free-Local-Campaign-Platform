@@ -44,7 +44,11 @@ EMAIL;
      */
     protected static function assertEmailContains(string $string): void
     {
-        self::assertContains(str_replace("\n", "\r\n", $string), Configure::read('EmailTransport.test.message'));
+        $actual = Configure::read('EmailTransport.test.message');
+        // TODO: This should be in UsersControllerTest::testForgot()
+        $actual = preg_replace('/\d{6}/', '{TOKEN}', $actual);
+
+        self::assertContains(str_replace("\n", "\r\n", $string), $actual);
     }
 
     /**

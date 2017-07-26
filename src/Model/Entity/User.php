@@ -14,6 +14,9 @@ use Cake\ORM\TableRegistry;
  * @property string $id The UUID.
  * @property string $slug The slug.
  * @property string $email The email address.
+ * @property string $email_temp The temporary email address for imported candidates.
+ * @property string $position The position for politicians.
+ * @property int $incumbent True if currently in office, false otherwise.
  * @property int $zip The zip code.
  * @property string $phone The phone number.
  * @property string $password The password.
@@ -169,8 +172,12 @@ class User extends Entity
     {
         $user = clone $this;
 
+        $minInteger = '1' . str_repeat('0', self::TOKEN_LENGTH - 1);
+        $maxInteger = str_repeat('9', self::TOKEN_LENGTH);
+        $randomInteger = (string)random_int((int)$minInteger, (int)$maxInteger);
+
         /** @noinspection SpellCheckingInspection */
-        $user->token = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, self::TOKEN_LENGTH);
+        $user->token = str_pad($randomInteger, self::TOKEN_LENGTH, '0', STR_PAD_LEFT);
         $user->token_expires = Time::now()->addHours(self::TOKEN_EXPIRY_HOURS);
 
         return $user;
@@ -188,14 +195,26 @@ class User extends Entity
         TableRegistry::get('Users')->saveOrFail($this->withLastSeen());
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isCitizen(): bool
+    {
+        return $this->role === self::ROLE_CITIZEN;
+    }
+
     public function isPolitician(): bool
     {
         return $this->role === self::ROLE_POLITICIAN;
     }
 
-    public function isAdmin(): bool
+    public function isClaimed(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        $email = $this->_properties['email'] ?: $this->email;
+
+        return strpos($email, '@example.com') === false;
     }
 
     protected function _getAge(): ?int

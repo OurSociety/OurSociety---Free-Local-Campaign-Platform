@@ -5,6 +5,7 @@
 
 import 'bootstrap-sass';
 import './app/editor.js';
+import './app/watermark.js';
 
 // window.Vue = require('vue');
 // window.Inputmask = require('inputmask');

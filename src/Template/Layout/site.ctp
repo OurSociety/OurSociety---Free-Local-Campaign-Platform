@@ -43,13 +43,8 @@ $this->start('navbar');
                         <?= $this->cell('Navbar/User') ?>
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
-                            <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_CITIZEN) ?></li>
-                            <?php if ($currentUser->isPolitician() || $currentUser->isAdmin()): ?>
-                                <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_POLITICIAN) ?></li>
-                            <?php endif ?>
-                            <?php if ($currentUser->isAdmin()): ?>
-                                <li><?= $this->Html->dashboardLink(\OurSociety\Model\Entity\User::ROLE_ADMIN) ?></li>
-                            <?php endif ?>
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->dashboardLink($currentUser->role, __('Dashboard')) ?></li>
                             <li role="separator" class="divider"></li>
                             <li><?= $this->Html->link('Logout', ['_name' => 'users:logout']) ?></li>
                         </ul>

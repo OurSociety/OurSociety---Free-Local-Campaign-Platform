@@ -28,11 +28,7 @@ class UsersControllerTest extends IntegrationTestCase
 
         switch ($expected) {
             case true:
-                /** @noinspection SpellCheckingInspection */
-                $token = 'K31X67';
-                mt_srand(SEED);
                 $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::EMAIL_CITIZEN]);
-                mt_srand();
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => 'citizen@example.net']]);
@@ -40,11 +36,11 @@ class UsersControllerTest extends IntegrationTestCase
                 self::assertEmailTo('citizen@example.net');
                 self::assertEmailSubject('Forgot password');
                 self::assertEmailBody('Citizenfour', <<<EMAIL
-Your verification code is: ${token}
+Your verification code is: {TOKEN}
 
 Alternatively, click or copy the following address into your web browser:
 
-https://test.oursociety.org/reset?email=citizen%40example.net&token=${token}
+https://test.oursociety.org/reset?email=citizen%40example.net&token={TOKEN}
 EMAIL
                 );
                 break;

@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Controller\Citizen;
+namespace OurSociety\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\View\CellTrait;
 use CrudView\Breadcrumb\Breadcrumb;
-use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianArticle;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\PoliticianArticlesTable;
@@ -45,7 +44,7 @@ class ArticlesController extends CrudController
                 // TODO: They can click the `name` but would be nice if this "View" button worked.
                 //       ... or just switch the template to a non-table one
                 //    'view' => ['title' => 'What', 'url' => [
-                //        '_name' => 'citizen:politician:article',
+                //        '_name' => 'politician:article',
                 //        'article' => 'the-long-road-ahead',
                 //        'politician' => 'augustus-octavius-bacon',
                 //        'id' => ':primaryKey:',
@@ -59,7 +58,7 @@ class ArticlesController extends CrudController
                         'title' => 'Article Title',
                         'formatter' => function ($name, $value, PoliticianArticle $article) {
                             return $this->createView()->Html->link($value, [
-                                '_name' => 'citizen:politician:article',
+                                '_name' => 'politician:article',
                                 'politician' => $article->politician->slug,
                                 'article' => $article->slug,
                             ]);

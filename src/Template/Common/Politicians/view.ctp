@@ -8,6 +8,10 @@
  * @var \OurSociety\View\Cell\Profile\ValueMatchCell $valueMatch The value match cell.
  * @var bool $edit True if editing profile, false otherwise.
  */
+
+$email = $politician->isClaimed()
+    ? $politician->email
+    : $politician->email_temp;
 ?>
 
 <?= $this->fetch('breadcrumbs') ?>
@@ -15,6 +19,13 @@
 <h2>
     <?= $politician->name ?>
     <?= $this->fetch('edit_profile') ?>
+    <?php if (!$politician->isClaimed()): ?>
+        <?= $this->Html->link(
+            __('Claim Your Profile'),
+            ['_name' => 'politician:claim', $politician->slug],
+            ['class' => ['btn', 'btn-danger', 'pull-right']]
+        ) ?>
+    <?php endif ?>
 </h2>
 
 <hr>
@@ -24,7 +35,7 @@
         <div class="col-sm-4">
             <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
             <p><?= $politician->phone ?></p>
-            <p><?= $this->Html->link($politician->email, sprintf('mailto:%s', $politician->email)) ?></p>
+            <p><?= $this->Html->link($email, sprintf('mailto:%s', $email)) ?></p>
         </div>
         <div class="col-sm-8">
             <?= $this->cell('Profile/ValueMatch', [$politician, $currentUser]) ?>
@@ -71,18 +82,18 @@
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading">
-                                <?php if ($this->request->getParam('prefix') === 'citizen'): ?>
-                                    <?= $this->Html->link($article->name, [
-                                        '_name' => 'citizen:politician:article',
-                                        'politician' => $politician->slug,
-                                        'article' => $article->slug,
-                                    ]) ?>
-                                <?php elseif ($this->request->getParam('prefix') === 'politician'): ?>
+                                <?php if ($this->request->getParam('prefix') === 'politician'): ?>
                                     <?= $this->Html->link($article->name, [
                                         'prefix' => 'politician/profile',
                                         'controller' => 'Articles',
                                         'action' => 'view',
                                         $article->id,
+                                    ]) ?>
+                                <?php else: ?>
+                                    <?= $this->Html->link($article->name, [
+                                        '_name' => 'politician:article',
+                                        'politician' => $politician->slug,
+                                        'article' => $article->slug,
                                     ]) ?>
                                 <?php endif ?>
                                 <span class="text-muted small">

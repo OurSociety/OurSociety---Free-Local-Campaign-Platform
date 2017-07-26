@@ -1,12 +1,8 @@
 <?php
+declare(strict_types=1);
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
- * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
- * @var \OurSociety\View\Cell\Profile\PictureCell $picture The profile picture cell.
- * @var \OurSociety\View\Cell\Profile\ValueMatchCell $valueMatch The value match cell.
- * @var bool $edit True if editing profile, false otherwise.
+ * @var \OurSociety\Model\Entity\User[] $politicians The list of politicians.
  */
 ?>
 <ol class="breadcrumb">
@@ -17,7 +13,6 @@
 <h2><?= __('Politicians') ?></h2>
 
 <hr>
-
 
 <section class="row">
     <?php foreach ($politicians as $politician): ?>
@@ -36,7 +31,11 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading"><?= $this->Html->politicianLink($politician) ?></h4>
-                    <p><?= $politician->positions[0]->name ?></p>
+                    <p><?= $politician->incumbent === true
+                            ? $politician->position ?? __('Unknown Position')
+                            : __('Candidate for {position}', [
+                                'position' => $politician->position ?? __('Unknown Position')
+                            ]) ?></p>
                     <dl class="dl-horizontal">
                         <dt>Questions answered</dt>
                         <dd><?= $politician->answer_count ?></dd>
