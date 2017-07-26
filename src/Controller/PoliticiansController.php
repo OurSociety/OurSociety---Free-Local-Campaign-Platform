@@ -40,6 +40,7 @@ class PoliticiansController extends CrudController
             'scaffold' => [
                 'fields' => [
                     'name',
+                    'picture',
                     'answer_count' => ['title' => '# Answers'],
                     'last_seen',
                 ],
