@@ -13,6 +13,9 @@ use Cake\I18n\I18n;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <?= $this->Html->meta('icon', $this->Url->image('logo.png')); ?>
+
+    <?= $this->element('Snippets/google_analytics') ?>
+
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('headjs'); ?>
