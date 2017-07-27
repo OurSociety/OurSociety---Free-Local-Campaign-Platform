@@ -1,5 +1,4 @@
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/variables'; // Bootstrap v3
-@import 'variables';
+@import 'data/variables';
 
 .navbar {
     background-image: linear-gradient(110deg, $white 50%, $brand-purple 50%);

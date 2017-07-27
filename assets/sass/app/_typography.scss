@@ -1,0 +1,5 @@
+@import 'data/variables';
+
+hr {
+    border-top: 5px $brand-purple-light solid; /* Make horizontal rules a thick purple line */
+}

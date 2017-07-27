@@ -1,84 +1,24 @@
+@charset "UTF-8";
+
+// Vendor
 //@import '~bootstrap/scss/bootstrap'; // Bootstrap v4
 @import '~bootstrap-sass/assets/stylesheets/bootstrap'; // Bootstrap v3
-@import 'app/variables';
+
+// Mixins
+@import 'app/data/flex';
+
+// Variables
+@import 'app/data/variables';
+
+// Global
+@import "app/global";
+
+// Theme
 @import 'app/editor';
+@import 'app/form';
+@import 'app/home';
 @import 'app/icons';
 @import 'app/navbar';
+@import 'app/questions';
+@import 'app/typography';
 @import 'app/watermark';
-
-body {
-    //background: $brand-primary;
-}
-
-
-.s-home {
-    section:nth-of-type(2) {
-        margin-top: 100px; /* Add whitespace between sections */
-    }
-
-    section {
-        margin-bottom: 100px; /* Add whitespace between sections */
-    }
-
-    section:last-of-type {
-        margin-bottom: 0; /* Add whitespace between sections */
-    }
-}
-
-hr {
-    border-top: 5px $brand-purple-light solid; /* Make horizontal rules a thick purple line */
-}
-
-/** Start hack for vertical align until BS4 - **/
-.row-xs-flex-center {
-    display:flex;
-    align-items:center;
-}
-@media (min-width:768px) {
-    .row-sm-flex-center {
-        display:flex;
-        align-items:center;
-    }
-}
-@media (min-width: 992px) {
-    .row-md-flex-center {
-        display:flex;
-        align-items:center;
-    }
-}
-@media (min-width: 1200px) {
-    .row-lg-flex-center {
-        display:flex;
-        align-items:center;
-    }
-}
-/** End hack **/
-
-.form-question-answers {
-    .radio {
-        .radio {
-            label {
-                background-color: $brand-purple;
-                border: 1px solid $black;
-                color: $white;
-                font-size: $blockquote-font-size;
-                padding: ($line-height-computed / 2) $line-height-computed;
-                width: 100%;
-                input {
-                    right: $line-height-computed;
-                    top: ($line-height-computed / 2);
-                }
-            }
-        }
-    }
-}
-
-.form-control:invalid {
-    border-color: $state-warning-text;
-    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075)); // Redeclare so transitions work
-    &:focus {
-        border-color: darken($state-warning-text, 10%);
-        $shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px lighten($state-warning-text, 20%);
-        @include box-shadow($shadow);
-    }
-}
