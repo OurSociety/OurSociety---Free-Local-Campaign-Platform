@@ -16,7 +16,7 @@
 <?php $this->start('actions_heading') ?>
     <?= $this->Html->link(__('Getting Started'), '/docs/onboarding', ['class' => 'btn btn-primary']) ?>
     <?= $this->Html->link(__('Example Profile'), ['_name' => 'politician', 'politician' => 'seth-kaper-dale'], ['class' => 'btn btn-info']) ?>
-    <?= $this->Html->link(__('Complete Profile'), ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-warning']) ?>
+    <?= $this->Html->link(__('Your Profile'), ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-warning']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_articles') ?>

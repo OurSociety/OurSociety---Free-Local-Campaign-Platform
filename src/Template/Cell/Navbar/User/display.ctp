@@ -16,7 +16,7 @@
     </p>
     <?= $this->Form->create($user, [
         'url' => ['_name' => 'admin:users:switch'],
-        'class' => ['form-inline', 'hidden-xs'],
+        'class' => ['form-inline', 'hidden-xs', 'hidden-sm'],
         'style' => 'float: left; margin-top: 8px;',
     ]) ?>
     <?= $this->Form->control('user', [

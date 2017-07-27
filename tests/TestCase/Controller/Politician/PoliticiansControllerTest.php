@@ -21,7 +21,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->assertResponseContains(UsersFixture::NAME_POLITICIAN);
         $this->assertResponseContains('Getting Started');
         $this->assertResponseContains('Example Profile');
-        $this->assertResponseContains('Complete Profile');
+        $this->assertResponseContains('Your Profile');
         $this->assertResponseContains('Edit Articles');
         $this->assertResponseContains('Edit Profile');
         $this->assertResponseContains('Edit Positions');

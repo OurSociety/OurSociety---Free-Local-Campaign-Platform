@@ -22,10 +22,10 @@ $this->end();
  */
 $this->start('navbar');
 ?>
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle visible-xs collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle visible-xs collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -37,7 +37,7 @@ $this->start('navbar');
                     ['class' => 'navbar-brand', 'escape' => false]
                 ); ?>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="navbar-top">
                 <div class="navbar-right">
                     <?php if ($this->get('currentUser')): ?>
                         <?= $this->cell('Navbar/User') ?>

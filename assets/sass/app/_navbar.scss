@@ -1,0 +1,46 @@
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/variables'; // Bootstrap v3
+@import 'variables';
+
+.navbar {
+    background-image: linear-gradient(110deg, $white 50%, $brand-purple 50%);
+
+    .container {
+        background-image: linear-gradient(110deg, $white 150px, $brand-purple 100%);
+        @media (min-width: $screen-sm-min) {
+            background-image: linear-gradient(110deg, $white 150px, $brand-purple 75%);
+
+            .navbar-text {
+                color: darken($gray-lighter, 10%);
+                a {
+                    color: $gray-lighter;
+                }
+            }
+            .navbar-nav > li > a {
+                color: $gray-lighter;
+                &:hover, &:focus {
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+.navbar-collapse {
+    @media (max-width: $screen-xs-max) {
+        box-shadow: inset 1px 4px 9px -6px;
+        background-color: $gray-lighter;
+    }
+}
+
+.navbar-brand {
+    //background: url('../img/banner.png') no-repeat center center;
+    //background-size: cover;
+    padding: 5px; /* Reduce padding to make the most of the image and make even on all sides.. */
+    margin: 0 10px; /* ..and compensate with horizontal margin so width/spacing is maintained */
+}
+
+.navbar-brand {
+    > img {
+        height: 100%; /* Force image to fit in default navbar height */
+    }
+}

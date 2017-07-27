@@ -1,36 +1,15 @@
 //@import '~bootstrap/scss/bootstrap'; // Bootstrap v4
 @import '~bootstrap-sass/assets/stylesheets/bootstrap'; // Bootstrap v3
+@import 'app/variables';
 @import 'app/editor';
 @import 'app/icons';
+@import 'app/navbar';
 @import 'app/watermark';
 
 body {
     //background: $brand-primary;
 }
 
-$brand-purple: #852c92;
-$brand-purple-light: #7e62a3;
-$white: white;
-$black: black;
-
-@media (min-width: 768px) {
-    .navbar-toggle {
-        display: inherit; /* Make hamburger visible on desktop */
-    }
-}
-
-.navbar-brand {
-    //background: url('../img/banner.png') no-repeat center center;
-    //background-size: cover;
-    padding: 5px; /* Reduce padding to make the most of the image and make even on all sides.. */
-    margin: 0 10px; /* ..and compensate with horizontal margin so width/spacing is maintained */
-}
-
-.navbar-brand {
-    > img {
-        height: 100%; /* Force image to fit in default navbar height */
-    }
-}
 
 .s-home {
     section:nth-of-type(2) {

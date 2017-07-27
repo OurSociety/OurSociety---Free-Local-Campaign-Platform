@@ -54,6 +54,20 @@ class UsersSeed extends App\AbstractSeed
                 'role' => User::ROLE_CITIZEN,
                 'zip' => 12345,
             ],
+            [
+                'id' => Text::uuid(),
+                'role' => User::ROLE_POLITICIAN,
+                'name' => 'Imported Politician',
+                'slug' => 'imported-politician',
+                'email' => 'imported-politician@example.com',
+                'email_temp' => 'possible.real.email@example.com',
+                'phone' => '(123) 456-7890 x1234 / 123-213-2345',
+                'password' => 'unclaimed',
+                'address_1' => '123 Street, Town, ST 01234',
+                'position' => 'State Senate District 8',
+                'incumbent' => 0,
+                'token' => '123456',
+            ],
         ];
 
         $table->insert($data)->save();
