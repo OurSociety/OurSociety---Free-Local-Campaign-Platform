@@ -1,0 +1,163 @@
+//.table-bordered {
+//    border: 1px solid black;
+//}
+
+$brand-purple: #852c92;
+
+svg.icon {
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    vertical-align: center;
+}
+
+li.topic-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    > svg.icon {
+        padding: .5em;
+        height: 5em;
+        width: 5em;
+    }
+}
+
+blockquote {
+    > svg.icon {
+        float: right;
+        padding: .5em;
+        height: 5em;
+        width: 5em;
+    }
+}
+
+i.topic {
+    //noinspection CssOptimizeSimilarProperties
+    background-repeat: no-repeat;
+    //noinspection CssOptimizeSimilarProperties
+    background-position: center center;
+    display: inline-block;
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+    shape-outside: circle();
+
+    blockquote & { // blockquote i.topic
+        float: right;
+    }
+
+    &-agriculture-food { // i.topic-agriculture-food
+        background-image: url('../../img/icon/topic/agriculture-food.svg?fill=red&selector=circle');
+    }
+
+    &-animals {
+        background-image: url('../../img/icon/topic/animals.svg?fill=red&selector=circle');
+    }
+
+    &-armed-forces-national-security {
+        background-image: url('../../img/icon/topic/armed-forces-national-security.svg?fill=red&selector=circle');
+    }
+
+    &-arts-culture-religion {
+        background-image: url('../../img/icon/topic/arts-culture-religion.svg?fill=red&selector=circle');
+    }
+
+    &-civil-rights {
+        background-image: url('../../img/icon/topic/civil-rights.svg?fill=red&selector=circle');
+    }
+
+    &-commerce {
+        background-image: url('../../img/icon/topic/commerce.svg?fill=red&selector=circle');
+    }
+
+    &-crime-law-enforcement {
+        background-image: url('../../img/icon/topic/crime-law-enforcement.svg?fill=red&selector=circle');
+    }
+
+    &-domestic-surveillance {
+        background-image: url('../../img/icon/topic/domestic-surveillance.svg?fill=red&selector=circle');
+    }
+
+    &-economics-finance {
+        background-image: url('../../img/icon/topic/economics-finance.svg?fill=red&selector=circle');
+    }
+
+    &-education {
+        background-image: url('../../img/icon/topic/education.svg?fill=red&selector=circle');
+    }
+
+    &-emergency-management {
+        background-image: url('../../img/icon/topic/emergency-management.svg?fill=red&selector=circle');
+    }
+
+    &-energy {
+        background-image: url('../../img/icon/topic/energy.svg?fill=red&selector=circle');
+    }
+
+    &-environment {
+        background-image: url('../../img/icon/topic/environment.svg?fill=red&selector=circle');
+    }
+
+    &-firearms {
+        background-image: url('../../img/icon/topic/firearms.svg?fill=red&selector=circle');
+    }
+
+    &-foreign-policy {
+        background-image: url('../../img/icon/topic/foreign-policy.svg?fill=red&selector=circle');
+    }
+
+    &-government-operation-politics {
+        background-image: url('../../img/icon/topic/government-operation-politics.svg?fill=red&selector=circle');
+    }
+
+    &-healthcare {
+        background-image: url('../../img/icon/topic/healthcare.svg?fill=red&selector=circle');
+    }
+
+    &-housing-community {
+        background-image: url('../../img/icon/topic/housing-community.svg?fill=red&selector=circle');
+    }
+
+    &-immigration {
+        background-image: url('../../img/icon/topic/immigration.svg?fill=red&selector=circle');
+    }
+
+    &-labor-employment {
+        background-image: url('../../img/icon/topic/labor-employment.svg?fill=red&selector=circle');
+    }
+
+    &-law {
+        background-image: url('../../img/icon/topic/law.svg?fill=red&selector=circle');
+    }
+
+    &-native-americans {
+        background-image: url('../../img/icon/topic/native-americans.svg?fill=red&selector=circle');
+    }
+
+    &-natural-resources {
+        background-image: url('../../img/icon/topic/natural-resources.svg?fill=red&selector=circle');
+    }
+
+    &-news-information {
+        background-image: url('../../img/icon/topic/news-information.svg?fill=red&selector=circle');
+    }
+
+    &-science-technology {
+        background-image: url('../../img/icon/topic/science-technology.svg?fill=red&selector=circle');
+    }
+
+    &-social-welfare {
+        background-image: url('../../img/icon/topic/social-welfare.svg?fill=red&selector=circle');
+    }
+
+    &-taxation {
+        background-image: url('../../img/icon/topic/taxation.svg?fill=red&selector=circle');
+    }
+
+    &-transportation {
+        background-image: url('../../img/icon/topic/transportation.svg?fill=red&selector=circle');
+    }
+}

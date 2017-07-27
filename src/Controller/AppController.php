@@ -19,7 +19,7 @@ use OurSociety\Model\Entity\User;
  */
 abstract class AppController extends Controller
 {
-    const COOKIE_NAME_REMEMBER_ME = 'remember';
+    const COOKIE_NAME_REMEMBER_ME = 'remember_me';
 
     /**
      * {@inheritdoc}

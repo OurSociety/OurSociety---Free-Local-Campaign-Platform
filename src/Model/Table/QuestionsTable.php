@@ -90,7 +90,7 @@ class QuestionsTable extends AppTable
         $query = $query ?: $this->find();
         $order = defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()';
 
-        return $query->contain(['Categories' => ['fields' => ['name']]])->order($order)->limit(10)->all();
+        return $query->contain(['Categories' => ['fields' => ['slug', 'name']]])->order($order)->limit(10)->all();
     }
 
     public function saveAnswers(array $formData): void

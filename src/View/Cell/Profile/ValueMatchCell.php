@@ -40,9 +40,6 @@ class ValueMatchCell extends Cell
 
     public function topics(string $name, array $topics): void
     {
-        $this->set([
-            'name' => $name,
-            'topics' => $topics,
-        ]);
+        $this->set(['name' => $name, 'topics' => $topics]);
     }
 }

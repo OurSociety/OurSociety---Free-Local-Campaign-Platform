@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
-const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
 
 mix
   .disableNotifications()
@@ -22,15 +23,31 @@ mix
   .setPublicPath('webroot')
   // .setResourceRoot('assets')
   .webpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.svg((\?.*)?|$)/,
+          include: path.resolve(__dirname, 'assets/img/icon/topic'),
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: { extract: true, spriteFilename: 'img/icons-topics.svg' }
+            },
+            'svgo-loader'
+          ]
+        },
+      ]
+    },
     output: {
       // publicPath: '/assets/',
       // chunkFilename: 'assets/dist/[name].[chunkhash].js',
     },
     plugins: [
+      new SpriteLoaderPlugin(),
       new WebpackNotifierPlugin({
         title: 'OurSociety',
         alwaysNotify: true,
-        contentImage: path.resolve(__dirname, 'assets/img/logo.png')
+        contentImage: path.resolve(__dirname, 'webroot/img/logo.png')
       })
     ],
     devServer: {

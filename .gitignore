@@ -4,9 +4,10 @@
 /vendor/*
 /webroot/css/app.css
 /webroot/css/landing.css
-/webroot/fonts/vendor/*
+/webroot/fonts/*
+!/webroot/fonts/cakedingbats-webfont.*
 /webroot/hot
-/webroot/images/*
+/webroot/img/icons-topics.svg
 /webroot/js/app.js
 /webroot/js/landing.js
 /webroot/mix-manifest.json

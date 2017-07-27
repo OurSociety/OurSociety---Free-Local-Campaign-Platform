@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -6,31 +8,23 @@ use Cake\ORM\Entity;
 /**
  * Category Entity
  *
- * @property string $id
- * @property string $slug
- * @property string $name
- * @property int $question_count
+ * @property string $id The UUID.
+ * @property string $slug The slug/icon CSS class suffix.
+ * @property string $name The name of the category.
+ * @property int $question_count The number of questions in this category.
  * @property int $match The value match percentage for a user (not persisted, but sometimes stored here) TODO: decide
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property \Cake\I18n\FrozenTime $created The created timestamp.
+ * @property \Cake\I18n\FrozenTime $modified The modified timestamp.
  *
  * @property \OurSociety\Model\Entity\Question[] $questions
  * @property \OurSociety\Model\Entity\User[] $users
  */
 class Category extends Entity
 {
+    public function __construct(array $properties = [], array $options = [])
+    {
+        parent::__construct($properties, $options);
 
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * Note that when '*' is set to true, this allows all unspecified fields to
-     * be mass assigned. For security purposes, it is advised to set '*' to false
-     * (or remove it), and explicitly make individual fields accessible as needed.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true,
-        'id' => false
-    ];
+        $this->_accessible = ['*' => true, 'id' => false];
+    }
 }
