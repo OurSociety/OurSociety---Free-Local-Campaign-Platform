@@ -27,7 +27,7 @@ class QuestionsControllerTest extends IntegrationTestCase
         /** @var User $user */
         $user = $this->_session['Auth']['User'];
         $number = 1;
-        $data = $table->getBatch()->map(function (Question $question) use ($user, &$number) {
+        $data = $table->getBatch($user)->map(function (Question $question) use ($user, &$number) {
             $this->assertResponseContains(sprintf('Question #%d', $number++));
             $this->assertResponseContains($question->question);
 

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Citizen;
 
+use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\AnswersTable;
 use OurSociety\Model\Table\QuestionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -16,20 +17,23 @@ class DashboardController extends AppController
      */
     public function index(): ?Response
     {
-        if ($this->Auth->user('zip') === null) {
+        /** @var User $user */
+        $user = $this->Auth->user();
+
+        if ($user->zip === null) {
             $this->Flash->success('Please provide the following information so we can find your politicians.');
 
             return $this->redirect(['_name' => 'users:onboarding']);
         }
 
-        if ($this->Auth->user('answer_count') === 0) {
+        if ($user->answer_count === 0) {
             $this->Flash->success('Please answer the following questions before we take you to the dashboard.');
 
             return $this->redirect(['_name' => 'citizen:questions']);
         }
 
         $this->set([
-            'questionTotal' => QuestionsTable::instance()->getQuestionTotal(),
+            'levelQuestionTotal' => QuestionsTable::instance()->getLevelQuestionTotal($user),
         ]);
 
         return null;

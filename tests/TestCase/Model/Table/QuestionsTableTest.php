@@ -7,6 +7,7 @@ use Cake\ORM\Table;
 use Cake\Utility\Text;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\Question;
+use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\QuestionsTable;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
@@ -52,8 +53,9 @@ class QuestionsTableTest extends AppTableTest
         /** @var QuestionsTable $table */
         $table = $this->table;
 
+        /** @var User $user */
         $user = UsersTable::instance()->find()->where(['email' => UsersFixture::EMAIL_CITIZEN])->firstOrFail();
-        $data = $table->getBatch()->map(function (Question $question) use ($user) {
+        $data = $table->getBatch($user)->map(function (Question $question) use ($user) {
             return [
                 'id' => $question->id,
                 'answers' => [

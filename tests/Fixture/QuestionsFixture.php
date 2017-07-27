@@ -24,6 +24,7 @@ class QuestionsFixture extends App\TestFixture
     public $fields = [
         'id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'category_id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'level' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'question' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'type' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'citizen_answer_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => true, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -49,12 +50,15 @@ class QuestionsFixture extends App\TestFixture
     {
         $questions = Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray();
 
-        collection($questions)->each(function (array $record) {
+        $i = 1;
+        collection($questions)->each(function (array $record) use (&$i) {
             $this->records[] = [
+                'level' => $i <= 50 ? 1 : 0,
                 'category_name' => $record['Type'],
                 'question' => $record['Question'],
                 'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
             ];
+            $i++;
         });
 
         parent::init();

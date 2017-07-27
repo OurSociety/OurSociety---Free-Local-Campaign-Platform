@@ -13,6 +13,7 @@ use Cake\ORM\TableRegistry;
  *
  * @property string $id The UUID.
  * @property string $slug The slug.
+ * @property string $level The current level of user.
  * @property string $email The email address.
  * @property string $email_temp The temporary email address for imported candidates.
  * @property string $position The position for politicians.
@@ -212,6 +213,11 @@ class User extends Entity
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;
+    }
+
+    protected function _getLevel(): ?int
+    {
+        return 1;
     }
 
     /**

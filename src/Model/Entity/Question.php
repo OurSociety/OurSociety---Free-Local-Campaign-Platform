@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property string $id
  * @property string $category_id
+ * @property int $level
  * @property string $question
  * @property string $type
  * @property int $citizen_answer_count

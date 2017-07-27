@@ -13,6 +13,7 @@ use Cake\ORM\RulesChecker;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Question;
+use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -56,6 +57,9 @@ class QuestionsTable extends AppTable
     public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
+            // level
+            ->allowEmpty('level')
+            ->integer('level')
             // question
             ->notEmpty('question')
             ->requirePresence('question', 'create')
@@ -82,15 +86,20 @@ class QuestionsTable extends AppTable
     }
 
     /**
-     * @param Query|null $query
+     * @param User $user
      * @return ResultSet|Question[]
      */
-    public function getBatch(?Query $query = null): ResultSet
+    public function getBatch(User $user): ResultSet
     {
-        $query = $query ?: $this->find();
-        $order = defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()';
-
-        return $query->contain(['Categories' => ['fields' => ['slug', 'name']]])->order($order)->limit(10)->all();
+        return $this->find()
+            ->where(['Questions.level' => $user->level])
+            ->contain(['Categories' => ['fields' => ['slug', 'name']]])
+            ->order(defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()')
+            ->notMatching('Answers', function (Query $query) use ($user) {
+                return $query->where(['Answers.user_id' => $user->id]);
+            })
+            ->limit(10)
+            ->all();
     }
 
     public function saveAnswers(array $formData): void
@@ -112,8 +121,8 @@ class QuestionsTable extends AppTable
         });
     }
 
-    public function getQuestionTotal(): int
+    public function getLevelQuestionTotal(User $user): int
     {
-        return $this->find()->count();
+        return $this->find()->where(['Questions.level' => $user->level])->count();
     }
 }

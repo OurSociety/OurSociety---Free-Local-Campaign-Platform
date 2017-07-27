@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -146,8 +147,11 @@ abstract class AppController extends Controller
     protected function refreshAuth(?User $user = null): void
     {
         $id = $user !== null ? $user->id : $this->Auth->user('id');
-        $authUser = $this->loadModel('Users')->find('auth')->where(['Users.id' => $id])->firstOrFail();
-
-        $this->Auth->setUser($authUser);
+        try {
+            $authUser = $this->loadModel('Users')->find('auth')->where(['Users.id' => $id])->firstOrFail();
+            $this->Auth->setUser($authUser);
+        } catch (RecordNotFoundException $e) {
+            $this->Auth->logout();
+        }
     }
 }
