@@ -28,6 +28,7 @@ class CategoriesTableTest extends TestCase
     public $fixtures = [
         'app.categories',
         'app.questions',
+        'app.answers',
         'app.users',
         'app.categories_users'
     ];
@@ -72,6 +73,16 @@ class CategoriesTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test getMatchPercentages method
+     *
+     * @return void
+     */
+    public function testGetMatchPercentages()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

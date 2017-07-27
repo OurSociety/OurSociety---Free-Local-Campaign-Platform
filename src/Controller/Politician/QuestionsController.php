@@ -26,7 +26,7 @@ class QuestionsController extends AppController
             return $this->redirect(['_name' => 'politician:dashboard']);
         }
 
-        $this->set(['questions' => $questions->getBatch()]);
+        $this->set(['questions' => $questions->getBatch($this->Auth->user())]);
 
         return null;
     }

@@ -3,9 +3,10 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  * @var \OurSociety\Model\Entity\User $currentUser
- * @var int $questionTotal The total number of questions in the application.
+ * @var int $levelQuestionTotal The total number of questions in this level.
  */
-$percentage = round(($currentUser->answer_count / $questionTotal) * 100);
+$percentage = round(($currentUser->answer_count / $levelQuestionTotal) * 100);
+$ceilingReached = $percentage === 100.0;
 ?>
 
 <ol class="breadcrumb">
@@ -20,13 +21,18 @@ $percentage = round(($currentUser->answer_count / $questionTotal) * 100);
         <p>
             <?= __('You have answered {answer_count} out of {question_total} questions.', [
                 'answer_count' => $currentUser->answer_count,
-                'question_total' => $questionTotal,
+                'question_total' => $levelQuestionTotal,
             ]) ?>
-            <?= __('Keep answering to improve the accuracy of your matches!') ?>
+            <?php if ($ceilingReached === true): ?>
+                <?= __('You have answered the first level of questions. Come back soon for more!') ?>
+            <?php else: ?>
+                <?= __('Keep answering to improve the accuracy of your matches!') ?>
+            <?php endif ?>
         </p>
 
         <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="<?= $percentage ?>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<?= $percentage ?>"
+                 aria-valuemin="0" aria-valuemax="100" style="min-width: <?= $percentage ?>em;">
                 <?= $percentage ?>%
             </div>
         </div>
@@ -52,7 +58,7 @@ $percentage = round(($currentUser->answer_count / $questionTotal) * 100);
                     <?= $this->Html->link(
                         __('Answer some more questions!'),
                         ['_name' => 'citizen:questions'],
-                        ['class' => 'btn btn-primary btn-block']
+                        ['class' => ['btn', 'btn-primary', 'btn-block', $ceilingReached ? 'disabled' : null]]
                     ) ?>
                 </div>
             </div>
