@@ -23,6 +23,7 @@ class Answer extends Entity
 {
     public const ANSWER_STRONGLY_AGREE = 100;
     public const ANSWER_SOMEWHAT_AGREE = 50;
+    public const ANSWER_NEUTRAL = 0;
     public const ANSWER_SOMEWHAT_DISAGREE = -50;
     public const ANSWER_STRONGLY_DISAGREE = -100;
 
@@ -32,6 +33,7 @@ class Answer extends Entity
     public const ANSWERS_SCALE = [
         self::ANSWER_STRONGLY_AGREE => 'Strongly Agree',
         self::ANSWER_SOMEWHAT_AGREE => 'Somewhat Agree',
+        self::ANSWER_NEUTRAL => 'No Opinion',
         self::ANSWER_SOMEWHAT_DISAGREE => 'Somewhat Disagree',
         self::ANSWER_STRONGLY_DISAGREE => 'Strongly Disagree',
     ];
