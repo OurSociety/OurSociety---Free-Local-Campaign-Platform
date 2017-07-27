@@ -93,4 +93,18 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
             $count === 0 ? 'No' : $count
         );
     }
+
+    /**
+     * Renders a jdenticon.
+     *
+     * @link https://jdenticon.com/
+     * @param string $jdenticonValue The string unique to the user/entity you are displaying jdenticon for.
+     * @param array|null $options The list of options for the tag.
+     * @param string|null $tag The tag to use ('svg' for vector, or 'canvas' for raster/PNG).
+     * @return string The tag where jdenticon will be rendered.
+     */
+    public function jdenticon(string $jdenticonValue, ?array $options = [], ?string $tag = null): string
+    {
+        return $this->tag($tag ?: 'svg', '', ['data-jdenticon-value' => $jdenticonValue] + $options);
+    }
 }

@@ -13,30 +13,32 @@
 </ol>
 <?php $this->end() ?>
 
-<?php $this->start('edit_profile') ?>
-<?= $this->Html->link('Edit Profile', ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-default pull-right']) ?>
+<?php $this->start('actions_heading') ?>
+    <?= $this->Html->link(__('Getting Started'), '/docs/onboarding', ['class' => 'btn btn-primary']) ?>
+    <?= $this->Html->link(__('Example Profile'), ['_name' => 'politician', 'politician' => 'seth-kaper-dale'], ['class' => 'btn btn-info']) ?>
+    <?= $this->Html->link(__('Complete Profile'), ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-warning']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_articles') ?>
+<?php $this->start('actions_articles') ?>
 <?= $this->Html->link('Edit Articles', ['_name' => 'politician:profile:articles'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_videos') ?>
+<?php $this->start('actions_videos') ?>
 <?= $this->Html->link('Edit Videos', ['_name' => 'politician:profile:videos'], ['class' => 'btn btn-sm btn-default']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_positions') ?>
+<?php $this->start('actions_positions') ?>
 <?= $this->Html->link('Edit Positions', ['_name' => 'politician:profile:positions'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_education') ?>
+<?php $this->start('actions_education') ?>
 <?= $this->Html->link('Edit Qualifications', ['_name' => 'politician:profile:qualifications'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_awards') ?>
+<?php $this->start('actions_awards') ?>
 <?= $this->Html->link('Edit Awards', ['_name' => 'politician:profile:awards'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
-<?php $this->start('edit_born') ?>
+<?php $this->start('actions_born') ?>
 <?= $this->Html->link('Edit Profile', ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>

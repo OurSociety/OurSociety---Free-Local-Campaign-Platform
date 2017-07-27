@@ -20,8 +20,8 @@ class PoliticianArticlesFixture extends App\TestFixture
 </p>
 
 HTML;
-    const ACTIVE_ID = 'approved_and_published';
-    const ACTIVE_SLUG = 'the-long-road-ahead';
+    const PUBLISHED_AND_APPROVED_ID = 'approved_and_published';
+    const PUBLISHED_AND_APPROVED_SLUG = 'the-long-road-ahead';
     const UNPUBLISHED_ID = 'unpublished';
     const UNAPPROVED_ID = 'unapproved';
 
@@ -59,9 +59,9 @@ HTML;
      */
     public $records = [
         [
-            'id' => self::ACTIVE_ID,
+            'id' => self::PUBLISHED_AND_APPROVED_ID,
             'politician_id' => UsersFixture::ID_POLITICIAN,
-            'slug' => self::ACTIVE_SLUG,
+            'slug' => self::PUBLISHED_AND_APPROVED_SLUG,
             'name' => 'The Long Road Ahead',
             'version' => 2,
             'approved' => '2017-07-11 10:00:00',
@@ -69,7 +69,7 @@ HTML;
         ],
         [
             'politician_id' => UsersFixture::ID_POLITICIAN,
-            'slug' => self::ACTIVE_SLUG, // need an identifier that matches new version
+            'slug' => self::PUBLISHED_AND_APPROVED_SLUG, // need an identifier that matches new version
             'name' => 'The Long Road Ahead (old version)',
             'version' => 1,
             'approved' => '2017-07-08 16:00:00',

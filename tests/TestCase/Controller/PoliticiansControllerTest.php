@@ -33,6 +33,10 @@ class PoliticiansControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'politician', 'politician' => 'imported-politician']);
         $this->assertResponseOk();
+        $this->assertResponseContains('This profile has not been claimed.');
+        $this->assertResponseContains('Click here to see <a href="/politicians/seth-kaper-dale">an example profile</a>');
+        $this->assertResponseContains('or choose <a href="/politicians/imported-politician/claim">Claim Profile</a>');
+        $this->assertResponseContains('to create your account.');
         $this->assertResponseContains('Imported Politician');
         $this->assertResponseContains('Claim Your Profile');
         $this->assertResponseContains('/politicians/imported-politician/claim');
@@ -77,6 +81,8 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->assertResponseContains(UsersTable::ERROR_EMAIL_UNIQUE);
 
         // success
+        $claimMessage = 'You have claimed the profile of Imported Politician and are now logged in. ' .
+            'Please update the remaining sections and see the <a href="/docs/onboarding">Getting Started</a> guide.';
         $this->post(['_name' => 'politician:claim', 'politician' => 'imported-politician'], [
             'token' => '123456',
             'email' => $expectedEmail,
@@ -84,20 +90,16 @@ class PoliticiansControllerTest extends IntegrationTestCase
         ]);
         $this->assertResponseSuccess();
         $this->assertRedirect(['_name' => 'politician:profile']);
-        $message = sprintf(
-            'You have claimed the profile of %s and are now logged in. Please update the remaining sections.',
-            $politician->name
-        );
-        $this->assertFlash($message);
+        $this->assertFlash($claimMessage);
 
         $politician = $users->getBySlug('imported-politician');
-
-        (new DefaultPasswordHasher)->check($expectedPassword, $politician->password);
+        self::assertNotNull($politician->verified);
+        self::assertTrue((new DefaultPasswordHasher)->check($expectedPassword, $politician->password));
 
         $this->resumeSession();
         $this->get(['_name' => 'politician:profile']);
         $this->assertResponseOk();
-        $this->assertResponseContains($message);
+        $this->assertResponseContains($claimMessage);
 
         $this->post(['_name' => 'users:login'], [
             'email' => $expectedEmail,
@@ -105,8 +107,8 @@ class PoliticiansControllerTest extends IntegrationTestCase
         ]);
         $this->assertResponseSuccess();
 
-        // TODO: Fix this test.
-        //$this->assertResponseCode(302);
-        //$this->assertRedirect(['_name' => 'politician:dashboard']);
+        $this->assertResponseCode(302);
+        $this->assertRedirect(['_name' => 'politician:dashboard']);
+        $this->assertFlash($claimMessage);
     }
 }

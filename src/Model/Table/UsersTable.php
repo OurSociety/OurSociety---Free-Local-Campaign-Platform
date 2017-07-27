@@ -73,9 +73,9 @@ class UsersTable extends AppTable
             // token_expires
             ->allowEmpty('token_expires')
             ->dateTime('token_expires')
-            // active
-            ->allowEmpty('active')
-            ->dateTime('active')
+            // verified
+            ->allowEmpty('verified')
+            ->dateTime('verified')
             // role
             ->inList('role', User::ROLES, __(self::ERROR_ROLE_NOT_IN_LIST, implode('", "', User::ROLES)))
             ->notBlank('role')
@@ -137,9 +137,9 @@ class UsersTable extends AppTable
         return $query->where(['answer_count' > 0]);
     }
 
-    protected function findIsActive(Query $query): Query
+    protected function findIsVerified(Query $query): Query
     {
-        return $query->where(['active IS NOT' => null]);
+        return $query->where(['verified IS NOT' => null]);
     }
 
     protected function findIsPolitician(Query $query): Query
@@ -184,9 +184,10 @@ class UsersTable extends AppTable
     {
         $options += ['role' => User::ROLE_CITIZEN];
 
-        if ($options['role'] === User::ROLE_CITIZEN) {
-            $query->find('isActive')->find('hasAnsweredQuestions');
-        }
+        // TODO: For now we will allow users to see non-verified politicians
+        //if ($options['role'] === User::ROLE_CITIZEN) {
+        //    $query->find('isVerified')->find('hasAnsweredQuestions');
+        //}
 
         return $query->find('politician', ['role' => 'citizen']);
     }

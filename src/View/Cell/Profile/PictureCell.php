@@ -38,7 +38,7 @@ class PictureCell extends Cell
      */
     public function display(): void
     {
-        $this->setUrl();
+        $this->setUser();
     }
 
     /**
@@ -48,16 +48,16 @@ class PictureCell extends Cell
      */
     public function edit(): void
     {
-        $this->setUrl();
+        $this->setUser();
     }
 
     /**
-     * Set URL.
+     * Set common view variables.
      *
-     * @return void Sets the URL to the view.
+     * @return void
      */
-    private function setUrl(): void
+    private function setUser(): void
     {
-        $this->set(['url' => $this->user->picture]);
+        $this->set(['user' => $this->user]);
     }
 }

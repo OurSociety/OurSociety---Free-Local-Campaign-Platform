@@ -37,8 +37,8 @@ class ArticlesControllerTest extends IntegrationTestCase
     public function provideView(): array
     {
         return [
-            'success (active)' => [
-                'id' => PoliticianArticlesFixture::ACTIVE_ID,
+            'success (approved and published)' => [
+                'id' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
                 'flash' => null,
             ],
             'success (unpublished)' => [

@@ -5,7 +5,6 @@ namespace OurSociety\Test\Fixture;
 
 use Cake\Auth\AbstractPasswordHasher;
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\I18n\Time;
 use OurSociety\TestSuite\Fixture as App;
 use Faker\Factory as GeneratorFactory;
 use Faker\Generator;
@@ -20,10 +19,10 @@ class UsersFixture extends App\TestFixture
     public const EMAIL_ADMIN = 'team@oursociety.org';
     public const EMAIL_CITIZEN = 'citizen@example.net';
     public const EMAIL_POLITICIAN = 'politician@example.org';
-    public const TOKEN_CITIZEN = 'ABC123';
+    public const TOKEN_CITIZEN = '123456';
     public const PASSWORD_DEFAULT = 'democracy';
     public const PASSWORD_RESET = 'new password';
-    public const SLUG_POLITICIAN = 'augustus-octavius-bacon';
+    public const SLUG_POLITICIAN = 'seth-kaper-dale';
     public const NAME_POLITICIAN = 'Augustus Octavius Bacon';
 
     /**
@@ -51,9 +50,6 @@ class UsersFixture extends App\TestFixture
         'phone' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'token' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'token_expires' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'active' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'role' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => 'citizen', 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'answer_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => true, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'picture' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -68,7 +64,10 @@ class UsersFixture extends App\TestFixture
         'born' => ['type' => 'date', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'position' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'incumbent' => ['type' => 'integer', 'length' => 3, 'unsigned' => true, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'token' => ['type' => 'string', 'length' => 6, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'token_expires' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'last_seen' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'verified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         '_constraints' => [
@@ -83,7 +82,6 @@ class UsersFixture extends App\TestFixture
     // @codingStandardsIgnoreEnd
 
     public $defaults = [
-        'active' => 'now',
         'password' => self::PASSWORD_DEFAULT,
     ];
 
@@ -97,15 +95,17 @@ class UsersFixture extends App\TestFixture
             'role' => User::ROLE_ADMIN,
             'name' => 'OurSociety Team',
             'email' => self::EMAIL_ADMIN,
-            'picture' => 'logo.png'
+            'picture' => 'logo.png',
+            'verified' => 'now',
         ],
         [
             'role' => User::ROLE_CITIZEN,
             'name' => 'Citizenfour',
             'email' => self::EMAIL_CITIZEN,
+            'picture' => 'example-politician.png',
             'token' => self::TOKEN_CITIZEN,
             'token_expires' => '1 hour',
-            'picture' => 'example-politician.png'
+            'verified' => 'now',
         ],
         [
             'id' => self::ID_POLITICIAN,
@@ -119,6 +119,7 @@ class UsersFixture extends App\TestFixture
             'birth_state' => 'NJ',
             'birth_country' => 'US',
             'born' => '1984-01-01',
+            'verified' => 'now',
         ],
         [
             'role' => User::ROLE_POLITICIAN,
@@ -127,12 +128,13 @@ class UsersFixture extends App\TestFixture
             'email' => 'imported-politician@example.com',
             'email_temp' => 'possible.real.email@example.com',
             'phone' => '(123) 456-7890 x1234 / 123-213-2345',
-            'password' => 'not-set',
-            'token' => '123456',
-            'token_expires' => null,
+            'password' => 'unclaimed',
             'address_1' => '123 Street, Town, ST 01234',
             'position' => 'State Senate District 8',
             'incumbent' => false,
+            'token' => '123456',
+            'token_expires' => null,
+            'verified' => null,
         ],
     ];
 
@@ -155,16 +157,7 @@ class UsersFixture extends App\TestFixture
             return $record;
         };
 
-        $setTokenExpires = function (array $record) {
-            if (isset($record['token'])) {
-                $record['token_expires'] = Time::now()->addHours(24);
-            }
-
-            return $record;
-        };
-
         $this->records = collection($this->records)
-            ->map($hashPasswords)
-            ->map($setTokenExpires);
+            ->map($hashPasswords);
     }
 }

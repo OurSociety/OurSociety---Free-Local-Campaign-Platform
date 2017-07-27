@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
  * @property string $name The name.
  * @property string|null $token The verification token.
  * @property \Cake\I18n\FrozenTime|null $token_expires The expiry timestamp.
- * @property \Cake\I18n\FrozenTime|null $active The account activation timestamp.
+ * @property \Cake\I18n\FrozenTime|null $verified The email verification timestamp.
  * @property string $role The role.
  * @property int $answer_count The amount of questions answered.
  * @property string|null $picture The profile picture.
@@ -57,7 +57,6 @@ class User extends Entity
     public const ROLE_POLITICIAN = 'politician';
     public const TOKEN_LENGTH = 6;
     public const TOKEN_EXPIRY_HOURS = 24;
-    private const PICTURE_DEFAULT = 'logo.png';
     public const COUNTRIES = [
         'US' => 'United States of America',
     ];
@@ -210,21 +209,9 @@ class User extends Entity
         return $this->role === self::ROLE_POLITICIAN;
     }
 
-    public function isClaimed(): bool
-    {
-        $email = $this->_properties['email'] ?: $this->email;
-
-        return strpos($email, '@example.com') === false;
-    }
-
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;
-    }
-
-    protected function _getPicture(): string
-    {
-        return $this->_properties['picture'] ?? self::PICTURE_DEFAULT;
     }
 
     /**

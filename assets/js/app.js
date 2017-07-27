@@ -4,6 +4,7 @@
 // import './main.scss';
 
 import 'bootstrap-sass';
+import 'jdenticon/dist/jdenticon.js'
 import './app/editor.js';
 import './app/watermark.js';
 

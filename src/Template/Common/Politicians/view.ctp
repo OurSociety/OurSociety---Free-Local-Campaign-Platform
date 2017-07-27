@@ -9,23 +9,16 @@
  * @var bool $edit True if editing profile, false otherwise.
  */
 
-$email = $politician->isClaimed()
-    ? $politician->email
-    : $politician->email_temp;
+$email = $politician->verified === null ? $politician->email : $politician->email_temp;
 ?>
 
 <?= $this->fetch('breadcrumbs') ?>
 
 <h2>
     <?= $politician->name ?>
-    <?= $this->fetch('edit_profile') ?>
-    <?php if (!$politician->isClaimed()): ?>
-        <?= $this->Html->link(
-            __('Claim Your Profile'),
-            ['_name' => 'politician:claim', $politician->slug],
-            ['class' => ['btn', 'btn-danger', 'pull-right']]
-        ) ?>
-    <?php endif ?>
+    <div class="pull-right">
+        <?= $this->fetch('actions_heading') ?>
+    </div>
 </h2>
 
 <hr>
@@ -48,8 +41,8 @@ $email = $politician->isClaimed()
 <section>
     <h3>
         <?= __('My platform') ?>
-        <?= $this->fetch('edit_videos') ?>
-        <?= $this->fetch('edit_articles') ?>
+        <?= $this->fetch('actions_videos') ?>
+        <?= $this->fetch('actions_articles') ?>
     </h3>
     <div class="row">
         <div class="col-md-6 text-center">
@@ -121,7 +114,7 @@ $email = $politician->isClaimed()
                 <div class="media-body">
                     <h4 class="media-heading">
                         <?= __('Positions') ?>
-                        <?= $this->fetch('edit_positions') ?>
+                        <?= $this->fetch('actions_positions') ?>
                     </h4>
                     <?php if (count($politician->positions) === 0): ?>
                         <p><?= __("This politician hasn't added any positions.") ?></p>
@@ -148,7 +141,7 @@ $email = $politician->isClaimed()
                 <div class="media-body">
                     <h4 class="media-heading">
                         <?= __('Education') ?>
-                        <?= $this->fetch('edit_education') ?>
+                        <?= $this->fetch('actions_education') ?>
                     </h4>
                     <?php if (count($politician->qualifications) === 0): ?>
                         <p><?= __("This politician hasn't added any qualifications.") ?></p>
@@ -175,7 +168,7 @@ $email = $politician->isClaimed()
                 <div class="media-body">
                     <h4 class="media-heading">
                         <?= __('Awards') ?>
-                        <?= $this->fetch('edit_awards') ?>
+                        <?= $this->fetch('actions_awards') ?>
                     </h4>
                     <?php if (count($politician->awards) === 0): ?>
                         <p><?= __("This politician hasn't added any awards.") ?></p>
@@ -200,7 +193,7 @@ $email = $politician->isClaimed()
                 <div class="media-body">
                     <h4 class="media-heading">
                         <?= __('Born') ?>
-                        <?= $this->fetch('edit_born') ?>
+                        <?= $this->fetch('actions_born') ?>
                     </h4>
                     <p>
                         <?= $politician->birth_name ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']) ?>

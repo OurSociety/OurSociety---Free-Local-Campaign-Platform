@@ -15,6 +15,7 @@
     "browser-sync": "^2.18.12",
     "browser-sync-webpack-plugin": "^1.2.0",
     "inputmask": "^3.3.7",
+    "jdenticon": "^1.7.2",
     "laravel-mix": "^1.2.2",
     "popper.js": "^1.10.8",
     "trumbowyg": "^2.7.0",

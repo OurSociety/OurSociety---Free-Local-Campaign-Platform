@@ -21,10 +21,10 @@ declare(strict_types=1);
                 <div class="media-left">
                     <?= $this->Html->politicianLink(
                         $politician,
-                        $this->Html->image($politician->picture, [
+                        $this->Html->jdenticon($politician->slug, [
                             'class' => ['media-object'],
                             'alt' => __('Profile picture of {politician_name}', ['politician_name' => $politician->name]),
-                            'style' => 'max-height: 200px',
+                            'height' => '150',
                         ]),
                         ['escape' => false]
                     ) ?>
@@ -52,8 +52,8 @@ declare(strict_types=1);
             </div>
         </div>
     <?php endforeach ?>
-    <?= $this->Paginator->numbers() ?>
 </section>
+
 <div class="text-muted small text-center">
-<?= $this->element('index/pagination') ?>
+    <?= $this->element('index/pagination') ?>
 </div>

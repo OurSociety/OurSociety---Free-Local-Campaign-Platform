@@ -35,7 +35,7 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains(sprintf(
             'politicians/%s/article/%s',
             UsersFixture::SLUG_POLITICIAN,
-            PoliticianArticlesFixture::ACTIVE_SLUG
+            PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_SLUG
         ));
     }
 
@@ -93,7 +93,7 @@ class ArticlesControllerTest extends IntegrationTestCase
             'success (citizen @ published & approved)' => [
                 'expected' => 'success',
                 'user' => UsersFixture::EMAIL_CITIZEN,
-                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+                'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'error (citizen @ unpublished)' => [
                 'expected' => 'error',
@@ -108,7 +108,7 @@ class ArticlesControllerTest extends IntegrationTestCase
             'success (politician @ published & approved)' => [
                 'expected' => 'success',
                 'user' => UsersFixture::EMAIL_POLITICIAN,
-                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+                'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'redirect (politician @ unpublished)' => [
                 'expected' => 'redirect',
@@ -123,7 +123,7 @@ class ArticlesControllerTest extends IntegrationTestCase
             'success (admin @ published & approved)' => [
                 'expected' => 'success',
                 'user' => UsersFixture::EMAIL_ADMIN,
-                'article' => PoliticianArticlesFixture::ACTIVE_ID,
+                'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'redirect (admin @ unpublished)' => [
                 'expected' => 'redirect',
