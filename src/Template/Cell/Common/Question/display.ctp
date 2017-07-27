@@ -20,6 +20,17 @@ use OurSociety\Model\Entity\Answer;
                     <p><?= $question->question ?></p>
                     <footer>Category: <cite><?= $question->category->name ?></cite></footer>
                 </blockquote>
+
+                <fieldset class="form-question-importance">
+                    <legend><?= __('How important is this topic to you?') ?></legend>
+                    <?= $this->Form->control(sprintf('%d.answers.0.importance', $number - 1), [
+                        'inline' => true,
+                        'required' => false,
+                        'label' => false,
+                        'type' => 'radio',
+                        'options' => Answer::IMPORTANCE
+                    ]) ?>
+                </fieldset>
             </div>
             <div class="col-md-6 form-question-answers">
                 <?= $this->Form->hidden(sprintf('%d.id', $number - 1), ['value' => $question->id]) ?>

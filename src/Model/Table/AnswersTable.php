@@ -63,8 +63,13 @@ class AnswersTable extends AppTable
             ->notEmpty('user_id')
             ->requirePresence('user_id', 'create')
             // answer
-            ->notBlank('answer')
-            ->requirePresence('answer', 'create');
+            ->integer('answer')
+            ->notEmpty('answer')
+            ->requirePresence('answer', 'create')
+            // importance
+            ->integer('importance')
+            ->notEmpty('importance')
+            ->requirePresence('importance', 'create');
     }
 
     /**

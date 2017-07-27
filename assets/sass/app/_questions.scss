@@ -18,3 +18,20 @@
         }
     }
 }
+
+.form-question-importance {
+    legend {
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+    .radio {
+        label {
+            background-color: $gray-lighter;
+            border: 1px solid $panel-inner-border;
+            padding: ($line-height-computed / 2);
+            padding-left: ($line-height-computed * 1.5);
+            input {
+            }
+        }
+    }
+}
