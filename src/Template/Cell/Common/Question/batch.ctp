@@ -4,10 +4,17 @@
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\Collection $questions
  */
 ?>
-<?= $this->Form->create($questions) ?>
+<?= $this->Form->create($questions, [
+    'context' => [
+        'validator' => [
+            'Questions' => 'default',
+            'Answers' => 'default'
+        ]
+    ]
+]) ?>
 <?php foreach ($questions as $index => $question): ?>
     <?= $this->cell('Common/Question', ['question' => $question, 'number' => $index + 1]) ?>
-    <?php if ($index + 1 !== $questions->count()): ?>
+    <?php if ($index + 1 !== count($questions)): ?>
         <hr>
     <?php endif ?>
 <?php endforeach ?>

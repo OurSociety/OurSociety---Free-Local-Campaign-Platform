@@ -64,11 +64,11 @@ class AnswersTable extends AppTable
             ->requirePresence('user_id', 'create')
             // answer
             ->integer('answer')
-            ->notEmpty('answer')
+            ->notEmpty('answer', 'Please choose an answer for this question.')
             ->requirePresence('answer', 'create')
             // importance
             ->integer('importance')
-            ->notEmpty('importance')
+            ->notEmpty('importance', 'Please specify if the topic of this question is important to you.')
             ->requirePresence('importance', 'create');
     }
 

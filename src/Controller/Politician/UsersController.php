@@ -36,7 +36,7 @@ class UsersController extends CrudController
     {
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->refreshAuth($event->getSubject()->entity);
+                $this->Auth->refreshSession($event->getSubject()->entity);
                 $this->Crud->action()->setConfig(['redirectUrl' => ['_name' => 'politician:profile']]);
             }
         });

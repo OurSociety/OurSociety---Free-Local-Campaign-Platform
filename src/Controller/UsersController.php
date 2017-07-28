@@ -172,7 +172,7 @@ class UsersController extends CrudController
     {
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->refreshAuth($event->getSubject()->entity);
+                $this->Auth->refreshSession($event->getSubject()->entity);
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });
@@ -245,7 +245,7 @@ class UsersController extends CrudController
 
         $this->Crud->on('beforeRedirect', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->refreshAuth();
+                $this->Auth->refreshSession();
                 $event->getSubject()->url = ['_name' => 'citizen:dashboard'];
             }
         });
