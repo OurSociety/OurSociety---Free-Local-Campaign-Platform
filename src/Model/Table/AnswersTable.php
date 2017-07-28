@@ -78,7 +78,8 @@ class AnswersTable extends AppTable
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         return parent::buildRules($rules)
-            ->add($rules->existsIn(['question_id'], 'Questions'))
-            ->add($rules->existsIn(['user_id'], 'Users'));
+            ->add($rules->existsIn(['question_id'], 'Questions', 'Sorry, we could not find that question.'))
+            ->add($rules->existsIn(['user_id'], 'Users', 'Sorry, we could not find that user.'))
+            ->add($rules->isUnique(['question_id', 'user_id'], 'Sorry, you have already answered this question.'));
     }
 }

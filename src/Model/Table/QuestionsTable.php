@@ -103,33 +103,6 @@ class QuestionsTable extends AppTable
             ->order(defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()');
     }
 
-    /**
-     * Save answers.
-     *
-     * @param array $formData The form data.
-     * @return bool|Question[] True if successful, otherwise list of entities with errors.
-     */
-    public function saveAnswers(array $formData)
-    {
-        $questions = $this->patchEntities(
-            $this->find()->where(['id IN' => Hash::extract($formData, '{n}.id')])->all(),
-            $formData,
-            ['associated' => ['Answers']]
-        );
-
-        try {
-            $this->getConnection()->transactional(function () use ($questions) {
-                foreach ($questions as $question) {
-                    $this->saveOrFail($question, ['atomic' => false]);
-                }
-            });
-        } catch (PersistenceFailedException $exception) {
-            return $questions;
-        }
-
-        return true;
-    }
-
     public function getLevelQuestionTotal(User $user): int
     {
         return $this->find()->where(['Questions.level' => $user->level])->count();
