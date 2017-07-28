@@ -26,17 +26,15 @@ class QuestionsSeed extends App\AbstractSeed
             $categoryIds[$row['name']] = $row['id'];
         }
 
-        $i = 1;
         $data = [];
         foreach (Csv::fromFile(CONFIG . 'Seeds' . DS . 'questions.csv')->toArray() as $record) {
             $data[] = [
                 'id' => Text::uuid(),
-                'level' => $i <= 50 ? 1 : 0,
+                'level' => $record['Level'],
                 'question' => $record['Question'],
                 'type' => $record['Answer A'] === 'Yes' ? Question::TYPE_BOOL : Question::TYPE_SCALE,
                 'category_id' => $categoryIds[$record['Type']],
             ];
-            $i++;
         }
 
         $table->insert($data)->save();

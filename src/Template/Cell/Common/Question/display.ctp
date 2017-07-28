@@ -8,6 +8,8 @@
 use Cake\Utility\Text;
 use OurSociety\Model\Entity\Answer;
 
+$index = $number - 1;
+
 $getError = function (\OurSociety\Model\Entity\Question $question, string $field): ?string {
     if ($question->answers === null) {
         return null;
@@ -51,7 +53,7 @@ $answerError = $getError($question, 'answer');
                         <legend><?= __('How important is this topic to you?') ?></legend>
                         <div <?= $importanceError !== null ? ' class="has-error"' : null ?>>
                             <?= $importanceError ?>
-                            <?= $this->Form->control(sprintf('%d.answers.0.importance', $number - 1), [
+                            <?= $this->Form->control(sprintf('%d.answers.0.importance', $index), [
                                 'inline' => true,
                                 'required' => false,
                                 'label' => false,
@@ -63,13 +65,13 @@ $answerError = $getError($question, 'answer');
                     </fieldset>
                 </div>
                 <div class="col-md-6 form-question-answers">
-                    <?= $this->Form->hidden(sprintf('%d.id', $number - 1), ['value' => $question->id]) ?>
-                    <?= $this->Form->hidden(sprintf('%d.answers.0.id', $number - 1), ['value' => Text::uuid()]) ?>
-                    <?= $this->Form->hidden(sprintf('%d.answers.0.question_id', $number - 1), ['value' => $question->id]) ?>
-                    <?= $this->Form->hidden(sprintf('%d.answers.0.user_id', $number - 1), ['value' => $currentUser->id]) ?>
+                    <?= $this->Form->hidden(sprintf('%d.id', $index), ['value' => $question->id]) ?>
+                    <?= $this->Form->hidden(sprintf('%d.answers.0.id', $index), ['value' => Text::uuid()]) ?>
+                    <?= $this->Form->hidden(sprintf('%d.answers.0.question_id', $index), ['value' => $question->id]) ?>
+                    <?= $this->Form->hidden(sprintf('%d.answers.0.user_id', $index), ['value' => $currentUser->id]) ?>
                     <div <?= $answerError !== null ? ' class="has-error"' : null ?>>
                         <?= $answerError ?>
-                        <?= $this->Form->control(sprintf('%d.answers.0.answer', $number - 1), [
+                        <?= $this->Form->control(sprintf('%d.answers.0.answer', $index), [
                             'required' => false,
                             'label' => false,
                             'type' => 'radio',
