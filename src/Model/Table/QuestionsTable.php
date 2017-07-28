@@ -8,7 +8,6 @@ use Cake\ORM\Association;
 use Cake\ORM\Behavior;
 use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator as CakeValidator;
@@ -85,40 +84,50 @@ class QuestionsTable extends AppTable
             ->add($rules->existsIn(['category_id'], 'Categories'));
     }
 
-    /**
-     * @param User $user
-     * @return ResultSet|Question[]
-     */
-    public function getBatch(User $user): ResultSet
+    protected function findBatch(Query $query, array $options): Query
     {
-        return $this->find()
+        $user = $options['user'] ?? null;
+
+        if (!$user instanceof User) {
+            throw new \InvalidArgumentException('User required');
+        }
+
+        $whereUserHasAnsweredThisQuestion = function (Query $query) use ($user) {
+            return $query->where(['Answers.user_id' => $user->id]);
+        };
+
+        return $query
+            ->notMatching('Answers', $whereUserHasAnsweredThisQuestion)
             ->where(['Questions.level' => $user->level])
             ->contain(['Categories' => ['fields' => ['slug', 'name']]])
-            ->order(defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()')
-            ->notMatching('Answers', function (Query $query) use ($user) {
-                return $query->where(['Answers.user_id' => $user->id]);
-            })
-            ->limit(10)
-            ->all();
+            ->order(defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()');
     }
 
-    public function saveAnswers(array $formData): void
+    /**
+     * Save answers.
+     *
+     * @param array $formData The form data.
+     * @return bool|Question[] True if successful, otherwise list of entities with errors.
+     */
+    public function saveAnswers(array $formData)
     {
-        $data = collection($formData)->filter(function ($question) {
-            return !empty($question['answers'][0]['answer']);
-        })->toArray();
-        $ids = Hash::extract($formData, '{n}.id');
-        $questions = $this->find()->where(['id IN' => $ids])->all();
-        $questions = $this->patchEntities($questions, $data, ['validate' => false, 'associated' => ['Answers']]);
-        $this->getConnection()->transactional(function () use ($questions) {
-            foreach ($questions as $question) {
-                /** @var Question $question */
-                $question = $this->saveOrFail($question, ['atomic' => false]);
-                if (count($question->answers) === 0) {
-                    throw new PersistenceFailedException($question, 'Answer was not saved');
+        $questions = $this->patchEntities(
+            $this->find()->where(['id IN' => Hash::extract($formData, '{n}.id')])->all(),
+            $formData,
+            ['associated' => ['Answers']]
+        );
+
+        try {
+            $this->getConnection()->transactional(function () use ($questions) {
+                foreach ($questions as $question) {
+                    $this->saveOrFail($question, ['atomic' => false]);
                 }
-            }
-        });
+            });
+        } catch (PersistenceFailedException $exception) {
+            return $questions;
+        }
+
+        return true;
     }
 
     public function getLevelQuestionTotal(User $user): int

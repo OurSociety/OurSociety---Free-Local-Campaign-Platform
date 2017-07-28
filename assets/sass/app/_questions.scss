@@ -1,0 +1,37 @@
+@import 'data/variables';
+
+.form-question-answers {
+    .radio {
+        .radio {
+            label {
+                background-color: $brand-purple;
+                border: 1px solid $black;
+                color: $white;
+                font-size: $blockquote-font-size;
+                padding: ($line-height-computed / 2) $line-height-computed;
+                width: 100%;
+                input {
+                    right: $line-height-computed;
+                    top: ($line-height-computed / 2);
+                }
+            }
+        }
+    }
+}
+
+.form-question-importance {
+    legend {
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+    .radio {
+        label {
+            background-color: $gray-lighter;
+            border: 1px solid $panel-inner-border;
+            padding: ($line-height-computed / 2);
+            padding-left: ($line-height-computed * 1.5);
+            input {
+            }
+        }
+    }
+}

@@ -3,31 +3,24 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Citizen;
 
-use OurSociety\Model\Table\QuestionsTable;
-use Psr\Http\Message\ResponseInterface as Response;
-use OurSociety\Controller\AppController;
+use Cake\Event\Event;
+use OurSociety\Controller\Action\AnswerAction;
+use OurSociety\Model\Table\UsersTable;
+use OurSociety\Controller\CrudController;
 
-class QuestionsController extends AppController
+class QuestionsController extends CrudController
 {
-    /**
-     * @route GET /citizen/your-voice
-     * @routeName citizen:questions
-     */
-    public function index(): ?Response
+    public function beforeFilter(Event $event): void
     {
-        /** @var QuestionsTable $questions */
-        $questions = $this->loadModel('Questions');
+        parent::beforeFilter($event);
 
-        if ($this->request->is(['post', 'put'])) {
-            $data = $this->request->getData();
-            $questions->saveAnswers($data);
-            $this->refreshAuth();
+        $this->Crud->mapAction('index', [
+            'className' => AnswerAction::class,
+            'redirectUrl' => ['_name' => 'citizen:dashboard'],
+        ]);
 
-            return $this->redirect(['_name' => 'citizen:dashboard']);
-        }
+        $this->Crud->disable(['view', 'add', 'edit', 'delete']);
 
-        $this->set(['questions' => $questions->getBatch($this->Auth->user())]);
-
-        return null;
+        $this->paginate = ['limit' => UsersTable::LIMIT_DASHBOARD];
     }
 }

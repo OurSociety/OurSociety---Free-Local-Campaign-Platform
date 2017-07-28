@@ -1,14 +1,19 @@
-@import '~bootstrap/scss/bootstrap';
-@import 'landing/_custom';
+@charset "UTF-8";
+
+// Vendor
+@import '~bootstrap/scss/bootstrap'; // Bootstrap v4
+
+// Mixins
+// - none
+
+// Variables
+// - none
+
+// Global
+@import 'landing/global';
+
+// Theme
+@import 'landing/custom';
 @import 'landing/navbar';
 @import 'landing/carousel';
 @import 'landing/social';
-
-/* GLOBAL STYLES
--------------------------------------------------- */
-/* Padding below the footer and lighter body text */
-
-body {
-    padding-bottom: 40px;
-    color: #5a5a5a;
-}

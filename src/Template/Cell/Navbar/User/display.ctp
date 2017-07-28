@@ -24,6 +24,7 @@
         'value' => $user->slug,
         'onchange' => 'this.form.submit()',
         'style' => 'margin-left: 8px;',
+        'error' => false,
     ]) ?>
     <?= $this->Form->end() ?>
 <?php else: ?>

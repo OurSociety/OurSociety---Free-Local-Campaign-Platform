@@ -6,6 +6,7 @@
 import 'bootstrap-sass';
 import 'jdenticon/dist/jdenticon.js'
 import './app/editor.js';
+import './app/question.js';
 import './app/watermark.js';
 
 // window.Vue = require('vue');

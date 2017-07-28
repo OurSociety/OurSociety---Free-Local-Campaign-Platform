@@ -1,0 +1,24 @@
+/** Start hack for vertical align until BS4 - **/
+.row-xs-flex-center {
+    display:flex;
+    align-items:center;
+}
+@media (min-width:768px) {
+    .row-sm-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+@media (min-width: 992px) {
+    .row-md-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+@media (min-width: 1200px) {
+    .row-lg-flex-center {
+        display:flex;
+        align-items:center;
+    }
+}
+/** End hack **/

@@ -113,7 +113,7 @@ class PoliticiansController extends CrudController
                 if (empty($entity->getErrors())) {
                     $saved = $this->Users->save($this->Users->patchEntity($politician, $formData));
                     if ($saved) {
-                        $this->refreshAuth($politician);
+                        $this->Auth->refreshSession($politician);
                         $this->Flash->success(__(
                             'You have claimed the profile of {politician_name} and are now logged in. '
                             . 'Please update the remaining sections and see the {getting_started} guide.',

@@ -45,10 +45,10 @@ class QuestionCell extends Cell
     /**
      * Display a batch of questions.
      *
-     * @param ResultSet|Question[] $questions
+     * @param Question[] $questions
      * @return void
      */
-    public function batch(ResultSet $questions): void
+    public function batch(array $questions): void
     {
         $this->set([
             'questions' => $questions,

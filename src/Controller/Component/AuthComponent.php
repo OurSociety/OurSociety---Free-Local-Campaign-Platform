@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Component;
 
+use Cake\ORM\TableRegistry;
 use OurSociety\Auth as AppAuth;
 use OurSociety\Controller\AppController;
 use Cake\Controller\Component as Cake;
+use OurSociety\Model\Entity\User;
 
 /**
  * Application auth component settings.
@@ -40,5 +42,16 @@ class AuthComponent extends Cake\AuthComponent
         ], $config));
 
         parent::initialize($config);
+    }
+
+    public function refreshSession(?User $user = null): void
+    {
+        $id = $user !== null ? $user->id : $this->user('id');
+        try {
+            $authUser = TableRegistry::get('Users')->find('auth')->where(['Users.id' => $id])->firstOrFail();
+            $this->setUser($authUser);
+        } catch (RecordNotFoundException $e) {
+            $this->logout();
+        }
     }
 }

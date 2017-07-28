@@ -53,7 +53,7 @@ class PoliticiansController extends CrudController
 
         $this->Crud->on('afterSave', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->refreshAuth();
+                $this->Auth->refreshSession();
             }
         });
 
