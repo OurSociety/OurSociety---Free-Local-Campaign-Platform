@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -67,5 +69,14 @@ abstract class AppTable extends Table
         }
 
         return $validator;
+    }
+
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
+    {
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                $data[$key] = trim($value);
+            }
+        }
     }
 }

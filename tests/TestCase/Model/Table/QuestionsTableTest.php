@@ -61,7 +61,7 @@ class QuestionsTableTest extends AppTableTest
         $table = $this->table;
 
         /** @var User $user */
-        $user = UsersTable::instance()->find()->where(['email' => UsersFixture::EMAIL_CITIZEN])->firstOrFail();
+        $user = UsersTable::instance()->get(UsersFixture::CITIZEN_ID);
 
         $formEntitiesToModelData = function (Question $question): array {
             return [

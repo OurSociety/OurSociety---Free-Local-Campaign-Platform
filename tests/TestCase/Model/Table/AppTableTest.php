@@ -12,8 +12,6 @@ use OurSociety\TestSuite\TestCase;
  */
 abstract class AppTableTest extends TestCase
 {
-    //use FixturesTrait;
-
     /**
      * Test subject
      *

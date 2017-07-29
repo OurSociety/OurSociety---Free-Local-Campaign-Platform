@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Model\Table;
 
+use OurSociety\Model\Entity\Answer;
+use OurSociety\Model\Entity\Question;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
+use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\Traits\FixturesTrait;
 
 /**
@@ -90,5 +94,99 @@ class UsersTableTest extends AppTableTest
         $actual = $this->table->find('auth');
 
         self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @dataProvider provideGetValueMatch
+     * @param string $citizenId The ID of the citizen to find match for.
+     * @param int $expectedSampleSize The expected sample size.
+     * @param float $expectedMatch Expected match percentage with margin of error accounted for.
+     * @return void
+     */
+    public function testGetValueMatch(string $citizenId, int $expectedSampleSize, float $expectedMatch): void
+    {
+        /** @var UsersTable $usersTable */
+        $usersTable = $this->table;
+        $citizen = $usersTable->get($citizenId);
+        $politician = $usersTable->get(UsersFixture::POLITICIAN_ID);
+
+        $sampleSize = $usersTable->Answers->find()
+            ->where(['Answers.user_id' => $citizenId])
+            ->count();
+
+        self::assertEquals($expectedSampleSize, $sampleSize);
+
+        $match = $usersTable->getValueMatch($citizen, $politician);
+
+        self::assertEquals($expectedMatch, $match);
+
+        return;
+
+
+
+
+        $answersTable = $usersTable->Answers;
+        $questionsTable = $answersTable->Questions;
+
+        self::assertEquals(20, $answersTable->find()->count());
+
+        $users = $usersTable->find()
+            ->select(['id'])
+            ->where(['Users.email IN' => [UsersFixture::CITIZEN_EMAIL, UsersFixture::POLITICIAN_EMAIL]])
+            ->all();
+
+        $questions = $questionsTable->find('batch', ['user' => $users->first()])
+            ->limit($citizenId)
+            ->all();
+
+        $data = [];
+        /** @var Question $question */
+        foreach ($questions as $question) {
+            foreach ($users as $user) {
+                $data[] = [
+                    'user_id' => $user->id,
+                    'question_id' => $question->id,
+                    'answer' => $question->type === 'scale'
+                        ? array_rand(Answer::ANSWERS_SCALE)
+                        : array_rand(Answer::ANSWERS_BOOL),
+                    'importance' => array_rand(Answer::IMPORTANCE),
+                ];
+            }
+        }
+
+        $entities = $answersTable->newEntities($data);
+
+        $answersTable->getConnection()->transactional(function () use ($answersTable, $entities) {
+            foreach ($entities as $entity) {
+                $answersTable->save($entity, ['atomic' => false]);
+            }
+        });
+
+        self::assertEquals($citizenId * $users->count(), $answersTable->find()->count());
+
+        $match = $usersTable->getValueMatch($users->first(), $users->last());
+
+        self::assertEquals($match, $expectedMatch);
+    }
+
+    public function provideGetValueMatch(): array
+    {
+        return [
+            'success (exact match, sample size 1, value match 0%)' => [
+                'citizenId' => UsersFixture::CITIZEN_1_ID,
+                'expectedSampleSize' => 1,
+                'expectedTrueMatch' => 0.0, // 1 / 1 = 1.0 => 100% match - 100% margin of error = 0% expected match
+            ],
+            'success (exact match, sample size 5, value match 80%)' => [
+                'citizenId' => UsersFixture::CITIZEN_2_ID,
+                'expectedSampleSize' => 10,
+                'expectedTrueMatch' => 90.0, // 1/10 = 0.1 => 100% match - 10% margin of error = 90% expected match
+            ],
+            'success (exact match, sample size 50, value match 98%)' => [
+                'citizenId' =>  UsersFixture::CITIZEN_3_ID,
+                'expectedSampleSize' => 50,
+                'expectedTrueMatch' => 98.0, // 1/50 = 0.02 => 100% match - 2% margin of error = 98% expected match
+            ],
+        ];
     }
 }

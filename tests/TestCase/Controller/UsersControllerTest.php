@@ -28,14 +28,14 @@ class UsersControllerTest extends IntegrationTestCase
 
         switch ($expected) {
             case true:
-                $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::EMAIL_CITIZEN]);
+                $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::CITIZEN_EMAIL]);
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
                 $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => 'citizen@example.net']]);
                 $this->assertFlash(UsersController::MESSAGE_FORGOT_SUCCESS);
                 self::assertEmailTo('citizen@example.net');
                 self::assertEmailSubject('Forgot password');
-                self::assertEmailBody('Citizenfour', <<<EMAIL
+                self::assertEmailBody(UsersFixture::CITIZEN_1_NAME, <<<EMAIL
 Your verification code is: {TOKEN}
 
 Alternatively, click or copy the following address into your web browser:
@@ -114,7 +114,7 @@ EMAIL
         return [
             'success (citizen)' => [
                 'data' => [
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                     'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
@@ -122,7 +122,7 @@ EMAIL
             ],
             'success (politician)' => [
                 'data' => [
-                    'email' => UsersFixture::EMAIL_POLITICIAN,
+                    'email' => UsersFixture::POLITICIAN_EMAIL,
                     'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
@@ -130,7 +130,7 @@ EMAIL
             ],
             'success (admin)' => [
                 'data' => [
-                    'email' => UsersFixture::EMAIL_ADMIN,
+                    'email' => UsersFixture::ADMIN_EMAIL,
                     'password' => UsersFixture::PASSWORD_DEFAULT,
                 ],
                 'expected' => 'success',
@@ -138,7 +138,7 @@ EMAIL
             ],
             'error (invalid credentials)' => [
                 'data' => [
-                    'email' => UsersFixture::EMAIL_ADMIN,
+                    'email' => UsersFixture::ADMIN_EMAIL,
                     'password' => 'incorrect',
                 ],
                 'expected' => 'error',
@@ -162,7 +162,7 @@ EMAIL
     public function provideLogout(): array
     {
         return [
-            'success (logged in)' => ['email' => UsersFixture::EMAIL_ADMIN],
+            'success (logged in)' => ['email' => UsersFixture::ADMIN_EMAIL],
             'success (NOT logged in)' => ['email' => null],
         ];
     }
@@ -255,10 +255,10 @@ EMAIL
             case 'success':
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
-                $this->assertRedirect(['_name' => 'users:login', '?' => ['email' => UsersFixture::EMAIL_CITIZEN]]);
+                $this->assertRedirect(['_name' => 'users:login', '?' => ['email' => UsersFixture::CITIZEN_EMAIL]]);
                 $this->assertFlash(UsersController::MESSAGE_RESET_SUCCESS);
                 $this->testLogin([
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                     'password' => UsersFixture::PASSWORD_RESET,
                 ], 'success', ['_name' => 'citizen:dashboard']);
                 break;
@@ -283,36 +283,36 @@ EMAIL
                 'case' => 'success',
                 'query' => [],
                 'data' => [
-                    'token' => UsersFixture::TOKEN_CITIZEN,
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'token' => UsersFixture::CITIZEN_TOKEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                     'password' => UsersFixture::PASSWORD_RESET,
                 ],
             ],
             'success (email in query string)' => [
                 'case' => 'success',
                 'query' => [
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                 ],
                 'data' => [
-                    'token' => UsersFixture::TOKEN_CITIZEN,
+                    'token' => UsersFixture::CITIZEN_TOKEN,
                     'password' => UsersFixture::PASSWORD_RESET,
                 ],
             ],
             'success (token in query string)' => [
                 'case' => 'success',
                 'query' => [
-                    'token' => UsersFixture::TOKEN_CITIZEN,
+                    'token' => UsersFixture::CITIZEN_TOKEN,
                 ],
                 'data' => [
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                     'password' => UsersFixture::PASSWORD_RESET,
                 ],
             ],
             'success (email and token in query string)' => [
                 'case' => 'success',
                 'query' => [
-                    'token' => UsersFixture::TOKEN_CITIZEN,
-                    'email' => UsersFixture::EMAIL_CITIZEN,
+                    'token' => UsersFixture::CITIZEN_TOKEN,
+                    'email' => UsersFixture::CITIZEN_EMAIL,
                 ],
                 'data' => [
                     'password' => UsersFixture::PASSWORD_RESET,

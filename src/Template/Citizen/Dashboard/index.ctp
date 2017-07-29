@@ -4,6 +4,7 @@
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  * @var \OurSociety\Model\Entity\User $currentUser
  * @var int $levelQuestionTotal The total number of questions in this level.
+ * @var \OurSociety\Model\Entity\ValueMatch $politicianMatch
  */
 $percentage = round(($currentUser->answer_count / $levelQuestionTotal) * 100);
 $ceilingReached = $percentage === 100.0;
@@ -37,20 +38,18 @@ $ceilingReached = $percentage === 100.0;
             </div>
         </div>
 
+        <?php if ($politicianMatch !== null): ?>
         <div class="media">
             <div class="media-left">
-                <?= $this->Html->image(
-                    (new Gravatar\Gravatar([], true))->avatar('test@example.com'),
-                    ['class' => 'img-circle']
-                ) ?>
+                <?= $this->cell('Profile/Picture', [], ['user' => $politicianMatch->politician]) ?>
             </div>
             <div class="media-body">
                 <div class="col-sm-6">
-                    <h4 class="media-heading"><?= $this->Html->link('Fake Politician', '#') ?></h4>
+                    <h4 class="media-heading"><?= $this->Html->politicianLink($politicianMatch->politician) ?></h4>
                     <p>
                         <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
-                            'percentage_match' => 81,
-                            'politician_name' => $this->Html->link('Fake Politician', '#'),
+                            'percentage_match' => $politicianMatch->true_match_percentage,
+                            'politician_name' => $this->Html->politicianLink($politicianMatch->politician),
                         ]) ?>
                     </p>
                 </div>
@@ -63,6 +62,7 @@ $ceilingReached = $percentage === 100.0;
                 </div>
             </div>
         </div>
+        <?php endif ?>
 
     </div>
 </div>

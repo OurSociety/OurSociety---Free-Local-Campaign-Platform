@@ -16,7 +16,10 @@ class TopicsController extends AppController
     public function compare(string $politician): ?Response
     {
         $this->set([
-            'politician' => $this->loadModel('Users')->find('politicianForCitizen')->where(['slug' => $politician])->firstOrFail(),
+            'politician' => $this->loadModel('Users')
+                ->find('politicianForCitizen')
+                ->where(['slug' => $politician])
+                ->firstOrFail(),
         ]);
 
         return null;

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace OurSociety\TestSuite\Fixture;
 
+use Cake\Database\Connection;
+use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\Fixture as Cake;
 
 /**
@@ -10,13 +12,29 @@ use Cake\TestSuite\Fixture as Cake;
  */
 class FixtureManager extends Cake\FixtureManager
 {
-    public function unload($test): void
+    public function load($test): void
     {
-        // NO TRUNCATE: Keep data around after tests pass/fail so we can inspect the application state.
+        /** @noinspection MissingIssetImplementationInspection */
+        if (empty($test->fixtures)) {
+            return;
+        }
+
+        $fixtures = $test->fixtures;
+        if (empty($fixtures) || !$test->autoFixtures) {
+            return;
+        }
+
+        $database = new DatabaseFixture;
+        $database->loadTestDatabase();
     }
 
-    public function shutDown(): void
-    {
+    //public function unload($test): void
+    //{
+        // NO TRUNCATE: Keep data around after tests pass/fail so we can inspect the application state.
+    //}
+
+    //public function shutDown(): void
+    //{
         // NO DROP: Keep tables around after tests pass/fail so we can inspect the application state.
-    }
+    //}
 }

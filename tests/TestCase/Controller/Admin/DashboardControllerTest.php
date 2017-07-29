@@ -41,7 +41,7 @@ class DashboardControllerTest extends IntegrationTestCase
             ],
             'admin' => [
                 'expected' => 'success',
-                'email' => UsersFixture::EMAIL_ADMIN,
+                'email' => UsersFixture::ADMIN_EMAIL,
             ],
         ];
     }

@@ -13,8 +13,8 @@ class TopicsControllerTest extends IntegrationTestCase
 {
     public function testCompare(): void
     {
-        $this->auth(UsersFixture::EMAIL_CITIZEN);
-        $this->get(['_name' => 'citizen:topics:compare', 'politician' => UsersFixture::SLUG_POLITICIAN]);
+        $this->auth(UsersFixture::CITIZEN_EMAIL);
+        $this->get(['_name' => 'citizen:topics:compare', 'politician' => UsersFixture::POLITICIAN_SLUG]);
         $this->assertResponseOk();
     }
 }

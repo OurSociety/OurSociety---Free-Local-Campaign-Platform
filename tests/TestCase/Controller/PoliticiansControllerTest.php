@@ -19,14 +19,14 @@ class PoliticiansControllerTest extends IntegrationTestCase
     {
         $this->get(['_name' => 'politicians']);
         $this->assertResponseOk();
-        $this->assertResponseContains(UsersFixture::NAME_POLITICIAN);
+        $this->assertResponseContains(UsersFixture::POLITICIAN_NAME);
     }
 
     public function testView(): void
     {
-        $this->get(['_name' => 'politician', 'politician' => UsersFixture::SLUG_POLITICIAN]);
+        $this->get(['_name' => 'politician', 'politician' => UsersFixture::POLITICIAN_SLUG]);
         $this->assertResponseOk();
-        $this->assertResponseContains(UsersFixture::NAME_POLITICIAN);
+        $this->assertResponseContains(UsersFixture::POLITICIAN_NAME);
     }
 
     public function testViewClaim(): void
@@ -74,7 +74,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         // duplicate_email
         $this->post(['_name' => 'politician:claim', 'politician' => 'imported-politician'], [
             'token' => '123456',
-            'email' => UsersFixture::EMAIL_POLITICIAN,
+            'email' => UsersFixture::POLITICIAN_EMAIL,
             'password' => $expectedPassword,
         ]);
         $this->assertResponseOk();

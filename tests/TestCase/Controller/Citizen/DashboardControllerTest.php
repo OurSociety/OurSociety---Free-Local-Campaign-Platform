@@ -45,19 +45,19 @@ class DashboardControllerTest extends IntegrationTestCase
         return [
             'success (no zip => onboarding)' => [
                 'expected' => 'success',
-                'email' => UsersFixture::EMAIL_ADMIN,
+                'email' => UsersFixture::ADMIN_EMAIL,
                 'userData' => ['zip' => null],
                 'redirectUrl' => ['_name' => 'users:onboarding'],
             ],
             'success (no answers => questions)' => [
                 'expected' => 'success',
-                'email' => UsersFixture::EMAIL_ADMIN,
+                'email' => UsersFixture::ADMIN_EMAIL,
                 'userData' => ['zip' => 12345],
                 'redirectUrl' => ['_name' => 'citizen:questions'],
             ],
             'success (dashboard)' => [
                 'expected' => 'success',
-                'email' => UsersFixture::EMAIL_ADMIN,
+                'email' => UsersFixture::ADMIN_EMAIL,
                 'userData' => ['zip' => 12345, 'answer_count' => 10],
             ],
             'error (unauthenticated)' => [

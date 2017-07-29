@@ -13,4 +13,5 @@
 /webroot/mix-manifest.json
 /.env*
 !/.env.default
+/.phpunit-watcher-cache.php
 /hot
