@@ -235,7 +235,9 @@ class UsersTable extends AppTable
      */
     protected function findRecentlyCreated(Query $query): Query
     {
-        return $query->orderDesc('created')->limit(self::LIMIT_DASHBOARD);
+        return $query
+            ->orderDesc('Users.created')
+            ->limit(self::LIMIT_DASHBOARD);
     }
 
     /**
@@ -248,6 +250,9 @@ class UsersTable extends AppTable
      */
     protected function findRecentlyActive(Query $query): Query
     {
-        return $query->orderDesc('last_seen')->limit(self::LIMIT_DASHBOARD);
+        return $query
+            ->where(['Users.last_seen IS NOT' => null])
+            ->orderDesc('Users.last_seen')
+            ->limit(self::LIMIT_DASHBOARD);
     }
 }

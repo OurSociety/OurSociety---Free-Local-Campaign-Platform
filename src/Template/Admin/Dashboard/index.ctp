@@ -25,19 +25,19 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Role</th>
                     <th>Name</th>
+                    <th>Role</th>
                     <th>Registered</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($recentlyCreatedUsers as $user): ?>
                     <tr>
-                        <td><?= ucfirst($user->role) ?></td>
                         <td><?= $this->Html->link(
                                 $user->name,
                                 ['controller' => 'Users', 'action' => 'view', $user->id]
                             ) ?></td>
+                        <td><?= ucfirst($user->role) ?></td>
                         <td><?= $this->Time->timeAgoInWords($user->created) ?></td>
                     </tr>
                 <?php endforeach ?>
@@ -53,20 +53,20 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Role</th>
                     <th>Name</th>
+                    <th>Role</th>
                     <th>Last Seen</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($recentlyActiveUsers as $user): ?>
                     <tr>
-                        <td><?= ucfirst($user->role) ?></td>
                         <td><?= $this->Html->link(
                                 $user->name,
                                 ['controller' => 'Users', 'action' => 'view', $user->id]
                             ) ?></td>
-                        <td><?= $this->Time->timeAgoInWords($user->created) ?></td>
+                        <td><?= ucfirst($user->role) ?></td>
+                        <td><?= $this->Time->timeAgoInWords($user->last_seen) ?></td>
                     </tr>
                 <?php endforeach ?>
                 </tbody>

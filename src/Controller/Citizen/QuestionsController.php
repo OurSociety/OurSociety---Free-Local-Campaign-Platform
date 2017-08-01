@@ -5,7 +5,7 @@ namespace OurSociety\Controller\Citizen;
 
 use Cake\Event\Event;
 use OurSociety\Controller\Action\AnswerAction;
-use OurSociety\Model\Table\UsersTable;
+use OurSociety\Model\Table\QuestionsTable;
 use OurSociety\Controller\CrudController;
 
 class QuestionsController extends CrudController
@@ -21,6 +21,6 @@ class QuestionsController extends CrudController
 
         $this->Crud->disable(['view', 'add', 'edit', 'delete']);
 
-        $this->paginate = ['limit' => UsersTable::LIMIT_DASHBOARD];
+        $this->paginate = ['limit' => QuestionsTable::LIMIT_BATCH];
     }
 }

@@ -34,6 +34,8 @@ use OurSociety\Validation\Validator as AppValidator;
  */
 class QuestionsTable extends AppTable
 {
+    public const LIMIT_BATCH = 10;
+
     /**
      * {@inheritdoc}
      */

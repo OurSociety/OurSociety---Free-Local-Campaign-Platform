@@ -38,20 +38,23 @@ $ceilingReached = $percentage === 100.0;
             </div>
         </div>
 
-        <?php if ($politicianMatch !== null): ?>
         <div class="media">
-            <div class="media-left">
-                <?= $this->cell('Profile/Picture', [], ['user' => $politicianMatch->politician]) ?>
-            </div>
+            <?php if ($politicianMatch !== null): ?>
+                <div class="media-left">
+                    <?= $this->cell('Profile/Picture', [], ['user' => $politicianMatch->politician]) ?>
+                </div>
+            <?php endif ?>
             <div class="media-body">
                 <div class="col-sm-6">
-                    <h4 class="media-heading"><?= $this->Html->politicianLink($politicianMatch->politician) ?></h4>
-                    <p>
-                        <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
-                            'percentage_match' => $politicianMatch->true_match_percentage,
-                            'politician_name' => $this->Html->politicianLink($politicianMatch->politician),
-                        ]) ?>
-                    </p>
+                    <?php if ($politicianMatch !== null): ?>
+                        <h4 class="media-heading"><?= $this->Html->politicianLink($politicianMatch->politician) ?></h4>
+                        <p>
+                            <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
+                                'percentage_match' => $politicianMatch->true_match_percentage,
+                                'politician_name' => $this->Html->politicianLink($politicianMatch->politician),
+                            ]) ?>
+                        </p>
+                    <?php endif ?>
                 </div>
                 <div class="col-sm-6">
                     <?= $this->Html->link(
@@ -62,7 +65,6 @@ $ceilingReached = $percentage === 100.0;
                 </div>
             </div>
         </div>
-        <?php endif ?>
 
     </div>
 </div>
