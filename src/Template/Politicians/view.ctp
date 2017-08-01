@@ -16,6 +16,10 @@
 </ol>
 <?php $this->end() ?>
 
+<?php $this->start('profile_picture') ?>
+    <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
+<?php $this->end() ?>
+
 <?php $this->start('actions_heading') ?>
 <?php if ($currentUser === null): ?>
     <?= $this->Html->link(

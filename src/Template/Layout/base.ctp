@@ -1,21 +1,18 @@
 <?php
-use Cake\I18n\I18n;
-
 /**
  * @var \OurSociety\View\AppView $this The view class.
  */
 ?>
 <!DOCTYPE html>
-<html lang="<?= Locale::getPrimaryLanguage(I18n::locale()) ?>">
+<html lang="<?= Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
 <head>
     <?= $this->Html->charset(); ?>
     <title><?= $this->get('title', 'OurSociety') ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <?= $this->Html->meta('icon', $this->Url->image('logo.png')); ?>
-
+    <?php // Add new tags below this line, and below Google Analytics ?>
     <?= $this->element('Snippets/google_analytics') ?>
-
+    <?= $this->Html->meta('icon', $this->Url->image('logo.png')); ?>
+    <?= $this->Html->meta('csrf-token', $this->request->getParam('_csrfToken')); ?>
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('headjs'); ?>

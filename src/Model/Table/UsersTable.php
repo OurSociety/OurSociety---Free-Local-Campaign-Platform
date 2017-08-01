@@ -8,7 +8,9 @@ use Cake\Localized\Validation\UsValidation;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\Utility\Text;
 use Cake\Validation as Cake;
+use Josegonzalez\Upload\Model\Behavior\UploadBehavior;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Validation\Validator as AppValidator;
@@ -53,6 +55,21 @@ class UsersTable extends AppTable
         ]);
 
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
+        $this->addBehavior(UploadBehavior::class, [
+            'picture' => [
+                'path' => 'webroot{DS}upload{DS}profile{DS}picture{DS}{primaryKey}',
+                'nameCallback' => function ($data, $options): string {
+                    $filename = Text::uuid();
+
+                    $extension = pathinfo($data['name'], PATHINFO_EXTENSION);
+                    if ($extension !== '') {
+                        $filename .= '.' . $extension;
+                    }
+
+                    return $filename;
+                }
+            ],
+        ]);
     }
 
     /**
@@ -145,9 +162,9 @@ class UsersTable extends AppTable
             'citizen_id' => $userFrom->id,
             'politician_id' => $userTo->id,
             'category_id IS' => null,
-        ])->firstOrFail();
+        ])->first();
 
-        return $match->true_match_percentage;
+        return $match !== null ? $match->true_match_percentage : 0;
     }
 
     /**

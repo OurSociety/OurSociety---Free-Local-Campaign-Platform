@@ -33,14 +33,7 @@ abstract class AppController extends Controller
         $this->loadComponent('Cookie');
         $this->loadComponent('Flash', ['className' => Component\FlashComponent::class]);
         $this->loadComponent('RequestHandler');
-
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         *
-         * See: http://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadSecurityComponents();
     }
 
     /**
@@ -90,32 +83,6 @@ abstract class AppController extends Controller
         }
     }
 
-    /**
-     * Is admin switching users?
-     *
-     * Detects if the request:
-     *
-     *  - matches the URL for the switch users action
-     *  - session indicates an admin who is currently acting as another user
-     *
-     * @return bool True if request is an admin trying to switch users.
-     */
-    private function isAdminSwitchingUsers(): bool
-    {
-        if ($this->request->getUri()->getPath() !== Router::reverse(['_name' => 'admin:users:switch'])) {
-            return false;
-        }
-
-        /** @var User|null $admin */
-        $admin = $this->request->session()->read('Auth.Admin');
-
-        if ($admin === null) {
-            return false;
-        }
-
-        return $admin->isAdmin();
-    }
-
     protected function rememberMe(): void
     {
         if ($this->components()->has('Auth') === false) {
@@ -142,5 +109,42 @@ abstract class AppController extends Controller
         $user->seen();
 
         $this->Auth->setUser($user);
+    }
+
+    /**
+     * Is admin switching users?
+     *
+     * Detects if the request:
+     *
+     *  - matches the URL for the switch users action
+     *  - session indicates an admin who is currently acting as another user
+     *
+     * @return bool True if request is an admin trying to switch users.
+     */
+    private function isAdminSwitchingUsers(): bool
+    {
+        if ($this->request->getUri()->getPath() !== Router::reverse(['_name' => 'admin:users:switch'])) {
+            return false;
+        }
+
+        /** @var User|null $admin */
+        $admin = $this->request->session()->read('Auth.Admin');
+
+        if ($admin === null) {
+            return false;
+        }
+
+        return $admin->isAdmin();
+    }
+
+    /**
+     * Enable the following components for recommended CakePHP security settings.
+     *
+     * @link http://book.cakephp.org/3.0/en/controllers/components/security.html
+     */
+    private function loadSecurityComponents(): void
+    {
+        //$this->loadComponent('Csrf');
+        //$this->loadComponent('Security');
     }
 }

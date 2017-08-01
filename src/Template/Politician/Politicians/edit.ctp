@@ -23,17 +23,17 @@ use OurSociety\Model\Entity\User;
 <hr>
 
 <section class="users form">
-    <?= $this->Form->create($politician, ['align' => [
-        'sm' => [
-            'left' => 3,
-            'middle' => 9
-        ]
-    ]]) ?>
+    <?= $this->Form->create($politician, ['align' => ['sm' => ['left' => 3, 'middle' => 9]], 'type' => 'file']) ?>
     <fieldset>
         <legend><?= __('Account Details') ?></legend>
         <?= $this->Form->control('role', ['value' => User::ROLE_POLITICIAN, 'type' => 'hidden']) ?>
         <?= $this->Form->control('name', ['label' => __('Full Display Name'), 'help' => 'e.g. Sen. John Doe']) ?>
         <?= $this->Form->control('email', ['label' => __('Email Address')]) ?>
+        <?= $this->Form->control('picture', [
+            'label' => __('Profile Picture'),
+            'type' => 'file',
+            'help' => __('Accepted file formats: GIF/JPEG/PNG - Maximum file size: 5 MB'),
+        ]) ?>
     </fieldset>
     <fieldset>
         <legend><?= __('Home Address') ?></legend>

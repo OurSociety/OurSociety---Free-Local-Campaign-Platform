@@ -39,9 +39,13 @@ class AnswerAction extends BaseAction
 
         $user = $controller->Auth->user();
         $query = $table->find('batch', ['user' => $user]);
-        $questions = $controller->paginate($query)->toArray();
+        $questions = $controller->paginate($query);
 
-        $controller->set(['questions' => $questions]);
+        if ($questions->count() === 0) {
+            $this->_controller()->redirect($this->_request()->referer());
+        }
+
+        $controller->set(['questions' => $questions->toArray()]);
     }
 
     protected function _post(): ?Response
@@ -83,6 +87,11 @@ class AnswerAction extends BaseAction
                 return !in_array($questionData['id'], $answeredQuestionIds, true);
             })
             ->toArray();
+
+        // It's possible that we remove all the questions, if user pressed back and answers same questions again...
+        if (empty($data)) {
+            return $this->_success();
+        }
 
         // Create entities from remaining unanswered questions in data.
         $questions = $table->patchEntities(

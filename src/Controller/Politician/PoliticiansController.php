@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Politician;
 
 use Cake\Event\Event;
+use Cake\Network\Exception\BadRequestException;
 use Cake\ORM\Query;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -62,5 +64,35 @@ class PoliticiansController extends CrudController
         });
 
         return $this->Crud->execute();
+    }
+
+    public function picture(): ?Response
+    {
+        if (!$this->request->is(['put', 'post'])) {
+            throw new BadRequestException('Only PUT/POST requests.');
+        }
+
+        /** @var UsersTable $users */
+        $users = $this->loadModel();
+        /** @var User $user */
+        $user = $this->Auth->user();
+
+        $user = $users->patchEntity($user, ['picture' => $this->request->getData('file')]);
+
+        $users->save($user);
+
+        $errors = $user->getErrors();
+        if (count($errors) > 0) {
+            $this->set('success', false);
+            $this->set('errors', $errors);
+            $this->set('_serialize', ['success', 'errors']);
+
+            return null;
+        }
+
+        $this->set('success', true);
+        $this->set('_serialize', ['success']);
+
+        return null;
     }
 }

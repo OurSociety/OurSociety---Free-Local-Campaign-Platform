@@ -106,11 +106,11 @@ ansicolors@~0.2.1:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
 
 anymatch@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.0.tgz#a3e52fa39168c825ff57b0248126ce5a8ff95507"
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
   dependencies:
-    arrify "^1.0.0"
     micromatch "^2.1.5"
+    normalize-path "^2.0.0"
 
 aproba@^1.0.3:
   version "1.1.2"
@@ -178,10 +178,6 @@ array-unique@^0.2.1:
 arraybuffer.slice@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/arraybuffer.slice/-/arraybuffer.slice-0.0.6.tgz#f33b2159f0532a3f3107a272c0ccfbd1ad2979ca"
-
-arrify@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
 asn1.js@^4.0.0:
   version "4.9.1"
@@ -276,6 +272,13 @@ aws-sign2@~0.6.0:
 aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
+
+axios@^0.16.2:
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+  dependencies:
+    follow-redirects "^1.2.3"
+    is-buffer "^1.1.5"
 
 babel-code-frame@^6.11.0, babel-code-frame@^6.22.0:
   version "6.22.0"
@@ -919,7 +922,7 @@ bootstrap-sass@^3.3.7:
 
 bootstrap@twbs/bootstrap#v4-dev:
   version "4.0.0-alpha.6"
-  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/c0eff6a61a19249778fbee3b908d8f0614e4393d"
+  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/f4f63d862352de4ebff7a0fc42a572d97817ebc6"
   dependencies:
     jquery ">=1.9.1"
     popper.js "^1.10.8"
@@ -1152,12 +1155,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000706"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000706.tgz#e2b5f0460573cbcc88a0985f5cced08f1617c6f5"
+  version "1.0.30000708"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000708.tgz#c2e736bd3b7fc5f6c14e4c6dfe62b98ed15e8a5b"
 
 caniuse-lite@^1.0.30000697, caniuse-lite@^1.0.30000704:
-  version "1.0.30000706"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000706.tgz#bc59abc41ba7d4a3634dda95befded6114e1f24e"
+  version "1.0.30000708"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000708.tgz#71dbf388c57f379b1bb66c89a890edc04c2509b6"
 
 canvas-renderer@~1.0.0:
   version "1.0.0"
@@ -1399,10 +1402,10 @@ component-inherit@0.0.3:
   resolved "https://registry.yarnpkg.com/component-inherit/-/component-inherit-0.0.3.tgz#645fc4adf58b72b649d5cae65135619db26ff143"
 
 compressible@~2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.10.tgz#feda1c7f7617912732b29bf8cf26252a20b9eecd"
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.11.tgz#16718a75de283ed8e604041625a2064586797d8a"
   dependencies:
-    mime-db ">= 1.27.0 < 2"
+    mime-db ">= 1.29.0 < 2"
 
 compression@^1.5.2:
   version "1.7.0"
@@ -1745,7 +1748,7 @@ debug@2.6.7:
   dependencies:
     ms "2.0.0"
 
-debug@2.6.8, debug@^2.1.1, debug@^2.2.0, debug@^2.6.6, debug@^2.6.8:
+debug@2.6.8, debug@^2.1.1, debug@^2.2.0, debug@^2.4.5, debug@^2.6.6, debug@^2.6.8:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -1850,9 +1853,13 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
 
-depd@1.1.0, depd@~1.1.0:
+depd@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
+
+depd@~1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
 
 des.js@^1.0.0:
   version "1.0.0"
@@ -1967,6 +1974,10 @@ download@^4.0.0, download@^4.1.2:
     vinyl "^1.0.0"
     vinyl-fs "^2.2.0"
     ware "^1.2.0"
+
+dropzone@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-4.3.0.tgz#48b0b8f2ad092872e4b535b672a7c3f1a1d67c91"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -2532,6 +2543,12 @@ first-chunk-stream@^1.0.0:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+
+follow-redirects@^1.2.3:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.4.tgz#355e8f4d16876b43f577b0d5ce2668b9723214ea"
+  dependencies:
+    debug "^2.4.5"
 
 for-in@^0.1.3:
   version "0.1.8"
@@ -3473,7 +3490,7 @@ jdenticon@^1.7.2:
     canvas-renderer "~1.0.0"
     requirejs "^2.3.3"
 
-jquery@>=1.9.1:
+jquery@>=1.9.1, jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -3795,6 +3812,10 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
 
+lodash.clone@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
+
 lodash.clonedeep@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-3.0.2.tgz#a0a1e40d82a5ea89ff5b147b8444ed63d92827db"
@@ -4075,7 +4096,7 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
-"mime-db@>= 1.27.0 < 2", mime-db@~1.29.0:
+"mime-db@>= 1.29.0 < 2", mime-db@~1.29.0:
   version "1.29.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.29.0.tgz#48d26d235589651704ac5916ca06001914266878"
 
@@ -4340,7 +4361,7 @@ normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
     semver "2 || 3 || 4 || 5"
     validate-npm-package-license "^3.0.1"
 
-normalize-path@^2.0.1:
+normalize-path@^2.0.0, normalize-path@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-2.1.1.tgz#1ab28b556e198363a8c1a6f7e6fa20137fe6aed9"
   dependencies:
@@ -4539,8 +4560,8 @@ p-map@^1.1.1:
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.1.1.tgz#05f5e4ae97a068371bc2a5cc86bfbdbc19c4ae7a"
 
 p-pipe@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/p-pipe/-/p-pipe-1.1.0.tgz#2e9dc7cc57ce67d2ce2db348ca03f28731854075"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/p-pipe/-/p-pipe-1.2.0.tgz#4b1a11399a11520a67790ee5a0c1d5881d6befe9"
 
 pako@~0.2.0:
   version "0.2.9"
@@ -6081,8 +6102,8 @@ svg-baker@^1.2.0, svg-baker@^1.2.7:
     traverse "^0.6.6"
 
 svg-sprite-loader@^3.0.6:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/svg-sprite-loader/-/svg-sprite-loader-3.0.7.tgz#bf02b201af6af779b5c3845cc71351cb6d4fa830"
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/svg-sprite-loader/-/svg-sprite-loader-3.0.8.tgz#52520423ea2718663852f3fca9d4dc173eccc4f4"
   dependencies:
     bluebird "^3.5.0"
     deepmerge "1.3.2"
@@ -6521,6 +6542,13 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-clip@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-clip/-/vue-clip-1.0.0.tgz#c28399ea4ca4957a391086584d50548a74340980"
+  dependencies:
+    dropzone "^4.3.0"
+    lodash.clone "^4.5.0"
+
 vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
@@ -6550,7 +6578,7 @@ vue-style-loader@^3.0.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.3.3:
+vue-template-compiler@^2.3.3, vue-template-compiler@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.4.2.tgz#5a45d843f148b098f6c1d1e35ac20c4956d30ad1"
   dependencies:

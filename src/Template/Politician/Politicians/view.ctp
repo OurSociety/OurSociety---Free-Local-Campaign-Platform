@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
+ * @var \OurSociety\Model\Entity\User $politician
  */
 ?>
 
@@ -11,6 +12,11 @@
     <li><?= $this->Html->dashboardLink() ?></li>
     <li><?= __('Profile') ?></li>
 </ol>
+<?php $this->end() ?>
+
+<?php $this->start('profile_picture') ?>
+    <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>
+    <?=''// $this->cell('Profile/Picture::edit', [], ['user' => $politician]) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_heading') ?>

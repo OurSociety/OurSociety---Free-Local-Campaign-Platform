@@ -5,9 +5,30 @@
 
 import 'bootstrap-sass';
 import 'jdenticon/dist/jdenticon.js'
+import './bootstrap';
 import './app/editor.js';
 import './app/question.js';
 import './app/watermark.js';
+import ProfilePicture from './Components/ProfilePicture.vue';
+
+// import Vue from 'vue'
+
+
+
+const app = new Vue({
+  el: '#app',
+  components: {
+    profilePicture: ProfilePicture,
+  }
+});
+
+class Welcome {
+  constructor() {
+    console.log('Welcome to OurSociety!');
+  }
+}
+
+new Welcome();
 
 // window.Vue = require('vue');
 // window.Inputmask = require('inputmask');

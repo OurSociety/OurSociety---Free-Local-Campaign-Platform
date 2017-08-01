@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  *
  * @property \OurSociety\Model\Entity\Question[] $questions
  * @property \OurSociety\Model\Entity\User[] $users
+ * @property \OurSociety\Model\Entity\ValueMatch[] $value_match
  */
 class Category extends Entity
 {
