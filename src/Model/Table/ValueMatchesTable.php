@@ -112,7 +112,7 @@ class ValueMatchesTable extends AppTable
             ];
 
             $errorPercentage = $entity->sample_size > 0 ? 1 / $entity->sample_size * 100 : 100;
-            $expression = new QueryExpression(sprintf('match_percentage - %s', $errorPercentage));
+            $expression = new QueryExpression(sprintf('GREATEST(match_percentage - %s, 0)', $errorPercentage));
             $commonData = [
                 'true_match_percentage' => $expression,
                 'error_percentage' => $errorPercentage,
