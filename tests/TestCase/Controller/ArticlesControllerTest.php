@@ -16,10 +16,10 @@ class ArticlesControllerTest extends IntegrationTestCase
 {
     public function testIndex(): void
     {
-        $this->auth(UsersFixture::EMAIL_CITIZEN);
+        $this->auth(UsersFixture::CITIZEN_EMAIL);
         $this->get([
             '_name' => 'politician:articles',
-            'politician' => UsersFixture::SLUG_POLITICIAN,
+            'politician' => UsersFixture::POLITICIAN_SLUG,
         ]);
         $this->assertResponseOk();
         $this->assertResponseContains('Articles');
@@ -34,7 +34,7 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Page 1 of 1, showing 3 records out of 3 total.');
         $this->assertResponseContains(sprintf(
             'politicians/%s/article/%s',
-            UsersFixture::SLUG_POLITICIAN,
+            UsersFixture::POLITICIAN_SLUG,
             PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_SLUG
         ));
     }
@@ -92,47 +92,47 @@ class ArticlesControllerTest extends IntegrationTestCase
         return [
             'success (citizen @ published & approved)' => [
                 'expected' => 'success',
-                'user' => UsersFixture::EMAIL_CITIZEN,
+                'user' => UsersFixture::CITIZEN_EMAIL,
                 'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'error (citizen @ unpublished)' => [
                 'expected' => 'error',
-                'user' => UsersFixture::EMAIL_CITIZEN,
+                'user' => UsersFixture::CITIZEN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
             ],
             'error (citizen @ unapproved)' => [
                 'expected' => 'error',
-                'user' => UsersFixture::EMAIL_CITIZEN,
+                'user' => UsersFixture::CITIZEN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
             ],
             'success (politician @ published & approved)' => [
                 'expected' => 'success',
-                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'user' => UsersFixture::POLITICIAN_EMAIL,
                 'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'redirect (politician @ unpublished)' => [
                 'expected' => 'redirect',
-                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'user' => UsersFixture::POLITICIAN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
             ],
             'redirect (politician @ unapproved)' => [
                 'expected' => 'redirect',
-                'user' => UsersFixture::EMAIL_POLITICIAN,
+                'user' => UsersFixture::POLITICIAN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
             ],
             'success (admin @ published & approved)' => [
                 'expected' => 'success',
-                'user' => UsersFixture::EMAIL_ADMIN,
+                'user' => UsersFixture::ADMIN_EMAIL,
                 'article' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
             ],
             'redirect (admin @ unpublished)' => [
                 'expected' => 'redirect',
-                'user' => UsersFixture::EMAIL_ADMIN,
+                'user' => UsersFixture::ADMIN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNPUBLISHED_ID,
             ],
             'redirect (admin @ unapproved)' => [
                 'expected' => 'redirect',
-                'user' => UsersFixture::EMAIL_ADMIN,
+                'user' => UsersFixture::ADMIN_EMAIL,
                 'article' => PoliticianArticlesFixture::UNAPPROVED_ID,
             ],
         ];

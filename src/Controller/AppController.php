@@ -113,7 +113,7 @@ abstract class AppController extends Controller
             return false;
         }
 
-        return $admin->role === User::ROLE_ADMIN;
+        return $admin->isAdmin();
     }
 
     protected function rememberMe(): void

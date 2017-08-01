@@ -22,7 +22,7 @@ class QuestionsControllerTest extends IntegrationTestCase
         /** @var QuestionsTable $table */
         $table = TableRegistry::get('Questions');
 
-        $this->auth(UsersFixture::EMAIL_CITIZEN);
+        $this->auth(UsersFixture::CITIZEN_EMAIL);
         $this->get(['_name' => 'citizen:questions', '?' => ['limit' => $batchLimit]]);
         $this->assertResponseOk();
 

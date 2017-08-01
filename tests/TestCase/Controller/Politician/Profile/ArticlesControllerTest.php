@@ -24,7 +24,7 @@ class ArticlesControllerTest extends IntegrationTestCase
         /** @var PoliticianArticle $article */
         $article = TableRegistry::get('PoliticianArticles')->get($id);
 
-        $this->auth(UsersFixture::EMAIL_POLITICIAN);
+        $this->auth(UsersFixture::POLITICIAN_EMAIL);
         $this->get(sprintf('/politician/profile/articles/view/%s', $article->id));
         $this->assertResponseOk();
 
@@ -54,7 +54,7 @@ class ArticlesControllerTest extends IntegrationTestCase
 
     public function testAdd(): void
     {
-        $this->auth(UsersFixture::EMAIL_POLITICIAN);
+        $this->auth(UsersFixture::POLITICIAN_EMAIL);
         $this->get('/politician/profile/articles/add');
         $this->assertResponseOk();
         $this->assertResponseContains('Add Article');

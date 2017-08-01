@@ -62,8 +62,8 @@ class UserCellTest extends TestCase
     {
         /** @var UsersTable $users */
         $users = TableRegistry::get('Users');
-        $politician = $users->get(UsersFixture::ID_POLITICIAN);
-        $admin = $users->find()->where(['email' => UsersFixture::EMAIL_ADMIN])->firstOrFail();
+        $politician = $users->get(UsersFixture::POLITICIAN_ID);
+        $admin = $users->get(UsersFixture::ADMIN_ID);
 
         return [
             'politician' => [

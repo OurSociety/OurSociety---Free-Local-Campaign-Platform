@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Test\TestCase\Controller\Admin;
 
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use OurSociety\Model\Entity\User;
@@ -14,7 +15,7 @@ class UsersControllerTest extends IntegrationTestCase
 {
     public function testIndex(): void
     {
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth(UsersFixture::ADMIN_EMAIL);
         $this->get('/admin/users');
         $this->assertResponseOk();
         $this->assertResponseContains('Users');
@@ -38,12 +39,13 @@ class UsersControllerTest extends IntegrationTestCase
                 //$this->assertResponseContains($record['created']);
                 //$this->assertResponseContains($record['modified']);
             });
-        $this->assertResponseContains('Page 1 of 1, showing 4 records out of 4 total.');
+        $userCount = TableRegistry::get('Users')->find()->count();
+        $this->assertResponseContains(sprintf('Page 1 of 1, showing %d records out of %d total.', $userCount, $userCount));
     }
 
     public function testAdd(): void
     {
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth(UsersFixture::ADMIN_EMAIL);
         $this->get('/admin/users/add');
         $this->assertResponseContains('Add User');
         $this->assertResponseContains('Index');
@@ -75,9 +77,9 @@ class UsersControllerTest extends IntegrationTestCase
     public function testEdit(): void
     {
         /** @var User $user */
-        $user = TableRegistry::get('Users')->find()->where(['email' => UsersFixture::EMAIL_ADMIN])->firstOrFail();
+        $user = TableRegistry::get('Users')->get(UsersFixture::ADMIN_ID);
 
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth(UsersFixture::ADMIN_EMAIL);
         $this->get(sprintf('/admin/users/edit/%s', $user->id));
         $this->assertResponseContains(sprintf('Edit User: %s', $user->name)); // Remove ID from heading
         $this->assertResponseContains('Index');
@@ -114,12 +116,10 @@ class UsersControllerTest extends IntegrationTestCase
 
     public function testDelete(): void
     {
-        $userQuery = TableRegistry::get('Users')->find()->where(['email' => UsersFixture::EMAIL_ADMIN]);
-
         /** @var User $user */
-        $user = $userQuery->firstOrFail();
+        $user = TableRegistry::get('Users')->get(UsersFixture::ADMIN_ID);
 
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth(UsersFixture::ADMIN_EMAIL);
         $this->post(sprintf('/admin/users/view/%s', $user->id), [
             '_method' => 'DELETE',
             'name' => 'Augustus O. Bacon',
@@ -137,9 +137,9 @@ class UsersControllerTest extends IntegrationTestCase
     public function testView(): void
     {
         /** @var User $user */
-        $user = TableRegistry::get('Users')->find()->where(['email' => UsersFixture::EMAIL_ADMIN])->firstOrFail();
+        $user = TableRegistry::get('Users')->get(UsersFixture::ADMIN_ID);
 
-        $this->auth(UsersFixture::EMAIL_ADMIN);
+        $this->auth(UsersFixture::ADMIN_EMAIL);
         $this->get(sprintf('/admin/users/view/%s', $user->id)); // TODO: Don't use UUID in URLs.
         $this->assertResponseOk();
         $this->assertResponseContains(sprintf('View User: %s', $user->name));
@@ -202,9 +202,9 @@ class UsersControllerTest extends IntegrationTestCase
         /** @var UsersTable $users */
         $users = TableRegistry::get('Users');
         /** @var User $politician */
-        $politician = $users->get(UsersFixture::ID_POLITICIAN);
+        $politician = $users->get(UsersFixture::POLITICIAN_ID);
         /** @var User $admin */
-        $admin = $users->find()->where(['email' => UsersFixture::EMAIL_ADMIN])->firstOrFail();
+        $admin = $users->get(UsersFixture::ADMIN_ID);
 
         return [
             'error (NOT admin)' => [

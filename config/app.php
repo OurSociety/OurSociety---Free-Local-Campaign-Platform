@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 return [
     /**
      * Debug Level:
@@ -98,7 +100,7 @@ return [
          */
         '_cake_core_' => [
             'className' => 'File',
-            'prefix' => 'myapp_cake_core_',
+            'prefix' => 'oursociety_cake_core_',
             'path' => CACHE . 'persistent/',
             'serialize' => true,
             'duration' => '+1 years',
@@ -113,7 +115,7 @@ return [
          */
         '_cake_model_' => [
             'className' => 'File',
-            'prefix' => 'myapp_cake_model_',
+            'prefix' => 'oursociety_cake_model_',
             'path' => CACHE . 'models/',
             'serialize' => true,
             'duration' => '+1 years',
@@ -152,7 +154,7 @@ return [
      */
     'Error' => [
         'errorLevel' => E_ALL,
-        'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
+        'exceptionRenderer' => Cake\Error\ExceptionRenderer::class,
         'skipLog' => [],
         'log' => true,
         'trace' => true,
@@ -205,53 +207,12 @@ return [
     ],
 
     /**
-     * Connection information used by the ORM to connect
-     * to your application's datastores.
-     * Do not use periods in database name - it may lead to error.
-     * See https://github.com/cakephp/cakephp/issues/6471 for details.
-     * Drivers include Mysql Postgres Sqlite Sqlserver
-     * See vendor\cakephp\cakephp\src\Database\Driver for complete list
+     * Connection information used by the ORM to connect to your application's datastores.
      */
     'Datasources' => [
         'default' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            /**
-             * CakePHP will use the default DB port based on the driver selected
-             * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
-             * the following line and set the port accordingly
-             */
-            //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'my_app',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'flags' => [],
-            'cacheMetadata' => true,
-            'log' => false,
-
-            /**
-             * Set identifier quoting to true if you are using reserved words or
-             * special characters in your table or column names. Enabling this
-             * setting will result in queries built using the Query Builder having
-             * identifiers quoted when creating SQL. It should be noted that this
-             * decreases performance because each query needs to be traversed and
-             * manipulated before being executed.
-             */
-            'quoteIdentifiers' => false,
-
-            /**
-             * During development, if using MySQL < 5.6, uncommenting the
-             * following line could boost the speed at which schema metadata is
-             * fetched from the database. It can also be set directly with the
-             * mysql configuration directive 'innodb_stats_on_metadata = 0'
-             * which is the recommended value in production environments
-             */
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-
+            'className' => Cake\Database\Connection::class,
+            'driver' => Cake\Database\Driver\Mysql::class,
             'url' => env('DATABASE_URL'),
         ],
 
@@ -259,21 +220,18 @@ return [
          * The test connection is used during the test suite.
          */
         'test' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'test_myapp',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+            'className' => Cake\Database\Connection::class,
+            'driver' => Cake\Database\Driver\Mysql::class,
             'url' => env('DATABASE_TEST_URL'),
+        ],
+
+        /**
+         * Use to seed fixtures into test database during testing.
+         */
+        'fixtures' => [
+            'className' => Cake\Database\Connection::class,
+            'driver' => Cake\Database\Driver\Mysql::class,
+            'url' => env('DATABASE_FIXTURES_URL'),
         ],
     ],
 
@@ -282,14 +240,14 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => 'Cake\Log\Engine\FileLog',
+            'className' => Cake\Log\Engine\FileLog::class,
             'path' => LOGS,
             'file' => 'debug',
             'levels' => ['notice', 'info', 'debug'],
             'url' => env('LOG_DEBUG_URL'),
         ],
         'error' => [
-            'className' => 'Cake\Log\Engine\FileLog',
+            'className' => Cake\Log\Engine\FileLog::class,
             'path' => LOGS,
             'file' => 'error',
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],

@@ -22,7 +22,7 @@ class TestFixture extends Cake\TestFixture
         parent::init();
 
         $this->generator = GeneratorFactory::create();
-        $this->generator->seed(SEED);
+        //$this->generator->seed(SEED);
 
         $setDefaults = function (array $record) {
             return $record + $this->defaults;

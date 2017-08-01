@@ -13,7 +13,7 @@ class VideosControllerTest extends IntegrationTestCase
 {
     public function testAdd(): void
     {
-        $this->auth(UsersFixture::EMAIL_POLITICIAN);
+        $this->auth(UsersFixture::POLITICIAN_EMAIL);
         $this->get('/politician/profile/videos/add');
         $this->assertResponseOk();
         $this->assertResponseContains('Add Video');

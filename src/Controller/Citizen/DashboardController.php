@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Citizen;
 
+use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Table\AnswersTable;
+use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Model\Table\QuestionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
@@ -34,6 +35,10 @@ class DashboardController extends AppController
 
         $this->set([
             'levelQuestionTotal' => QuestionsTable::instance()->getLevelQuestionTotal($user),
+            'politicianMatch' => TableRegistry::get('ValueMatches')->find()->contain(['Politicians'])->where([
+                'citizen_id' => $this->Auth->user()->id,
+                'category_id IS' => null,
+            ])->first()
         ]);
 
         return null;

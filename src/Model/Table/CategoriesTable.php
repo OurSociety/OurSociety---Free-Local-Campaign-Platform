@@ -55,11 +55,10 @@ class CategoriesTable extends AppTable
 
     public function getMatchPercentages(User $citizen, User $politician, bool $inverse = false, ?int $limit = null): ResultSet
     {
-        return $this->find()->limit($limit)->page(1)->order('RAND()')->formatResults(function (ResultSet $results) {
-            return $results->map(function (Category $category) {
-                $category->match = 100;
-                return $category;
-            });
-        })->all();
+        return $this->Users->ValueMatches->find()->contain(['Categories'])->where([
+            'citizen_id' => $citizen->id,
+            'politician_id' => $politician->id,
+            'category_id IS NOT' => null,
+        ])->limit($limit)->page(1)->order(['true_match_percentage' => $inverse === false ? 'ASC' : 'DESC'])->all();
     }
 }

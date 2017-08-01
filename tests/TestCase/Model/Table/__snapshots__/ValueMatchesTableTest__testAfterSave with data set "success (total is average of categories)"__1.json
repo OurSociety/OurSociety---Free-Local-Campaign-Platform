@@ -1,0 +1,32 @@
+{
+    "d6661879-41d2-44d6-914a-55cab857ed74": {
+        "id": "d6661879-41d2-44d6-914a-55cab857ed74",
+        "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
+        "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
+        "category_id": null,
+        "true_match_percentage": 70,
+        "match_percentage": 90,
+        "error_percentage": 20,
+        "sample_size": 5
+    },
+    "dc663db3-035c-450e-b46a-d447aebc2c14": {
+        "id": "dc663db3-035c-450e-b46a-d447aebc2c14",
+        "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
+        "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
+        "category_id": "213e2c94-6f7c-3d58-9f2e-134b9ee3dddd",
+        "true_match_percentage": 80,
+        "match_percentage": 100,
+        "error_percentage": 20,
+        "sample_size": 5
+    },
+    "ac63eb67-3e97-4082-8695-fd340301e957": {
+        "id": "ac63eb67-3e97-4082-8695-fd340301e957",
+        "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
+        "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
+        "category_id": "23ab4609-26e8-3227-a8a9-41a3e0c66931",
+        "true_match_percentage": 60,
+        "match_percentage": 80,
+        "error_percentage": 20,
+        "sample_size": 5
+    }
+}

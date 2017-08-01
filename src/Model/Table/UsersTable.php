@@ -10,6 +10,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation as Cake;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -17,6 +18,7 @@ use OurSociety\Validation\Validator as AppValidator;
  *
  * @property AnswersTable|Association\HasMany $Answers
  * @property CategoriesTable|Association\BelongsToMany $Categories
+ * @property ValueMatchesTable|Association\HasMany $ValueMatches
  *
  * @method User get($primaryKey, $options = [])
  * @method User newEntity($data = null, array $options = [])
@@ -41,6 +43,14 @@ class UsersTable extends AppTable
 
         $this->hasMany('Answers');
         $this->belongsToMany('Categories');
+        $this->hasMany('ValueMatches', ['foreignKey' => 'citizen_id']);
+        $this->belongsToMany('PoliticianMatches', [
+            'joinTable' => 'value_matches',
+            'through' => 'ValueMatches',
+            'className' => self::class,
+            'foreignKey' => 'citizen_id',
+            'targetForeignKey' => 'politician_id',
+        ]);
 
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
     }
@@ -115,6 +125,29 @@ class UsersTable extends AppTable
             ->find('politicianForCitizen', ['role' => $role])
             ->where(['slug' => $slug])
             ->firstOrFail();
+    }
+
+    /**
+     * Get value match.
+     *
+     * @param User $userFrom
+     * @param User $userTo
+     * @return float The value match percentage.
+     */
+    public function getMatchPercentage(User $userFrom, User $userTo): float
+    {
+        if ($userFrom->id === $userTo->id) {
+            return 100;
+        }
+
+        /** @var ValueMatch $match */
+        $match = $this->ValueMatches->find()->where([
+            'citizen_id' => $userFrom->id,
+            'politician_id' => $userTo->id,
+            'category_id IS' => null,
+        ])->firstOrFail();
+
+        return $match->true_match_percentage;
     }
 
     /**
@@ -216,10 +249,5 @@ class UsersTable extends AppTable
     protected function findRecentlyActive(Query $query): Query
     {
         return $query->orderDesc('last_seen')->limit(self::LIMIT_DASHBOARD);
-    }
-
-    public function getMatchPercentage(User $citizenUser, User $politicianUser)
-    {
-        return 100; // TODO: Calculate real match.
     }
 }
