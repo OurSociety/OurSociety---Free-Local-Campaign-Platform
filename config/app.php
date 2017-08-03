@@ -316,6 +316,11 @@ return [
             ],
         ],
         'timezoneAwareDateTimeWidget' => false,
-        'useAssetCompress' => \Cake\Core\Plugin::loaded('AssetCompress')
+        'useAssetCompress' => \Cake\Core\Plugin::loaded('AssetCompress'),
+        'tablesBlacklist' => ['phinxlog']
     ],
+    /**
+     * AuditStash configuration
+     */
+    'AuditStash' => ['persister' => \AuditStash\Persister\DatabasePersister::class],
 ];

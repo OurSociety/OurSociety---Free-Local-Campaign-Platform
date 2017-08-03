@@ -1,0 +1,11 @@
+
+.os-bar-inner {
+    @include mdc-elevation(1);
+    background: lighten($brand-purple-light, 50%);
+    white-space: nowrap;
+
+    .breadcrumb {
+        margin-bottom: 0;
+        background-color: inherit;
+    }
+}

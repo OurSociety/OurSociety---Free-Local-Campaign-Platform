@@ -1,0 +1,19 @@
+.bd-sidebar {
+    @include mdc-elevation(5);
+    overflow: hidden;
+    background: url('../../img/backgrounds/collaboration-faded.png') no-repeat 50% 0;
+    background-size: cover;
+
+    &:hover {
+        overflow: inherit; /* Set to 'scroll' if you want scrollbar inside div instead of outside */
+    }
+}
+
+.bd-links {
+    z-index: 2;
+    padding-left: 1rem;
+
+    @include media-breakpoint-up(md) {
+        max-height: calc(100vh); /* Override until the search box is uncommented */
+    }
+}

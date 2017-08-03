@@ -32,6 +32,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/politician/:politician/claim', ['controller' => 'Politicians', 'action' => 'claim'], ['_name' => 'politician:claim', 'pass' => ['politician']]);
     $routes->connect('/politician/:politician/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'politician:article', 'pass' => ['politician', 'article']]);
     $routes->connect('/politician/:politician/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'politician:articles', 'pass' => ['politician']]);
+    $routes->connect('/politicians/:action', ['controller' => 'Politicians']); // TODO: Implement LookupAction or remove.
     $routes->connect('/profile/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
@@ -52,7 +53,7 @@ Router::scope('/', function (RouteBuilder $routes) {
  * All routes here will have URLs prefixed with `/citizen` and names prefixed with `citizen:`.
  */
 Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
     $routes->connect('/ballots', ['controller' => 'Ballot', 'action' => 'index'], ['_name' => 'ballots']);
     $routes->connect('/ballot/:election', ['controller' => 'Ballot', 'action' => 'view'], ['_name' => 'ballot', 'pass' => ['election']]);
     $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
@@ -66,7 +67,7 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
  * All routes here will have URLs prefixed with `/politician` and names prefixed with `politician:`.
  */
 Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
     $routes->connect('/profile', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'Politicians', 'action' => 'edit'], ['_name' => 'profile:edit']);
     $routes->connect('/profile/embed', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'profile:embed']);
@@ -91,9 +92,12 @@ Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBu
  * All routes here will have URLs prefixed with `/admin` and names prefixed with `admin:`.
  */
 Router::prefix('admin', ['_namePrefix' => 'admin:'], function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index'], ['_name' => 'dashboard']);
+    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
     $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
+    $routes->redirect('/politicians/:action/*', ['controller' => 'Users', 'action' => false], ['persist' => true, 'pass' => ['action']]);
     $routes->connect('/users/switch', ['controller' => 'Users', 'action' => 'switch'], ['_name' => 'users:switch']);
+    $routes->connect('/users/dashboard', ['controller' => 'Users', 'action' => 'dashboard'], ['_name' => 'users:dashboard']);
+    $routes->connect('/aspects/users', ['controller' => 'AspectsUsers', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 

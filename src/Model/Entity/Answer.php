@@ -59,8 +59,18 @@ class Answer extends AppEntity
         $this->setHidden(['answer']);
     }
 
+    protected function _getImportance(): ?string
+    {
+        if (!isset($this->_properties['importance'])) {
+            return null;
+        }
+
+        return self::IMPORTANCE[$this->_properties['importance']];
+    }
+
     protected function _getName(): string
     {
-        return self::ANSWERS_SCALE[$this->answer] ?? self::ANSWERS_BOOL[$this->answer];
+        return self::ANSWERS_SCALE[$this->_properties['answer']]
+            ?? self::ANSWERS_BOOL[$this->_properties['answer']];
     }
 }

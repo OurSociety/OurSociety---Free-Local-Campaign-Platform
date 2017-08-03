@@ -7,17 +7,22 @@ mix
   .disableNotifications()
   .autoload({
     'jquery': ['$', 'window.jQuery', 'jQuery'], // auto-`require('jquery')` if these variables are used
-    'popper.js': 'Popper'
+    'popper.js/dist/umd/popper.js': ['Popper'],
   })
   .extract(['bootstrap', 'bootstrap-sass', 'jdenticon/dist/jdenticon.js', 'jquery', 'popper.js', 'selectize', 'trumbowyg'])
   .js('assets/js/app.js', 'webroot/js')
   .js('assets/js/landing.js', 'webroot/js')
+  .js('assets/admin/js/admin.js', 'webroot/js/admin.js')
+  .js('assets/common/js/common.js', 'webroot/js/common.js')
   .js('assets/embed/main.js', 'webroot/js/embed.js')
   .options({
     // clearConsole: false
   })
   .sass('assets/sass/app.scss', 'webroot/css')
   .sass('assets/sass/landing.scss', 'webroot/css')
+  .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', {
+    includePaths: ['node_modules']
+  })
   .sass('assets/embed/scss/embed.scss', 'webroot/css')
   .setPublicPath('webroot')
   // .setResourceRoot('assets')
@@ -31,6 +36,28 @@ mix
             {
               loader: 'svg-sprite-loader',
               options: { extract: true, spriteFilename: 'img/icons-topics.svg' }
+            },
+            'svgo-loader'
+          ]
+        },
+        {
+          test: /\.svg((\?.*)?|$)/,
+          include: path.resolve(__dirname, 'assets/img/logo'),
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: { extract: true, spriteFilename: 'img/sprite-branding.svg' }
+            },
+            'svgo-loader'
+          ]
+        },
+        {
+          test: /\.svg((\?.*)?|$)/,
+          include: path.resolve(__dirname, 'assets/admin/svg'),
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: { extract: true, spriteFilename: 'img/sprite-admin.svg' }
             },
             'svgo-loader'
           ]

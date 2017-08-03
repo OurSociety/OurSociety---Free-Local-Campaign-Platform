@@ -3,39 +3,95 @@ declare(strict_types = 1);
 
 namespace OurSociety\View;
 
-use BootstrapUI\View\Helper as BootstrapUI;
 use Cake\Core\Configure;
-use CrudView\View\CrudView;
-use OurSociety\View\Widget\EditorWidget;
-use OurSociety\View\Widget\ZipWidget;
+use CrudView\View as CrudView;
+use Gourmet\KnpMenu\View\Helper as GourmetKnpMenu;
 
 /**
- * Application View
+ * Application view class.
  *
- * Your application’s default view class, based on CrudView.
+ * The application's default view class (based on CrudView) for handling HTML requests.
  *
- * @property BootstrapUI\FormHelper $Form
+ * @property Helper\BreadcrumbsHelper $Breadcrumbs
+ * @property CrudView\Helper\CrudViewHelper $CrudView
+ * @property Helper\FormHelper $Form
  * @property Helper\HtmlHelper $Html
+ * @property GourmetKnpMenu\MenuHelper $Menu
+ * @property Helper\PaginatorHelper $Paginator
  * @property Helper\UrlHelper $Url
- * @property VideoEmbed\VideoHelper $Video
+ * @property Helper\VideoHelper $Video
  */
-class AppView extends CrudView
+class AppView extends CrudView\CrudView
 {
     /**
      * {@inheritdoc}
      */
     public function initialize(): void
     {
-        if ($this->layout() === 'embed') {
+        $this->_setupLayout();
+
+        parent::initialize();
+    }
+
+    /**
+     * Get Bootstrap version.
+     *
+     * Some helpers (such as Breadcrumbs, Form, etc.) switch templates based on the Bootstrap version.
+     *
+     * @return int The major version of Bootstrap.
+     */
+    public function getBootstrapVersion(): int
+    {
+        return $this->isAdmin() ? 4 : 3;
+    }
+
+    /**
+     * Is admin?
+     *
+     * Determines if the current request is for an admin page, so layout settings can be switched.
+     *
+     * @return bool True if admin prefix, false otherwise.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->request->getParam('prefix') === 'admin';
+    }
+
+    /**
+     * Is embed?
+     *
+     * Determines if the current request is for an embedded widget, so layout settings can be switched.
+     *
+     * @return bool True if embed layout, false otherwise.
+     */
+    public function isEmbed(): bool
+    {
+        return $this->layout() === 'embed';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _loadAssets(): void
+    {
+        // Switch out default assets on embed layout.
+        if ($this->isEmbed()) {
             Configure::write('CrudView.css', [mix('css/embed.css')]);
             Configure::write('CrudView.js.script', []); // NOTE: embed.js is outside the iframe, not inside.
         }
 
-        parent::initialize();
-
-        if ($this->layout() === 'CrudView.default') {
-            $this->layout('site');
+        // Switch out default assets on admin prefix.
+        if ($this->isAdmin()) {
+            Configure::write('CrudView.css', [mix('css/admin.css')]);
+            Configure::write('CrudView.js.script', [
+                mix('js/manifest.js'),
+                mix('js/vendor.js'),
+                mix('js/common.js'),
+                mix('js/admin.js'),
+            ]);
         }
+
+        parent::_loadAssets();
     }
 
     /**
@@ -45,19 +101,55 @@ class AppView extends CrudView
     {
         parent::_setupHelpers();
 
-        $this->helpers()->unload('Html');
+        // Unload helpers that CrudView loaded so we can use customised ones.
+        $this->helpers()->unload('Breadcrumbs');
         $this->helpers()->unload('Form');
+        $this->helpers()->unload('Html');
+        $this->helpers()->unload('Paginator');
 
+        // These helpers override the CrudView ones with custom settings (thought they still extend BootstrapUI).
+        $this->loadHelper('Breadcrumbs', ['className' => Helper\BreadcrumbsHelper::class]);
+        $this->loadHelper('Form', ['className' => Helper\FormHelper::class]);
         $this->loadHelper('Html', ['className' => Helper\HtmlHelper::class]);
-        $this->loadHelper('Form', ['className' => BootstrapUI\FormHelper::class, 'widgets' => [
-            'editor' => [EditorWidget::class],
-            'zip' => [ZipWidget::class, 'text'],
-            // TODO: Implement better date/time widget with following requirements:
-            // - Supports "date" also (not just "datetime"
-            // - Easy to select DOB (a date many years in the past)
-            // - Day field can be optional (for positions/qualifications/awards the day isn't important)
-            //'datetime' => [CrudViewWidget\DateTimeWidget::class, 'select']
-        ]]);
+        $this->loadHelper('Paginator', ['className' => Helper\PaginatorHelper::class]);
+
+        // Load extra helpers required by application.
+        $this->loadHelper('Menu', ['className' => GourmetKnpMenu\MenuHelper::class]);
         $this->loadHelper('Video', ['className' => Helper\VideoHelper::class]);
+    }
+
+    /**
+     * Setup layout.
+     *
+     * @return void
+     */
+    protected function _setupLayout(): void
+    {
+        // This check is so we don't break error pages by changing layout.
+        if ($this->layout() !== 'CrudView.default') {
+            return;
+        }
+
+        // Use the current prefixes default template, not the CrudView one.
+        $this->layout('default');
+    }
+
+    /**
+     * Setup paths.
+     *
+     * Add path with routing prefix so we can have custom scaffold templates for each one.
+     *
+     * @return void
+     */
+    protected function _setupPaths(): void
+    {
+        parent::_setupPaths();
+
+        if ($this->isAdmin()) {
+            Configure::write('App.paths.templates', array_merge(
+                [APP . 'Template' . DS . 'Admin' . DS],
+                Configure::read('App.paths.templates')
+            ));
+        }
     }
 }

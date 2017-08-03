@@ -6,7 +6,7 @@
  */
 ?>
 <?php if ($users !== null): ?>
-    <p class="visible-xs navbar-text text-muted">
+    <p class="d-sm-none visible-xs navbar-text text-muted">
         <?= __('Signed in as {name}', [
             'name' => $this->Html->link(
                 $user['name'],
@@ -20,11 +20,12 @@
         'style' => 'float: left; margin-top: 8px;',
     ]) ?>
     <?= $this->Form->control('user', [
-        'label' => __('Signed in as'),
+        'label' => false,
         'value' => $user->slug,
-        'onchange' => 'this.form.submit()',
+        'onchange' => 'if (this.value) this.form.submit()',
         'style' => 'margin-left: 8px;',
         'error' => false,
+        'class' => ['js-selectize'],
     ]) ?>
     <?= $this->Form->end() ?>
 <?php else: ?>

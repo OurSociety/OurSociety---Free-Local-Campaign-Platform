@@ -1,0 +1,26 @@
+/**
+ * OurSociety variables.
+ */
+
+// OurSociety brand colors
+// TODO: Get real colors from designer.
+$brand-purple: #852c92;
+$brand-purple-light: #7e62a3;
+
+/**
+ * Bootstrap overrides.
+ */
+
+// Tweak global options.
+$grid-gutter-width: 15px;
+$enable-shadows: true;
+
+// Improve color palette.
+$blue: #09a2ee;
+$green: #67bb6d;
+$pink: #fe6896;
+$purple: #9672cb;
+
+// Choose element colors.
+$body-bg: lighten($brand-purple-light, 40%);
+$link-color: $brand-purple-light;

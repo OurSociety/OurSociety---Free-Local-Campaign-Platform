@@ -15,7 +15,7 @@ class DashboardController extends AppController
      * @route GET /citizen
      * @routeName citizen:dashboard
      */
-    public function index(): ?Response
+    public function dashboard(): ?Response
     {
         /** @var User $user */
         $user = $this->Auth->user();

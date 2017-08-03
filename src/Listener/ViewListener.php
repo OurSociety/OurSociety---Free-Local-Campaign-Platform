@@ -155,4 +155,36 @@ class ViewListener extends CrudView\ViewListener
             ->map($defaultHelp)
             ->toArray();
     }
+
+    protected function _associations(array $whitelist = [])
+    {
+        $modifyAssociationsByType = function (array $associations): array {
+            $setAssociationPrimaryKeyToSlug = function (array $config): array {
+                /** @var Table $table */
+                $table = $this->_controller()->loadModel($config['model']);
+
+                if ($table->getSchema()->column('slug') !== null) {
+                    $config['primaryKey'] = 'slug';
+                }
+
+                return $config;
+            };
+
+            return collection($associations)->map($setAssociationPrimaryKeyToSlug)->toArray();
+        };
+
+        return collection(parent::_associations($whitelist))->map($modifyAssociationsByType)->toArray();
+    }
+
+    protected function _table(): Table
+    {
+        /** @var Table $table */
+        $table = parent::_table();
+
+        if ($table->getSchema()->column('slug') !== null) {
+            $table->setPrimaryKey('slug');
+        }
+
+        return $table;
+    }
 }

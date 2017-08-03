@@ -7,28 +7,36 @@ use ArrayAccess;
 use ArrayObject;
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\Event\Event;
-use Cake\ORM\Behavior\TimestampBehavior;
+use Cake\ORM\Behavior as Cake;
 use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator as CakeValidator;
-use Muffin\Orderly\Model\Behavior\OrderlyBehavior;
-use Muffin\Slug\Model\Behavior\SlugBehavior;
+use OurSociety\Model\Behavior as App;
 use OurSociety\Validation\Validator as AppValidator;
+use Search\Manager as SearchManager;
+use Search\Model\Behavior as Search;
 
 /**
  * Application table.
  *
  * Base class for all tables in the application.
  *
- * @mixin TimestampBehavior
+ * @mixin App\AuditLogBehavior
+ * @mixin App\DefaultOrderBehavior
+ * @mixin Search\SearchBehavior
+ * @mixin App\SlugBehavior
+ * @mixin Cake\TimestampBehavior
  */
 abstract class AppTable extends Table
 {
+    use Traits\ClassNameSupportTrait;
+    use Traits\InvokableFinderTrait;
+
     public static function instance(?string $alias = null, ?array $options = [])
     {
         $alias = $alias ?: preg_replace('#.*\\\\(.*)Table#', '$1', static::class);
-        $options += TableRegistry::exists('Questions') ? [] : ['className' => static::class];
+        $options += TableRegistry::exists($alias) ? [] : ['className' => static::class];
 
         return TableRegistry::get($alias, $options);
     }
@@ -42,12 +50,11 @@ abstract class AppTable extends Table
 
         $this->_validatorClass = AppValidator::class;
 
-        $this->addBehavior(OrderlyBehavior::class, $this->getDefaultOrder());
-        $this->addBehavior(TimestampBehavior::class);
-
-        if ($this->getSchema()->column('slug') !== null) {
-            $this->addBehavior(SlugBehavior::class, ['onUpdate' => true]);
-        }
+        $this->addBehavior(App\AuditLogBehavior::class);
+        $this->addBehavior(App\DefaultOrderBehavior::class);
+        $this->addBehavior(Search\SearchBehavior::class);
+        $this->addBehavior(App\SlugBehavior::class);
+        $this->addBehavior(Cake\TimestampBehavior::class);
     }
 
     /**
@@ -83,6 +90,12 @@ abstract class AppTable extends Table
         }
     }
 
+    public function searchConfiguration(): SearchManager
+    {
+        // Setup search filter using search manager
+        return $this->searchManager();
+    }
+
     /**
      * Upsert (update/insert).
      *
@@ -110,10 +123,5 @@ abstract class AppTable extends Table
         }
 
         return $this->{$saveMethod}($entity, $options);
-    }
-
-    protected function getDefaultOrder(): array
-    {
-        return [];
     }
 }

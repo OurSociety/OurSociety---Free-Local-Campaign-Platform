@@ -2,18 +2,25 @@
 import 'bootstrap-sass';
 import 'jdenticon/dist/jdenticon.js'
 
-// App
+// Application
+import 'holderjs';
+// import 'chart.js';
 import './app/editor';
 import './app/question';
 import './app/watermark';
 import './app/onboarding';
 
-// Vue
+// Browser
+window.$ = window.jQuery = require('jquery');
+
+// VueJS (Un-used)
 // import './bootstrap';
-// import ProfilePicture from './Components/ProfilePicture.vue';
 // import Vue from 'vue'
+// import ProfilePicture from './Components/ProfilePicture.vue';
 //
+// window.Vue = require('vue');
 // window.Inputmask = require('inputmask');
+//
 // Vue.directive('input-mask', function(el, binding) {
 //   new Inputmask({ mask: binding.expression }).mask(el);
 // });

@@ -1,70 +1,77 @@
 <?php
 /**
- * @var \OurSociety\View\AppView $this
+ * Default layout.
+ *
+ * @var \OurSociety\View\AppView $this The view class.
+ * @var \OurSociety\Model\Entity\User $currentUser The current user.
+ */
+$this->extend('base');
+
+/**
+ * Page content block.
+ */
+$this->start('page');
+?>
+    <?= $this->Flash->render(); ?>
+    <?= $this->fetch('content'); ?>
+<?php
+$this->end();
+
+/**
+ * Navbar block.
+ */
+$this->start('navbar');
+?>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle visible-xs collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <?= $this->Html->link(
+                    $this->Html->image('banner.png', ['title' => 'OurSociety', 'alt' => 'Brand']),
+                    ['_name' => 'pages:home'],
+                    ['class' => 'navbar-brand', 'escape' => false]
+                ); ?>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-top">
+                <div class="navbar-right">
+                    <?php if ($this->get('currentUser')): ?>
+                        <?= $this->cell('Navbar/User') ?>
+                        <?=''// $this->element('topbar'); ?>
+                        <ul class="nav navbar-nav">
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
+                            <li><?= $this->Html->dashboardLink($currentUser->role, __('Dashboard')) ?></li>
+                            <li role="separator" class="divider"></li>
+                            <li><?= $this->Html->link(__('Logout'), ['_name' => 'users:logout']) ?></li>
+                        </ul>
+                    <?php else: ?>
+                        <ul class="nav navbar-nav">
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
+                            <li><?= $this->Html->link(__('Login'), ['_name' => 'users:login']) ?></li>
+                        </ul>
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+    </nav>
+<?php
+$this->end();
+
+/**
+ * Render layout.
  */
 ?>
-<!DOCTYPE html>
-<html lang="<?= \Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
-<head>
-    <?= $this->Html->charset(); ?>
-    <title><?= $this->get('title');?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <?= $this->Html->meta('icon'); ?>
-    <?= $this->fetch('meta'); ?>
-    <?= $this->fetch('css'); ?>
-    <?= $this->fetch('headjs'); ?>
-</head>
-<body>
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <?php
-            $siteTitleContent = $siteTitle;
-            if (!empty($siteTitleImage)) {
-                $siteTitleContent = $this->Html->image($siteTitleImage);
-            }
-            if (empty($siteTitleLink)) {
-                echo $this->Html->tag('span', $siteTitleContent, ['class' => 'navbar-brand', 'escape' => false]);
-            } else {
-                echo $this->Html->link($siteTitleContent, $siteTitleLink, ['class' => 'navbar-brand', 'escape' => false]);
-            }
-            ?>
-        </div>
-
-        <?= $this->element('topbar'); ?>
+<?= $this->fetch('navbar'); ?>
+<div class="container">
+    <div id="app" class="view">
+        <?= $this->fetch('page') ?>
     </div>
-</nav>
-
-<div class="container-fluid">
-    <div class="row">
-        <?php if ($disableSidebar) : ?>
-            <div class="col-sm-12">
-                <?= $this->Flash->render(); ?>
-                <?= $this->element('breadcrumbs') ?>
-                <?= $this->fetch('content'); ?>
-                <?= $this->fetch('action_link_forms'); ?>
-            </div>
-        <?php else : ?>
-            <div class="col-xs-0 col-sm-2 col-lg-2">
-                <?= $this->element('sidebar'); ?>
-            </div>
-            <div class="col-xs-12 col-sm-10 col-lg-10">
-                <?= $this->Flash->render(); ?>
-                <?= $this->element('breadcrumbs') ?>
-                <?= $this->fetch('content'); ?>
-                <?= $this->fetch('action_link_forms'); ?>
-            </div>
-        <?php endif; ?>
-    </div>
+    <?= $this->fetch('action_link_forms') // For CrudView delete links to work ?>
+    <?= $this->element('footer') ?>
 </div>
-
-<?= $this->fetch('script'); ?>
-</body>
-</html>

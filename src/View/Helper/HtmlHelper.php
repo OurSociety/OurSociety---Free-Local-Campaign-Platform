@@ -60,7 +60,7 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
             ]), $options + ['class' => ['icon']]);
         }
 
-        return parent::icon($name, $options);
+        return parent::icon($name, ['iconSet' => 'fa'] + $options);
     }
 
     public function image($path, array $options = []): string

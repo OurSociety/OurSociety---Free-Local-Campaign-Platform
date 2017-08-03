@@ -12,7 +12,7 @@ class DashboardController extends AppController
      * @route GET /politician
      * @routeName politician:dashboard
      */
-    public function index(): ?Response
+    public function dashboard(): ?Response
     {
         $this->set([
             'answers' => $this->loadModel('Answers')

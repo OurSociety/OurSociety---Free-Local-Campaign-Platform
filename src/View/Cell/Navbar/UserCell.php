@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Cell\Navbar;
 
+use Cake\ORM\Query;
 use Cake\View\Cell;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
@@ -36,9 +37,9 @@ class UserCell extends Cell
      * Returns a list of users for the dropdown if the actual user in an admin.
      *
      * @param User $user The currently logged in user.
-     * @return array|null The list of users, or null if not an admin.
+     * @return Query|null The list of users, or null if not an admin.
      */
-    protected function getUsers(User $user): ?array
+    protected function getUsers(User $user): ?Query
     {
         $actualUser = $this->request->session()->read('Auth.Admin') ?: $user;
 
@@ -49,6 +50,6 @@ class UserCell extends Cell
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
 
-        return $users->getListGroupedByRole()->toArray();
+        return $users->getListGroupedByRole();
     }
 }

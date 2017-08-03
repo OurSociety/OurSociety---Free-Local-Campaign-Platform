@@ -22,7 +22,7 @@ class CategoriesControllerTest extends IntegrationTestCase
     public function testIndex(): void
     {
         $this->auth(UsersFixture::ADMIN_EMAIL);
-        $this->get('/admin/categories');
+        $this->get('/admin/aspects');
         $this->assertResponseOk();
         $this->assertResponseContainsTableHeading('Name');
         $this->assertResponseContainsTableHeading('# Questions');
@@ -44,7 +44,7 @@ class CategoriesControllerTest extends IntegrationTestCase
     public function testView(): void
     {
         $this->auth(UsersFixture::ADMIN_EMAIL);
-        $this->get('/admin/categories/view/' . TableRegistry::get('Categories')->find()->firstOrFail()->id);
+        $this->get('/admin/aspects/view/' . TableRegistry::get('Categories')->find()->firstOrFail()->id);
         $this->assertResponseOk();
         $this->assertResponseContainsTableHeading('Name');
         $this->assertResponseContainsTableHeading('# Questions');
