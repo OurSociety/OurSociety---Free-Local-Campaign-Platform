@@ -91,7 +91,6 @@ class ArticlesController extends CrudController
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianArticle $article */
             $article = $event->getSubject()->entity;
-            $article->id = Text::uuid(); // TODO: Find out why validation fails without this.
             $article->version = $article->version ?: 1; // TODO: Should take default from database?
             $article->politician_id = $this->Auth->user('id');
             $article->published = (bool)$this->request->getData('published') ? Time::now() : null;
