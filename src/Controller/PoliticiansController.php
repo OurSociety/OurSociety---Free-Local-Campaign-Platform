@@ -138,4 +138,45 @@ class PoliticiansController extends CrudController
 
         return null;
     }
-}
+
+    public function embed(string $slug = null): ?Response
+    {
+        // Start same as view()
+        /** @var User $user */
+        $user = $this->Auth->user();
+        $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
+
+        /** @var User $politician */
+        $politician = $this->loadModel('Users')
+            ->find('politicianForCitizen')
+            ->where(compact('slug'))
+            ->firstOrFail();
+
+        if ($politician->verified === null) {
+            $link = function (string $text, array $url): string {
+                /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
+                return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
+            };
+
+            $this->Flash->warning(__(
+                'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
+                    'example_profile' => $link(__('an example profile'), [
+                        '_name' => 'politician',
+                        'politician' => 'seth-kaper-dale'
+                    ]),
+                    'claim_profile' => $link(__('Claim Profile'), [
+                        '_name' => 'politician:claim',
+                        'politician' => $politician->slug
+                    ]),
+                ]
+            ), ['params' => ['escape' => false]]);
+        }
+
+        $this->set(compact('politician'));
+        // End same as view()
+
+        $this->viewBuilder()->setLayout('embed');
+        $this->render('view');
+
+        return null;
+    }}

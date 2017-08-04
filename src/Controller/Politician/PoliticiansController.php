@@ -95,4 +95,12 @@ class PoliticiansController extends CrudController
 
         return null;
     }
+
+    public function embed(): ?Response
+    {
+        $this->set([
+            'politician' => $this->Users->get($this->Auth->user()->id),
+        ]);
+        return null;
+    }
 }

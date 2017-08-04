@@ -15,11 +15,13 @@ mix
   // ], 'assets/vendor.js')
   .js('assets/js/app.js', 'webroot/js')
   .js('assets/js/landing.js', 'webroot/js')
+  .js('assets/embed/main.js', 'webroot/js/embed.js')
   .options({
     // clearConsole: false
   })
   .sass('assets/sass/app.scss', 'webroot/css')
   .sass('assets/sass/landing.scss', 'webroot/css')
+  .sass('assets/embed/main.scss', 'webroot/css/embed.css')
   .setPublicPath('webroot')
   // .setResourceRoot('assets')
   .webpackConfig({

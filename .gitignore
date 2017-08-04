@@ -2,14 +2,12 @@
 /node_modules/*
 /tmp/*
 /vendor/*
-/webroot/css/app.css
-/webroot/css/landing.css
+/webroot/css/*
 /webroot/fonts/*
 !/webroot/fonts/cakedingbats-webfont.*
 /webroot/hot
 /webroot/img/icons-topics.svg
-/webroot/js/app.js
-/webroot/js/landing.js
+/webroot/js/*
 /webroot/upload/*
 /webroot/mix-manifest.json
 /.env*
