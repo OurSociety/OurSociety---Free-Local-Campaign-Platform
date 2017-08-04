@@ -16,10 +16,10 @@ class PoliticianArticlesFixture extends TestFixture
 </p>
 
 HTML;
-    const PUBLISHED_AND_APPROVED_ID = 'approved_and_published';
+    const PUBLISHED_AND_APPROVED_ID = '2c872874-7966-11e7-a115-6c4008a68a60';
     const PUBLISHED_AND_APPROVED_SLUG = 'the-long-road-ahead';
-    const UNPUBLISHED_ID = 'unpublished';
-    const UNAPPROVED_ID = 'unapproved';
+    const UNPUBLISHED_ID = '38913376-7966-11e7-8a5f-6c4008a68a60';
+    const UNAPPROVED_ID = '41e53d64-7966-11e7-83b9-6c4008a68a60';
 
     public $import = ['table' => 'politician_articles', 'connection' => 'fixtures'];
 }

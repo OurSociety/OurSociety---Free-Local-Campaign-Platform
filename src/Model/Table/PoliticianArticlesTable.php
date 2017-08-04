@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
+use ArrayObject;
 use Cake\Datasource\EntityInterface as Entity;
+use Cake\Event\Event;
+use Cake\I18n\Time;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -52,7 +55,6 @@ class PoliticianArticlesTable extends AppTable
             // version
             ->integer('version')
             ->notEmpty('version')
-            ->requirePresence('version', 'create')
             // approved
             ->allowEmpty('approved')
             ->dateTime('approved')
@@ -111,5 +113,16 @@ class PoliticianArticlesTable extends AppTable
         }
 
         return $query->find('latest');
+    }
+
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
+    {
+        foreach (['published', 'approved'] as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = (bool)$data[$field] ? Time::now() : null;
+            }
+        }
+
+        parent::beforeMarshal($event, $data, $options);
     }
 }
