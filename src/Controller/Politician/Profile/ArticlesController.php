@@ -8,6 +8,7 @@ use Cake\I18n\Time;
 use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Entity\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -65,6 +66,17 @@ class ArticlesController extends CrudController
 
     public function add(): ?Response
     {
+        $this->Crud->on('beforeSave', function (Event $event) {
+            /** @var PoliticianArticle $article */
+            $article = $event->getSubject()->entity;
+            /** @var User $user */
+            $user = $this->Auth->user();
+
+            if ($user->isPolitician()) {
+                $article->politician_id = $user->id;
+            }
+        });
+
         return $this->_form();
     }
 
@@ -78,8 +90,11 @@ class ArticlesController extends CrudController
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
+                    'id',
+                    'politician_id' => ['type' => 'hidden'],
                     'name' => ['label' => 'Title'],
                     'body' => ['label' => 'Body', 'type' => 'editor'],
+                    'version' => ['type' => 'hidden'],
                     'published' => [
                         'type' => 'checkbox',
                         'help' => 'After publishing, it may take up to a day for your article to appear due to moderation.',
@@ -87,14 +102,6 @@ class ArticlesController extends CrudController
                 ],
             ]
         ]);
-
-        $this->Crud->on('beforeSave', function (Event $event) {
-            /** @var PoliticianArticle $article */
-            $article = $event->getSubject()->entity;
-            $article->version = $article->version ?: 1; // TODO: Should take default from database?
-            $article->politician_id = $this->Auth->user('id');
-            $article->published = (bool)$this->request->getData('published') ? Time::now() : null;
-        });
 
         return $this->Crud->execute();
     }

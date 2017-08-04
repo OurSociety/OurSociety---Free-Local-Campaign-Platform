@@ -86,17 +86,23 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Save');
 
         $this->post(sprintf('/politician/profile/articles/edit/%s', $article->id), [
+            '_method' => 'PUT',
+            'id' => $article->id,
+            'politician_id' => $article->politician_id,
             'name' => 'Test Edit Article',
             'body' => 'An article about the edit test.',
-            'published' => true,
+            'version' => $article->version,
+            'published' => '1',
         ]);
         $this->assertResponseSuccess();
         $this->assertRedirect('/politician/profile/articles');
         $this->assertFlash('Successfully updated politician article');
 
-        $this->get(sprintf('/politician/profile/articles/view/%s', $article->id));
+        $this->get(sprintf('/politician/profile/articles/edit/%s', $article->id));
+        $this->assertResponseOk();
         $this->assertResponseContains('Test Edit Article');
         $this->assertResponseContains('An article about the edit test.');
+        $this->assertResponseContains('<input type="checkbox" name="published" value="1" id="published" checked="checked">');
     }
 
     private function table(): PoliticianArticlesTable
