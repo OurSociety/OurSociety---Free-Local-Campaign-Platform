@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace OurSociety\TestSuite\Fixture;
 
-use Cake\Database\Connection;
-use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\Fixture as Cake;
 
 /**

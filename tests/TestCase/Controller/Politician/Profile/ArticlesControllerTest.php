@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller\Politician\Profile;
 
-use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Table\PoliticianArticlesTable;
 use OurSociety\Test\Fixture\PoliticianArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
@@ -22,16 +22,15 @@ class ArticlesControllerTest extends IntegrationTestCase
     public function testView(string $id, string $flash = null): void
     {
         /** @var PoliticianArticle $article */
-        $article = TableRegistry::get('PoliticianArticles')->get($id);
+        $article = $this->table()->get($id);
 
         $this->auth(UsersFixture::POLITICIAN_EMAIL);
+        $this->enableRetainFlashMessages();
         $this->get(sprintf('/politician/profile/articles/view/%s', $article->id));
         $this->assertResponseOk();
-
-        // TODO: Determine why this assertion isn't working when flash messages appear in browser.
-        //if ($flash !== null) {
-        //    $this->assertFlash($flash);
-        //}
+        if ($flash !== null) {
+            $this->assertFlash($flash);
+        }
     }
 
     public function provideView(): array
@@ -66,10 +65,42 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->post('/politician/profile/articles/add', [
             'name' => 'Test Article',
             'body' => 'An article about the test.',
-            'published' => true,
+            'published' => false,
         ]);
         $this->assertResponseSuccess();
         $this->assertRedirect('/politician/profile/articles');
         $this->assertFlash('Successfully created politician article');
+    }
+
+    public function testEdit(): void
+    {
+        $article = $this->table()->get(PoliticianArticlesFixture::UNPUBLISHED_ID);
+
+        $this->auth(UsersFixture::POLITICIAN_EMAIL);
+        $this->get(sprintf('/politician/profile/articles/edit/%s', $article->id));
+        $this->assertResponseOk();
+        $this->assertResponseContains('Edit Article');
+        $this->assertResponseContains('Title');
+        $this->assertResponseContains('Body');
+        $this->assertResponseContains('Published');
+        $this->assertResponseContains('Save');
+
+        $this->post(sprintf('/politician/profile/articles/edit/%s', $article->id), [
+            'name' => 'Test Edit Article',
+            'body' => 'An article about the edit test.',
+            'published' => true,
+        ]);
+        $this->assertResponseSuccess();
+        $this->assertRedirect('/politician/profile/articles');
+        $this->assertFlash('Successfully updated politician article');
+
+        $this->get(sprintf('/politician/profile/articles/view/%s', $article->id));
+        $this->assertResponseContains('Test Edit Article');
+        $this->assertResponseContains('An article about the edit test.');
+    }
+
+    private function table(): PoliticianArticlesTable
+    {
+        return PoliticianArticlesTable::instance();
     }
 }
