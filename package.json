@@ -21,6 +21,7 @@
     "jquery": "^3.2.1",
     "laravel-mix": "^1.2.2",
     "lodash": "^4.17.4",
+    "npm-font-source-sans-pro": "^1.0.2",
     "popper.js": "^1.10.8",
     "svg-sprite-loader": "^3.0.6",
     "svgo-loader": "^1.2.1",

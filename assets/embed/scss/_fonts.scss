@@ -1,0 +1,153 @@
+@import '~npm-font-source-sans-pro/source-sans-pro';
+
+// @see https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight#Common_weight_name_mapping
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-thin-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-thin-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-thin-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 100;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-thinit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-thinit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-thinit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-light-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-light-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-light-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 300;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-lightit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-lightit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-lightit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-regular-webfont.eot') format('embedded-opentype'),
+        url('../fonts/durotype_-_flexo-regular-webfont.woff') format('woff'),
+        url('../fonts/durotype_-_flexo-regular-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-medium-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-medium-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-medium-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 500;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-mediumit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-mediumit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-mediumit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-demi-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-demi-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-demi-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 600;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-demiit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-demiit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-demiit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-bold-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-bold-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-bold-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 700;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-boldit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-boldit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-boldit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-heavy-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-heavy-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-heavy-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 800;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-heavyit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-heavyit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-heavyit-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-black-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-black-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-black-webfont.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Flexo';
+    font-weight: 900;
+    font-style: italic;
+    font-stretch: normal;
+    src: url('../fonts/durotype_-_flexo-blackit-webfont.eot') format('embedded-opentype'),
+    url('../fonts/durotype_-_flexo-blackit-webfont.woff') format('woff'),
+    url('../fonts/durotype_-_flexo-blackit-webfont.ttf') format('truetype');
+}

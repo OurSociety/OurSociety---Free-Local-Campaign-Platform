@@ -1,3 +1,7 @@
+// Images
+import '../img/brand/logo-purple-faded.svg'
+import '../img/brand/logo-white-transparent.svg'
+
 function isProbablyMobileAndNonViewport() {
   var appVersion = navigator.appVersion;
   var isAndroid = (/android/gi).test(appVersion);

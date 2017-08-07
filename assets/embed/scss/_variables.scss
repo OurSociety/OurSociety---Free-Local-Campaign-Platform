@@ -1,0 +1,19 @@
+// Bootstrap Overrides
+$font-family-sans-serif: 'Source Sans Pro';
+$grid-gutter-width: 15px;
+
+// Brand colors
+$os-purple-brand-primary: #582c83;
+$os-purple-brand-secondary: #871898;
+
+// Miscellaneous colors
+$os-purple:          #563d7c;
+$os-purple-bright:   lighten(saturate($os-purple, 5%), 15%);
+$os-purple-light:    #cdbfe3;
+$os-purple-lightest: #f5f2f9;
+$os-graphite:        #2a2730;
+$os-graphite-light:  lighten($os-graphite, 40%);
+$os-yellow:          #ffe484; // Used by header CTA
+$os-danger:          #d9534f;
+$os-warning:         #f0ad4e;
+$os-info:            #5bc0de;

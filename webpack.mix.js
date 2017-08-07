@@ -21,7 +21,7 @@ mix
   })
   .sass('assets/sass/app.scss', 'webroot/css')
   .sass('assets/sass/landing.scss', 'webroot/css')
-  .sass('assets/embed/main.scss', 'webroot/css/embed.css')
+  .sass('assets/embed/scss/embed.scss', 'webroot/css')
   .setPublicPath('webroot')
   // .setResourceRoot('assets')
   .webpackConfig({
@@ -38,6 +38,17 @@ mix
             'svgo-loader'
           ]
         },
+        {
+          test: /\.svg((\?.*)?|$)/,
+          include: path.resolve(__dirname, 'assets/img/brand'),
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: { extract: true, spriteFilename: 'img/brand-sprite.svg' }
+            },
+            'svgo-loader'
+          ]
+        }
       ]
     },
     output: {
