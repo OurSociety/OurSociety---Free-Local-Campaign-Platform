@@ -6,7 +6,7 @@
 /webroot/fonts/*
 !/webroot/fonts/cakedingbats-webfont.*
 /webroot/hot
-/webroot/img/icons-topics.svg
+/webroot/img/*
 /webroot/js/*
 /webroot/upload/*
 /webroot/mix-manifest.json

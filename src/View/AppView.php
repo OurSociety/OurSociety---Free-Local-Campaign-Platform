@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace OurSociety\View;
 
 use BootstrapUI\View\Helper as BootstrapUI;
+use Cake\Core\Configure;
 use CrudView\View\CrudView;
 use OurSociety\View\Widget\EditorWidget;
 use OurSociety\View\Widget\ZipWidget;
-use VideoEmbed\View\Helper as VideoEmbed;
 
 /**
  * Application View
@@ -26,6 +26,11 @@ class AppView extends CrudView
      */
     public function initialize(): void
     {
+        if ($this->layout() === 'embed') {
+            Configure::write('CrudView.css', [mix('css/embed.css')]);
+            Configure::write('CrudView.js.script', []); // NOTE: embed.js is outside the iframe, not inside.
+        }
+
         parent::initialize();
 
         if ($this->layout() === 'CrudView.default') {
@@ -53,6 +58,6 @@ class AppView extends CrudView
             // - Day field can be optional (for positions/qualifications/awards the day isn't important)
             //'datetime' => [CrudViewWidget\DateTimeWidget::class, 'select']
         ]]);
-        $this->loadHelper('Video', ['className' => VideoEmbed\VideoHelper::class]);
+        $this->loadHelper('Video', ['className' => Helper\VideoHelper::class]);
     }
 }

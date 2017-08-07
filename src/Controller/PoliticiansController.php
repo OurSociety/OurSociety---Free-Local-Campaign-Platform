@@ -176,7 +176,7 @@ class PoliticiansController extends CrudController
         // End same as view()
 
         $this->viewBuilder()->setLayout('embed');
-        $this->render('view');
+        $this->render('embed');
 
         return null;
     }}
