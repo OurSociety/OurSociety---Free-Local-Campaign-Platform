@@ -104,7 +104,7 @@ return [
             'path' => CACHE . 'persistent/',
             'serialize' => true,
             'duration' => '+1 years',
-            'url' => env('CACHE_CAKECORE_URL'),
+            'url' => env('CACHE_CAKE_CORE_URL'),
         ],
 
         /**
@@ -119,7 +119,7 @@ return [
             'path' => CACHE . 'models/',
             'serialize' => true,
             'duration' => '+1 years',
-            'url' => env('CACHE_CAKEMODEL_URL'),
+            'url' => env('CACHE_CAKE_MODEL_URL'),
         ],
     ],
 
@@ -308,11 +308,10 @@ return [
             mix('css/app.css'),
         ],
         'js' => [
-            'headjs' => [
-            ],
+            'headjs' => [],
             'script' => [
-                //mix('assets/manifest.js'),
-                //mix('assets/vendor.js'),
+                mix('js/manifest.js'),
+                mix('js/vendor.js'),
                 mix('js/app.js'),
             ],
         ],

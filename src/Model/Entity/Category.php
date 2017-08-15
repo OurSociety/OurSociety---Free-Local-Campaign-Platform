@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Category Entity
  *
@@ -20,12 +18,6 @@ use Cake\ORM\Entity;
  * @property \OurSociety\Model\Entity\User[] $users
  * @property \OurSociety\Model\Entity\ValueMatch[] $value_match
  */
-class Category extends Entity
+class Category extends AppEntity
 {
-    public function __construct(array $properties = [], array $options = [])
-    {
-        parent::__construct($properties, $options);
-
-        $this->_accessible = ['*' => true, 'id' => false];
-    }
 }

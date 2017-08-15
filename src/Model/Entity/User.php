@@ -5,7 +5,6 @@ namespace OurSociety\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
-use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -41,16 +40,21 @@ use Cake\ORM\TableRegistry;
  * @property \Cake\I18n\FrozenTime $created The created timestamp.
  * @property \Cake\I18n\FrozenTime $modified The modified timestamp.
  *
+ * @property Answer $answers
+ * @property Category[] $categories
+ * @property ElectoralDistrict $electoral_district
  * @property RecordSet|PoliticianArticle[] $articles
  * @property RecordSet|PoliticianAwards[] $awards
  * @property RecordSet|PoliticianPosition[] $positions
  * @property RecordSet|PoliticianQualification[] $qualifications
  * @property RecordSet|PoliticianVideo[] $videos
+ * @property ValueMatch[] $politician_matches
+ * @property ValueMatch[] $value_matches
  *
  * @property int|null $age The age, if `born` date available.
  * @property PoliticianVideo|null $featured_video
  */
-class User extends Entity
+class User extends AppEntity
 {
     public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
     public const ROLE_ADMIN = 'admin';
@@ -130,8 +134,7 @@ class User extends Entity
     {
         parent::__construct($properties, $options);
 
-        $this->_accessible = ['*' => true, 'id' => false];
-        $this->_hidden = ['password', 'token'];
+        $this->setHidden(['password', 'token']);
     }
 
     /**

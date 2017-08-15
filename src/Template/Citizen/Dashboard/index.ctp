@@ -16,7 +16,7 @@ $ceilingReached = $percentage === 100.0;
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('What should OurSociety be thinking about?') ?></h3>
+        <h3 class="panel-title"><?= __('My Values') ?></h3>
     </div>
     <div class="panel-body">
         <p>
@@ -66,6 +66,51 @@ $ceilingReached = $percentage === 100.0;
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __('Virtual Ballot') ?></h3>
+    </div>
+    <div class="panel-body">
+        <?php if ($currentUser->electoral_district === null): ?>
+            <p>
+                <?= __('By selecting your electoral district, we can show you your virtual ballot!') ?>
+            </p>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <?= $this->Html->link(
+                        __('Select electoral district'),
+                        ['_name' => 'users:onboarding'],
+                        ['class' => ['btn', 'btn-primary', 'btn-block']]
+                    ) ?>
+                </div>
+            </div>
+        <?php else: ?>
+            <p>
+                <?= __('You have indicated you are in the municipality of {municipality}.', [
+                    'municipality' => $this->Html->link($currentUser->electoral_district->name, [
+                        '_name' => 'district',
+                        $currentUser->electoral_district->slug,
+                    ]),
+                ]) ?>
+            </p>
+            <p>
+                <?= __('From this, we can work out who you should be voting for in the upcoming New Jersey gubernatorial election, 2017!') ?>
+            </p>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <?= $this->Html->link(
+                        __("Let's see my virtual ballot"),
+                        ['_name' => 'citizen:ballots'],
+                        ['class' => ['btn', 'btn-primary', 'btn-block']]
+                    ) ?>
+                </div>
+            </div>
+        <?php endif ?>
     </div>
 </div>
 

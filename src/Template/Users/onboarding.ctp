@@ -9,11 +9,18 @@
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Location information') ?></legend>
+        <?= $this->Form->control('electoral_district_id', [
+            'empty' => true,
+            'required' => true,
+            'label' => __('Select your municipality')
+        ]) ?>
+        <!--
         <?= $this->Form->control('zip', [
             'type' => 'text',
             'required' => true,
             'label' => __('ZIP code')
         ]) ?>
+        -->
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

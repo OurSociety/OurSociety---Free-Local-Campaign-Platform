@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
-use Cake\ORM\Entity;
-
 /**
  * Answer Entity
  *
@@ -20,7 +18,7 @@ use Cake\ORM\Entity;
  * @property \OurSociety\Model\Entity\Question $question
  * @property \OurSociety\Model\Entity\User $user
  */
-class Answer extends Entity
+class Answer extends AppEntity
 {
     public const ANSWER_STRONGLY_AGREE = 100;
     public const ANSWER_SOMEWHAT_AGREE = 50;
@@ -58,12 +56,11 @@ class Answer extends Entity
     {
         parent::__construct($properties, $options);
 
-        $this->_accessible = ['*' => true, 'id' => false];
-        $this->_hidden = ['answer'];
+        $this->setHidden(['answer']);
     }
 
     protected function _getName(): string
     {
-        return Answer::ANSWERS_SCALE[$this->answer] ?? Answer::ANSWERS_BOOL[$this->answer];
+        return self::ANSWERS_SCALE[$this->answer] ?? self::ANSWERS_BOOL[$this->answer];
     }
 }

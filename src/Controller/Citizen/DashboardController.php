@@ -5,7 +5,6 @@ namespace OurSociety\Controller\Citizen;
 
 use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Model\Table\QuestionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;

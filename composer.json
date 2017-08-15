@@ -15,6 +15,7 @@
         "friendsofcake/crud-users": "^0.5",
         "friendsofcake/crud-view": "dev-master@dev",
         "fzaninotto/faker": "^1.6",
+        "google/apiclient": "^2.0",
         "josegonzalez/cakephp-upload": "^3.7",
         "josegonzalez/dotenv": "^3.0",
         "kminek/email-obfuscator": "^1.0",

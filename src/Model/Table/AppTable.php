@@ -3,9 +3,12 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
+use ArrayAccess;
 use ArrayObject;
+use Cake\Datasource\EntityInterface as Entity;
 use Cake\Event\Event;
 use Cake\ORM\Behavior\TimestampBehavior;
+use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator as CakeValidator;
@@ -39,11 +42,11 @@ abstract class AppTable extends Table
 
         $this->_validatorClass = AppValidator::class;
 
-        $this->addBehavior(OrderlyBehavior::class);
+        $this->addBehavior(OrderlyBehavior::class, $this->getDefaultOrder());
         $this->addBehavior(TimestampBehavior::class);
 
         if ($this->getSchema()->column('slug') !== null) {
-            $this->addBehavior(SlugBehavior::class);
+            $this->addBehavior(SlugBehavior::class, ['onUpdate' => true]);
         }
     }
 
@@ -78,5 +81,39 @@ abstract class AppTable extends Table
                 $data[$key] = trim($value);
             }
         }
+    }
+
+    /**
+     * Upsert (update/insert).
+     *
+     * Updates a record if one is found matching conditions, otherwise inserts a new record.
+     *
+     * @param array $conditions The conditions to find existing record.
+     * @param array $data The data to save (will be merged with `$conditions`).
+     * @param array|ArrayAccess $options The options to use when saving.
+     * @return Entity The saved entity.
+     * @throws PersistenceFailedException When the entity couldn't be saved.
+     */
+    public function upsert(array $conditions, array $data = [], array $options = []): Entity
+    {
+        $options += ['fail' => true];
+        $saveMethod = $options['fail'] === true ? 'saveOrFail' : 'save';
+        unset($options['fail']);
+
+        $existing = $this->find()->where($conditions)->first();
+
+        $data += $conditions;
+        if ($existing === null) {
+            $entity = $this->newEntity($data);
+        } else {
+            $entity = $this->patchEntity($existing, $data);
+        }
+
+        return $this->{$saveMethod}($entity, $options);
+    }
+
+    protected function getDefaultOrder(): array
+    {
+        return [];
     }
 }
