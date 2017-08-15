@@ -45,7 +45,7 @@ class UsersTable extends AppTable
 
         $this->hasMany('Answers');
         $this->belongsToMany('Categories');
-        $this->hasMany('ValueMatches', ['foreignKey' => 'citizen_id']);
+        $this->belongsTo('ElectoralDistricts')->setFinder('municipality')->setStrategy('select');
         $this->belongsToMany('PoliticianMatches', [
             'joinTable' => 'value_matches',
             'through' => 'ValueMatches',
@@ -53,6 +53,7 @@ class UsersTable extends AppTable
             'foreignKey' => 'citizen_id',
             'targetForeignKey' => 'politician_id',
         ]);
+        $this->hasMany('ValueMatches')->setForeignKey('citizen_id');
 
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
         $this->addBehavior(UploadBehavior::class, [
@@ -179,7 +180,7 @@ class UsersTable extends AppTable
      */
     protected function findAuth(Query $query): Query
     {
-        return $query;
+        return $query->contain(['ElectoralDistricts']);
     }
 
     protected function findHasAnsweredQuestions(Query $query): Query

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Mailer\MailerAwareTrait;
@@ -237,7 +238,7 @@ class UsersController extends CrudController
      */
     public function onboarding(): ?Response
     {
-        $this->Crud->action()->setConfig('messages.success.text', 'Thanks!');
+        $this->Crud->action()->setConfig('messages.success.text', 'Thanks, your location has been noted!');
 
         $this->Crud->on('beforeFind', function (Event $event) {
             $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);

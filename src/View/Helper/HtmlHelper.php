@@ -101,11 +101,18 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
      */
     public function pluralize(string $template, string $noun, int $count): string
     {
+        $one = 'one';
+        $none = 'no';
+        if (strpos($template, '{number}') === 0) {
+            $one = ucfirst($one);
+            $none = ucfirst($none);
+        }
+
         return __n(
-            __($template, ['number' => 'One', 'noun' => $noun]),
+            __($template, ['number' => $one, 'noun' => $noun]),
             __($template, ['number' => '{0}', 'noun' => Inflector::pluralize($noun)]),
             $count,
-            $count === 0 ? 'No' : $count
+            $count === 0 ? $none : $count
         );
     }
 

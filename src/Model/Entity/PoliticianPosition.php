@@ -1,7 +1,7 @@
 <?php
-namespace OurSociety\Model\Entity;
+declare(strict_types=1);
 
-use Cake\ORM\Entity;
+namespace OurSociety\Model\Entity;
 
 /**
  * PoliticianPosition Entity
@@ -17,20 +17,6 @@ use Cake\ORM\Entity;
  *
  * @property \OurSociety\Model\Entity\Politician $politician
  */
-class PoliticianPosition extends Entity
+class PoliticianPosition extends AppEntity
 {
-
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * Note that when '*' is set to true, this allows all unspecified fields to
-     * be mass assigned. For security purposes, it is advised to set '*' to false
-     * (or remove it), and explicitly make individual fields accessible as needed.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true,
-        'id' => false
-    ];
 }

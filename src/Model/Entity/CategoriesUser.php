@@ -1,7 +1,7 @@
 <?php
-namespace OurSociety\Model\Entity;
+declare(strict_types=1);
 
-use Cake\ORM\Entity;
+namespace OurSociety\Model\Entity;
 
 /**
  * CategoriesUser Entity
@@ -16,12 +16,6 @@ use Cake\ORM\Entity;
  * @property \OurSociety\Model\Entity\Category $category
  * @property \OurSociety\Model\Entity\User $user
  */
-class CategoriesUser extends Entity
+class CategoriesUser extends AppEntity
 {
-    public function __construct(array $properties = [], array $options = [])
-    {
-        parent::__construct($properties, $options);
-
-        $this->_accessible = ['*' => true, 'id' => false];
-    }
 }

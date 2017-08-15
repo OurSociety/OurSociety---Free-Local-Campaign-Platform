@@ -4,29 +4,43 @@ declare(strict_types=1);
 namespace OurSociety\Shell;
 
 use ArrayObject;
-use Cake\Console\ConsoleOptionParser;
-use Cake\Console\Shell;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Shell\Helper\ProgressHelper;
 use OurSociety\Model\Table\AnswersTable;
 use OurSociety\Model\Entity\Answer;
+use OurSociety\Model\Table\AppTable;
+use OurSociety\Shell\Task\Database\ImportGoogleCivicDataTask;
 
-class DatabaseShell extends Shell
+/**
+ * @property ImportGoogleCivicDataTask $ImportGoogleCivicData
+ */
+class DatabaseShell extends AppShell
 {
-    public function getOptionParser(): ConsoleOptionParser
+    public function initialize(): void
     {
-        return parent::getOptionParser();
+        $this->tasks = [
+            'ImportGoogleCivicData' => ['className' => Task\Database\ImportGoogleCivicDataTask::class],
+        ];
+
+        parent::initialize();
     }
 
-    public function main(): bool
+    public function main(): int
     {
         $this->out($this->OptionParser->help());
 
-        return true;
+        return self::CODE_SUCCESS;
     }
 
-    public function recalculateMatches(): bool
+    public function importGoogleCivicData(): int
+    {
+        //return $this->ImportGoogleCivicData->importDivisions();
+        //return $this->ImportGoogleCivicData->mapMunicipalities();
+        return $this->ImportGoogleCivicData->importOffices();
+    }
+
+    public function recalculateMatches(): int
     {
         /** @var AnswersTable $table */
         $table = TableRegistry::get('answers');
@@ -47,7 +61,20 @@ class DatabaseShell extends Shell
             },
         ]);
 
-        return true;
+        return self::CODE_SUCCESS;
+    }
+
+    public function updateSlugs(): int
+    {
+        /** @var AppTable $table */
+        $table = TableRegistry::get('ElectoralDistricts');
+        $hasSlugsWithNumbers = $table->find()->where(['slug RLIKE' => '\d$'])->all();
+        foreach ($hasSlugsWithNumbers as $hasSlugWithNumber) {
+            $hasSlugWithNumber->slug = $table->slug($hasSlugWithNumber);
+            $table->saveOrFail($hasSlugWithNumber);
+        }
+
+        return self::CODE_SUCCESS;
     }
 
     private function recalculateMatch(Answer $answer): void

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace OurSociety\View\Listener;
+namespace OurSociety\Listener;
 
 use Cake\Core\Configure;
 use Cake\ORM\Table;
@@ -114,5 +114,45 @@ class ViewListener extends CrudView\ViewListener
             'before_view' => ['Scaffold/before_view' => 'element'],
             'before_index' => ['Scaffold/before_index' => 'element'],
         ];
+    }
+
+    /**
+     * {@inheritdoc}. Custom logic for determining scaffold fields.
+     *
+     * @param array $associations
+     * @return array
+     */
+    protected function _scaffoldFields(array $associations = []): array
+    {
+        /** @var Table $table */
+        $table = $this->_table();
+        $tableSchema = $table->getSchema();
+
+        $defaultEmpty = function (array $options, string $field) use ($tableSchema) {
+            if (isset($options['empty'])) {
+                return $options;
+            }
+
+            $empty = true;
+            if (isset($options['type']) && $options['type'] === 'radio') {
+                $empty = 'None';
+            }
+
+            return $options + ['empty' => $empty];
+        };
+
+        $defaultHelp = function (array $options, string $field) use ($tableSchema){
+            $comment = $tableSchema->column($field)['comment'];
+            if ($comment !== '' && !isset($options['help'])) {
+                $options['help'] = $comment ?? null;
+            }
+
+            return $options;
+        };
+
+        return collection(parent::_scaffoldFields($associations))
+            ->map($defaultEmpty)
+            ->map($defaultHelp)
+            ->toArray();
     }
 }

@@ -7,7 +7,7 @@ use Crud\Action as CrudAction;
 use Crud\Controller as Crud;
 use Crud\Listener as CrudListener;
 use OurSociety\Controller\Component as App;
-use OurSociety\View\Listener as AppListener;
+use OurSociety\Listener as AppListener;
 
 /**
  * CRUD controller.
@@ -34,13 +34,13 @@ abstract class CrudController extends AppController
                 'index' => CrudAction\IndexAction::class,
                 'add' => CrudAction\AddAction::class,
                 'edit' => CrudAction\EditAction::class,
-                'view' => CrudAction\ViewAction::class,
+                'view' => Action\ViewAction::class,
                 'delete' => CrudAction\DeleteAction::class,
             ],
             'listeners' => [
                 AppListener\ViewListener::class, // @see for CrudView configuration.
                 CrudListener\RedirectListener::class,
-                CrudListener\RelatedModelsListener::class,
+                AppListener\RelatedModelsListener::class,
             ],
         ]);
     }

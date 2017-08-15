@@ -3,9 +3,10 @@ import 'bootstrap-sass';
 import 'jdenticon/dist/jdenticon.js'
 
 // App
-import './app/editor.js';
-import './app/question.js';
-import './app/watermark.js';
+import './app/editor';
+import './app/question';
+import './app/watermark';
+import './app/onboarding';
 
 // Vue
 // import './bootstrap';

@@ -9,10 +9,7 @@ mix
     'jquery': ['$', 'window.jQuery', 'jQuery'], // auto-`require('jquery')` if these variables are used
     'popper.js': 'Popper'
   })
-  // .extract([
-  //   'popper.js',
-  //   'bootstrap'
-  // ], 'assets/vendor.js')
+  .extract(['bootstrap', 'bootstrap-sass', 'jdenticon/dist/jdenticon.js', 'jquery', 'popper.js', 'selectize', 'trumbowyg'])
   .js('assets/js/app.js', 'webroot/js')
   .js('assets/js/landing.js', 'webroot/js')
   .js('assets/embed/main.js', 'webroot/js/embed.js')
