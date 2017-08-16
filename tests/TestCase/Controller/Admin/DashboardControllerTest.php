@@ -9,11 +9,11 @@ use OurSociety\TestSuite\IntegrationTestCase;
 class DashboardControllerTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideIndex
+     * @dataProvider provideDashboard
      * @param string $expected The expected case.
      * @param string|null $email The email of the user to authenticate as, if any.
      */
-    public function testIndex(string $expected, string $email = null): void
+    public function testDashboard(string $expected, string $email = null): void
     {
         $this->auth($email);
         $this->get(['_name' => 'admin:dashboard']);
@@ -33,7 +33,7 @@ class DashboardControllerTest extends IntegrationTestCase
         }
     }
 
-    public function provideIndex(): array
+    public function provideDashboard(): array
     {
         return [
             'unauthenticated' => [

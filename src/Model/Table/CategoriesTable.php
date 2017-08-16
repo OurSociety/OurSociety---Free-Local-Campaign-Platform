@@ -3,16 +3,10 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\Collection\Collection;
-use Cake\Collection\CollectionInterface;
-use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface as Entity;
-use Cake\Datasource\ResultSetInterface as ResultSet;
 use Cake\ORM\Association;
-use Cake\ORM\Query;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Category;
-use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -32,6 +26,8 @@ use OurSociety\Validation\Validator as AppValidator;
  */
 class CategoriesTable extends AppTable
 {
+    use Categories\Getter\MatchPercentages;
+
     /**
      * {@inheritdoc}
      */
@@ -56,21 +52,5 @@ class CategoriesTable extends AppTable
             ->integer('question_count')
             ->notEmpty('question_count')
             ->requirePresence('question_count', 'create');
-    }
-
-    public function getMatchPercentages(User $citizen, User $politician, bool $inverse = false, ?int $limit = null): CollectionInterface
-    {
-        $this->hasOne('ValueMatch', [
-            'className' => ValueMatchesTable::class,
-            'conditions' => [
-                'ValueMatch.citizen_id' => $citizen->id,
-                'ValueMatch.politician_id' => $politician->id,
-                'ValueMatch.category_id IS NOT' => null,
-            ],
-        ]);
-
-        return $this->find()->contain(['ValueMatch'])->order([
-            'ValueMatch.true_match_percentage' => $inverse === false ? 'DESC' : 'ASC',
-        ])->limit($limit)->all();
     }
 }

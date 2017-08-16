@@ -26,4 +26,23 @@ class CrudComponent extends Crud\CrudComponent
 
         return parent::execute($controllerAction, $args);
     }
+
+    /**
+     * {@inheritdoc}.
+     *
+     * - This method was only overridden to fix case-sensitivity when removing listeners by class name.
+     *   ie. removeListener(ViewListener::class) will correctly remove the 'ourSociety\listener\viewListener' key.
+     *
+     * @see \Crud\Controller\Component\CrudComponent::removeListener
+     */
+    public function removeListener($name): ?bool
+    {
+        foreach(array_keys($this->getConfig('listeners')) as $key) {
+            if (strtolower($key) === strtolower($name)) {
+                return parent::removeListener($key);
+            }
+        }
+
+        return parent::removeListener($name);
+    }
 }

@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller;
 
+use Cake\Controller\Component\CookieComponent;
+use Cake\Controller\Component\RequestHandlerComponent;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\Routing\Router;
+use Gourmet\KnpMenu\Controller\Component\MenuComponent;
+use OurSociety\Controller\Component\AuthComponent;
+use OurSociety\Controller\Component\FlashComponent;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as ServerRequest;
-use OurSociety\Model\Entity\User;
+use Search\Controller\Component\PrgComponent;
 
 /**
  * Application controller.
@@ -22,6 +25,14 @@ abstract class AppController extends Controller
 {
     const COOKIE_NAME_REMEMBER_ME = 'remember_me';
 
+    use Traits\AuditLogTrait;
+    use Traits\AuthorizationTrait;
+    use Traits\ClassNameSupportTrait;
+    use Traits\CurrentUserTrait;
+    use Traits\RememberMeTrait;
+    use Traits\SecurityTrait;
+    use Traits\UserSwitchingTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -29,10 +40,13 @@ abstract class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('Auth', ['className' => Component\AuthComponent::class]);
-        $this->loadComponent('Cookie');
-        $this->loadComponent('Flash', ['className' => Component\FlashComponent::class]);
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent(AuthComponent::class);
+        $this->loadComponent(CookieComponent::class);
+        $this->loadComponent(FlashComponent::class);
+        $this->loadComponent(MenuComponent::class);
+        $this->loadComponent(PrgComponent::class);
+        $this->loadComponent(RequestHandlerComponent::class);
+
         $this->loadSecurityComponents();
     }
 
@@ -44,6 +58,7 @@ abstract class AppController extends Controller
         parent::beforeFilter($event);
 
         $this->rememberMe();
+        $this->setupAuditLog();
     }
 
     /**
@@ -51,100 +66,8 @@ abstract class AppController extends Controller
      */
     public function beforeRender(Event $event): ?Response
     {
-        if ($this->components()->has('Auth')) {
-            $this->set('currentUser', $this->Auth->user());
-        }
+        $this->setCurrentUser();
 
         return parent::beforeRender($event);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * - Adds simple role-based permission checking.
-     */
-    public function isAuthorized(User $user, ?ServerRequest $request = null): bool
-    {
-        $request = $request ?: $this->request;
-
-        if ($this->isAdminSwitchingUsers()) {
-            return true;
-        }
-
-        switch ($user->role) {
-            case User::ROLE_ADMIN:
-                return true;
-            case User::ROLE_CITIZEN:
-                return in_array($request->getParam('prefix'), [false, 'citizen'], true);
-            case User::ROLE_POLITICIAN:
-                return in_array($request->getParam('prefix'), [false, 'citizen', 'politician', 'politician/profile'], true);
-            default:
-                return false;
-        }
-    }
-
-    protected function rememberMe(): void
-    {
-        if ($this->components()->has('Auth') === false) {
-            return;
-        }
-
-        if ($this->Auth->user() !== null) {
-            return;
-        }
-
-        if ($this->Cookie->read(self::COOKIE_NAME_REMEMBER_ME) === null) {
-            return;
-        }
-
-        /** @var User $user */
-        $user = $this->Auth->identify();
-
-        if ($user === false) {
-            $this->Cookie->delete(self::COOKIE_NAME_REMEMBER_ME);
-
-            return;
-        }
-
-        $user->seen();
-
-        $this->Auth->setUser($user);
-    }
-
-    /**
-     * Is admin switching users?
-     *
-     * Detects if the request:
-     *
-     *  - matches the URL for the switch users action
-     *  - session indicates an admin who is currently acting as another user
-     *
-     * @return bool True if request is an admin trying to switch users.
-     */
-    private function isAdminSwitchingUsers(): bool
-    {
-        if ($this->request->getUri()->getPath() !== Router::reverse(['_name' => 'admin:users:switch'])) {
-            return false;
-        }
-
-        /** @var User|null $admin */
-        $admin = $this->request->session()->read('Auth.Admin');
-
-        if ($admin === null) {
-            return false;
-        }
-
-        return $admin->isAdmin();
-    }
-
-    /**
-     * Enable the following components for recommended CakePHP security settings.
-     *
-     * @link http://book.cakephp.org/3.0/en/controllers/components/security.html
-     */
-    private function loadSecurityComponents(): void
-    {
-        //$this->loadComponent('Csrf');
-        //$this->loadComponent('Security');
     }
 }

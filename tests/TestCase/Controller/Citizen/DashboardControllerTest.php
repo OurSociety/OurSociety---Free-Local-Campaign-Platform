@@ -9,13 +9,13 @@ use OurSociety\TestSuite\IntegrationTestCase;
 class DashboardControllerTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideIndex
+     * @dataProvider provideDashboard
      * @param string $expected The expected case.
      * @param string|null $email The email of the user to authenticate as, if any.
      * @param array $userData The extra user data.
      * @param array|null $redirectUrl The redirect URL, if any.
      */
-    public function testIndex(string $expected, string $email = null, ?array $userData = [], ?array $redirectUrl = null): void
+    public function testDashboard(string $expected, string $email = null, ?array $userData = [], ?array $redirectUrl = null): void
     {
         $this->auth($email, $userData);
         $this->get(['_name' => 'citizen:dashboard']);
@@ -40,7 +40,7 @@ class DashboardControllerTest extends IntegrationTestCase
         }
     }
 
-    public function provideIndex(): array
+    public function provideDashboard(): array
     {
         return [
             'success (no zip => onboarding)' => [

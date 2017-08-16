@@ -195,7 +195,11 @@ class User extends AppEntity
      */
     public function seen(): void
     {
-        TableRegistry::get('Users')->saveOrFail($this->withLastSeen());
+        $user = $this->withLastSeen();
+
+        $table = TableRegistry::get('Users');
+        $table->removeBehavior('Timestamp');
+        $table->saveOrFail($user);
     }
 
     public function isAdmin(): bool

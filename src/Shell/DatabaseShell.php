@@ -26,6 +26,29 @@ class DatabaseShell extends AppShell
         parent::initialize();
     }
 
+    public function getOptionParser(): ConsoleOptionParser
+    {
+        return parent::getOptionParser()
+            ->addSubcommand('recalculate_matches', [
+                'help' => 'Recalculate all value match percentages',
+                'parser' => new ConsoleOptionParser('recalculate_matches', [
+                    'help' => <<<HELP
+Triggers the afterSave callback on each answer in the system.
+This callback contains the logic that calculates value match percentages between the users who answered that question.
+HELP
+                ]),
+            ])
+            ->addSubcommand('recalculate_dashboards', [
+                'help' => 'Recalculate all dashboard totals',
+                'parser' => new ConsoleOptionParser('recalculate_dashboards', [
+                    'help' => <<<HELP
+Triggers the afterSave callback on each answer in the system.
+This callback contains the logic that calculates dashboard totals between the users who answered that question.
+HELP
+                ]),
+            ]);
+    }
+
     public function main(): int
     {
         $this->out($this->OptionParser->help());
@@ -73,6 +96,15 @@ class DatabaseShell extends AppShell
             $hasSlugWithNumber->slug = $table->slug($hasSlugWithNumber);
             $table->saveOrFail($hasSlugWithNumber);
         }
+
+        return self::CODE_SUCCESS;
+    }
+
+    public function recalculateDashboards(): bool
+    {
+        /** @var DashboardTotalsTable $table */
+        $table = TableRegistry::get('DashboardTotals');
+        $table->recalculateTotals();
 
         return self::CODE_SUCCESS;
     }

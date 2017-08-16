@@ -6,7 +6,7 @@
 $this->assign('scope', 's-home');
 ?>
 <section class="jumbotron text-center">
-    <?= $this->Html->image('http://via.placeholder.com/780x350?text=Image%20Coming%20Soon') ?>
+    <img height="350" data-src="holder.js/100px350?theme=gray">
 
     <h2>Grassroots - Transparent - Issue Focused</h2>
 
@@ -45,10 +45,7 @@ $this->assign('scope', 's-home');
 
         <div class="row">
             <article class="col-lg-4 text-justify">
-                <?= $this->Html->image(
-                    'http://via.placeholder.com/600x400?text=Image%20Coming%20Soon',
-                    ['class' => 'img-responsive']
-                ) ?>
+                <img data-src="holder.js/100px250?theme=gray" class="img-responsive">
                 <h3>Post #1</h3>
                 <p>
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
@@ -57,10 +54,7 @@ $this->assign('scope', 's-home');
             </article>
 
             <article class="col-lg-4 text-justify">
-                <?= $this->Html->image(
-                    'http://via.placeholder.com/600x400?text=Image%20Coming%20Soon',
-                    ['class' => 'img-responsive']
-                ) ?>
+                <img height="250" data-src="holder.js/100px250?theme=gray" class="img-responsive">
                 <h3>Post #2</h3>
                 <p>
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
@@ -69,10 +63,7 @@ $this->assign('scope', 's-home');
             </article>
 
             <article class="col-lg-4 text-justify">
-                <?= $this->Html->image(
-                    'http://via.placeholder.com/600x400?text=Image%20Coming%20Soon',
-                    ['class' => 'img-responsive']
-                ) ?>
+                <img data-src="holder.js/100px250?theme=gray" class="img-responsive">
                 <h3>Post #3</h3>
                 <p>
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed

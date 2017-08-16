@@ -8,6 +8,7 @@ use Cake\TestSuite as Cake;
 
 class TestCase extends Cake\TestCase
 {
+    use Traits\FixturesTrait;
     use Traits\AssertionsTrait;
 
     public function setUp(): void

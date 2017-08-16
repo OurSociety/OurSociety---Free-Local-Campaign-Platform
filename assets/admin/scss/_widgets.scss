@@ -1,0 +1,16 @@
+.card {
+    @include mdc-elevation(3);
+}
+
+.os-text-blue {
+    color: $blue;
+}
+.os-text-green {
+    color: $green;
+}
+.os-text-pink {
+    color: $pink;
+}
+.os-text-purple {
+    color: $purple;
+}

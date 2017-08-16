@@ -103,8 +103,8 @@
                 <span class="text-muted small">
                     <?= sprintf(
                         '%s–%s',
-                        $position->started->format('M, Y'),
-                        $position->ended ? $position->ended->format('M, Y') : 'Present'
+                        $position->started->format('M Y'),
+                        $position->ended ? $position->ended->format('M Y') : 'Present'
                     ) ?>
                 </span>
             </li>
@@ -121,8 +121,8 @@
                 <span class="text-muted small">
                     <?= sprintf(
                         '%s–%s',
-                        $qualification->started->toFormattedDateString(),
-                        $qualification->ended ? $qualification->ended->toFormattedDateString() : 'Present'
+                        $qualification->started->format('M Y'),
+                        $qualification->ended ? $qualification->started->format('M Y') : 'Present'
                     ) ?>
                 </span>
             </li>

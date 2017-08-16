@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller;
 
-use Crud\Action as CrudAction;
+use Crud\Action\LookupAction;
 use Crud\Controller as Crud;
 use Crud\Listener as CrudListener;
+use CrudView\Listener as CrudView;
 use OurSociety\Controller\Component as App;
 use OurSociety\Listener as AppListener;
 
@@ -29,16 +30,19 @@ abstract class CrudController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('Crud.Crud', [
+        $this->loadComponent('Crud', [
             'actions' => [
-                'index' => CrudAction\IndexAction::class,
-                'add' => CrudAction\AddAction::class,
-                'edit' => CrudAction\EditAction::class,
+                'index' => Action\IndexAction::class,
+                'add' => Action\AddAction::class,
+                'edit' => Action\EditAction::class,
                 'view' => Action\ViewAction::class,
-                'delete' => CrudAction\DeleteAction::class,
+                'delete' => Action\DeleteAction::class,
+                'export' => Action\ExportAction::class,
+                'lookup' => LookupAction::class,
             ],
             'listeners' => [
-                AppListener\ViewListener::class, // @see for CrudView configuration.
+                AppListener\ViewListener::class, // All CrudView configuration inside this class.
+                CrudView\ViewSearchListener::class,
                 CrudListener\RedirectListener::class,
                 AppListener\RelatedModelsListener::class,
             ],

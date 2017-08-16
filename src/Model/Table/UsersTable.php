@@ -32,6 +32,8 @@ use OurSociety\Validation\Validator as AppValidator;
  */
 class UsersTable extends AppTable
 {
+    use Users\SearchConfiguration;
+
     public const LIMIT_DASHBOARD = 10;
     public const ERROR_ROLE_NOT_IN_LIST = 'The only valid roles are "{0}".';
     public const ERROR_EMAIL_UNIQUE = 'This email address is already in use. Each account must have a unique email address.';
@@ -166,111 +168,5 @@ class UsersTable extends AppTable
         ])->first();
 
         return $match !== null ? $match->true_match_percentage : 0;
-    }
-
-    /**
-     * Find for auth.
-     *
-     * Used by the AuthComponent to get all the authenticated user's data.
-     *
-     * TODO: Return associated information as it becomes known, or remove method if never used.
-     *
-     * @param Query $query The original query.
-     * @return Query The updated query.
-     */
-    protected function findAuth(Query $query): Query
-    {
-        return $query->contain(['ElectoralDistricts']);
-    }
-
-    protected function findHasAnsweredQuestions(Query $query): Query
-    {
-        return $query->where(['answer_count' > 0]);
-    }
-
-    protected function findIsVerified(Query $query): Query
-    {
-        return $query->where(['verified IS NOT' => null]);
-    }
-
-    protected function findIsPolitician(Query $query): Query
-    {
-        return $query->where(['role' => User::ROLE_POLITICIAN]);
-    }
-
-    protected function findPolitician(Query $query): Query
-    {
-        $this->hasMany('Articles', [
-            'className' => PoliticianArticlesTable::class,
-            'foreignKey' => 'politician_id'
-        ]);
-        $this->hasMany('Awards', [
-            'className' => PoliticianAwardsTable::class,
-            'foreignKey' => 'politician_id'
-        ]);
-        $this->hasMany('Positions', [
-            'className' => PoliticianPositionsTable::class,
-            'foreignKey' => 'politician_id'
-        ]);
-        $this->hasMany('Qualifications', [
-            'className' => PoliticianQualificationsTable::class,
-            'foreignKey' => 'politician_id'
-        ]);
-        $this->hasMany('Videos', [
-            'className' => PoliticianVideosTable::class,
-            'foreignKey' => 'politician_id',
-            'conditions' => ['featured' => false] // TODO: Move to finder
-        ]);
-        $this->hasOne('FeaturedVideos', [
-            'className' => PoliticianVideosTable::class,
-            'foreignKey' => 'politician_id',
-            'conditions' => ['featured' => true] // TODO: Move to finder
-        ]);
-
-        return $query->find('isPolitician')
-            ->contain(['Articles', 'Awards', 'Positions', 'Qualifications', 'Videos', 'FeaturedVideos']);
-    }
-
-    protected function findPoliticianForCitizen(Query $query, array $options = []): Query
-    {
-        $options += ['role' => User::ROLE_CITIZEN];
-
-        // TODO: For now we will allow users to see non-verified politicians
-        //if ($options['role'] === User::ROLE_CITIZEN) {
-        //    $query->find('isVerified')->find('hasAnsweredQuestions');
-        //}
-
-        return $query->find('politician', ['role' => 'citizen']);
-    }
-
-    /**
-     * Find recently created.
-     *
-     * Finds the recent created users by their registration date.
-     *
-     * @param Query $query The original query.
-     * @return Query The updated query.
-     */
-    protected function findRecentlyCreated(Query $query): Query
-    {
-        return $query
-            ->orderDesc('Users.created')
-            ->limit(self::LIMIT_DASHBOARD);
-    }
-
-    /**
-     * Find recently active.
-     *
-     * Finds the recently active users by their last seen date.
-     *
-     * @param Query $query The original query.
-     * @return Query The updated query.
-     */
-    protected function findRecentlyActive(Query $query): Query
-    {
-        return $query
-            ->where(['Users.last_seen IS NOT' => null])
-            ->orderDesc('Users.last_seen')
-            ->limit(self::LIMIT_DASHBOARD);
     }
 }

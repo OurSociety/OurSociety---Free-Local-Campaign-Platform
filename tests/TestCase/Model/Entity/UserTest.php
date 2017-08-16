@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace OurSociety\Test\TestCase\Model\Table;
 
 use Cake\I18n\Time;
+use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
 use OurSociety\TestSuite\TestCase;
 
 class UserTest extends TestCase
@@ -40,5 +42,16 @@ class UserTest extends TestCase
         self::assertInternalType('string', $user->token);
         self::assertRegExp(sprintf('/^[1-9]\d{%d}$/', User::TOKEN_LENGTH - 1), $user->token);
         self::assertEquals(User::TOKEN_EXPIRY_HOURS, $user->token_expires->diffInHours());
+    }
+
+    public function testSeen(): void
+    {
+        //$user = new User(['slug' => 'seen', 'email' => 'seen@example.com', 'password' => '', 'name' => '']);
+        /** @var UsersTable $table */
+        $table = TableRegistry::get('Users');
+        //$table->saveOrFail($user);
+        ///** @var User $user */
+        $user = $table->get(User::ROLE_CITIZEN);
+        dd($user->last_seen);
     }
 }

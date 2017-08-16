@@ -93,7 +93,7 @@ class ArticlesController extends CrudController
                     'id',
                     'politician_id' => ['type' => 'hidden'],
                     'name' => ['label' => 'Title'],
-                    'body' => ['label' => 'Body', 'type' => 'editor'],
+                    'body' => ['type' => 'editor'],
                     'version' => ['type' => 'hidden'],
                     'published' => [
                         'type' => 'checkbox',
