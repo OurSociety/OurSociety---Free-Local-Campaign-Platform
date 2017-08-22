@@ -34,7 +34,7 @@ class PoliticiansControllerTest extends IntegrationTestCase
         $this->get(['_name' => 'politician', 'politician' => 'imported-politician']);
         $this->assertResponseOk();
         $this->assertResponseContains('This profile has not been claimed.');
-        $this->assertResponseContains('Click here to see <a href="/politicians/seth-kaper-dale">an example profile</a>');
+        $this->assertResponseContains(sprintf('Click here to see <a href="/politicians/%s">an example profile</a>', UsersFixture::POLITICIAN_SLUG));
         $this->assertResponseContains('or choose <a href="/politicians/imported-politician/claim">Claim Profile</a>');
         $this->assertResponseContains('to create your account.');
         $this->assertResponseContains('Imported Politician');

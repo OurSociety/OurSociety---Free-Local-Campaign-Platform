@@ -84,6 +84,7 @@ class VideosController extends CrudController
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
+                    'id',
                     'youtube_video_id' => [
                         'label' => 'YouTube Video ID',
                         'type' => 'text',
@@ -101,7 +102,6 @@ class VideosController extends CrudController
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianVideo $video */
             $video = $event->getSubject()->entity;
-            $video->id = Text::uuid();
             $video->politician_id = $this->Auth->user('id');
         });
 

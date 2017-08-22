@@ -6,6 +6,7 @@ namespace OurSociety\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use OurSociety\View\AppView;
 
 /**
  * User Entity

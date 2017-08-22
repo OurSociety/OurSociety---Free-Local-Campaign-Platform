@@ -8,6 +8,7 @@ window.Popper = Popper
 // Load custom JS
 import './analytics/dashboard'
 import './charts/categories'
+import './keen.io/cohorts'
 // import './charts/votes'
 
 // Bundle images

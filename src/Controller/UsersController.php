@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Mailer\MailerAwareTrait;

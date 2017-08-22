@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use OurSociety\View\AppView;
+
 /**
  * PoliticianArticle Entity
  *
@@ -21,4 +23,12 @@ namespace OurSociety\Model\Entity;
  */
 class PoliticianArticle extends AppEntity
 {
+    public function renderPoliticianEditButton(AppView $view): string
+    {
+        return $view->Html->link(
+            __('Edit article'),
+            ['prefix' => 'politician/profile', 'controller' => 'Articles', 'action' => 'edit', $this->slug],
+            ['class' => 'btn btn-default']
+        );
+    }
 }

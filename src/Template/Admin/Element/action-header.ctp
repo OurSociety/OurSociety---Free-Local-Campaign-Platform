@@ -1,4 +1,9 @@
 <?php
+/**
+ * @var \OurSociety\View\AppView $this
+ * @var string $viewVar
+ * @var array[] $actions
+ */
 if (!$this->exists('actions')) {
     $this->start('actions');
         echo $this->element('actions', [

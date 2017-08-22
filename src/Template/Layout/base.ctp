@@ -16,6 +16,7 @@
     <?= $this->fetch('meta'); ?>
     <?= $this->fetch('css'); ?>
     <?= $this->fetch('headjs'); ?>
+    <?= $this->element('Snippets/keen_io'); ?>
 </head>
 <body class="<?= $this->fetch('scope') ?> <?= $this->fetch('theme') ?>">
     <?= $this->fetch('content') ?>

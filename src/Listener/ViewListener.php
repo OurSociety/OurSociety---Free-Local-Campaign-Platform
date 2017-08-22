@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Listener;
 
 use Cake\Core\Configure;
+use Cake\Database\Exception as DatabaseException;
 use Cake\ORM\Table;
 use Crud\Action\BaseAction;
 use CrudView\Listener as CrudView;
@@ -25,6 +26,37 @@ class ViewListener extends CrudView\ViewListener
         return parent::_action($name);
     }
 
+    protected function _associations(array $whitelist = [])
+    {
+        $modifyAssociationsByType = function (array $associations): array {
+            $setAssociationPrimaryKeyToSlug = function (array $config): array {
+                /** @var Table $table */
+                $table = $this->_controller()->loadModel($config['model']);
+
+                if ($table->getSchema()->column('slug') !== null) {
+                    $config['primaryKey'] = 'slug';
+                }
+
+                return $config;
+            };
+
+            $setControllerName = function (array $config): array {
+                switch ($config['controller']) {
+                    case 'Categories': $config['controller'] = 'Aspects';
+                }
+
+                return $config;
+            };
+
+            return collection($associations)
+                ->map($setAssociationPrimaryKeyToSlug)
+                ->map($setControllerName)
+                ->toArray();
+        };
+
+        return collection(parent::_associations($whitelist))->map($modifyAssociationsByType)->toArray();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -37,6 +69,41 @@ class ViewListener extends CrudView\ViewListener
     {
         return parent::_controller();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * - Remove lookup action.
+     *
+     * @return MenuItem[]
+     */
+    protected function _getAllowedActions(): array
+    {
+        $allowedActions = parent::_getAllowedActions();
+        unset($allowedActions['lookup']);
+
+        return $allowedActions;
+    }
+
+    protected function _getControllerActionConfiguration($actionName, $config)
+    {
+        [$scope, $actionConfig] = parent::_getControllerActionConfiguration($actionName, $config);
+
+        if ($actionConfig['title'] === 'Dashboard') {
+            $scope = 'table';
+            $actionConfig['title'] = '<i class="fa fa-th-large"></i>' . ' ' . $actionConfig['title'];
+            $actionConfig['options'] = ['class' => ['btn', 'btn-info']];
+        }
+
+        if ($actionConfig['title'] === 'Export') {
+            $scope = 'table';
+            $actionConfig['title'] = '<i class="fa fa-download"></i>' . ' ' . $actionConfig['title'];
+            $actionConfig['options'] = ['class' => ['btn', 'btn-secondary']];
+        }
+
+        return [$scope, $actionConfig];
+    }
+
 
     /**
      * {@inheritdoc}
@@ -156,33 +223,17 @@ class ViewListener extends CrudView\ViewListener
             ->toArray();
     }
 
-    protected function _associations(array $whitelist = [])
-    {
-        $modifyAssociationsByType = function (array $associations): array {
-            $setAssociationPrimaryKeyToSlug = function (array $config): array {
-                /** @var Table $table */
-                $table = $this->_controller()->loadModel($config['model']);
-
-                if ($table->getSchema()->column('slug') !== null) {
-                    $config['primaryKey'] = 'slug';
-                }
-
-                return $config;
-            };
-
-            return collection($associations)->map($setAssociationPrimaryKeyToSlug)->toArray();
-        };
-
-        return collection(parent::_associations($whitelist))->map($modifyAssociationsByType)->toArray();
-    }
-
     protected function _table(): Table
     {
         /** @var Table $table */
         $table = parent::_table();
 
-        if ($table->getSchema()->column('slug') !== null) {
-            $table->setPrimaryKey('slug');
+        try {
+            if ($table->getSchema()->column('slug') !== null) {
+                $table->setPrimaryKey('slug');
+            }
+        } catch (DatabaseException $exception) {
+            // no-op: ignore exceptions for missing tables.
         }
 
         return $table;

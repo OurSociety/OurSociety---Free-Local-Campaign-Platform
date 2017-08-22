@@ -9,6 +9,7 @@ use Cake\Routing\Router;
 use Cake\View\CellTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
+use OurSociety\Test\Fixture\UsersFixture;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -75,7 +76,7 @@ class PoliticiansController extends CrudController
                 'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
                     'example_profile' => $link(__('an example profile'), [
                         '_name' => 'politician',
-                        'politician' => 'seth-kaper-dale'
+                        'politician' => UsersFixture::POLITICIAN_SLUG
                     ]),
                     'claim_profile' => $link(__('Claim Profile'), [
                         '_name' => 'politician:claim',
@@ -162,7 +163,7 @@ class PoliticiansController extends CrudController
                 'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
                     'example_profile' => $link(__('an example profile'), [
                         '_name' => 'politician',
-                        'politician' => 'seth-kaper-dale'
+                        'politician' => UsersFixture::POLITICIAN_SLUG
                     ]),
                     'claim_profile' => $link(__('Claim Profile'), [
                         '_name' => 'politician:claim',

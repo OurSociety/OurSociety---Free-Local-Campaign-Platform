@@ -21,7 +21,7 @@
 
 <?php $this->start('actions_heading') ?>
     <?= $this->Html->link(__('Getting Started'), '/docs/onboarding', ['class' => 'btn btn-primary']) ?>
-    <?= $this->Html->link(__('Example Profile'), ['_name' => 'politician', 'politician' => 'seth-kaper-dale'], ['class' => 'btn btn-info']) ?>
+    <?= $this->Html->link(__('Example Profile'), ['_name' => 'politician', 'politician' => \OurSociety\Test\Fixture\UsersFixture::POLITICIAN_SLUG], ['class' => 'btn btn-info']) ?>
     <?= $this->Html->link(__('Your Profile'), ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-warning']) ?>
 <?php $this->end() ?>
 
@@ -30,7 +30,7 @@
 <?php $this->end() ?>
 
 <?php $this->start('actions_videos') ?>
-<?= $this->Html->link('Edit Videos', ['_name' => 'politician:profile:videos'], ['class' => 'btn btn-sm btn-default']) ?>
+<?= $this->Html->link('Edit Videos', ['_name' => 'politician:profile:videos'], ['class' => 'btn btn-sm btn-default', 'id' => 'button-edit-videos']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_positions') ?>

@@ -3,55 +3,20 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table;
 
-use Cake\ORM\Entity;
-use Cake\ORM\Query;
+use Cake\Database\Connection;
+use Cake\Datasource\ConnectionManager;
 
-class DashboardTotalsTable extends AppTable
+class DashboardTotalsTable
 {
-    public static function getTotal($name, $period)
+    public static function getRows(string $name, string $period): array
     {
-        return self::instance()->find()->where(compact('name', 'period'))->first() ?? new Entity();
-    }
+        /** @var Connection $connection */
+        $connection = ConnectionManager::get('default');
+        $sqlFilename = CONFIG . 'Queries' . DS . 'Dashboards' . DS . $name . '_by_' . $period . '.sql';
+        $query = file_get_contents($sqlFilename);
+        /** @var \PDOStatement $statement */
+        $statement = $connection->execute($query);
 
-    public function initialize(array $config): void
-    {
-        $this->setPrimaryKey(['name', 'period']);
-
-        parent::initialize($config);
-    }
-
-    public function recalculateTotals(): void
-    {
-        $entity = $this->find('usersCreated')->firstOrFail();
-        $entity = $this->patchEntity($entity, ['percentage_change' => 10.3]);
-        $this->saveOrFail($entity);
-    }
-
-    public function findUsersCreated(Query $query): Query
-    {
-        return $query->where(['name' => 'users_created', 'period' => 'hour'])->select([
-            'name',
-            'period',
-            'count_current' => $this->query()->newExpr('100'),
-            'count_previous' => 1000,
-        ]);
-    }
-
-    public function findDashboard(Query $query, array $options): Query
-    {
-        $query->where(['period' => $options['period']]);
-
-        if ($options['dashboard'] === 'users') {
-            $query->where(['name IN' => [
-                'users_created',
-                'politicians_created',
-                'citizens_created',
-                'users_seen',
-                'citizens_seen',
-                'politicians_seen',
-            ]]);
-        }
-
-        return $query;
+        return $statement->fetchAll('assoc');
     }
 }

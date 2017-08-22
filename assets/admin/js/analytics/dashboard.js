@@ -53,7 +53,7 @@ if (typeof gapi !== "undefined") {
         sort: '-ga:sessions'
       },
       chart: {
-        container: 'chart-1-container',
+        container: 'chart-3-container',
         type: 'PIE',
         options: {
           title: 'Top Regions',
@@ -72,16 +72,17 @@ if (typeof gapi !== "undefined") {
       query: {
         ids: "ga:156148947",
         metrics: 'ga:sessions',
-        dimensions: 'ga:region',
+        dimensions: 'ga:source',
         'start-date': '30daysAgo',
         'end-date': 'yesterday',
         'max-results': 6,
         sort: '-ga:sessions'
       },
       chart: {
-        container: 'chart-2-container',
+        container: 'chart-4-container',
         type: 'PIE',
         options: {
+          title: 'Top Sources',
           width: '100%',
           pieHole: 4 / 9
         }
@@ -92,8 +93,8 @@ if (typeof gapi !== "undefined") {
     dataChart.execute();
     dataChart1.execute();
     dataChart2.execute();
-    renderWeekOverWeekChart("ga:156148947");
-    renderYearOverYearChart("ga:156148947");
+    // renderWeekOverWeekChart("ga:156148947");
+    // renderYearOverYearChart("ga:156148947");
     // renderTopBrowsersChart(data.ids);
     // renderTopCountriesChart(data.ids);
 
@@ -120,7 +121,7 @@ if (typeof gapi !== "undefined") {
         clearTimeout(timeout);
         timeout = setTimeout(function () {
           element.className =
-            element.className.replace(/ is-(increasing|decreasing)/g, '');
+            element.className.replace(/ is-(?:increasing|decreasing)/g, '');
         }, 3000);
       });
     });
@@ -154,6 +155,7 @@ if (typeof gapi !== "undefined") {
       // Adjust `now` to experiment with different days, for testing only...
       let now = moment(); // .subtract(3, 'day');
 
+      // noinspection JSCheckFunctionSignatures,JSDeprecatedSymbols
       let thisWeek = query({
         'ids': ids,
         'dimensions': 'ga:date,ga:nthDay',
@@ -162,6 +164,7 @@ if (typeof gapi !== "undefined") {
         'end-date': moment(now).format('YYYY-MM-DD')
       });
 
+      // noinspection JSCheckFunctionSignatures,JSDeprecatedSymbols
       let lastWeek = query({
         'ids': ids,
         'dimensions': 'ga:date,ga:nthDay',
@@ -210,7 +213,8 @@ if (typeof gapi !== "undefined") {
           ]
         };
 
-        new Chart(makeCanvas('chart-1-container')).Line(data);
+        let canvas = makeCanvas('chart-1-container');
+        new Chart.Line(canvas, data);
         generateLegend('legend-1-container', data.datasets);
       });
     }
@@ -253,14 +257,13 @@ if (typeof gapi !== "undefined") {
         'end-date': moment(now).format('YYYY-MM-DD')
       });
 
+      // noinspection JSCheckFunctionSignatures,JSDeprecatedSymbols
       let lastYear = query({
         'ids': ids,
         'dimensions': 'ga:month,ga:nthMonth',
         'metrics': 'ga:users',
-        'start-date': moment(now).subtract(1, 'year').date(1).month(0)
-          .format('YYYY-MM-DD'),
-        'end-date': moment(now).date(1).month(0).subtract(1, 'day')
-          .format('YYYY-MM-DD')
+        'start-date': moment(now).subtract(1, 'year').date(1).month(0).format('YYYY-MM-DD'),
+        'end-date': moment(now).date(1).month(0).subtract(1, 'day').format('YYYY-MM-DD')
       });
 
       Promise.all([thisYear, lastYear]).then(function (results) {
@@ -298,12 +301,44 @@ if (typeof gapi !== "undefined") {
           ]
         };
 
-        new Chart(makeCanvas('chart-2-container')).Bar(data);
+        new Chart.Bar(makeCanvas('chart-2-container'), data);
         generateLegend('legend-2-container', data.datasets);
-      })
-        .catch(function (err) {
-          console.error(err.stack);
-        });
+      }).catch(function (err) {
+        console.error(err.stack);
+      });
+    }
+
+    /**
+     * Create a visual legend inside the specified element based off of a
+     * Chart.js dataset.
+     * @param {string} id The id attribute of the element to host the legend.
+     * @param {Array.<Object>} items A list of labels and colors for the legend.
+     */
+    function generateLegend(id, items) {
+      let legend = document.getElementById(id);
+      legend.innerHTML = items.map(function(item) {
+        let color = item.color || item.fillColor;
+        let label = item.label;
+        return '<li><i style="background:' + color + '"></i>' +
+          escapeHtml(label) + '</li>';
+      }).join('');
+    }
+
+    // Set some global Chart.js defaults.
+    Chart.defaults.global.animationSteps = 60;
+    Chart.defaults.global.animationEasing = 'easeInOutQuart';
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.maintainAspectRatio = false;
+
+    /**
+     * Escapes a potentially unsafe HTML string.
+     * @param {string} str An string that may contain HTML entities.
+     * @return {string} The HTML-escaped string.
+     */
+    function escapeHtml(str) {
+      let div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
     }
 
     activeUsers.execute();

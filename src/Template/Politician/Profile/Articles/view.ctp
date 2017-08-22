@@ -15,4 +15,9 @@ $this->start('breadcrumbs');
 </ol>
 <?php
 $this->end();
+
+$this->start('actions');
 ?>
+    <?= $article->renderPoliticianEditButton($this) ?>
+<?php
+$this->end();

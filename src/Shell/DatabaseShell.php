@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Shell;
 
 use ArrayObject;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Shell\Helper\ProgressHelper;
@@ -35,15 +36,6 @@ class DatabaseShell extends AppShell
                     'help' => <<<HELP
 Triggers the afterSave callback on each answer in the system.
 This callback contains the logic that calculates value match percentages between the users who answered that question.
-HELP
-                ]),
-            ])
-            ->addSubcommand('recalculate_dashboards', [
-                'help' => 'Recalculate all dashboard totals',
-                'parser' => new ConsoleOptionParser('recalculate_dashboards', [
-                    'help' => <<<HELP
-Triggers the afterSave callback on each answer in the system.
-This callback contains the logic that calculates dashboard totals between the users who answered that question.
 HELP
                 ]),
             ]);
@@ -96,15 +88,6 @@ HELP
             $hasSlugWithNumber->slug = $table->slug($hasSlugWithNumber);
             $table->saveOrFail($hasSlugWithNumber);
         }
-
-        return self::CODE_SUCCESS;
-    }
-
-    public function recalculateDashboards(): bool
-    {
-        /** @var DashboardTotalsTable $table */
-        $table = TableRegistry::get('DashboardTotals');
-        $table->recalculateTotals();
 
         return self::CODE_SUCCESS;
     }

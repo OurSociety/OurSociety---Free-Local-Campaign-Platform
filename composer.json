@@ -4,6 +4,13 @@
     "homepage": "https://oursociety.org",
     "type": "project",
     "license": "proprietary",
+    "minimum-stability": "alpha",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Sam-Burns/phpspec-code-coverage.git"
+        }
+    ],
     "require": {
         "php": ">=7.1",
         "TeamTNT/php-stripe-webhook-tester": "^1.1",
@@ -34,15 +41,30 @@
         "xety/cake3-cookieauth": "^1.4"
     },
     "require-dev": {
+        "behat/behat": "^3.3",
+        "behat/mink": "^1.7",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-goutte-driver": "^1.2",
+        "behat/mink-selenium2-driver": "^1.3",
+        "bex/behat-browser-initialiser": "^1.1",
+        "bex/behat-screenshot": "^1.2",
+        "bossa/phpspec2-expect": "^3.0",
         "cakephp/bake": "~1.1",
         "cakephp/cakephp-codesniffer": "^3.0",
         "cakephp/debug_kit": "~3.2",
+        "ciaranmcnulty/phpspec-typehintedmethods": "^3.0",
         "dereuromark/cakephp-ide-helper": "^0.8.0",
+        "guzzlehttp/guzzle": "6.3.0 as 4.2.4",
         "kint-php/kint": "^2.1",
+        "leanphp/behat-code-coverage": "3.1.x-dev@dev",
+        "leanphp/phpspec-code-coverage": "dev-phpspec-4@dev",
+        "memio/spec-gen": "^0.8",
+        "phpspec/phpspec": "4.0.2 as 3.4.2",
         "phpunit/phpunit": "^6.2",
         "psy/psysh": "@stable",
         "pyrech/composer-changelogs": "^1.5",
         "scriptfusion/phpunit-immediate-exception-printer": "^1.1",
+        "sensiolabs/behat-page-object-extension": "^2.0",
         "sllh/composer-versions-check": "^2.0",
         "spatie/db-dumper": "^2.7",
         "spatie/phpunit-watcher": "^1.0"

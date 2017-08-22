@@ -1,0 +1,94 @@
+default:
+    autoload:
+        '': %paths.base%/src/TestSuite/Behat/Context
+    formatters:
+#        html:
+#            output_path: %paths.base%/build/story/report
+        pretty:
+            verbose: true
+            paths: false
+            snippets: false
+    extensions:
+        Behat\MinkExtension:
+            default_session: php
+            javascript_session: browser
+            base_url: http://oursociety.dev
+            sessions:
+                php:
+                    goutte: ~
+                browser:
+                    selenium2:
+                        browser: chrome
+                        capabilities:
+                            chrome:
+                                switches:
+                                    #- "--headless"
+                remote:
+                    browser_stack:
+                        username: 'USERNAME'
+                        access_key: 'ACCESS KEY'
+                        capabilities:
+                            browser: 'firefox'
+                            browserVersion: 42
+                            # This is required for local testing.
+                            browserstack-tunnel: true
+        Bex\Behat\BrowserInitialiserExtension:
+            browser_window_size: max
+        Bex\Behat\ScreenshotExtension:
+            image_drivers:
+                local:
+                    screenshot_directory: build/story/screenshots
+                    clear_screenshot_directory: true
+#        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+#            name: html
+#            renderer: Behat2
+#            file_name: index
+#            print_args: true
+#            print_outp: true
+#            loop_break: true
+        LeanPHP\Behat\CodeCoverage\Extension:
+            auth: ~
+            drivers:
+                - local
+            filter: ~
+            report:
+                format: html
+                options:
+                    target: %paths.base%/build/story/coverage
+        SensioLabs\Behat\PageObjectExtension:
+            namespaces:
+                page: [OurSociety\TestSuite\Behat\Page]
+                element: [OurSociety\TestSuite\Behat\Element]
+    suites:
+#        public:
+#            paths:
+#                - %paths.base%/features/public
+#            contexts:
+#                - OurSociety\TestSuite\Behat\Context\FeatureContext
+        politician:
+            paths:
+                - %paths.base%/features/politician
+            contexts:
+#                - OurSociety\TestSuite\Behat\Context\BrowserContext
+#                - OurSociety\TestSuite\Behat\Context\LoggedInContext:
+#                    - role: politician
+                - OurSociety\TestSuite\Behat\Context\PoliticianContext
+#        admin:
+#            paths:
+#                - %paths.base%/features/admin
+#            contexts:
+#                - OurSociety\TestSuite\Behat\Context\FeatureContext
+#                - OurSociety\TestSuite\Behat\Context\AdminContext
+debug:
+    extensions:
+        Behat\MinkExtension:
+            default_session: browser
+            sessions:
+                browser:
+                    selenium2:
+                        capabilities:
+                            chrome:
+                                switches:
+                                    - "--window-position=0,-720"
+                                    - "--window-size=1280,720"
+#                                    - "--maximize"
