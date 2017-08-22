@@ -1,20 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 65 65" enable-background="new 0 0 65 65" xml:space="preserve">
-    <g>
-        <path d="M25.9,30.4H4v8.5h21.9V30.4z M24.4,37.4H5.5v-5.6h18.9V37.4z"/>
-        <rect x="5.7" y="54.6" width="6" height="1.5"/>
-        <rect x="20.6" y="57.2" width="1.2" height="1.5"/>
-        <rect x="18.2" y="54.6" width="6" height="1.5"/>
-        <rect x="20.6" y="52" width="1.2" height="1.5"/>
-        <polygon points="9.4,42.1 8,42.1 8,44.4 5.7,44.4 5.7,45.9 8,45.9 8,48.1 9.4,48.1 9.4,45.9 11.7,45.9 11.7,44.4 9.4,44.4  "/>
-        <polygon points="22.8,42.5 21.2,44.1 19.6,42.5 18.5,43.5 20.2,45.1 18.5,46.7 19.6,47.8 21.2,46.2 22.8,47.8 23.9,46.7 22.3,45.1    23.9,43.5  "/>
-        <rect x="28.4" y="48.9" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -25.2054 38.4625)" width="10.9" height="1.5"/>
-        <path d="M36.2,50C35,50,34,51,34,52.2s1,2.2,2.2,2.2c1.2,0,2.2-1,2.2-2.2S37.4,50,36.2,50z M36.2,52.9c-0.4,0-0.7-0.3-0.7-0.7   c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C36.9,52.6,36.6,52.9,36.2,52.9z"/>
-        <path d="M31.3,49.5c1.2,0,2.2-1,2.2-2.2s-1-2.2-2.2-2.2c-1.2,0-2.2,1-2.2,2.2S30.1,49.5,31.3,49.5z M31.3,46.5   c0.4,0,0.7,0.3,0.7,0.7S31.7,48,31.3,48s-0.7-0.3-0.7-0.7S30.9,46.5,31.3,46.5z"/>
-        <rect x="22.6" y="15" width="28.5" height="1.5"/>
-        <rect x="22.6" y="19.9" width="28.5" height="1.5"/>
-        <path d="M65,28.8h-7.8V6.2l-4.7-4.3l-3.9,3.7l-3.9-3.7l-3.9,3.7l-3.9-3.7l-3.9,3.7l-3.9-3.7L25,5.5l-3.9-3.7l-4.7,4.3v19.7H0v37.3   h29.9v-4.9c1.2,0.5,2.4,0.8,3.8,0.8h0c4.5,0,8.3-3.3,9.2-7.6H65V28.8z M17.9,6.8l3.2-3L25,7.5l3.9-3.7l3.9,3.7l3.9-3.7l3.9,3.7   l3.9-3.7l3.9,3.7l3.9-3.7l3.2,3v21.9H29.9v-2.9h-12V6.8z M28.4,61.7H1.5V27.3h26.9v14.8c-2.4,1.7-4,4.5-4,7.6c0,3.2,1.6,6,4,7.7   V61.7z M33.7,57.6v0.7V57.6c-4.4,0-7.8-3.5-7.8-7.9c0-4.3,3.5-7.8,7.9-7.8c2.1,0,4.1,0.8,5.5,2.3c1.5,1.5,2.3,3.5,2.3,5.5   C41.6,54.1,38,57.6,33.7,57.6z M40.4,43.2c-1.8-1.8-4.1-2.7-6.6-2.8c0,0-0.1,0-0.1,0v-3.1c1.4-0.3,2.6-1.4,2.9-2.9h19.9   c0.3,1.4,1.4,2.6,2.9,2.9v5.6c-1.4,0.3-2.6,1.4-2.9,2.9H42.2C41.7,44.8,41.1,43.9,40.4,43.2z M63.5,50H43.1c0-0.1,0-0.1,0-0.2   c0-0.9-0.1-1.7-0.3-2.5h15.1v-0.7c0-1.2,1-2.2,2.2-2.2h0.7v-8.5h-0.7c-1.2,0-2.2-1-2.2-2.2v-0.7H35.1v0.7c0,1.2-1,2.2-2.2,2.2h-0.7   v4.7c-0.8,0.1-1.6,0.4-2.3,0.7v-11h33.6V50z"/>
-        <path d="M46.5,36.8c-1.8,0-3.3,1.5-3.3,3.3c0,1.8,1.5,3.3,3.3,3.3c1.8,0,3.3-1.5,3.3-3.3C49.8,38.3,48.3,36.8,46.5,36.8z M46.5,42   c-1,0-1.9-0.8-1.9-1.9c0-1,0.8-1.9,1.9-1.9c1,0,1.9,0.8,1.9,1.9C48.3,41.1,47.5,42,46.5,42z"/>
-    </g>
-    <text x="0" y="80" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Creative Stall</text>
-    <text x="0" y="85" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="90px" height="90px" viewBox="0 0 90 90" enable-background="new 0 0 90 90" xml:space="preserve">
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M50.179,68.212H26.306c-3.768,0-6.821-3.055-6.821-6.821V20.266c0-3.768,3.054-6.821,6.821-6.821h20.959l-0.021,8.541
+	c-0.009,3.78,3.058,6.848,6.838,6.838l8.541-0.021v26.964"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="47.265" y1="13.444" x2="62.623" y2="28.803"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.795" y1="20.274" x2="41.894" y2="20.274"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.795" y1="26.965" x2="41.894" y2="26.965"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.795" y1="53.725" x2="51.179" y2="53.725"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.795" y1="60.415" x2="44.935" y2="60.415"/>
+<polygon fill="#582D82" points="25.033,35.331 33.024,35.331 33.024,37.781 30.502,37.781 30.502,46.44 27.527,46.44 27.527,37.781
+	25.033,37.781 "/>
+<path fill="#582D82" d="M34.34,46.44l3.161-9.179c0.51-1.478,1.14-2.046,2.174-2.046c0.982,0,1.679,0.658,2.15,2.046l3.109,9.179
+	h-3.138l-0.653-2.308H38.03L37.4,46.44H34.34z M40.49,41.815l-0.93-3.305l-0.9,3.305H40.49z"/>
+<polygon fill="#582D82" points="49.771,46.44 46.451,46.44 50.09,40.79 46.586,35.331 49.985,35.331 51.791,38.315 53.642,35.331
+	56.865,35.331 53.385,40.729 57.074,46.44 53.652,46.44 51.678,43.25 "/>
+<circle fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="60.151" cy="65.739" r="10.277"/>
+<line fill="none" stroke="#822C90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="55.957" y1="69.934" x2="64.346" y2="61.546"/>
+<path fill="#822C90" d="M58.839,62.558c0,0.875-0.71,1.585-1.585,1.585c-0.876,0-1.586-0.71-1.586-1.585
+	c0-0.876,0.71-1.585,1.586-1.585C58.129,60.973,58.839,61.682,58.839,62.558"/>
+<path fill="#822C90" d="M64.887,68.626c0,0.864-0.7,1.565-1.564,1.565s-1.565-0.701-1.565-1.565s0.701-1.565,1.565-1.565
+	S64.887,67.762,64.887,68.626"/>
 </svg>

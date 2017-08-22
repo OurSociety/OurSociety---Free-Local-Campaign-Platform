@@ -1,20 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 65 65" enable-background="new 0 0 65 65" xml:space="preserve">
-    <g>
-        <path d="M64.3,47.7L47.5,31.8l4.3-4.3c0.3,0.2,0.7,0.3,1.1,0.3c0.6,0,1.2-0.2,1.6-0.7c0.9-0.9,0.9-2.3,0-3.2l-6.8-6.8   c-0.9-0.9-2.3-0.8-3.2,0c-0.7,0.7-0.8,1.9-0.3,2.7l-1.6,1.6v-14H4.1c-2.4,0-4.4,2-4.4,4.4v41c0,2.4,2,4.4,4.4,4.4h38.5V36.8   l1.5-1.5L59.9,52c0.6,0.6,1.4,1,2.2,1c0.8,0,1.6-0.3,2.2-0.9c0.6-0.6,0.9-1.4,0.9-2.2C65.2,49,64.9,48.3,64.3,47.7z M45.6,18.4   c0.1-0.1,0.3-0.2,0.5-0.2c0.2,0,0.4,0.1,0.5,0.2l6.8,6.8c0.3,0.3,0.3,0.8,0,1.1c-0.3,0.3-0.8,0.3-1.1,0l-6.8-6.8   C45.3,19.1,45.3,18.6,45.6,18.4z M3.4,9.2v39.4c-0.8,0.1-1.5,0.5-2.1,1V12C1.3,10.7,2.2,9.6,3.4,9.2z M41.1,55.9h-37   c-1.6,0-2.9-1.3-2.9-2.9c0-1.6,1.3-2.9,2.9-2.9h37V55.9z M41.1,48.6H4.9V9.1h36.2v14L32.2,32c-0.9-0.5-2-0.4-2.7,0.3   c-0.9,0.9-0.9,2.3,0,3.2l6.8,6.8c0.4,0.4,1,0.7,1.6,0.7c0.6,0,1.2-0.2,1.6-0.7c0.7-0.7,0.8-1.9,0.3-2.7l1.3-1.3V48.6z M38.4,41.2   c-0.3,0.3-0.8,0.3-1.1,0l-6.8-6.8c-0.3-0.3-0.3-0.8,0-1.1c0.1-0.1,0.3-0.2,0.5-0.2c0.2,0,0.4,0.1,0.5,0.2l6.8,6.8   C38.7,40.4,38.7,40.9,38.4,41.2z M63.3,51c-0.6,0.6-1.7,0.6-2.3,0L44.1,33.1l-5.3,5.3l-0.6-0.6L33.4,33l11.8-11.8l5.5,5.5l-5.3,5.3   l17.9,16.9c0.3,0.3,0.5,0.7,0.5,1.1C63.8,50.3,63.6,50.7,63.3,51z"/>
-        <rect x="20.2" y="26.2" width="1.5" height="1.5"/>
-        <rect x="16.3" y="26.2" width="1.5" height="1.5"/>
-        <rect x="24.1" y="26.2" width="1.5" height="1.5"/>
-        <rect x="28" y="26.2" width="1.3" height="1.5"/>
-        <rect x="8.5" y="26.2" width="1.5" height="1.5"/>
-        <rect x="12.4" y="26.2" width="1.5" height="1.5"/>
-        <rect x="36.1" y="52.2" width="1.5" height="1.5"/>
-        <rect x="28.3" y="52.2" width="1.5" height="1.5"/>
-        <rect x="32.2" y="52.2" width="1.5" height="1.5"/>
-        <rect x="8.5" y="20.2" width="20.5" height="1.5"/>
-        <rect x="8.5" y="32.2" width="12.7" height="1.5"/>
-        <rect x="8.5" y="38.2" width="16.7" height="1.5"/>
-        <rect x="8.5" y="14.2" width="29" height="1.5"/>
-    </g>
-    <text x="0" y="80" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Creative Stall</text>
-    <text x="0" y="85" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="90px" height="90px" viewBox="0 0 90 90" enable-background="new 0 0 90 90" xml:space="preserve">
+<path fill="none" stroke="#822C90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M48.506,67.657c-0.365-0.613-1.025-0.988-1.738-0.988H31.187H15.608c-0.714,0-1.374,0.375-1.739,0.988l-2.01,3.381
+	c-0.186,0.313-0.285,0.67-0.285,1.034v0.564c0,1.118,0.906,2.023,2.023,2.023h17.59h17.59c1.117,0,2.022-0.905,2.022-2.023v-0.564
+	c0-0.364-0.099-0.722-0.284-1.034L48.506,67.657z"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M44.47,52.938c-0.365-0.613-1.025-0.988-1.739-0.988H31.187H19.642c-0.713,0-1.374,0.375-1.738,0.988l-2.01,3.381
+	c-0.186,0.313-0.284,0.67-0.284,1.034v0.565c0,1.117,0.905,2.022,2.022,2.022h13.555h13.554c1.118,0,2.022-0.905,2.022-2.022v-0.565
+	c0-0.364-0.098-0.721-0.283-1.034L44.47,52.938z"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M17.904,21.285c0.365,0.613,1.025,0.989,1.739,0.989h11.544h11.545c0.713,0,1.374-0.376,1.738-0.989l2.011-3.381
+	c0.187-0.313,0.284-0.67,0.284-1.033v-0.565c0-1.118-0.906-2.023-2.023-2.023H31.187H17.633c-1.118,0-2.023,0.905-2.023,2.023v0.565
+	c0,0.363,0.098,0.721,0.284,1.033L17.904,21.285z"/>
+<rect x="20.988" y="22.274" fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="20.399" height="29.675"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M55.6,33.279h18.9c2.117,0,3.833,1.716,3.833,3.832s-1.716,3.832-3.833,3.832H55.6"/>
+<polyline fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	48.913,40.943 41.387,40.943 41.387,33.279 48.913,33.279 "/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M54.094,42.907H50.42c-0.832,0-1.508-0.675-1.508-1.507v-8.578c0-0.832,0.676-1.506,1.508-1.506h3.674
+	c0.832,0,1.506,0.674,1.506,1.506V41.4C55.6,42.232,54.926,42.907,54.094,42.907z"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="31.187" y1="18.278" x2="46.029" y2="18.278"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="31.187" y1="55.945" x2="16.116" y2="55.945"/>
+<line fill="none" stroke="#822C90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="12.364" y1="70.664" x2="49.856" y2="70.664"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="52.257" y1="31.316" x2="52.257" y2="37.111"/>
 </svg>
