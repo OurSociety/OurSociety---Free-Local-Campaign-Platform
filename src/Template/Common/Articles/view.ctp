@@ -7,15 +7,12 @@
 ?>
 <?= $this->fetch('breadcrumbs') ?>
 
+<div class="pull-right">
+    <?= $this->fetch('actions') ?>
+</div>
+
 <h2>
     <?= $article->name ?>
-    <?php if ($currentUser->isPolitician()): ?>
-        <?= $this->Html->link(
-            __('Edit article'),
-            ['prefix' => 'politician/profile', 'controller' => 'Articles', 'action' => 'edit', $article->id],
-            ['class' => 'btn btn-default']
-        ) ?>
-    <?php endif ?>
 </h2>
 
 <hr>

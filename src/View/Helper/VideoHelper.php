@@ -5,16 +5,34 @@ namespace OurSociety\View\Helper;
 
 use VideoEmbed\View\Helper as VideoEmbed;
 
+/**
+ * Video helper.
+ *
+ * @property HtmlHelper $Html
+ */
 class VideoHelper extends VideoEmbed\VideoHelper
 {
-    public function youtube($url, $settings = array())
+    public $helpers = [
+        'Html' => ['className' => HtmlHelper::class],
+    ];
+
+    public function youtube($url, $settings = []): string
     {
+        $settings = $settings + [
+            'iframeClass' => ['embed-responsive-item'],
+            'failSilently' => true,
+            'wrapperClass' => ['embed-responsive', 'embed-responsive-16by9'],
+        ];
+
         $iframe = parent::youtube($url, $settings);
 
-        if (isset($settings['class'])) {
-            $iframe = str_replace('<iframe ', '<iframe class="' . $settings['class'] . '" ', $iframe);
+        if (isset($settings['iframeClass'])) {
+            if (is_array($settings['iframeClass'])) {
+                $settings['iframeClass'] = implode(' ', $settings['iframeClass']);
+            }
+            $iframe = str_replace('<iframe ', '<iframe class="' . $settings['iframeClass'] . '" ', $iframe);
         }
 
-        return $iframe;
+        return $this->Html->div($settings['wrapperClass'], $iframe);
     }
 }

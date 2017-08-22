@@ -27,18 +27,6 @@ $this->set('title', 'Users Dashboard');
         <?= $this->Html->link($label, ['?' => ['range' => $name]], $options) ?>
     <?php endforeach ?>
 </div>
-
-<!--
-<?= $this->Form->create(null, ['type' => 'GET', 'class' => 'form-inline']) ?>
-<?= $this->Form->control('range', [
-    'class' => ['form-control-sm'],
-    'default' => $this->request->getQuery('range', $defaultRange),
-    'label' => false,
-    'onchange' => 'this.form.submit()',
-    'options' => $ranges,
-]) ?>
-<?= $this->Form->end() ?>
--->
 <?php $this->end() ?>
 
 <?php

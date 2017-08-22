@@ -6,6 +6,7 @@ namespace OurSociety\Controller\Admin;
 use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\DashboardTotalsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
 

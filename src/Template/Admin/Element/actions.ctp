@@ -88,16 +88,6 @@ foreach ($actions as $name => $config) {
                 continue;
             }
 
-            //$config['options']['class'] = ['btn btn-default'];
-            //if ($config['method'] !== 'GET') {
-            //    echo $this->Form->postLink(
-            //        $config['title'] === 'Delete' ? '<i class="fa fa-trash"></i>' : $config['title'],
-            //        $config['url'],
-            //        $config['title'] === 'Delete' ? $config['options'] + ['escape' => false] : $config['options']
-            //    );
-            //    continue;
-            //}
-
             echo $this->element(sprintf('action-%s', $type ?? 'button'), ['config' => $config]);
         }
         ?>

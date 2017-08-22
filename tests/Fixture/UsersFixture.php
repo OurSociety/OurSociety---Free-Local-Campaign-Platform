@@ -20,8 +20,8 @@ class UsersFixture extends TestFixture
     public const PASSWORD_RESET = 'new password';
     public const POLITICIAN_EMAIL = 'politician@example.org';
     public const POLITICIAN_ID = '573111be-759e-11e7-a371-6c4008a68a60';
-    public const POLITICIAN_NAME = 'Augustus Octavius Bacon';
-    public const POLITICIAN_SLUG = 'seth-kaper-dale';
+    public const POLITICIAN_NAME = 'John Doe';
+    public const POLITICIAN_SLUG = 'john-doe';
 
     public $import = ['table' => 'users', 'connection' => 'fixtures'];
 }

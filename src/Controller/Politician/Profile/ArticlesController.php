@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
-use Cake\I18n\Time;
-use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianArticle;
 use OurSociety\Model\Entity\User;
@@ -90,7 +88,7 @@ class ArticlesController extends CrudController
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
-                    'id',
+                    'id' => ['type' => 'hidden'],
                     'politician_id' => ['type' => 'hidden'],
                     'name' => ['label' => 'Title'],
                     'body' => ['type' => 'editor'],

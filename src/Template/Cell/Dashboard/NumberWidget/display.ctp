@@ -4,7 +4,7 @@
  * @var string $icon
  * @var string $label
  * @var string $percentageChange
- * @var string $percentageChangeDirection
+ * @var string $percentageChangeIcon
  * @var string $percentageChangeStyle
  * @var string $previousCount
  * @var string $style
@@ -19,7 +19,8 @@
         <h4><?= $currentCount ?></h4>
         <br>
         <span class="small os-text-<?= $percentageChangeStyle ?>">
-            <i class="fa fa-arrow-circle-o-<?= $percentageChangeDirection ?>"></i> <?= $percentageChange ?>
+            <i class="fa fa-<?= $percentageChangeIcon ?>"></i>
+            <?= $percentageChange ?>
             <br>
             <small class="text-muted"><?= __('Previously {0}', $previousCount) ?></small>
         </span>

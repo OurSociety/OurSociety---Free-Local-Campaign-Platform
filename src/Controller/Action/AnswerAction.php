@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Action;
 
-use Cake\Controller\Controller;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
 use OurSociety\Controller\AppController;
@@ -21,14 +20,7 @@ class AnswerAction extends BaseAction
     use SaveMethodTrait;
     use RedirectTrait;
 
-    public function __construct(Controller $Controller, $config = [])
-    {
-        $this->_defaultConfig = [];
-
-        parent::__construct($Controller, $config);
-    }
-
-    public function _get(): void
+    protected function _get(): ?Response
     {
         if ($this->getConfig('redirectUrl') === null) {
             throw new \InvalidArgumentException('Config key "redirectUrl" not set.');
@@ -42,10 +34,12 @@ class AnswerAction extends BaseAction
         $questions = $controller->paginate($query);
 
         if ($questions->count() === 0) {
-            $this->_controller()->redirect($this->_request()->referer());
+            return $this->_controller()->redirect($this->_request()->referer());
         }
 
         $controller->set(['questions' => $questions->toArray()]);
+
+        return null;
     }
 
     protected function _post(): ?Response
@@ -81,12 +75,12 @@ class AnswerAction extends BaseAction
             ->extract('question_id')
             ->toArray();
 
+        $filterAnsweredQuestions = function (array $questionData) use ($answeredQuestionIds) {
+            return !\in_array($questionData['id'], $answeredQuestionIds, true);
+        };
+
         /** @var array $data */
-        $data = collection($data)
-            ->filter(function (array $questionData) use ($answeredQuestionIds) {
-                return !in_array($questionData['id'], $answeredQuestionIds, true);
-            })
-            ->toArray();
+        $data = \collection($data)->filter($filterAnsweredQuestions)->toArray();
 
         // It's possible that we remove all the questions, if user pressed back and answers same questions again...
         if (empty($data)) {
@@ -94,11 +88,8 @@ class AnswerAction extends BaseAction
         }
 
         // Create entities from remaining unanswered questions in data.
-        $questions = $table->patchEntities(
-            $table->find()->where(['id IN' => Hash::extract($data, '{n}.id')])->all()->toArray(),
-            $data,
-            ['associated' => ['Answers']]
-        );
+        $questionList = $table->find()->where(['id IN' => Hash::extract($data, '{n}.id')])->all()->toArray();
+        $questions = $table->patchEntities($questionList, $data, ['associated' => ['Answers']]);
 
         // The order of questions on the page is important, since patchEntities resets all the keys we use this method
         // to create a new array containing any unsaved entities with their original/expected indexes.
@@ -124,7 +115,7 @@ class AnswerAction extends BaseAction
             }
         }
         // Not sure why yet, but the order can end up with question #4 before question #3 - a simple key sort fixes it.
-        ksort($errors, SORT_NUMERIC);
+        \ksort($errors, \SORT_NUMERIC);
 
         // If there are no errors, take the user away.
         if (count($errors) === 0) {
@@ -136,7 +127,7 @@ class AnswerAction extends BaseAction
         return $this->_error($errors);
     }
 
-    public function _success(): ?Response
+    protected function _success(): ?Response
     {
         /** @var AppController $controller */
         $controller = $this->_controller();
@@ -147,11 +138,11 @@ class AnswerAction extends BaseAction
         return $controller->redirect($this->getConfig('redirectUrl'));
     }
 
-    public function _error(array $questions): ?Response
+    protected function _error(array $questions): ?Response
     {
         $controller = $this->_controller();
 
-        $questionsForView = collection($questions)->map(function (Question $question) {
+        $questionsForView = \collection($questions)->map(function (Question $question) {
             /** @var QuestionsTable $table */
             $table = $this->_table();
             $question->category = $table->Categories->find()->matching('Questions', function (Query $query) use ($question) {

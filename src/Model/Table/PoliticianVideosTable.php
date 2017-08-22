@@ -13,7 +13,7 @@ use OurSociety\Validation\Validator as AppValidator;
 /**
  * PoliticianVideos Model
  *
- * @property PoliticiansTable|Association\BelongsTo $Politicians
+ * @property UsersTable|Association\BelongsTo $Politicians
  *
  * @method PoliticianVideo get($primaryKey, $options = [])
  * @method PoliticianVideo newEntity($data = null, array $options = [])

@@ -46,22 +46,22 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
     </h3>
     <div class="row">
         <div class="col-md-6 text-center">
-            <?php if ($politician->featured_video === null): ?>
-                <p><?= __("This politician hasn't featured a YouTube video.") ?></p>
-            <?php else: ?>
-                <?= $this->Video->embed(
-                    $politician->featured_video->youtube_video_url,
-                    ['width' => '100%', 'height' => 300, 'failSilently' => true]) ?>
-            <?php endif ?>
+            <div class="politician-video politician-video-featured">
+                <?php if ($politician->featured_video === null): ?>
+                    <p><?= __("This politician hasn't featured a YouTube video.") ?></p>
+                <?php else: ?>
+                    <?= $politician->featured_video->renderEmbed($this) ?>
+                <?php endif ?>
+            </div>
             <?php if (count($politician->videos) === 0): ?>
                 <p class="text-muted small"><?= __("This politician hasn't linked any additional YouTube videos.") ?></p>
             <?php else: ?>
                 <div class="row">
                     <?php foreach ($politician->videos as $video): ?>
-                        <div class="col-md-2">
-                            <?= $this->Html->image(
-                                $video->youtube_video_thumbnail,
-                                ['class' => ['img-responsive'], 'style' => 'margin: 0 auto']) ?>
+                        <div class="col-md-6" style="margin-top: 15px">
+                            <div class="politician-video">
+                                <?= $video->renderEmbed($this) ?>
+                            </div>
                         </div>
                     <?php endforeach ?>
                 </div>

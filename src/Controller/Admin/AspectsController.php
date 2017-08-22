@@ -6,6 +6,7 @@ namespace OurSociety\Controller\Admin;
 use Cake\Event\Event;
 use OurSociety\Controller\Action\DashboardAction;
 use OurSociety\Controller\CrudController;
+use OurSociety\Listener\ViewListener;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class AspectsController extends CrudController
@@ -20,7 +21,8 @@ class AspectsController extends CrudController
 
     public function dashboard(): ?Response
     {
-        $this->Crud->removeListener('ourSociety\view\listener\viewListener');
+        $this->Crud->removeListener(ViewListener::class);
+
         return $this->Crud->execute();
     }
 

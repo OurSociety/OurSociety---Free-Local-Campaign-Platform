@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace OurSociety\Model\Table\Categories\Getter;
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\Query;
+use Cake\ORM\ResultSet;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\ValueMatchesTable;
 
 /**
  * Trait MatchPercentages
@@ -13,7 +16,7 @@ use OurSociety\Model\Entity\User;
  */
 trait MatchPercentages
 {
-    public function getMatchPercentages(User $citizen, User $politician, bool $inverse = false, ?int $limit = null): CollectionInterface
+    public function getMatchPercentages(User $citizen, User $politician, bool $inverse = false, ?int $limit = null): ResultSet
     {
         $this->hasOne('ValueMatch', [
             'className' => ValueMatchesTable::class,

@@ -7,6 +7,7 @@ use Cake\Event\Event;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\Action\DashboardAction;
 use OurSociety\Controller\CrudController;
+use OurSociety\Listener\ViewListener;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class PoliticianArticlesController extends CrudController
@@ -20,7 +21,8 @@ class PoliticianArticlesController extends CrudController
 
     public function dashboard(): ?Response
     {
-        $this->Crud->removeListener('ourSociety\view\listener\viewListener');
+        $this->Crud->removeListener(ViewListener::class);
+
         return $this->Crud->execute();
     }
 

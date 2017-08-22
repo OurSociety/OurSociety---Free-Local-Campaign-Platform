@@ -20,7 +20,7 @@ class DashboardController extends AppController
         /** @var User $user */
         $user = $this->Auth->user();
 
-        if ($user->zip === null) {
+        if ($user->electoral_district === null) {
             $this->Flash->success('Please provide the following information so we can find your politicians.');
 
             return $this->redirect(['_name' => 'users:onboarding']);

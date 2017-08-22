@@ -10,17 +10,18 @@ $this->extend('/Common/Dashboard/dashboard');
 
 $this->start('dashboard');
 $numbers = [
-    ['name' => 'questions_answered_total', 'label' => 'Above 90%', 'style' => 'green', 'icon' => 'percent'],
-    ['name' => 'questions_answered_citizens', 'label' => 'Above 80%', 'style' => 'green', 'icon' => 'percent'],
-    ['name' => 'questions_answered_politicians', 'label' => 'Above 60%', 'style' => 'blue', 'icon' => 'percent'],
-    ['name' => 'questions_percentage_total', 'label' => 'Above 40%', 'style' => 'blue', 'icon' => 'percent'],
-    ['name' => 'questions_percentage_citizens', 'label' => 'Above 20%', 'style' => 'pink', 'icon' => 'percent'],
-    ['name' => 'questions_percentage_politicians', 'label' => 'Below 10%', 'style' => 'pink', 'icon' => 'percent'],
+    ['name' => 'questions_answered_total', 'label' => 'Total Questions Answered', 'style' => 'pink', 'icon' => 'percent'],
+    ['name' => 'questions_answered_citizens', 'label' => 'Questions Answered by Citizen', 'style' => 'green', 'icon' => 'percent'],
+    ['name' => 'questions_answered_politicians', 'label' => 'Questions Answered by Politician', 'style' => 'blue', 'icon' => 'percent'],
+    //['name' => 'questions_percentage_total', 'label' => 'Percentage', 'style' => 'blue', 'icon' => 'percent'],
+    //['name' => 'questions_percentage_citizens', 'label' => 'Percentage by Citizen', 'style' => 'pink', 'icon' => 'percent'],
+    //['name' => 'questions_percentage_politicians', 'label' => 'Percentage by Politician', 'style' => 'pink', 'icon' => 'percent'],
 ];
 ?>
-<div class="row pb-3">
+<div class="row pb-6">
     <?php foreach ($numbers as $number): ?>
-        <div class="col-6 col-sm-4 col-xl-2">
+        <!--<div class="col-6 col-sm-4 col-xl-2">-->
+        <div class="col">
             <?= $this->cell(
                 'Dashboard/NumberWidget',
                 [],

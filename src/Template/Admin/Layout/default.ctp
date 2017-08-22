@@ -31,19 +31,13 @@ $this->set('theme', 'bd-docs')
 
                     <div class="col align-self-center pr-1 text-right">
                         <?= $this->fetch('breadcrumb-actions') ?>
+                        <?= $this->fetch('actions'); ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row no-gutters os-background">
-
-            <?php if ($this->exists('actions')): ?>
-                <div class="d-none d-xl-block col-xl-2 bd-toc">
-                    <?= $this->element('Admin/toc') ?>
-                </div>
-            <?php endif ?>
-
-            <main class="col p-md-3 bd-content" role="main">
+            <main class="col p-md-3 bd-content">
 
                 <?= $this->Flash->render() ?>
 

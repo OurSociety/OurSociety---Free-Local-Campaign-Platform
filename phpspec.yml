@@ -1,0 +1,11 @@
+extensions:
+  Cjm\PhpSpec\Extension\TypeHintedMethodsExtension: ~
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - html
+    output:
+      html: build/spec/html
+    whitelist:
+      - src
+  Memio\SpecGen\MemioSpecGenExtension: ~
+  #RMiller\BehatSpec\Extension\BehatSpecExtension\PhpSpecExtension: ~
