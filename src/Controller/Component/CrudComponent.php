@@ -23,7 +23,6 @@ class CrudComponent extends Crud\CrudComponent
     public function execute($controllerAction = null, $args = []): Response
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-
         return parent::execute($controllerAction, $args);
     }
 

@@ -42,6 +42,11 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
     {
+        if ($path === ['tos']) {
+            $this->viewBuilder()->setLayout('site');
+        }
+
+
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');

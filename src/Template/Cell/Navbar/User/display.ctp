@@ -2,7 +2,8 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $user
- * @var \OurSociety\Model\Entity\Users $users
+ * @var \OurSociety\Model\Entity\User[] $users
+ * @var array $formOptions
  */
 ?>
 <?php if ($users !== null): ?>
@@ -14,10 +15,9 @@
             )
         ]) ?>
     </p>
-    <?= $this->Form->create($user, [
+    <?= $this->Form->create($user, $formOptions + [
         'url' => ['_name' => 'admin:users:switch'],
         'class' => ['form-inline', 'hidden-xs', 'hidden-sm'],
-        'style' => 'float: left; margin-top: 8px;',
     ]) ?>
     <?= $this->Form->control('user', [
         'label' => false,

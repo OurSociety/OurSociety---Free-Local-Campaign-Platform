@@ -18,7 +18,7 @@ use OurSociety\Validation\Validator as AppValidator;
 /**
  * PoliticianArticles Model
  *
- * @property PoliticiansTable|Association\BelongsTo $Politicians
+ * @property UsersTable|Association\BelongsTo $Politicians
  *
  * @method PoliticianArticle get($primaryKey, $options = [])
  * @method PoliticianArticle newEntity($data = null, array $options = [])
@@ -72,15 +72,17 @@ class PoliticianArticlesTable extends AppTable
             ->add($rules->existsIn(['politician_id'], 'Politicians'));
     }
 
-    public function getBySlug(string $slug, string $role = User::ROLE_CITIZEN): PoliticianArticle
+    public function getBySlug(string $slug, string $role = null): PoliticianArticle
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->find('forCitizen', ['role' => $role])->where(['slug' => $slug])->firstOrFail();
+        return $this->find('forCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
+            ->where(['slug' => $slug])
+            ->firstOrFail();
     }
 
     protected function findApproved(Query $query): Query
     {
-        return $query->where(['PoliticianArticles.approved IS NOT' => null]);
+        return $query->where([array_values($query->aliasField('approved'))[0] . ' IS NOT' => null]);
     }
 
     protected function findLatest(Query $query): Query
@@ -93,18 +95,18 @@ class PoliticianArticlesTable extends AppTable
                 ])->group('slug')
             ],
             [
-                'PoliticianArticles.slug = LatestPoliticianArticles__slug',
-                'PoliticianArticles.version = LatestPoliticianArticles__version',
+                array_values($query->aliasField('slug'))[0] . ' = LatestPoliticianArticles__slug',
+                array_values($query->aliasField('version'))[0] . ' = LatestPoliticianArticles__version',
             ]
         );
     }
 
     protected function findPublished(Query $query): Query
     {
-        return $query->where(['PoliticianArticles.published IS NOT' => null]);
+        return $query->where([array_values($query->aliasField('published'))[0] . ' IS NOT' => null]);
     }
 
-    protected function findForCitizen(Query $query, array $options = []): Query
+    protected function findForCitizen(Query $query, array $options = null): Query
     {
         $options += ['role' => User::ROLE_CITIZEN];
 

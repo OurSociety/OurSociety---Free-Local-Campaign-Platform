@@ -7,26 +7,27 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
 use OurSociety\Model\Entity\ElectoralDistrict;
-use OurSociety\Model\Table\ElectoralDistrictsTable;
+use OurSociety\Model\Table\MunicipalitiesTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * ElectoralDistricts Controller
+ * Municipalities Controller
  *
- * @property ElectoralDistrictsTable $ElectoralDistricts
-*/
-class ElectoralDistrictsController extends CrudController
+ * @property MunicipalitiesTable $Municipalities
+ */
+class MunicipalitiesController extends CrudController
 {
     public function initialize(): void
     {
         parent::initialize();
 
+        $this->modelClass = 'ElectoralDistricts';
         $this->Auth->allow(['view']);
     }
 
     /**
-     * @route GET /district/lookup
-     * @routeName district:lookup
+     * @route GET /municipalities/lookup
+     * @routeName municipality:lookup
      */
     public function lookup(): ?Response
     {
@@ -59,16 +60,13 @@ class ElectoralDistrictsController extends CrudController
             ]);
         });
 
-        //$this->Crud->on('beforeRender', function (Event $event) {
-        //    /** @var ElectoralDistrict $electoralDistrict */
-        //    $electoralDistrict = $event->getSubject()->entity;
-        //    if ($electoralDistrict->isMunicipality()) {
-        //        //$this->viewBuilder()->setLayout('site');
-        //        //$this->viewBuilder()->setTemplatePath(ROOT . 'src' . DS . 'Template' . DS . 'ElectoralDistricts');
-        //        $this->Crud->disable('view');
-        //        $this->render('municipality', 'site');
-        //    }
-        //});
+        $this->Crud->on('beforeRender', function (Event $event) {
+            /** @var ElectoralDistrict $electoralDistrict */
+            $electoralDistrict = $event->getSubject()->entity;
+            if ($electoralDistrict->isMunicipality()) {
+                $this->viewBuilder()->setLayout('site');
+            }
+        });
 
         return $this->Crud->execute();
     }

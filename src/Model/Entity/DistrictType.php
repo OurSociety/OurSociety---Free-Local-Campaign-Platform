@@ -7,6 +7,8 @@ namespace OurSociety\Model\Entity;
  * DistrictType Entity
  *
  * @property string $id
+ * @property string $id_vip
+ * @property string $id_gapi_scope
  * @property string $name
  * @property string $description
  *
@@ -14,4 +16,8 @@ namespace OurSociety\Model\Entity;
  */
 class DistrictType extends AppEntity
 {
+    public function isMunicipality()
+    {
+        return $this->id_vip === 'municipality';
+    }
 }

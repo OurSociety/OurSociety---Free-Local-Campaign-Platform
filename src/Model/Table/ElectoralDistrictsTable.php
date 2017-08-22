@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Model\Table;
 
 use ArrayObject;
+use Cake\Database\Connection;
 use Cake\Event\Event;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\HasMany;
@@ -30,6 +31,7 @@ class ElectoralDistrictsTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->setDisplayField('label');
         $this->hasMany('Children', [
             'className' => self::class,
             'foreignKey' => 'parent_id'

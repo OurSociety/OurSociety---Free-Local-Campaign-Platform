@@ -25,7 +25,7 @@
     </div>
 
     <div class="flex-row ml-md-auto d-none d-md-flex">
-    <?= $this->cell('Navbar/User') ?>
+    <?= $this->cell('Navbar/User', [['style' => 'margin-top: 4px;']]) ?>
     </div>
 
     <ul class="navbar-nav flex-row ml-md-2 d-none d-md-flex">

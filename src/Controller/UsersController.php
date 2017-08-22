@@ -254,8 +254,8 @@ class UsersController extends CrudController
     }
 
     // TODO: Move this to CrudController, or move action configuration to new custom child actions.
-    private function config($key, $value = null, $merge = true)
+    private function config($key, $value = null, $merge = null)
     {
-        return $this->Crud->action()->setConfig($key, $value, $merge);
+        return $this->Crud->action()->setConfig($key, $value, $merge ?? true);
     }
 }

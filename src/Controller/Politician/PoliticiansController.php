@@ -15,6 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
  * Politicians Controller
  *
  * @method User[] paginate($object = null, array $settings = [])
+ * @property UsersTable $Users
  */
 class PoliticiansController extends CrudController
 {

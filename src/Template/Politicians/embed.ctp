@@ -31,29 +31,16 @@
 <div class="row">
     <?php if (count($politician->videos) === 0): ?>
         <div class="col">
-            <?= $this->Video->embed(
-                $politician->featured_video->youtube_video_url,
-                ['width' => 16, 'height' => 9, 'failSilently' => true]
-            ) ?>
+            <?= $politician->featured_video->renderEmbed($this) ?>
         </div>
     <?php else: ?>
-    <div class="col">
-        <div class="embed-responsive embed-responsive-16by9">
-            <?= $this->Video->embed(
-                $politician->featured_video->youtube_video_url,
-                ['class' => 'embed-responsive-item', 'failSilently' => true]
-            ) ?>
+        <div class="col">
+            <?= $politician->featured_video->renderEmbed($this) ?>
         </div>
-    </div>
-    <div class="col">
-        <div class="embed-responsive embed-responsive-16by9">
-            <?= $this->Video->embed(
-                $politician->videos[0]->youtube_video_url,
-                ['class' => 'embed-responsive-item', 'failSilently' => true]
-            ) ?>
+        <div class="col">
+            <?= $politician->videos[0]->renderEmbed($this) ?>
         </div>
-        <?php endif ?>
-    </div>
+    <?php endif ?>
 </div>
 
 <hr>
@@ -81,8 +68,7 @@
     <br>
     <?= $politician->born
         ? $politician->born->toFormattedDateString()
-        : $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']
-    ) ?>
+        : $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']) ?>
     <span class="text-muted small">
         (<?= __('{age} years old', ['age' => $politician->age])?>)
     </span>
