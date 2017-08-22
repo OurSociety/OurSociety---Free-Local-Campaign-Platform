@@ -1,5 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-    <path d="M80,48h-4.852l-6.42-11.008C68.369,36.378,67.711,36,67,36h-3v-1c0-2.206-1.794-4-4-4h-5v-1c0-2.757-2.243-5-5-5  s-5,2.243-5,5v1H20c-2.206,0-4,1.794-4,4v32c0,1.105,0.895,2,2,2h6.253c0.89,3.447,4.026,6,7.747,6s6.857-2.553,7.747-6h20.506  c0.89,3.447,4.026,6,7.747,6s6.857-2.553,7.747-6H82c1.105,0,2-0.895,2-2V52C84,49.794,82.206,48,80,48z M68,60  c-3.52,0-6.432,2.613-6.92,6H38.92c-0.488-3.387-3.401-6-6.92-6s-6.432,2.613-6.92,6H19V35c0-0.551,0.449-1,1-1h40  c0.552,0,1,0.449,1,1v3c0,0.552,0.447,1,1,1h4.426l6.711,11.504C73.314,50.811,73.645,51,74,51h6c0.552,0,1,0.449,1,1v14h-6.08  C74.432,62.613,71.52,60,68,60z M68,72c-2.757,0-5-2.243-5-5s2.243-5,5-5s5,2.243,5,5S70.757,72,68,72z M32,72c-2.757,0-5-2.243-5-5  s2.243-5,5-5s5,2.243,5,5S34.757,72,32,72z M50,28c1.104,0,2,0.897,2,2v2h-4v-2C48,28.897,48.897,28,50,28z M38,46h-3v-3  c0-0.552-0.448-1-1-1h-4c-0.552,0-1,0.448-1,1v3h-3c-0.552,0-1,0.448-1,1v4c0,0.552,0.448,1,1,1h3v3c0,0.552,0.448,1,1,1h4  c0.552,0,1-0.448,1-1v-3h3c0.552,0,1-0.448,1-1v-4C39,46.448,38.552,46,38,46z M37,50h-4v4h-2v-4h-4v-2h4v-4h2v4h4V50z   M65.857,40.485C65.677,40.184,65.352,40,65,40h-3c-0.553,0-1,0.448-1,1v10c0,0.552,0.447,1,1,1h9c0.773,0,1.259-0.846,0.857-1.514  L65.857,40.485z M63,50v-8h1.434l4.801,8H63z M58,27h2c0.553,0,1,0.448,1,1s-0.447,1-1,1h-2c-0.553,0-1-0.448-1-1S57.447,27,58,27z   M54.95,23.05c-0.392-0.39-0.392-1.023,0-1.414l1.413-1.415c0.392-0.391,1.023-0.391,1.414,0c0.392,0.39,0.392,1.023,0,1.414  l-1.414,1.415C55.982,23.433,55.349,23.448,54.95,23.05z M49,20v-2c0-0.552,0.448-1,1-1s1,0.448,1,1v2c0,0.552-0.448,1-1,1  S49,20.552,49,20z M42.222,21.636c-0.391-0.391-0.391-1.023,0-1.414c0.391-0.391,1.023-0.391,1.414,0l1.415,1.415  c0.391,0.391,0.391,1.023,0,1.414c-0.39,0.391-1.024,0.391-1.414,0L42.222,21.636z M39,28c0-0.552,0.448-1,1-1h2  c0.552,0,1,0.448,1,1s-0.448,1-1,1h-2C39.448,29,39,28.552,39,28z"/>
-    <text x="0" y="115" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Setyo Ari Wibowo</text>
-    <text x="0" y="120" fill="#000000" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="90px" height="90px" viewBox="0 0 90 90" enable-background="new 0 0 90 90" xml:space="preserve">
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" d="M44.1,69.104H32.203
+	c-2.141,0-3.875-1.734-3.875-3.875V38.516c0-2.141,1.734-3.875,3.875-3.875H44.1c2.14,0,3.875,1.734,3.875,3.875v26.713
+	C47.975,67.369,46.239,69.104,44.1,69.104z"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" d="M18.127,38.496
+	c1.09-5.193,4.92-9.378,9.908-10.972"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" d="M38.151,24.285
+	L38.151,24.285c2.89,0,5.232,2.343,5.232,5.233v5.122H32.919v-3.752"/>
+<circle fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" cx="32.919" cy="25.655" r="5.232"/>
+<line fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" x1="43.384" y1="28.485" x2="46.593" y2="28.485"/>
+<path fill="none" stroke="#582D82" stroke-width="1.8" stroke-linecap="round" stroke-miterlimit="10" d="M58.705,34.092
+	l-10.889-2.713c-0.719-0.179-1.224-0.825-1.224-1.567v-2.654c0-0.741,0.505-1.387,1.224-1.566l10.889-2.713
+	c1.094-0.273,2.153,0.555,2.153,1.682v7.848C60.858,33.537,59.799,34.364,58.705,34.092z"/>
+<line fill="none" stroke="#822C90" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="65.844" y1="28.485" x2="72.063" y2="28.485"/>
+<line fill="none" stroke="#822C90" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="65.917" y1="23.373" x2="70.881" y2="22.28"/>
+<line fill="none" stroke="#822C90" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="65.917" y1="33.598" x2="70.881" y2="34.691"/>
 </svg>
