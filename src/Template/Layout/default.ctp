@@ -40,7 +40,7 @@ $this->start('navbar');
             <div class="collapse navbar-collapse" id="navbar-top">
                 <div class="navbar-right">
                     <?php if ($this->get('currentUser')): ?>
-                        <?= $this->cell('Navbar/User') ?>
+                        <?= $this->cell('Navbar/User', [['style' => 'float: left; margin-top: 8px;']]) ?>
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
                             <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>

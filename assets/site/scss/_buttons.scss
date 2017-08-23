@@ -1,0 +1,25 @@
+.btn-os-purple {
+    font-weight: 500;
+    color: $os-purple-bright;
+    border-color: $os-purple-bright;
+
+    &:hover,
+    &:active {
+        color: #fff;
+        background-color: $os-purple-bright;
+        border-color: $os-purple-bright;
+    }
+}
+
+.btn-os-yellow {
+    font-weight: 500;
+    color: $os-yellow;
+    border-color: $os-yellow;
+
+    &:hover,
+    &:active {
+        color: $os-graphite;
+        background-color: $os-yellow;
+        border-color: $os-yellow;
+    }
+}

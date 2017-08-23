@@ -10,9 +10,13 @@
     <fieldset>
         <legend><?= __('Location information') ?></legend>
         <?= $this->Form->control('electoral_district_id', [
+            'aria-autocomplete' => 'both',
+            'class' => ['js-autocomplete'],
+            'data-filter-field' => 'name',
+            'data-url' => $this->Url->build(['_name' => 'district:lookup']),
             'empty' => true,
             'required' => true,
-            'label' => __('Select your municipality')
+            'label' => __('Select your municipality'),
         ]) ?>
         <!--
         <?= $this->Form->control('zip', [

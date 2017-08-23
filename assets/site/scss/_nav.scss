@@ -1,0 +1,24 @@
+//
+// Main navbar
+//
+
+.os-navbar {
+    min-height: 4rem;
+    background-color: $os-purple-brand-primary;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
+
+    @include media-breakpoint-down(md) {
+        padding-right: .5rem;
+        padding-left: .5rem;
+    }
+
+    @supports (position: sticky) {
+        position: sticky;
+        top: 0;
+        z-index: ($zindex-tooltip + 1); // over everything in bootstrap
+    }
+
+    .navbar-brand {
+        font-family: 'flexo-medium', $font-family-sans-serif;
+    }
+}

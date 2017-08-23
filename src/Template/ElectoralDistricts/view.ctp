@@ -98,6 +98,7 @@ $childrenByType = collection($electoralDistrict->children)->groupBy($groupByType
         <?= $electoralDistrict->name ?>
     </h1>
 
+<?php if ($electoralDistrict->parent !== null): ?>
     <p>
         <?= __('{electoral_district} is one of {sibling_count} districts in the {parent_electoral_district} area.', [
             'electoral_district' => $electoralDistrict->name,
@@ -105,6 +106,7 @@ $childrenByType = collection($electoralDistrict->children)->groupBy($groupByType
             'parent_electoral_district' => $electoralDistrict->parent->renderLink($this),
         ]) ?>
     </p>
+<?php endif ?>
 
     <h2>
         <?= \Cake\Utility\Inflector::humanize($electoralDistrict->district_type->name) ?>

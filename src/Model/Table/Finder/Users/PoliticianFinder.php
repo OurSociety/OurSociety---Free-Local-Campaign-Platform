@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace OurSociety\Model\Table\Finder\Users;
 
 use Cake\ORM\Query;
+use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\Finder\Finder;
 use OurSociety\Model\Table;
 
@@ -13,7 +14,8 @@ class PoliticianFinder extends Finder
     {
         $this->table->hasMany('Articles', [
             'className' => Table\PoliticianArticlesTable::class,
-            'foreignKey' => 'politician_id'
+            'foreignKey' => 'politician_id',
+            'finder' => isset($options['role']) && $options['role'] === User::ROLE_CITIZEN ? 'forCitizen' : 'all',
         ]);
         $this->table->hasMany('Awards', [
             'className' => Table\PoliticianAwardsTable::class,

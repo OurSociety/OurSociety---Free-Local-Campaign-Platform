@@ -18,6 +18,6 @@ class PoliticianForCitizenFinder extends Finder
         //    $query->find('isVerified')->find('hasAnsweredQuestions');
         //}
 
-        return $query->find('politician', ['role' => 'citizen']);
+        return $query->find('politician', $options);
     }
 }

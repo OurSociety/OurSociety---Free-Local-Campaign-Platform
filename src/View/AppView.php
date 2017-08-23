@@ -70,10 +70,28 @@ class AppView extends CrudView\CrudView
     }
 
     /**
+     * Is site?
+     *
+     * Determines if the current request is for a website page, so layout settings can be switched.
+     *
+     * @return bool True if website, false otherwise.
+     */
+    private function isSite(): bool
+    {
+        return $this->layout() === 'site';
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function _loadAssets(): void
     {
+        // Switch out default assets on embed layout.
+        if ($this->isSite()) {
+            Configure::write('CrudView.css', [mix('css/site.css')]);
+            Configure::write('CrudView.js.script', []); // NOTE: embed.js is outside the iframe, not inside.
+        }
+
         // Switch out default assets on embed layout.
         if ($this->isEmbed()) {
             Configure::write('CrudView.css', [mix('css/embed.css')]);

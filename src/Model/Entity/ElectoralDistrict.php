@@ -38,4 +38,15 @@ class ElectoralDistrict extends AppEntity
     {
         return $view->Html->link($this->name, $url ?: ['_name' => 'district', 'district' => $this->slug]);
     }
+
+    public function isMunicipality()
+    {
+        return $this->district_type->isMunicipality();
+    }
+
+    protected function _getLabel(): string
+    {
+        return $this->_properties['name'] .
+            ($this->parent ? ' (' . $this->parent->name . ')' : '');
+    }
 }

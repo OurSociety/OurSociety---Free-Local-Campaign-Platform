@@ -18,9 +18,10 @@ class UserCell extends Cell
      *
      * Displays the currently logged in user or, if logged in user is an admin, the ability to switch users.
      *
+     * @var array $formOptions
      * @return void
      */
-    public function display(): void
+    public function display(array $formOptions = null): void
     {
         /** @var User $user */
         $user = $this->request->session()->read('Auth.User');
@@ -28,6 +29,7 @@ class UserCell extends Cell
         $this->set([
             'user' => $user,
             'users' => $this->getUsers($user),
+            'formOptions' => $formOptions ?? [],
         ]);
     }
 

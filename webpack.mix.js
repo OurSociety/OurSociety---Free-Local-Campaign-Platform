@@ -4,26 +4,37 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
 mix
+
+  // Current themes: (TODO: if possible, merge site/admin/common into single BS4 theme)
+  // - Site: used for frontend, based on Bootstrap 4
+  .sass('assets/site/scss/main.scss', 'webroot/css/site.css')
+  // - Admin: used for backend, based on Bootstrap 4
+  .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', { includePaths: ['node_modules'] })
+  .js('assets/admin/js/admin.js', 'webroot/js/admin.js')
+  // - Common: Styles and scripts shared between frontend and backend
+  .js('assets/common/js/common.js', 'webroot/js/common.js')
+  // - Embed: used for widget embed, based on Bootstrap 4
+  .sass('assets/embed/scss/main.scss', 'webroot/css/embed.css')
+  .js('assets/embed/main.js', 'webroot/js/embed.js')
+
+  // Deprecated themes:
+  // - App: used for old frontend, based on Bootstrap 3 (deprecated, to be dropped ASAP)
+  .sass('assets/sass/app.scss', 'webroot/css')
+  .js('assets/js/app.js', 'webroot/js')
+  // - Landing: used for static index.html (deprecated, to be dropped at time of public launch)
+  .sass('assets/sass/landing.scss', 'webroot/css')
+  .js('assets/js/landing.js', 'webroot/js')
+
+  // Configuration:
   .disableNotifications()
   .autoload({
     'jquery': ['$', 'window.jQuery', 'jQuery'], // auto-`require('jquery')` if these variables are used
     'popper.js/dist/umd/popper.js': ['Popper'],
   })
   .extract(['bootstrap', 'bootstrap-sass', 'jdenticon/dist/jdenticon.js', 'jquery', 'popper.js', 'selectize', 'trumbowyg'])
-  .js('assets/js/app.js', 'webroot/js')
-  .js('assets/js/landing.js', 'webroot/js')
-  .js('assets/admin/js/admin.js', 'webroot/js/admin.js')
-  .js('assets/common/js/common.js', 'webroot/js/common.js')
-  .js('assets/embed/main.js', 'webroot/js/embed.js')
   .options({
     // clearConsole: false
   })
-  .sass('assets/sass/app.scss', 'webroot/css')
-  .sass('assets/sass/landing.scss', 'webroot/css')
-  .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', {
-    includePaths: ['node_modules']
-  })
-  .sass('assets/embed/scss/embed.scss', 'webroot/css')
   .setPublicPath('webroot')
   // .setResourceRoot('assets')
   .webpackConfig({

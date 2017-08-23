@@ -1196,11 +1196,8 @@ bootstrap-sass@^3.3.7:
   resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"
 
 bootstrap@twbs/bootstrap#v4-dev:
-  version "4.0.0-alpha.6"
-  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/698a7b4253e668146b5d64f7124a913f71188278"
-  dependencies:
-    jquery ">=1.9.1"
-    popper.js "^1.10.8"
+  version "4.0.0-beta"
+  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/6063b0dc659e7ba3a83cfc9502ad7872f8201a32"
 
 brace-expansion@^1.1.7:
   version "1.1.8"
@@ -3967,7 +3964,7 @@ jdenticon@^1.7.2:
     canvas-renderer "~1.0.0"
     requirejs "^2.3.3"
 
-jquery@>=1.9.1, jquery@^3.2.1:
+jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 

@@ -1,0 +1,15 @@
+// Options
+@import "variables"; // Customize Bootstrap
+
+// Vendor
+@import "~bootstrap/scss/bootstrap"; // Bootstrap v4
+@import "~font-awesome/scss/font-awesome"; // Font Awesome icons
+
+// Custom
+@import "background"; // Background Image
+@import "grid"; // Gutters
+@import "fonts"; // Flexo & Source Sans Pro
+@import "type"; // Typography
+@import "nav"; // Branding
+@import "buttons"; // CTA Links
+@import "footer"; // CTA Links

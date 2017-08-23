@@ -6,9 +6,15 @@
  * @var string $displayField The CrudView variable with the name of the model class display field.
  */
 $prefix = $this->request->getParam('prefix');
+
+try {
+    $indexLink = $this->Html->link($pluralHumanName, ['action' => 'index']);
+} catch (\Cake\Routing\Exception\MissingRouteException $exception) {
+    $indexLink = null;
+}
 ?>
 <ol class="breadcrumb">
-    <li><?= $this->Html->link(ucfirst($prefix), ['_name' => sprintf('%s:dashboard', $prefix)]) ?></li>
-    <li><?= $this->Html->link($pluralHumanName, ['action' => 'index']) ?></li>
+    <li><?= $this->Html->dashboardLink() ?></li>
+    <li><?= $indexLink ?></li>
     <li><?= ${$viewVar}->{$displayField} ?></li>
 </ol>

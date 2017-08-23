@@ -5,6 +5,7 @@ import 'jdenticon/dist/jdenticon.js'
 // Application
 import 'holderjs';
 // import 'chart.js';
+import './app/autocomplete';
 import './app/editor';
 import './app/question';
 import './app/watermark';

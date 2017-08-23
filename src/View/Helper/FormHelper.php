@@ -30,4 +30,15 @@ class FormHelper extends BootstrapUI\FormHelper
 
         parent::__construct($View, $defaultConfig + $config);
     }
+
+    public function postLink($title, $url = null, array $options = []): string
+    {
+        try {
+            return parent::postLink($title, $url, $options);
+        } catch (\Cake\Routing\Exception\MissingRouteException $exception) {
+            return '';
+        }
+    }
+
+
 }
