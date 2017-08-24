@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \OurSociety\View\AppView $this The view.
+ */
 if (empty($searchInputs)) {
     return;
 }
@@ -6,17 +9,15 @@ if (empty($searchInputs)) {
 
 <div class="row-fluid search-filters">
     <?php
-    $searchOptions = isset($searchOptions) ? $searchOptions : [];
-    $searchOptions += ['class' => 'form-inline', 'id' => 'searchFilter'];
+    $searchOptions = $searchOptions ?? [];
+    $searchOptions += ['align' => 'inline', 'id' => 'searchFilter'];
 
     echo $this->Form->create(null, $searchOptions);
     echo $this->Form->hidden('_search');
     ?>
 
-    <fieldset>
-        <?= $this->Form->inputs($searchInputs, ['fieldset' => false]); ?>
+        <?= $this->Form->controls($searchInputs, ['fieldset' => false]); ?>
         <?= $this->Form->button('Filter results', ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
-    </fieldset>
 
     <?= $this->Form->end(); ?>
 </div>

@@ -6,7 +6,7 @@ namespace OurSociety\Controller;
 use Crud\Action\LookupAction;
 use Crud\Controller as Crud;
 use Crud\Listener as CrudListener;
-use CrudView\Listener as CrudView;
+use CrudView\Listener as CrudViewListener;
 use OurSociety\Controller\Component as App;
 use OurSociety\Listener as AppListener;
 
@@ -42,7 +42,8 @@ abstract class CrudController extends AppController
             ],
             'listeners' => [
                 AppListener\ViewListener::class, // All CrudView configuration inside this class.
-                CrudView\ViewSearchListener::class,
+                CrudViewListener\ViewSearchListener::class,
+                CrudListener\SearchListener::class,
                 CrudListener\RedirectListener::class,
                 AppListener\RelatedModelsListener::class,
             ],

@@ -37,7 +37,9 @@ $callToActionLink = $this->Url->build([
     </div>
 
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-        <?= $this->cell('Navbar/User') ?>
+        <?php if ($this->get('currentUser')): ?>
+            <?= $this->cell('Navbar/User') ?>
+        <?php endif ?>
     </ul>
 
     <?php if ($this->get('currentUser')): ?>

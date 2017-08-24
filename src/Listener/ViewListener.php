@@ -230,7 +230,7 @@ class ViewListener extends CrudView\ViewListener
 
         try {
             if ($table->getSchema()->column('slug') !== null) {
-                //$table->setPrimaryKey('slug');
+                //$table->setPrimaryKey('slug'); // TODO: This breaks relations or CRUD navigation depending on set/unset
             }
         } catch (DatabaseException $exception) {
             // no-op: ignore exceptions for missing tables.
