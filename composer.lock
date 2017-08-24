@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8affca5e9a7e1811c0dbb30536f3ddae",
+    "content-hash": "eb5d897691718e356e45c015ab65184d",
     "packages": [
         {
             "name": "aura/intl",
@@ -891,29 +891,31 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.6.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123"
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44f9a286a04b80c76a4e5fb7aad8bb539b920123",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3|^7.0"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
                 "ext-intl": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5"
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "squizlabs/php_codesniffer": "^1.5"
             },
             "type": "library",
             "extra": {
-                "branch-alias": []
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -935,7 +937,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29T12:21:54+00:00"
+            "time": "2017-08-15T16:48:10+00:00"
         },
         {
             "name": "google/apiclient",
@@ -1308,6 +1310,43 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "jeremyharris/cakephp-lazyload",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeremyharris/cakephp-lazyload.git",
+                "reference": "15a9d583b02343f81ba7b0bbc32960bfe9bda673"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeremyharris/cakephp-lazyload/zipball/15a9d583b02343f81ba7b0bbc32960bfe9bda673",
+                "reference": "15a9d583b02343f81ba7b0bbc32960bfe9bda673",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/orm": ">=3.1.0 <4.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp": ">=3.1.0 <4.0",
+                "cakephp/cakephp-codesniffer": "dev-master",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "JeremyHarris\\LazyLoad\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "An association lazy-loader for CakePHP",
+            "keywords": [
+                "cakephp",
+                "lazy load",
+                "plugin"
+            ],
+            "time": "2017-02-23T17:50:47+00:00"
         },
         {
             "name": "josegonzalez/cakephp-upload",

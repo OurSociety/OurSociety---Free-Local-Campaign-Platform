@@ -5,10 +5,13 @@ namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
+use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
 use OurSociety\View\AppView;
 
 abstract class AppEntity extends Entity
 {
+    use LazyLoadEntityTrait;
+
     public function __construct(array $properties = [], array $options = [])
     {
         $this->setAccess('*', true);
@@ -17,22 +20,36 @@ abstract class AppEntity extends Entity
         parent::__construct($properties, $options);
     }
 
-    public function renderCardElement(AppView $view, array $viewVariables = []): string
+    public static function examples(int $count, array $data = null, ?callable $sort = null): array
     {
-        return $this->renderElement($view, 'card', $viewVariables);
+        $examples = [];
+        for ($i = 0; $i < $count; $i++) {
+            $examples[] = static::example($data);
+        }
+
+        if ($sort !== null) {
+            uasort($examples, $sort);
+        }
+
+        return $examples;
     }
 
-    public function renderSummaryElement(AppView $view, array $viewVariables = []): string
+    public function renderCardElement(AppView $view, array $viewVariables = null): string
     {
-        return $this->renderElement($view, 'summary', $viewVariables);
+        return $this->renderElement($view, 'card', $viewVariables ?? []);
     }
 
-    private function renderElement(AppView $view, string $type, array $viewVariables = []): string
+    public function renderSummaryElement(AppView $view, array $viewVariables = null): string
+    {
+        return $this->renderElement($view, 'summary', $viewVariables ?? []);
+    }
+
+    protected function renderElement(AppView $view, string $type, array $viewVariables = null): string
     {
         $className = preg_replace('/.*\\\\(.*)/', '$1', static::class);
         $elementName = sprintf('%s/%s', Inflector::camelize($type), Inflector::underscore($className));
         $viewVariableName = Inflector::variable($className);
 
-        return $view->element($elementName, $viewVariables + [$viewVariableName => $this]);
+        return $view->element($elementName, ($viewVariables ?? []) + [$viewVariableName => $this]);
     }
 }

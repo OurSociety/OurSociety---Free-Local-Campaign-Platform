@@ -5,6 +5,7 @@ namespace OurSociety\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\Query;
+use Cake\Routing\Router;
 use Cake\View\CellTrait;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Model\Entity\PoliticianArticle;
@@ -99,10 +100,8 @@ class ArticlesController extends CrudController
 
         if ($article->approved === null || $article->published === null) {
             return $this->redirect([
-                'prefix' => 'politician/profile',
-                'controller' => 'Articles',
-                'action' => 'view',
-                $article->id,
+                '_name' => 'politician:profile:article',
+                'article' => $article->slug,
             ]);
         }
 

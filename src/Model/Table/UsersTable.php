@@ -47,6 +47,7 @@ class UsersTable extends AppTable
 
         $this->hasMany('Answers');
         $this->belongsToMany('Categories');
+        $this->belongsTo('OfficeTypes');
         $this->belongsTo('ElectoralDistricts')->setFinder('municipality')->setStrategy('select');
         $this->belongsToMany('PoliticianMatches', [
             'joinTable' => 'value_matches',

@@ -456,7 +456,7 @@
 <p>
     As a member of <?= $this->Html->link('www.oursociety.org', '/') ?>, you may cancel or terminate your account,
     associated email address and/or access to our Services by submitting a cancellation or termination request to
-    <?= \Kminek\EmailObfuscator::obfuscate('info@oursociety.org') ?>. As a member, you agree that OurSociety Inc.
+    <?= $this->Html->email('info@oursociety.org') ?>. As a member, you agree that OurSociety Inc.
     may, without any prior written notice, immediately suspend, terminate, discontinue and/or limit your account,
     any email associated with your account, and access to any of our Services. The cause for such termination,
     discontinuance, suspension and/or limitation of access shall include, but is not limited to:
@@ -798,7 +798,7 @@
     1583 Livingston Avenue<br>
     North Brunswick Township, New Jersey 08902<br>
     Telephone: (516) 477-8027
-    Email: <?= \Kminek\EmailObfuscator::obfuscate('info@oursociety.org') ?>
+    Email: <?= $this->Html->email('info@oursociety.org') ?>
 </address>
 
 <h2>
@@ -891,5 +891,5 @@
     1583 Livingston Avenue<br>
     North Brunswick Township, New Jersey 08902<br>
     Telephone: (516) 477-8027
-    Email: <?= \Kminek\EmailObfuscator::obfuscate('info@oursociety.org') ?>
+    Email: <?= $this->Html->email('info@oursociety.org') ?>
 </address>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Model\Entity;
 
 /**
- * DistrictType Entity
+ * Office Entity
  *
  * @property string $id
  * @property string $electoral_district_id

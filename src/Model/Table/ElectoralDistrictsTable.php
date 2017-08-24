@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace OurSociety\Model\Table;
 
 use ArrayObject;
-use Cake\Database\Connection;
 use Cake\Event\Event;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\HasMany;
@@ -32,18 +31,21 @@ class ElectoralDistrictsTable extends AppTable
         parent::initialize($config);
 
         $this->setDisplayField('label');
-        $this->hasMany('Children', [
-            'className' => self::class,
-            'foreignKey' => 'parent_id'
-        ]);
+        $this->belongsTo('Counties', ['className' => self::class])->setForeignKey('county_id');
+        $this->belongsTo('DistrictTypes')->setForeignKey('type_id');
+        $this->belongsTo('Parents', ['className' => self::class])->setForeignKey('parent_id');
+        $this->belongsTo('States', ['className' => self::class])->setForeignKey('state_id');
+        $this->hasMany('Articles', ['className' => PoliticianArticlesTable::class]);
+        $this->hasMany('Children', ['className' => self::class])->setForeignKey('parent_id');
         $this->hasMany('Contests');
+        $this->hasMany('ElectedOfficials', ['className' => UsersTable::class])->setFinder('isElectedOfficial');
         $this->hasMany('Elections');
+        $this->hasMany('Events');
         $this->hasMany('Offices');
-        $this->belongsTo('DistrictTypes', ['foreignKey' => 'type_id']);
-        $this->belongsTo('Parents', [
-            'className' => self::class,
-            'foreignKey' => 'parent_id'
-        ]);
+        $this->hasMany('PathwayPoliticians', ['className' => UsersTable::class])->setFinder('isPathwayPolitician');
+        $this->hasMany('Videos', ['className' => PoliticianVideosTable::class]);
+        $this->hasOne('UpcomingElections', ['className' => ElectionsTable::class])->setFinder('upcoming');
+        $this->hasOne('Mayors', ['className' => UsersTable::class])->setFinder('isMayor')->setStrategy('select');
     }
 
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary): void
@@ -51,8 +53,6 @@ class ElectoralDistrictsTable extends AppTable
         $query
             ->enableAutoFields()
             ->select(array_diff($this->getSchema()->columns(), ['polygon']));
-
-        return;
 
         if ($primary === true) {
             $aliasField = $query->repository()->aliasField('polygon');

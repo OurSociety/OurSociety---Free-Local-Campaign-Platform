@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use Cake\ORM\TableRegistry;
+
 /**
  * Category Entity
  *
@@ -20,4 +22,9 @@ namespace OurSociety\Model\Entity;
  */
 class Category extends AppEntity
 {
+    public static function random(array $data = null): self
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return TableRegistry::get('Categories')->find()->order('RAND()')->firstOrFail();
+    }
 }

@@ -24,4 +24,26 @@ abstract class Finder
     }
 
     abstract public function __invoke(Query $query, array $options = []): Query;
+
+    /**
+     * Alias field.
+     *
+     * Cake's method returns an array, which is almost never what we want.
+     *
+     * @param Query $query The query to get the correct alias from.
+     * @param string $field The field name to alias.
+     * @param string|null $operator The operator to append, if any. ('LIKE', '>', etc.)
+     * @return string The alias.
+     */
+    protected function aliasField(Query $query, string $field, string $operator = null): string
+    {
+        $aliasedField = $query->aliasField($field);
+        $aliasedFieldName = array_values($aliasedField)[0];
+
+        if ($operator !== null) {
+            $aliasedFieldName .= ' ' . $operator;
+        }
+
+        return $aliasedFieldName;
+    }
 }
