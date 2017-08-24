@@ -18,6 +18,7 @@ use Gourmet\KnpMenu\View\Helper as GourmetKnpMenu;
  * @property Helper\HtmlHelper $Html
  * @property GourmetKnpMenu\MenuHelper $Menu
  * @property Helper\PaginatorHelper $Paginator
+ * @property Helper\TimeHelper $Time
  * @property Helper\UrlHelper $Url
  * @property Helper\VideoHelper $Video
  */

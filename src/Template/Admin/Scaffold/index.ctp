@@ -14,6 +14,7 @@
 <?= $this->fetch('before_index'); ?>
 <div class="card">
     <div class="<?= $this->CrudView->getCssClasses(); ?>">
+        <?= $this->element('action-header') ?>
 
         <?= $this->exists('search') ? $this->fetch('search') : $this->element('search') ?>
 

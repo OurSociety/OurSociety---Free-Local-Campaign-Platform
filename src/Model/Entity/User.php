@@ -44,11 +44,11 @@ use OurSociety\View\AppView;
  * @property Answer $answers
  * @property Category[] $categories
  * @property ElectoralDistrict $electoral_district
- * @property RecordSet|PoliticianArticle[] $articles
- * @property RecordSet|PoliticianAwards[] $awards
- * @property RecordSet|PoliticianPosition[] $positions
- * @property RecordSet|PoliticianQualification[] $qualifications
- * @property RecordSet|PoliticianVideo[] $videos
+ * @property PoliticianArticle[] $articles
+ * @property PoliticianAwards[] $awards
+ * @property PoliticianPosition[] $positions
+ * @property PoliticianQualification[] $qualifications
+ * @property PoliticianVideo[] $videos
  * @property ValueMatch[] $politician_matches
  * @property ValueMatch[] $value_matches
  *
@@ -58,6 +58,7 @@ use OurSociety\View\AppView;
 class User extends AppEntity
 {
     public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
+    public const ROLES_LABELS = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
     public const ROLE_ADMIN = 'admin';
     public const ROLE_CITIZEN = 'citizen';
     public const ROLE_POLITICIAN = 'politician';

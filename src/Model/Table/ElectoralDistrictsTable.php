@@ -52,6 +52,8 @@ class ElectoralDistrictsTable extends AppTable
             ->enableAutoFields()
             ->select(array_diff($this->getSchema()->columns(), ['polygon']));
 
+        return;
+
         if ($primary === true) {
             $aliasField = $query->repository()->aliasField('polygon');
             $query->select([

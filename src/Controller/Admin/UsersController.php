@@ -82,14 +82,23 @@ class UsersController extends CrudController
 
     public function add(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'verified']);
-
-        return $this->Crud->execute();
+        return $this->_form();
     }
 
     public function edit(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', ['id', 'name', 'email', 'verified']);
+        return $this->_form();
+    }
+
+    protected function _form(): ?Response
+    {
+        $this->Crud->action()->setConfig('scaffold.fields', [
+            'id' => ['type' => 'hidden'],
+            'name' => ['label' => __('Full name')],
+            'email' => ['type' => 'email', 'label' => __('Email address')],
+            'role' => ['options' => array_combine(User::ROLES, User::ROLES)],
+            'verified' => ['type' => 'checkbox', 'label' => __('Email verified?')],
+        ]);
 
         return $this->Crud->execute();
     }
