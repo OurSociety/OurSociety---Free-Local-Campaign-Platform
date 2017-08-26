@@ -16,6 +16,7 @@ use OurSociety\View\AppView;
  * @property string $id_census2010
  * @property string $slug
  * @property string $name
+ * @property string $description
  * @property int $number
  * @property string $type_id
  * @property int $office_count
@@ -31,6 +32,15 @@ use OurSociety\View\AppView;
  * @property DistrictType $district_type
  * @property Office[] offices
  * @property ElectoralDistrict $parent
+ * @property Event[] $events
+ * @property User $mayor
+ * @property Election $upcoming_election
+ * @property User[] $pathway_politicians
+ * @property ElectoralDistrict $county
+ * @property ElectoralDistrict $state
+ * @property PoliticianArticle[] $articles
+ * @property User[] $elected_officials
+ * @property PoliticianVideo[] $videos
  */
 class ElectoralDistrict extends AppEntity
 {

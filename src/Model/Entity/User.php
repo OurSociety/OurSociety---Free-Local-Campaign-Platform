@@ -6,7 +6,8 @@ namespace OurSociety\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
-use OurSociety\View\AppView;
+use Cake\Utility\Text;
+use Faker\Factory as Example;
 
 /**
  * User Entity
@@ -54,6 +55,8 @@ use OurSociety\View\AppView;
  *
  * @property int|null $age The age, if `born` date available.
  * @property PoliticianVideo|null $featured_video
+ * @property OfficeType $office_type
+ * @property bool $is_example
  */
 class User extends AppEntity
 {
@@ -137,6 +140,21 @@ class User extends AppEntity
         parent::__construct($properties, $options);
 
         $this->setHidden(['password', 'token']);
+    }
+
+    public static function example(array $data = null): self
+    {
+        $example = Example::create();
+        $name = $example->firstName . ' ' . $example->lastName;
+        $data = ($data ?? []) + [
+            'id' => Text::uuid(),
+            'name' => $name,
+            'office_type' => OfficeType::random(),
+            'email' => Text::slug($name, '.') . '@example.com',
+            'is_example' => true,
+        ];
+
+        return new self($data);
     }
 
     /**

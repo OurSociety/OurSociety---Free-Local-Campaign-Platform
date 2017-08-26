@@ -17,9 +17,15 @@ use OurSociety\View\AppView;
  * @property \OurSociety\Model\Entity\User $politician
  * @property string $youtube_video_url
  * @property string $youtube_video_thumbnail
+ * @property bool $is_example
  */
 class PoliticianVideo extends AppEntity
 {
+    public static function example(): self
+    {
+        return new self(['youtube_video_id' => 'C0DPdy98e4c', 'is_example' => true]);
+    }
+
     public function renderEmbed(AppView $view): string
     {
         return $view->Video->embed($this->youtube_video_url);
@@ -27,7 +33,8 @@ class PoliticianVideo extends AppEntity
 
     protected function _getYoutubeVideoThumbnail(): string
     {
-        return sprintf('http://img.youtube.com/vi/%s/mqdefault.jpg', $this->youtube_video_id);
+        return $this->properties['youtube_video_thumbnail']
+            ?? sprintf('http://img.youtube.com/vi/%s/mqdefault.jpg', $this->youtube_video_id);
     }
 
     protected function _getYoutubeVideoUrl(): string

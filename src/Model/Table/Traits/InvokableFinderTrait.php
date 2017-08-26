@@ -17,10 +17,11 @@ trait InvokableFinderTrait
         $query->applyOptions($options);
         $options = $query->getOptions();
 
+        // TODO: Replace with proper way to get table name, not alias.
         $finderClassName = sprintf(
             '%s\\Model\\Table\\Finder\\%s\\%sFinder',
             Configure::read('App.namespace'),
-            $this->getAlias(),
+            preg_replace('#^.*\\\\(.*)Table#', '$1', static::class),
             ucfirst($type)
         );
 

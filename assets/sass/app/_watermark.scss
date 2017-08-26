@@ -4,6 +4,7 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    opacity: 0.5;
 
     &::before {
         position: absolute;

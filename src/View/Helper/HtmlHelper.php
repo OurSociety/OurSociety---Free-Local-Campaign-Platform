@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace OurSociety\View\Helper;
 
 use BootstrapUI\View\Helper as BootstrapUI;
+use Cake\Log\Log;
+use Cake\Routing\Exception\MissingRouteException;
 use Cake\Utility\Inflector;
+use Kminek\EmailObfuscator;
 use OurSociety\Model\Entity\User;
 
 /**
@@ -77,20 +80,27 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
         return str_replace('label', 'badge', parent::label($text, $options));
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @param string|array|null $url
+     */
     public function link($title, $url = null, array $options = []): string
     {
         try {
             return parent::link($title, $url, $options);
-        } catch (\Cake\Routing\Exception\MissingRouteException $exception) {
+        } catch (MissingRouteException $exception) {
+            Log::warning(sprintf('Missing link "%s": %s', $title, is_array($url) ? json_encode($url) : $url));
             return '';
         }
     }
 
-    public function politicianLink(User $politician, string $title = null, array $options = []): string
+    public function politicianLink(User $politician, ?string $title = null, ?array $options = null): string
     {
         $title = $title ?: $politician->name;
         $url = ['_name' => 'politician', 'politician' => $politician->slug];
 
+        $options = $options ?? [];
         if (isset($options['#'])) {
             $url['#'] = $options['#'];
             unset($options['#']);
@@ -139,8 +149,26 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
      * @param string|null $tag The tag to use ('svg' for vector, or 'canvas' for raster/PNG).
      * @return string The tag where jdenticon will be rendered.
      */
-    public function jdenticon(string $jdenticonValue, ?array $options = [], ?string $tag = null): string
+    public function jdenticon(string $jdenticonValue, ?array $options = null, ?string $tag = null): string
     {
-        return $this->tag($tag ?: 'svg', '', ['data-jdenticon-value' => $jdenticonValue] + $options);
+        $options = $options ?? [];
+        $tag = $tag ?? 'svg';
+
+        return $this->tag($tag, '', ['data-jdenticon-value' => $jdenticonValue] + $options + [
+            'style' => 'background: white'
+        ]);
+    }
+
+    /**
+     * Renders an email address.
+     *
+     * Outputs an email address in a way that should not be easily scraped by spam bots.
+     *
+     * @param string $email The email address.
+     * @return string The obfuscated email link.
+     */
+    public function email(string $email): string
+    {
+        return EmailObfuscator::obfuscate($email);
     }
 }

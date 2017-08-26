@@ -8,6 +8,7 @@ mix
   // Current themes: (TODO: if possible, merge site/admin/common into single BS4 theme)
   // - Site: used for frontend, based on Bootstrap 4
   .sass('assets/site/scss/main.scss', 'webroot/css/site.css')
+  .js('assets/site/js/main.js', 'webroot/js/site.js')
   // - Admin: used for backend, based on Bootstrap 4
   .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', { includePaths: ['node_modules'] })
   .js('assets/admin/js/admin.js', 'webroot/js/admin.js')
@@ -25,6 +26,8 @@ mix
   .sass('assets/sass/landing.scss', 'webroot/css')
   .js('assets/js/landing.js', 'webroot/js')
 
+  // TODO: Fix SVG stuff.
+  .copy('assets/img/svg/video-placeholder.svg', 'webroot/img/svg/video-placeholder.svg')
   // Configuration:
   .disableNotifications()
   .autoload({

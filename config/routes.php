@@ -19,8 +19,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->redirect('/', '/index.html');
 
     $routes->connect('/embed/:politician', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'politician:embed', 'pass' => ['politician']]);
-    $routes->connect('/district/lookup', ['controller' => 'ElectoralDistricts', 'action' => 'lookup'], ['_name' => 'district:lookup']);
-    $routes->connect('/district/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
+    $routes->connect('/place/lookup', ['controller' => 'ElectoralDistricts', 'action' => 'lookup'], ['_name' => 'district:lookup']);
+    $routes->connect('/place/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
     $routes->connect('/election/:election', ['controller' => 'Elections', 'action' => 'view'], ['_name' => 'election', 'pass' => ['election']]);
     $routes->connect('/election/:election/contest/:contest', ['controller' => 'Contests', 'action' => 'view'], ['_name' => 'election:contest', 'pass' => ['contest']]);
     $routes->connect('/elections', ['controller' => 'Elections'], ['_name' => 'elections']);
@@ -78,6 +78,7 @@ Router::prefix('politician', ['_namePrefix' => 'politician:'], function (RouteBu
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'register']);
 
     $routes->prefix('profile', ['_namePrefix' => 'profile:'], function (RouteBuilder $routes) {
+        $routes->connect('/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'article', 'pass' => ['article']]);
         $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'articles']);
         $routes->connect('/awards', ['controller' => 'Awards', 'action' => 'index'], ['_name' => 'awards']);
         $routes->connect('/positions', ['controller' => 'Positions', 'action' => 'index'], ['_name' => 'positions']);

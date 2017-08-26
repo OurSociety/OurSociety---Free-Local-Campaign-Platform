@@ -90,7 +90,12 @@ class AppView extends CrudView\CrudView
         // Switch out default assets on embed layout.
         if ($this->isSite()) {
             Configure::write('CrudView.css', [mix('css/site.css')]);
-            Configure::write('CrudView.js.script', []); // NOTE: embed.js is outside the iframe, not inside.
+            Configure::write('CrudView.js.script', [
+                mix('js/manifest.js'),
+                mix('js/vendor.js'),
+                mix('js/common.js'),
+                mix('js/site.js'),
+            ]);
         }
 
         // Switch out default assets on embed layout.

@@ -2,7 +2,6 @@
 /**
  * @var \OurSociety\View\AppView $this
  */
-use Kminek\EmailObfuscator;
 ?>
 <hr>
 
@@ -10,7 +9,7 @@ use Kminek\EmailObfuscator;
     <div class="col-xs-12">
         <p><?= $this->Html->image('../img/banner.png', ['style' => 'height: 50px']) ?></p>
         <ul class="list-unstyled">
-            <li><?= EmailObfuscator::obfuscate('info@oursociety.org') ?></li>
+            <li><?= $this->Html->email('info@oursociety.org') ?></li>
             <li><a href="#">Menu Item #1</a></li>
             <li><a href="#">Menu Item #2</a></li>
             <li><a href="#">Menu Item #3</a></li>

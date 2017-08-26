@@ -7,13 +7,13 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
 use OurSociety\Model\Entity\ElectoralDistrict;
-use OurSociety\Model\Table\MunicipalitiesTable;
+use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Municipalities Controller
  *
- * @property MunicipalitiesTable $Municipalities
+ * @property ElectoralDistrictsTable $Municipalities
  */
 class MunicipalitiesController extends CrudController
 {
@@ -51,15 +51,6 @@ class MunicipalitiesController extends CrudController
 
     public function view(): ?Response
     {
-        $this->Crud->on('beforeFind', function (Event $event) {
-            /** @var Query $query */
-            $query = $event->getSubject()->query;
-            $query->contain([
-                'Children' => ['DistrictTypes'],
-                'Contests' => ['Elections'],
-            ]);
-        });
-
         $this->Crud->on('beforeRender', function (Event $event) {
             /** @var ElectoralDistrict $electoralDistrict */
             $electoralDistrict = $event->getSubject()->entity;

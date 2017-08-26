@@ -37,6 +37,8 @@ class PoliticianArticlesTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->belongsTo('Aspects', ['className' => CategoriesTable::class]);
+        $this->belongsTo('ArticleTypes');
         $this->belongsTo('Politicians', ['className' => UsersTable::class]);
     }
 
