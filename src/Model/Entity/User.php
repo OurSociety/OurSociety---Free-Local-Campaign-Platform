@@ -158,6 +158,18 @@ class User extends AppEntity
     }
 
     /**
+     * Has onboarded?
+     *
+     * Determines if a user has completed the tutorial/onboarding process.
+     *
+     * @return bool True if location set, false otherwise.
+     */
+    public function hasOnboarded(): bool
+    {
+        return $this->electoral_district !== null;
+    }
+
+    /**
      * Is token expired?
      *
      * @return bool True if token has expired, false otherwise.

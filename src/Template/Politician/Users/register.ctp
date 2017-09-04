@@ -28,6 +28,11 @@ use OurSociety\Model\Entity\User;
         <?= $this->Form->control('name', ['label' => __('Full Display Name'), 'help' => 'e.g. Sen. John Doe']) ?>
         <?= $this->Form->control('email', ['label' => __('Email Address')]) ?>
         <?= $this->Form->control('password') ?>
+        <?= $this->Form->control('incumbent', ['label' => __('Electoral Status'), 'options' => [
+            false => __('Candidate'),
+            true => __('Elected Official'),
+        ]]) ?>
+        <?= $this->Form->control('office_type_id', ['label' => __('Electoral Office')]) ?>
     </fieldset>
     <fieldset>
         <legend><?= __('Home Address') ?></legend>
@@ -47,7 +52,8 @@ use OurSociety\Model\Entity\User;
         <?= $this->Form->control('born', [
             'label' => 'Date of Birth',
             'type' => 'date',
-            'default' => '1900-01-01',
+            'maxYear' => date('Y'),
+            'minYear' => 1900,
         ]) ?>
     </fieldset>
     <?= $this->Form->button(__('Register'), ['class' => ['btn', 'btn-primary', 'pull-right']]); ?>

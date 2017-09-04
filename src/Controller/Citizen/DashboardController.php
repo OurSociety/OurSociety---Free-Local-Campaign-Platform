@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace OurSociety\Controller\Citizen;
 
 use Cake\ORM\TableRegistry;
-use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\QuestionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
@@ -17,12 +16,9 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
-        /** @var User $user */
-        $user = $this->Auth->user();
+        $user = $this->getCurrentUser();
 
-        if ($user->electoral_district === null) {
-            $this->Flash->success('Please provide the following information so we can find your politicians.');
-
+        if (!$user->hasOnboarded()) {
             return $this->redirect(['_name' => 'users:onboarding']);
         }
 
@@ -35,7 +31,7 @@ class DashboardController extends AppController
         $this->set([
             'levelQuestionTotal' => QuestionsTable::instance()->getLevelQuestionTotal($user),
             'politicianMatch' => TableRegistry::get('ValueMatches')->find()->contain(['Politicians'])->where([
-                'citizen_id' => $this->Auth->user()->id,
+                'citizen_id' => $user->id,
                 'category_id IS' => null,
             ])->first()
         ]);

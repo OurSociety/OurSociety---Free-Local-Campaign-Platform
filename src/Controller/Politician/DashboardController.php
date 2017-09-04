@@ -14,11 +14,17 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        $user = $this->getCurrentUser();
+
+        if (!$user->hasOnboarded()) {
+            return $this->redirect(['_name' => 'users:onboarding']);
+        }
+
         $this->set([
             'answers' => $this->loadModel('Answers')
                 ->find()
                 ->contain(['Questions'])
-                ->where(['Answers.user_id' => $this->Auth->user('id')])
+                ->where(['Answers.user_id' => $user->id])
                 ->orderDesc('Questions.modified')
                 ->all(),
             'categories' => $this->loadModel('Categories')
