@@ -3,9 +3,10 @@
  * @var \OurSociety\View\AppView $this
  */
 ?>
-<hr>
 
 <footer class="row">
+    <hr>
+
     <div class="col-xs-12">
         <p><?= $this->Html->image('../img/banner.png', ['style' => 'height: 50px']) ?></p>
         <ul class="list-unstyled">

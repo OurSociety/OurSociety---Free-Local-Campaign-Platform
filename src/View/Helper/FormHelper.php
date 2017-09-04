@@ -20,21 +20,18 @@ class FormHelper extends BootstrapUI\FormHelper
             'widgets' => [
                 //'answer' => [Widget\AnswerWidget::class],
                 'checkbox' => [Widget\CheckboxWidget::class],
+                'datetime' => [Widget\DateTimeWidget::class, 'select'],
                 'editor' => [Widget\EditorWidget::class],
                 //'importance' => [Widget\ImportanceWidget::class],
+                'select' => [Widget\SelectBoxWidget::class],
                 'zip' => [Widget\ZipWidget::class, 'text'],
-                // TODO: Implement better date/time widget with following requirements:
-                // - Supports "date" also (not just "datetime"
-                // - Easy to select DOB (a date many years in the past)
-                // - Day field can be optional (for positions/qualifications/awards the day isn't important)
-                //'datetime' => [CrudViewWidget\DateTimeWidget::class, 'select']
             ]
         ];
 
         parent::__construct($View, $defaultConfig + $config);
     }
 
-    public function control($fieldName, array $options = [])
+    public function control($fieldName, array $options = []): string
     {
         $options['placeholder'] = $options['placeholder'] ?? $options['label'] ?? null;
 
@@ -50,7 +47,7 @@ class FormHelper extends BootstrapUI\FormHelper
     {
         try {
             return parent::postLink($title, $url, $options);
-        } catch (MissingRouteException $exception) {
+        } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingRouteException $exception) {
             Log::warning(sprintf('Missing link "%s": %s', $title, is_array($url) ? json_encode($url) : $url));
             return '';
         }
