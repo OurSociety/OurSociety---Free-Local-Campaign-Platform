@@ -5,7 +5,6 @@ namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
-use Cake\Utility\Text;
 use Faker\Factory as Example;
 use OurSociety\View\AppView;
 
@@ -14,6 +13,7 @@ use OurSociety\View\AppView;
  *
  * @property string $id
  * @property string $politician_id
+ * @property string $electoral_district_id
  * @property string $slug
  * @property string $name
  * @property string $body
@@ -49,11 +49,13 @@ class PoliticianArticle extends AppEntity
 
     public function renderMunicipalViewLink(AppView $view, array $options = null): string
     {
+        $text = $options['text'] ?? $this->name;
+
         if ($this->is_example) {
-            return $this->name;
+            return $text;
         }
 
-        return $view->Html->link($this->name, [
+        return $view->Html->link($text, [
             '_name' => 'politician:article',
             'politician' => $this->politician->slug,
             'article' => $this->slug,

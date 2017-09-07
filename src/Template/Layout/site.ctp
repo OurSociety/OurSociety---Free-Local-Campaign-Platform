@@ -27,7 +27,7 @@ $callToActionLink = $this->Url->build([
         <ul class="navbar-nav os-navbar-nav flex-row">
             <?php if ($this->get('currentUser')): ?>
                 <li class="nav-item"><?= $this->Html->dashboardLink($currentUser->role, __('My Dashboard'), ['class' => ['nav-link']]) ?></li>
-                <li class="nav-item"><?= $this->Html->link(__('My Municipality'), '#', ['class' => ['nav-link', 'active']]) ?></li>
+                <li class="nav-item"><?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default'], ['class' => ['nav-link']]) ?></li>
                 <li class="nav-item"><?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?></li>
             <?php else: ?>
                 <li class="nav-item"><?= $this->Html->link(__('Home'), ['_name' => 'pages:home'], ['class' => ['nav-link']]) ?></li>
@@ -57,6 +57,7 @@ $callToActionLink = $this->Url->build([
 <main id="content">
     <div class="container my-5">
         <main class="os-content">
+            <?= $this->Flash->render(); ?>
             <?= $this->fetch('content') ?>
         </main>
     </div>

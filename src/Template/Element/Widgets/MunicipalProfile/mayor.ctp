@@ -22,7 +22,7 @@ if ($mayor === null) {
     <?php endif ?>
 
     <p class="h5 mt-2 mb-0">
-        <?= $mayor->name ?>
+        <?= $mayor->renderLink($this) ?>
         <small class="text-muted"><?= $mayor->office_type->name ?></small>
     </p>
 

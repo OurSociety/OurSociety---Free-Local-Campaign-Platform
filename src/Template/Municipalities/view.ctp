@@ -6,10 +6,10 @@
 ?>
 
 <h1 class="os-title" id="content">
-    <?= $municipality->name ?>
+    <?= $municipality->display_name ?>
     <small class="text-muted">
-        <?= $municipality->county ? $municipality->county->name : 'Unknown County' ?>,
-        <?= $municipality->state ? $municipality->state->name : 'Unknown State' ?>
+        <?= $municipality->county ? $municipality->county->display_name : 'Unknown County' ?>,
+        <?= $municipality->state ? $municipality->state->display_name : 'Unknown State' ?>
     </small>
 </h1>
 
@@ -19,7 +19,7 @@
     <div class="col-md-3">
         <?= $this->element('Widgets/MunicipalProfile/mayor', ['mayor' => $municipality->mayor]) ?>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 d-sm-none d-md-block">
         <?= $this->element('Widgets/MunicipalProfile/map', ['municipality' => $municipality]) ?>
         <?= $this->element('Widgets/MunicipalProfile/town_information', ['municipality' => $municipality]) ?>
         <?= $this->element('Widgets/MunicipalProfile/upcoming_election', ['upcomingElection' => $municipality->upcoming_election]) ?>
@@ -28,9 +28,17 @@
 
 <hr>
 
+<?= $this->element('Widgets/MunicipalProfile/stats') ?>
+
+<hr>
+
 <?= $this->element('Widgets/MunicipalProfile/articles', ['articles' => $municipality->articles]) ?>
 
 <hr>
+
+<h2 class="mb-3">
+    <?= __('Town Commons') ?>
+</h2>
 
 <div class="row">
     <div class="col">
@@ -39,9 +47,6 @@
 
     <div class="col">
         <?= $this->element('Widgets/MunicipalProfile/videos', ['videos' => $municipality->videos]) ?>
-
-        <hr>
-
         <?= $this->element('Widgets/MunicipalProfile/events', ['events' => $municipality->events]) ?>
     </div>
 </div>

@@ -12,7 +12,11 @@ if ($isExample) {
 $featuredVideo = array_shift($videos);
 ?>
 
-<div class="card text-center <?= $isExample ? ' example' : null ?>">
+<h3>
+    <?= __('Recent Videos') ?>
+</h3>
+
+<div class="card text-center <?= $isExample ? ' example' : null ?> mb-3">
     <div class="card-body p-0 bg-light">
         <?php if ($featuredVideo->is_example): ?>
             <img src="/img/svg/video-placeholder.svg">

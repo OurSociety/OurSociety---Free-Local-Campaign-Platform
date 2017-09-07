@@ -28,7 +28,12 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
+    $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
     $routes->connect('/municipality/:municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality', 'pass' => ['municipality']]);
+    $routes->connect('/municipality/:municipality/article/new', ['controller' => 'Articles', 'action' => 'add'], ['_name' => 'municipality:article:new', 'pass' => ['municipality']]);
+    $routes->connect('/municipality/:municipality/articles', ['controller' => 'Municipalities', 'action' => 'articles'], ['_name' => 'municipality:articles', 'pass' => ['municipality']]);
+    $routes->connect('/municipality/:municipality/event/:event', ['controller' => 'Events', 'action' => 'view'], ['_name' => 'municipality:event', 'pass' => ['event', 'municipality']]);
+    $routes->connect('/municipality/:municipality/events', ['controller' => 'Events', 'action' => 'index'], ['_name' => 'municipality:events', 'pass' => ['municipality']]);
     $routes->connect('/politicians', ['controller' => 'Politicians', 'action' => 'index'], ['_name' => 'politicians']);
     $routes->connect('/politician/:politician', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politician', 'pass' => ['politician']]);
     $routes->connect('/politician/:politician/claim', ['controller' => 'Politicians', 'action' => 'claim'], ['_name' => 'politician:claim', 'pass' => ['politician']]);

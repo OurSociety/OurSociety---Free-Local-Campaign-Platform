@@ -87,6 +87,12 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
      */
     public function link($title, $url = null, array $options = []): string
     {
+        if (isset($options['icon'])) {
+            $title = $this->icon($options['icon'], ['class' => ['fa-fw']]) . ' ' . $title;
+            $options['escape'] = false;
+            unset($options['icon']);
+        }
+
         try {
             return parent::link($title, $url, $options);
         } catch (MissingRouteException $exception) {

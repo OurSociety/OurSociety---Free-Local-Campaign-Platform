@@ -8,6 +8,7 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Faker\Factory as Example;
+use OurSociety\View\AppView;
 
 /**
  * User Entity
@@ -18,6 +19,7 @@ use Faker\Factory as Example;
  * @property string $email The email address.
  * @property string $email_temp The temporary email address for imported candidates.
  * @property string $position The position for politicians.
+ * @property int $electoral_district_id The electoral district ID.
  * @property int $incumbent True if currently in office, false otherwise.
  * @property int $zip The zip code.
  * @property string $phone The phone number.
@@ -247,6 +249,25 @@ class User extends AppEntity
     public function isPolitician(): bool
     {
         return $this->role === self::ROLE_POLITICIAN;
+    }
+
+    /**
+     * Render link to profile.
+     *
+     * @param AppView $view The view.
+     * @param string|array|null $url The url (if overridden).
+     * @return string The HTML link.
+     */
+    public function renderLink(AppView $view, $url = null): string
+    {
+        if ($url === null && $this->isPolitician()) {
+            return $view->Html->link($this->name, [
+                '_name' => 'politician',
+                'politician' => $this->slug,
+            ]);
+        }
+
+        return $this->name;
     }
 
     protected function _getAge(): ?int

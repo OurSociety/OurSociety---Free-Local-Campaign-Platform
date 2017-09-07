@@ -35,7 +35,7 @@ class ElectoralDistrictsTable extends AppTable
         $this->belongsTo('DistrictTypes')->setForeignKey('type_id');
         $this->belongsTo('Parents', ['className' => self::class])->setForeignKey('parent_id');
         $this->belongsTo('States', ['className' => self::class])->setForeignKey('state_id');
-        $this->hasMany('Articles', ['className' => PoliticianArticlesTable::class]);
+        $this->hasMany('Articles', ['className' => PoliticianArticlesTable::class])->setFinder('forCitizen');
         $this->hasMany('Children', ['className' => self::class])->setForeignKey('parent_id');
         $this->hasMany('Contests');
         $this->hasMany('ElectedOfficials', ['className' => UsersTable::class])->setFinder('isElectedOfficial');

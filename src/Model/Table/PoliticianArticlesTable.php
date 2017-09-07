@@ -18,6 +18,7 @@ use OurSociety\Validation\Validator as AppValidator;
 /**
  * PoliticianArticles Model
  *
+ * @property ElectoralDistrictsTable|Association\BelongsTo $Municipalities
  * @property UsersTable|Association\BelongsTo $Politicians
  *
  * @method PoliticianArticle get($primaryKey, $options = [])
@@ -35,9 +36,12 @@ class PoliticianArticlesTable extends AppTable
      */
     public function initialize(array $config): void
     {
+        $this->setTable('articles');
+
         parent::initialize($config);
 
         $this->belongsTo('Aspects', ['className' => CategoriesTable::class]);
+        $this->belongsTo('Municipalities', ['className' => ElectoralDistrictsTable::class]);
         $this->belongsTo('ArticleTypes');
         $this->belongsTo('Politicians', ['className' => UsersTable::class]);
     }

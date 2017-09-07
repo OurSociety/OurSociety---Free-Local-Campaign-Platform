@@ -6,6 +6,7 @@ namespace OurSociety\Controller;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
+use OurSociety\Controller\Action\IndexAction;
 use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -23,6 +24,7 @@ class MunicipalitiesController extends CrudController
 
         $this->modelClass = 'ElectoralDistricts';
         $this->Auth->allow(['view']);
+        $this->Crud->mapAction('articles', IndexAction::class);
     }
 
     /**
@@ -49,8 +51,18 @@ class MunicipalitiesController extends CrudController
         return $this->Crud->execute();
     }
 
-    public function view(): ?Response
+    public function view(?string $municipalitySlug = null): ?Response
     {
+        $this->Crud->on('beforeFind', function (Event $event) use ($municipalitySlug) {
+            if ($municipalitySlug !== null) {
+                return;
+            }
+
+            $event->getSubject()->query = ElectoralDistrictsTable::instance()->find()->where([
+                'id' => $this->getCurrentUser()->electoral_district_id,
+            ]);
+        });
+
         $this->Crud->on('beforeRender', function (Event $event) {
             /** @var ElectoralDistrict $electoralDistrict */
             $electoralDistrict = $event->getSubject()->entity;
@@ -58,6 +70,22 @@ class MunicipalitiesController extends CrudController
                 $this->viewBuilder()->setLayout('site');
             }
         });
+
+        return $this->Crud->execute();
+    }
+
+    public function articles(string $slug): ?Response
+    {
+        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
+
+        $this->set([
+            'municipality' => $this->loadModel()->find()->where(['slug' => $slug])->firstOrFail(),
+        ]);
+
+        $this->modelClass = 'PoliticianArticles';
+        $this->Crud->action()->setConfig([
+            'viewVar' => 'articles',
+        ]);
 
         return $this->Crud->execute();
     }

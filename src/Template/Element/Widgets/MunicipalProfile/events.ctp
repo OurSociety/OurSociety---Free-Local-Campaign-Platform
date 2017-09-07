@@ -13,7 +13,9 @@ endif;
 <div<?= $isExample ? ' class="example"' : null ?>>
     <?= $this->Html->link('View All', '#', ['class' => ['btn', 'btn-outline-dark', 'float-right']]) ?>
 
-    <h2>Events</h2>
+    <h3>
+        <?= __('Upcoming Events') ?>
+    </h3>
 
     <ul class="list-unstyled">
         <?php foreach ($events as $event): ?>
