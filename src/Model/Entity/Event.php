@@ -5,6 +5,7 @@ namespace OurSociety\Model\Entity;
 
 use Cake\I18n\FrozenTime as DateTime;
 use Cake\I18n\Time;
+use OurSociety\View\AppView;
 
 /**
  * Event Entity
@@ -19,6 +20,8 @@ use Cake\I18n\Time;
  * @property string $electoral_district_id
  * @property DateTime $created
  * @property DateTime $modified
+ *
+ * @property ElectoralDistrict $electoral_district
  */
 class Event extends AppEntity
 {
@@ -38,5 +41,21 @@ class Event extends AppEntity
         ];
 
         return new self($data);
+    }
+
+    /**
+     * Render link to event.
+     *
+     * @param AppView $view The view.
+     * @param string|array|null $url The url (if overridden).
+     * @return string The HTML link.
+     */
+    public function renderMunicipalViewLink(AppView $view, $url = null): string
+    {
+        return $view->Html->link($this->name, [
+            '_name' => 'municipality:event',
+            'event' => $this->id,
+            'municipality' => $this->electoral_district->slug,
+        ]);
     }
 }

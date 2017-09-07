@@ -8,4 +8,5 @@
 <?= $this->Html->image($user, [
     'alt' => __('Profile picture of {user_name}', ['user_name' => $user->name]),
     'class' => ['img-responsive'],
+    'style' => 'min-width: 100%',
 ]) ?>

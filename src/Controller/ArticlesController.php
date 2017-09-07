@@ -5,9 +5,9 @@ namespace OurSociety\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\Query;
-use Cake\Routing\Router;
 use Cake\View\CellTrait;
 use CrudView\Breadcrumb\Breadcrumb;
+use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\PoliticianArticle;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\PoliticianArticlesTable;
@@ -90,6 +90,8 @@ class ArticlesController extends CrudController
 
     public function view(string $politicianSlug, string $articleSlug): ?Response
     {
+        $this->viewBuilder()->setLayout('site');
+
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
         /** @var PoliticianArticlesTable $articles */
@@ -111,5 +113,57 @@ class ArticlesController extends CrudController
         ]);
 
         return null;
+    }
+
+    public function add($municipalitySlug): ?Response
+    {
+        $this->viewBuilder()->setLayout('site');
+
+        $getMunicipalityId = function () use ($municipalitySlug): string {
+            /** @var PoliticianArticlesTable $table */
+            $table = $this->loadModel();
+            /** @var ElectoralDistrict $municipality */
+            $municipality = $table->Municipalities->find('slugged', ['slug' => $municipalitySlug])->firstOrFail();
+
+            return $municipality->id;
+        };
+
+        $this->Crud->on('beforeSave', function (Event $event) use ($getMunicipalityId) {
+            /** @var PoliticianArticle $article */
+            $article = $event->getSubject()->entity;
+            /** @var User $user */
+            $user = $this->Auth->user();
+
+            $article->politician_id = $user->id;
+            $article->electoral_district_id = $getMunicipalityId();
+        });
+
+        $this->Crud->on('beforeRedirect', function (Event $event) use ($municipalitySlug) {
+            if ($event->getSubject()->success !== true) {
+                return null;
+            }
+
+            return $this->redirect(['_name' => 'municipality', 'municipality' => $municipalitySlug]);
+        });
+
+        return $this->_form();
+    }
+
+    private function _form(): ?Response
+    {
+        $this->Crud->action()->setConfig([
+            'scaffold' => [
+                'fields' => [
+                    'id' => ['type' => 'hidden'],
+                    'politician_id' => ['type' => 'hidden'],
+                    'name' => ['label' => 'Title'],
+                    'body' => ['type' => 'editor'],
+                    'version' => ['type' => 'hidden'],
+                ],
+                'form_submit_extra_buttons' => false,
+            ],
+        ]);
+
+        return $this->Crud->execute();
     }
 }

@@ -5,14 +5,12 @@
  */
 ?>
 
-<div class="card">
+<div class="card<?= $article->is_example ? ' example' : null ?>">
 
-    <?php if ($article->aspect): ?>
-        <?= $this->Html->icon(
-            $article->aspect->slug,
-            ['iconSet' => 'topic', 'style' => 'opacity: .05', 'height' => '275']
-        ) ?>
-    <?php endif ?>
+    <?= $this->Html->icon(
+        $article->aspect ? $article->aspect->slug : 'government-operation-politics',
+        ['iconSet' => 'topic', 'style' => 'opacity: .05', 'height' => '275']
+    ) ?>
 
     <div class="card-img-overlay text-center">
         <h5 class="card-title">

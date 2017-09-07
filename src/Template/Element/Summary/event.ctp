@@ -10,4 +10,4 @@
     &ndash;
 </small>
 
-<?= $event->name ?> @ <?= $event->location ?>
+<?= $event->renderMunicipalViewLink($this) ?> @ <?= $event->location ?>

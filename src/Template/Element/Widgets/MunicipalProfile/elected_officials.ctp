@@ -13,9 +13,10 @@ if ($isExample):
 endif;
 ?>
 
-<h2 class="mb-3">
+<h3>
     <?= __('Elected Officials') ?>
-</h2>
+</h3>
+
 <ul class="list-unstyled">
     <?php foreach ($electedOfficials as $user): ?>
         <li>

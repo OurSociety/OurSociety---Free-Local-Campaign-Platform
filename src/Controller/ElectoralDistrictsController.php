@@ -6,7 +6,6 @@ namespace OurSociety\Controller;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
-use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 

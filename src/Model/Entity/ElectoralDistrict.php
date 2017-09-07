@@ -16,6 +16,7 @@ use OurSociety\View\AppView;
  * @property string $id_census2010
  * @property string $slug
  * @property string $name
+ * @property string $short_name
  * @property string $description
  * @property int $number
  * @property string $type_id
@@ -41,6 +42,8 @@ use OurSociety\View\AppView;
  * @property PoliticianArticle[] $articles
  * @property User[] $elected_officials
  * @property PoliticianVideo[] $videos
+ *
+ * @property string $display_name
  */
 class ElectoralDistrict extends AppEntity
 {
@@ -52,6 +55,11 @@ class ElectoralDistrict extends AppEntity
     public function isMunicipality()
     {
         return $this->district_type->isMunicipality();
+    }
+
+    protected function _getDisplayName(): string
+    {
+        return $this->short_name ?: preg_replace('/ (borough|county|district|township)$/i', '', $this->name);
     }
 
     protected function _getLabel(): string

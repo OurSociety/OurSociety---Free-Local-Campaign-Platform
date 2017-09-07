@@ -9,6 +9,8 @@ use Cake\ORM\Association\BelongsTo;
  * EventsTable.
  *
  * @property BelongsTo|ElectoralDistrictsTable $ElectoralDistricts
+ * @property BelongsTo|UsersTable $Users
+ * @property BelongsTo|CategoriesTable $Categories
  */
 class EventsTable extends AppTable
 {
@@ -19,6 +21,8 @@ class EventsTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->belongsTo('Categories');
+        $this->belongsTo('Users');
         $this->belongsTo('ElectoralDistricts');
     }
 }
