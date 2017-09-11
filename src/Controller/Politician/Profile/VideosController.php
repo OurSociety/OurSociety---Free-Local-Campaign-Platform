@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
-use Cake\Utility\Text;
+use Cake\ORM\Query;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianVideo;
 use OurSociety\View\AppView;
@@ -47,9 +47,13 @@ class VideosController extends CrudController
         ]);
 
         $this->Crud->on('beforePaginate', function (Event $event) {
-            $event->getSubject()->query = $event->getSubject()->query->where([
-                'Politicians.slug' => $this->Auth->user('slug'),
-            ]);
+            /** @var Query $query */
+            $query = $event->getSubject()->query;
+            $query->matching('Politicians', function (Query $query) {
+                return $query->where([
+                    'Politicians.slug' => $this->Auth->user('slug'),
+                ]);
+            });
         });
 
         return $this->Crud->execute();

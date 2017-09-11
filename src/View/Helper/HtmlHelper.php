@@ -124,12 +124,13 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
      * - "One thing clicked."
      * - "2 things clicked."
      *
-     * @param string $template
-     * @param string $noun
-     * @param int $count
+     * @param string $template The template to use.
+     * @param string $noun The noun to pluralize.
+     * @param int $count The number to base pluralization off.
+     * @param array $replacements Any additional replacements.
      * @return string
      */
-    public function pluralize(string $template, string $noun, int $count): string
+    public function pluralize(string $template, string $noun, int $count, array $replacements = null): string
     {
         $one = 'one';
         $none = 'no';
@@ -139,8 +140,8 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
         }
 
         return __n(
-            __($template, ['number' => $one, 'noun' => $noun]),
-            __($template, ['number' => '{0}', 'noun' => Inflector::pluralize($noun)]),
+            __($template, ['number' => $one, 'noun' => $noun] + ($replacements ?? [])),
+            __($template, ['number' => '{0}', 'noun' => Inflector::pluralize($noun)] + ($replacements ?? [])),
             $count,
             $count === 0 ? $none : $count
         );

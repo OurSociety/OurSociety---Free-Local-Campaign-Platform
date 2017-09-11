@@ -5,7 +5,7 @@ namespace OurSociety\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 
-class PoliticianArticlesFixture extends TestFixture
+class ArticlesFixture extends TestFixture
 {
     const BODY_PARAGRAPH = <<<HTML
 <p>
@@ -21,5 +21,5 @@ HTML;
     const UNPUBLISHED_ID = '38913376-7966-11e7-8a5f-6c4008a68a60';
     const UNAPPROVED_ID = '41e53d64-7966-11e7-83b9-6c4008a68a60';
 
-    public $import = ['table' => 'politician_articles', 'connection' => 'fixtures'];
+    public $import = ['table' => 'articles', 'connection' => 'fixtures'];
 }

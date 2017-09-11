@@ -10,7 +10,7 @@ namespace OurSociety\Model\Entity;
  * @property string $electoral_district_id
  * @property string $name
  *
- * @property \OurSociety\Model\Entity\ElectoralDistrict $electoral_district
+ * @property ElectoralDistrict $electoral_district
  */
 class Office extends AppEntity
 {

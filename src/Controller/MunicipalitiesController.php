@@ -23,7 +23,11 @@ class MunicipalitiesController extends CrudController
         parent::initialize();
 
         $this->modelClass = 'ElectoralDistricts';
-        $this->Auth->allow(['view']);
+
+        if ($this->request->getParam('action') === 'view' && $this->request->getParam('municipality') !== false) {
+            $this->Auth->allow(['view']);
+        }
+
         $this->Crud->mapAction('articles', IndexAction::class);
     }
 
@@ -82,10 +86,35 @@ class MunicipalitiesController extends CrudController
             'municipality' => $this->loadModel()->find()->where(['slug' => $slug])->firstOrFail(),
         ]);
 
-        $this->modelClass = 'PoliticianArticles';
+        $this->modelClass = 'Articles';
         $this->Crud->action()->setConfig([
             'viewVar' => 'articles',
         ]);
+
+        return $this->Crud->execute();
+    }
+
+    public function edit(string $municipalitySlug): ?Response
+    {
+        $this->Crud->action()->setConfig([
+            'relatedModels' => false,
+            'scaffold' => [
+                'actions' => [],
+                'form_submit_button_text' => 'Update Town Information',
+                'form_submit_extra_buttons' => false,
+                'fields' => [
+                    'description' => ['placeholder' => 'Town Information', 'label' => false]
+                ],
+            ],
+        ]);
+
+        $this->Crud->on('beforeRedirect', function (Event $event) use ($municipalitySlug) {
+            if ($event->getSubject()->success !== true) {
+                return null;
+            }
+
+            return $this->redirect(['_name' => 'municipality', 'municipality' => $municipalitySlug]);
+        });
 
         return $this->Crud->execute();
     }

@@ -8,6 +8,7 @@ use Cake\ORM\Association;
 use Cake\ORM\Behavior;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator as CakeValidator;
+use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Validation\Validator as AppValidator;
 
@@ -40,7 +41,7 @@ class AnswersTable extends AppTable
 
         $this->setDisplayField('name');
 
-        $this->addBehavior('CounterCache', [
+        $this->addBehavior(CounterCacheBehavior::class, [
             'Users' => ['answer_count'],
             // TODO: Implement scope for following counter-caches
             //'Questions' => ['citizen_answer_count', 'politician_answer_count'],

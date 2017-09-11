@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace OurSociety\Controller\Citizen;
 
-use Cake\ORM\Query;
 use OurSociety\Controller\AppController;
 use OurSociety\Model\Entity\Contest;
 use OurSociety\Model\Entity\Election;
@@ -17,6 +18,8 @@ class BallotController extends AppController
 {
     public function index(): ?Response
     {
+        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
+
         /** @var User $user */
         $user = $this->Auth->user();
 
@@ -48,6 +51,8 @@ class BallotController extends AppController
 
     public function view(string $electionSlug): ?Response
     {
+        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
+
         /** @var User $user */
         $user = $this->Auth->user();
 

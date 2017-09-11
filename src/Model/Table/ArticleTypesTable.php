@@ -8,7 +8,7 @@ use Cake\ORM\Association\HasMany;
 /**
  * ArticleTypesTable.
  *
- * @property HasMany|PoliticianArticlesTable $Articles
+ * @property HasMany|ArticlesTable $Articles
  */
 class ArticleTypesTable extends AppTable
 {
@@ -19,6 +19,6 @@ class ArticleTypesTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->hasMany('Articles', ['className' => PoliticianArticlesTable::class]);
+        $this->hasMany('Articles', ['className' => ArticlesTable::class]);
     }
 }

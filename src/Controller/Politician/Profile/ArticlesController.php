@@ -5,24 +5,17 @@ namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Entity\Article;
 use OurSociety\Model\Entity\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Articles Controller
  *
- * @method PoliticianArticle[] paginate($object = null, array $settings = [])
+ * @method Article[] paginate($object = null, array $settings = [])
  */
 class ArticlesController extends CrudController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->modelClass = 'PoliticianArticles';
-    }
-
     public function index(): ?Response
     {
         $this->Crud->action()->setConfig([
@@ -47,7 +40,7 @@ class ArticlesController extends CrudController
     public function view(): ?Response
     {
         $this->Crud->on('beforeRender', function (Event $event) {
-            /** @var PoliticianArticle $article */
+            /** @var Article $article */
             $article = $event->getSubject()->entity;
 
             if ($article->published === null) {
@@ -65,7 +58,7 @@ class ArticlesController extends CrudController
     public function add(): ?Response
     {
         $this->Crud->on('beforeSave', function (Event $event) {
-            /** @var PoliticianArticle $article */
+            /** @var Article $article */
             $article = $event->getSubject()->entity;
             /** @var User $user */
             $user = $this->Auth->user();

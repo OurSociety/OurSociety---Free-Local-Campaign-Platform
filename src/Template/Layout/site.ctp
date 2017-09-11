@@ -26,9 +26,15 @@ $callToActionLink = $this->Url->build([
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav os-navbar-nav flex-row">
             <?php if ($this->get('currentUser')): ?>
-                <li class="nav-item"><?= $this->Html->dashboardLink($currentUser->role, __('My Dashboard'), ['class' => ['nav-link']]) ?></li>
-                <li class="nav-item"><?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default'], ['class' => ['nav-link']]) ?></li>
-                <li class="nav-item"><?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?></li>
+                <li class="nav-item<?= $this->request->getUri()->getPath() === '/citizen' ? ' active' : null ?>">
+                    <?= $this->Html->dashboardLink($currentUser->role, __('My Dashboard'), ['class' => ['nav-link']]) ?>
+                </li>
+                <li class="nav-item<?= $this->request->getUri()->getPath() === '/municipality' ? ' active' : null ?>">
+                    <?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default'], ['class' => ['nav-link']]) ?>
+                </li>
+                <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
+                    <?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
+                </li>
             <?php else: ?>
                 <li class="nav-item"><?= $this->Html->link(__('Home'), ['_name' => 'pages:home'], ['class' => ['nav-link']]) ?></li>
                 <li class="nav-item"><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?></li>
@@ -66,10 +72,10 @@ $callToActionLink = $this->Url->build([
 <footer class="os-footer text-muted">
     <div class="container-fluid p-3 p-md-5">
         <ul class="os-footer-links">
-            <li><?= $this->Html->link(__('About'), '#') ?></li>
-            <li><?= $this->Html->link(__('Team'), '#') ?></li>
+            <li><?= $this->Html->link(__('About'), 'http://oursociety.org/purpose.php') ?></li>
+            <li><?= $this->Html->link(__('Team'), 'http://oursociety.org/team.php') ?></li>
             <li><?= $this->Html->link(__('Terms'), '/tos') ?></li>
         </ul>
-        <p>&copy; OurSociety - a 501(c)(3) company.</p>
+        <p>&copy; OurSociety &ndash; a 501(c)(3) company.</p>
     </div>
 </footer>

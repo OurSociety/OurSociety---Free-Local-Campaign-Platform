@@ -1197,7 +1197,7 @@ bootstrap-sass@^3.3.7:
 
 bootstrap@twbs/bootstrap#v4-dev:
   version "4.0.0-beta"
-  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/6063b0dc659e7ba3a83cfc9502ad7872f8201a32"
+  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/576636047754711ccd702f6916a57218f0460085"
 
 brace-expansion@^1.1.7:
   version "1.1.8"

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view.
- * @var \OurSociety\Model\Entity\PoliticianArticle $article The article.
+ * @var \OurSociety\Model\Entity\Article $article The article.
  */
 ?>
 

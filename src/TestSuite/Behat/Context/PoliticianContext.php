@@ -47,7 +47,7 @@ class PoliticianContext extends PageObjectContext
     }
 
     /**
-     * @Given /^There is a video$/
+     * @Given /^there is a video$/
      */
     public function thereIsAVideo()
     {
@@ -64,22 +64,20 @@ class PoliticianContext extends PageObjectContext
     public function iEditThatVideo()
     {
         $videoList = $this->politicianProfile->clickToEditVideos();
-        $videoList->iEditThatVideo();
-        //$this->visitPath(sprintf('/politician/profile/videos/edit/%s', self::VIDEO_ID_EDIT));
-        //$this->assertPageAddress(sprintf('/politician/profile/videos/edit/%s', self::VIDEO_ID_EDIT));
-        //$this->fillField('YouTube Video ID', 'test');
-        //$this->uncheckOption('Feature This Video?');
-        //$this->pressButton('Save');
+        $videoEditPage = $videoList->clickToEditVideo(self::VIDEO_ID_EDIT);
+        $videoEditPage->setYoutubeVideoId('test');
+        $videoEditPage->setAsFeatured(false);
+        $videoEditPage->save();
     }
 
     /**
-     * @Then /^The video is updated$/
+     * @Then /^the video is updated$/
      */
     public function theVideoIsUpdated()
     {
-        $this->visitPath(sprintf('/politician/profile/videos/edit/%s', self::VIDEO_ID_EDIT));
-        $this->assertPageAddress(sprintf('/politician/profile/videos/edit/%s', self::VIDEO_ID_EDIT));
-        $this->assertFieldContains('YouTube Video ID', 'test');
-        $this->assertCheckboxNotChecked('Feature This Video?');
+        $videoList = $this->politicianProfile->clickToEditVideos();
+        $videoEditPage = $videoList->clickToEditVideo(self::VIDEO_ID_EDIT);
+        $videoEditPage->assertYoutubeVideoId('test');
+        $videoEditPage->assertFeatured(false);
     }
 }

@@ -12,7 +12,7 @@ default:
         Behat\MinkExtension:
             default_session: php
             javascript_session: browser
-            base_url: http://oursociety.dev
+            base_url: https://oursociety.dev
             sessions:
                 php:
                     goutte: ~
@@ -32,6 +32,8 @@ default:
                             browserVersion: 42
                             # This is required for local testing.
                             browserstack-tunnel: true
+            show_auto: true
+            show_cmd: open -a "Google Chrome" %s
         Bex\Behat\BrowserInitialiserExtension:
             browser_window_size: max
         Bex\Behat\ScreenshotExtension:
@@ -60,11 +62,11 @@ default:
                 page: [OurSociety\TestSuite\Behat\Page]
                 element: [OurSociety\TestSuite\Behat\Element]
     suites:
-#        public:
-#            paths:
-#                - %paths.base%/features/public
-#            contexts:
-#                - OurSociety\TestSuite\Behat\Context\FeatureContext
+        public:
+            paths:
+                - %paths.base%/features/public
+            contexts:
+                - OurSociety\TestSuite\Behat\Context\PublicContext
         politician:
             paths:
                 - %paths.base%/features/politician

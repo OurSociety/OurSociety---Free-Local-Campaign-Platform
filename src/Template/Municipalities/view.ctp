@@ -5,13 +5,24 @@
  */
 ?>
 
-<h1 class="os-title" id="content">
-    <?= $municipality->display_name ?>
-    <small class="text-muted">
-        <?= $municipality->county ? $municipality->county->display_name : 'Unknown County' ?>,
-        <?= $municipality->state ? $municipality->state->display_name : 'Unknown State' ?>
-    </small>
-</h1>
+<div class="row">
+    <div class="col">
+        <h1 class="os-title" id="content">
+            <?= $municipality->display_name ?>
+            <small class="text-muted">
+                <?= $municipality->county ? $municipality->county->display_name : 'Unknown County' ?>,
+                <?= $municipality->state ? $municipality->state->display_name : 'Unknown State' ?>
+            </small>
+        </h1>
+    </div>
+    <div class="col-auto">
+        <?= $this->Html->link(
+            __('Edit Municipal Profile'),
+            ['_name' => 'municipality:edit', 'municipality' => $municipality->slug],
+            ['class' => ['btn btn-outline-dark'], 'icon' => 'pencil']
+        ) ?>
+    </div>
+</div>
 
 <hr>
 
@@ -19,7 +30,7 @@
     <div class="col-md-3">
         <?= $this->element('Widgets/MunicipalProfile/mayor', ['mayor' => $municipality->mayor]) ?>
     </div>
-    <div class="col-md-9 d-sm-none d-md-block">
+    <div class="col-md-9 d-none d-md-block">
         <?= $this->element('Widgets/MunicipalProfile/map', ['municipality' => $municipality]) ?>
         <?= $this->element('Widgets/MunicipalProfile/town_information', ['municipality' => $municipality]) ?>
         <?= $this->element('Widgets/MunicipalProfile/upcoming_election', ['upcomingElection' => $municipality->upcoming_election]) ?>

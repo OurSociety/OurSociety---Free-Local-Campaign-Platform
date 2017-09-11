@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Page;
 
-use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
+use OurSociety\TestSuite\Behat\Page\Politician\Profile\VideoList;
 
 /**
  * PoliticianProfilePage.

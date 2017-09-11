@@ -7,9 +7,9 @@ trait FixturesTrait
 {
     public $fixtures = [
         'app.answers',
+        'app.articles',
         'app.categories',
         'app.categories_users',
-        'app.politician_articles',
         'app.politician_awards',
         'app.politician_positions',
         'app.politician_qualifications',

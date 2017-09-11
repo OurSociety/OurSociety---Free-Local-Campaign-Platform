@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\PoliticianArticle $article The currently viewed article.
+ * @var \OurSociety\Model\Entity\Article $article The currently viewed article.
  */
 
 $this->extend('/Common/Articles/view');
