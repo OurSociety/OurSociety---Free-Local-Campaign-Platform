@@ -407,9 +407,8 @@ class AddElections extends AbstractMigration
                 'limit' => 11,
                 'null' => true,
             ])
-            ->addColumn('polygon', 'string', [
+            ->addColumn('polygon', 'geometry', [
                 'default' => null,
-                'limit' => null,
                 'null' => true,
             ])
             ->addColumn('created', 'datetime', [

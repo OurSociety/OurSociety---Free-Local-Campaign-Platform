@@ -3,6 +3,10 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Candidate $candidate
  */
+
+if ($candidate->politician === null) {
+    $candidate->politician = \OurSociety\Model\Entity\User::example(['slug' => 'asd']);
+}
 ?>
 
 <div class="media">
@@ -24,17 +28,17 @@
                 : __('Candidate for {position}', [
                     'position' => $candidate->politician->position ?? __('Unknown Position')
                 ]) ?></p>
-        <dl class="dl-horizontal">
-            <dt>Questions answered</dt>
-            <dd><?= $candidate->politician->answer_count ?></dd>
-            <dt>Articles posted</dt>
-            <dd><?= count($candidate->politician->articles) ?></dd>
-            <dt>Videos uploaded</dt>
-            <dd><?= count($candidate->politician->awards) ?></dd>
-            <dt>Previous positions</dt>
-            <dd><?= count($candidate->politician->positions) ?></dd>
-            <dt>Qualifications</dt>
-            <dd><?= count($candidate->politician->qualifications) ?></dd>
+        <dl class="row">
+            <dt class="col-sm-9"><?= __('Questions answered') ?></dt>
+            <dd class="col-sm-3"><?= $candidate->politician->answer_count ?? 0 ?></dd>
+            <dt class="col-sm-9"><?= __('Articles posted') ?></dt>
+            <dd class="col-sm-3"><?= count($candidate->politician->articles) ?></dd>
+            <dt class="col-sm-9"><?= __('Videos uploaded') ?></dt>
+            <dd class="col-sm-3"><?= count($candidate->politician->awards) ?></dd>
+            <dt class="col-sm-9"><?= __('Previous positions') ?></dt>
+            <dd class="col-sm-3"><?= count($candidate->politician->positions) ?></dd>
+            <dt class="col-sm-9"><?= __('Qualifications') ?></dt>
+            <dd class="col-sm-3"><?= count($candidate->politician->qualifications) ?></dd>
         </dl>
     </div>
 </div>

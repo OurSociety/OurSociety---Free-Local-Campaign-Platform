@@ -35,7 +35,7 @@ class ElectoralDistrictsTable extends AppTable
         $this->belongsTo('DistrictTypes')->setForeignKey('type_id');
         $this->belongsTo('Parents', ['className' => self::class])->setForeignKey('parent_id');
         $this->belongsTo('States', ['className' => self::class])->setForeignKey('state_id');
-        $this->hasMany('Articles', ['className' => PoliticianArticlesTable::class])->setFinder('forCitizen');
+        $this->hasMany('Articles', ['className' => ArticlesTable::class])->setFinder('forCitizen');
         $this->hasMany('Children', ['className' => self::class])->setForeignKey('parent_id');
         $this->hasMany('Contests');
         $this->hasMany('ElectedOfficials', ['className' => UsersTable::class])->setFinder('isElectedOfficial');
@@ -55,10 +55,11 @@ class ElectoralDistrictsTable extends AppTable
             ->select(array_diff($this->getSchema()->columns(), ['polygon']));
 
         if ($primary === true) {
-            $aliasField = $query->repository()->aliasField('polygon');
-            $query->select([
-                str_replace('.', '__', $aliasField) => $query->newExpr(sprintf('ST_AsGeoJSON(%s)', $aliasField))
-            ]);
+            $aliasedField = $query->repository()->aliasField('polygon');
+            $underscoredAliasedField = str_replace('.', '__', $aliasedField);
+            $polygonAsGeoJSON = $query->newExpr(sprintf('ST_AsGeoJSON(%s)', $aliasedField));
+
+            $query->select([$underscoredAliasedField => $polygonAsGeoJSON]);
         }
     }
 

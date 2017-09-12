@@ -28,24 +28,42 @@
 
 <h2><?= $election->name ?></h2>
 
-<p>
-    <?= __('The following contests in this election apply to your area:') ?>
-</p>
+<?php if (count($contests) === 0): ?>
+    <p>
+        <?= __('There are no contests in this election.') ?>
+    </p>
+<?php else: ?>
+    <p>
+        <?= __('The following contests in this election apply to your area:') ?>
+    </p>
 
-<?php foreach ($contests as $contest): ?>
+    <?php foreach ($contests as $contest): ?>
 
-    <h3>
-        <?= $contest->name ?>
-    </h3>
+        <div class="card mb-3">
+            <div class="card-body pb-0">
+                <h3>
+                    <?= $contest->name ?>
+                </h3>
 
-    <p>The following candidates have filed for this contest:</p>
+                <?php if (count($contest->candidates) === 0): ?>
+                    <p>
+                        <?= __('No candidates have filed for this contest.') ?>
+                    </p>
+                <?php else: ?>
+                    <p>
+                        <?= __('The following candidates have filed for this contest:') ?>
+                    </p>
 
-    <div class="row">
-        <?php foreach ($contest->candidates as $candidate): ?>
-            <div class="col-md-4">
-                <?= $candidate->renderCardElement($this) ?>
+                    <div class="row">
+                        <?php foreach ($contest->candidates as $candidate): ?>
+                            <div class="col-md-4">
+                                <?= $candidate->renderSummaryElement($this) ?>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                <?php endif ?>
             </div>
-        <?php endforeach ?>
-    </div>
+        </div>
 
-<?php endforeach ?>
+    <?php endforeach ?>
+<?php endif ?>

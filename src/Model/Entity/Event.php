@@ -22,6 +22,7 @@ use OurSociety\View\AppView;
  * @property DateTime $modified
  *
  * @property ElectoralDistrict $electoral_district
+ * @property bool $is_example True if entity is example.
  */
 class Event extends AppEntity
 {
@@ -37,7 +38,8 @@ class Event extends AppEntity
         $data = ($data ?? []) + [
             'name' => 'Example Event',
             'location' => 'Example Location',
-            'start' => Time::now()->addDays(random_int(0, 30))
+            'start' => Time::now()->addDays(random_int(0, 30)),
+            'is_example' => true,
         ];
 
         return new self($data);
@@ -52,6 +54,10 @@ class Event extends AppEntity
      */
     public function renderMunicipalViewLink(AppView $view, $url = null): string
     {
+        if ($this->is_example) {
+            return $this->name;
+        }
+
         return $view->Html->link($this->name, [
             '_name' => 'municipality:event',
             'event' => $this->id,

@@ -8,9 +8,9 @@ use Cake\ORM\Query;
 use Cake\View\CellTrait;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Model\Entity\ElectoralDistrict;
-use OurSociety\Model\Entity\PoliticianArticle;
+use OurSociety\Model\Entity\Article;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Table\PoliticianArticlesTable;
+use OurSociety\Model\Table\ArticlesTable;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -27,13 +27,6 @@ class ArticlesController extends CrudController
      * @var UsersTable
      */
     public $Users;
-
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->modelClass = 'PoliticianArticles';
-    }
 
     public function index(string $politician): ?Response
     {
@@ -57,7 +50,7 @@ class ArticlesController extends CrudController
                 'fields' => [
                     'name' => [
                         'title' => 'Article Title',
-                        'formatter' => function ($name, $value, PoliticianArticle $article) {
+                        'formatter' => function ($name, $value, Article $article) {
                             return $this->createView()->Html->link($value, [
                                 '_name' => 'politician:article',
                                 'politician' => $article->politician->slug,
@@ -94,8 +87,8 @@ class ArticlesController extends CrudController
 
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
-        /** @var PoliticianArticlesTable $articles */
-        $articles = $this->loadModel('PoliticianArticles');
+        /** @var ArticlesTable $articles */
+        $articles = $this->loadModel('Articles');
 
         $politician = $users->getBySlug($politicianSlug, $this->Auth->user()->role);
         $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
@@ -120,16 +113,16 @@ class ArticlesController extends CrudController
         $this->viewBuilder()->setLayout('site');
 
         $getMunicipalityId = function () use ($municipalitySlug): string {
-            /** @var PoliticianArticlesTable $table */
+            /** @var ArticlesTable $table */
             $table = $this->loadModel();
             /** @var ElectoralDistrict $municipality */
-            $municipality = $table->Municipalities->find('slugged', ['slug' => $municipalitySlug])->firstOrFail();
+            $municipality = $table->ElectoralDistricts->find('slugged', ['slug' => $municipalitySlug])->firstOrFail();
 
             return $municipality->id;
         };
 
         $this->Crud->on('beforeSave', function (Event $event) use ($getMunicipalityId) {
-            /** @var PoliticianArticle $article */
+            /** @var Article $article */
             $article = $event->getSubject()->entity;
             /** @var User $user */
             $user = $this->Auth->user();
@@ -156,11 +149,20 @@ class ArticlesController extends CrudController
                 'fields' => [
                     'id' => ['type' => 'hidden'],
                     'politician_id' => ['type' => 'hidden'],
-                    'name' => ['label' => 'Title'],
-                    'body' => ['type' => 'editor'],
+                    'name' => ['label' => 'Article Title'],
+                    'body' => ['type' => 'editor', 'label' => false],
                     'version' => ['type' => 'hidden'],
                 ],
+                'form_submit_button_text' => 'Submit Article for Fact-Checking',
                 'form_submit_extra_buttons' => false,
+            ],
+            'messages' => [
+                'success' => [
+                    'text' => 'Thanks for submitting! This article is now in the queue for fact-­checking and will be approved soon.'
+                ],
+                'error' => [
+                    'text' => 'Could not submit article. Please check for errors below, or contact us if the problem persists.'
+                ]
             ],
         ]);
 

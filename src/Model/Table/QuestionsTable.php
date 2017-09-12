@@ -6,11 +6,10 @@ namespace OurSociety\Model\Table;
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\ORM\Association;
 use Cake\ORM\Behavior;
-use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator as CakeValidator;
+use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Entity\Question;
 use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
@@ -45,7 +44,7 @@ class QuestionsTable extends AppTable
 
         $this->setDisplayField('question');
 
-        $this->addBehavior('CounterCache', ['Categories' => ['question_count']]);
+        $this->addBehavior(CounterCacheBehavior::class, ['Categories' => ['question_count']]);
 
         $this->belongsTo('Categories');
         $this->hasMany('Answers');

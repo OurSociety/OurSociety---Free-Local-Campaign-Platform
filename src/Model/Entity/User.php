@@ -47,7 +47,7 @@ use OurSociety\View\AppView;
  * @property Answer $answers
  * @property Category[] $categories
  * @property ElectoralDistrict $electoral_district
- * @property PoliticianArticle[] $articles
+ * @property Article[] $articles
  * @property PoliticianAwards[] $awards
  * @property PoliticianPosition[] $positions
  * @property PoliticianQualification[] $qualifications

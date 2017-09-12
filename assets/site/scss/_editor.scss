@@ -1,0 +1,10 @@
+@import '~trumbowyg/dist/ui/sass/trumbowyg';
+
+.trumbowyg-box {
+    @include border-radius($border-radius);
+    margin-top: 0;
+}
+
+.trumbowyg-editor {
+    background: $white;
+}

@@ -22,6 +22,7 @@ namespace OurSociety\Model\Entity;
  * @property string $vote_variation_id Vote variation associated with the contest (e.g. n-of-m, majority, et al).
  *
  * @property Candidate[] $candidates
+ * @property Office $office
  * @property Election $election
  * @property ElectoralDistrict $electoral_district
  */

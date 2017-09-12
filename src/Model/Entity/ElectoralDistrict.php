@@ -23,6 +23,10 @@ use OurSociety\View\AppView;
  * @property int $office_count
  * @property int $subdivision_count
  * @property int $sibling_count
+ * @property int $citizen_count
+ * @property int $politician_count
+ * @property int $article_factcheck_count
+ * @property int $article_year_count
  * @property string $polygon
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
@@ -39,7 +43,7 @@ use OurSociety\View\AppView;
  * @property User[] $pathway_politicians
  * @property ElectoralDistrict $county
  * @property ElectoralDistrict $state
- * @property PoliticianArticle[] $articles
+ * @property Article[] $articles
  * @property User[] $elected_officials
  * @property PoliticianVideo[] $videos
  *

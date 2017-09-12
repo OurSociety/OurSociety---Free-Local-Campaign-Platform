@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var \Cake\ORM\ResultSet|\OurSociety\Model\Entity\PoliticianArticle[] $articles The articles.
+ * @var \Cake\ORM\ResultSet|\OurSociety\Model\Entity\Article[] $articles The articles.
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
  */
 ?>

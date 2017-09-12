@@ -13,7 +13,7 @@ use Cake\ORM\TableRegistry;
  */
 class OfficeType extends AppEntity
 {
-    public static function random(array $data = null): self
+    public static function random(): self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return TableRegistry::get('OfficeTypes')->find()->order('RAND()')->firstOrFail();

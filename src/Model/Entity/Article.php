@@ -9,7 +9,7 @@ use Faker\Factory as Example;
 use OurSociety\View\AppView;
 
 /**
- * PoliticianArticle Entity
+ * Article Entity
  *
  * @property string $id
  * @property string $politician_id
@@ -29,7 +29,7 @@ use OurSociety\View\AppView;
  * @property int $read_time Estimated read time (in minutes)
  * @property bool $is_example
  */
-class PoliticianArticle extends AppEntity
+class Article extends AppEntity
 {
     public static function example(array $data = null): self
     {
@@ -100,14 +100,5 @@ class PoliticianArticle extends AppEntity
         $imageTimeMinutes = $imageTimeSeconds / MINUTE;
 
         return max((int)round($readTimeMinutes + $imageTimeMinutes), 1);
-    }
-
-    // TODO: Delete when this class name is `Articles`, not `PoliticianArticles`.
-    protected function renderElement(AppView $view, string $type, array $viewVariables = null): string
-    {
-        return $view->element(
-            sprintf('%s/article', Inflector::camelize($type)),
-            ($viewVariables ?? []) + ['article' => $this]
-        );
     }
 }

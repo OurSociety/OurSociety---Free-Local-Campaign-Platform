@@ -4,7 +4,6 @@
     "homepage": "https://oursociety.org",
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "alpha",
     "repositories": [
         {
             "type": "vcs",
@@ -27,6 +26,7 @@
         "fzaninotto/faker": "^1.7",
         "google/apiclient": "^2.0",
         "gourmet/knp-menu": "^0.5.0",
+        "huncrys/cakephp-countercache-shell": "^0.0.1",
         "jeremyharris/cakephp-lazyload": "^2.0",
         "josegonzalez/cakephp-upload": "^3.7",
         "josegonzalez/dotenv": "^3.0",
@@ -61,7 +61,7 @@
         "leanphp/behat-code-coverage": "3.1.x-dev@dev",
         "leanphp/phpspec-code-coverage": "dev-phpspec-4@dev",
         "memio/spec-gen": "^0.8",
-        "phpspec/phpspec": "4.0.2 as 3.4.2",
+        "phpspec/phpspec": "^4.0",
         "phpunit/phpunit": "^6.2",
         "psy/psysh": "@stable",
         "pyrech/composer-changelogs": "^1.5",

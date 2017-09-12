@@ -25,13 +25,16 @@ class DatabaseFixture
     {
         $connection = $this->getConnection(self::CONNECTION_FIXTURES);
         $config = $connection->config();
+        $filename = $this->getFixturesDumpFilename();
 
         DatabaseDumper::create()
             ->setDbName($config['database'])
             ->setUserName($config['username'])
             ->setPassword($config['password'])
             ->dontUseExtendedInserts()
-            ->dumpToFile($this->getFixturesDumpFilename());
+            ->dumpToFile($filename);
+
+        file_put_contents($filename, str_replace('`polygon` varchar(255) ', '`polygon` geometry ', file_get_contents($filename)));
     }
 
     public function restoreFixtureDatabase(): void

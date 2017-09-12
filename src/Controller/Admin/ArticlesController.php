@@ -10,7 +10,7 @@ use OurSociety\Controller\CrudController;
 use OurSociety\Listener\ViewListener;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class PoliticianArticlesController extends CrudController
+class ArticlesController extends CrudController
 {
     public function beforeFilter(Event $event): void
     {

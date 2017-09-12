@@ -14,6 +14,7 @@ use Gourmet\KnpMenu\View\Helper as GourmetKnpMenu;
  *
  * @property Helper\BreadcrumbsHelper $Breadcrumbs
  * @property CrudView\Helper\CrudViewHelper $CrudView
+ * @property Helper\FlashHelper $Flash
  * @property Helper\FormHelper $Form
  * @property Helper\HtmlHelper $Html
  * @property GourmetKnpMenu\MenuHelper $Menu
@@ -127,12 +128,14 @@ class AppView extends CrudView\CrudView
 
         // Unload helpers that CrudView loaded so we can use customised ones.
         $this->helpers()->unload('Breadcrumbs');
+        $this->helpers()->unload('Flash');
         $this->helpers()->unload('Form');
         $this->helpers()->unload('Html');
         $this->helpers()->unload('Paginator');
 
         // These helpers override the CrudView ones with custom settings (thought they still extend BootstrapUI).
         $this->loadHelper('Breadcrumbs', ['className' => Helper\BreadcrumbsHelper::class]);
+        $this->loadHelper('Flash', ['className' => Helper\FlashHelper::class]);
         $this->loadHelper('Form', ['className' => Helper\FormHelper::class]);
         $this->loadHelper('Html', ['className' => Helper\HtmlHelper::class]);
         $this->loadHelper('Paginator', ['className' => Helper\PaginatorHelper::class]);

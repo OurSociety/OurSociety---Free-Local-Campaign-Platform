@@ -5,6 +5,7 @@ Feature: Politician Videos
   I want to embed videos on my profile
 
   Scenario: Edit video
-    Given There is a video
+    Given I am on my profile
+    And there is a video
     When I edit that video
-    Then The video is updated
+    Then the video is updated

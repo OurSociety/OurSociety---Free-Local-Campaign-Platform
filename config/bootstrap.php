@@ -227,6 +227,7 @@ Plugin::load('CakeDC/Enum');
 Plugin::load('Crud');
 Plugin::load('CrudUsers');
 Plugin::load('CrudView');
+Plugin::load('Crys/CounterCacheShell');
 Plugin::load('CsvView');
 Plugin::load('Gourmet/KnpMenu');
 Plugin::load('Josegonzalez/Upload');

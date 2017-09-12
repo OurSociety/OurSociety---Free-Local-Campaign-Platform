@@ -10,15 +10,11 @@ $percentage = round(($currentUser->answer_count / $levelQuestionTotal) * 100);
 $ceilingReached = $percentage === 100.0;
 ?>
 
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Citizen Dashboard'), ['_name' => 'citizen:dashboard']) ?></li>
-</ol>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= __('My Values') ?></h3>
-    </div>
-    <div class="panel-body">
+<div class="card mb-3">
+    <h4 class="card-header">
+        <?= __('My Values') ?>
+    </h4>
+    <div class="card-body">
         <p>
             <?= __('You have answered {answer_count} out of {question_total} questions.', [
                 'answer_count' => $currentUser->answer_count,
@@ -31,94 +27,131 @@ $ceilingReached = $percentage === 100.0;
             <?php endif ?>
         </p>
 
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="<?= $percentage ?>"
-                 aria-valuemin="0" aria-valuemax="100" style="min-width: <?= $percentage ?>em;">
+        <div class="progress" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<?= $percentage ?>"
+                 aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage ?>%;">
                 <?= $percentage ?>%
             </div>
         </div>
 
-        <div class="media">
-            <?php if ($politicianMatch !== null): ?>
-                <div class="media-left">
-                    <?= $this->cell('Profile/Picture', [], ['user' => $politicianMatch->politician]) ?>
-                </div>
-            <?php endif ?>
-            <div class="media-body">
-                <div class="col-sm-6">
+        <div class="row mt-3">
+            <div class="col">
+                <div class="media">
                     <?php if ($politicianMatch !== null): ?>
-                        <h4 class="media-heading"><?= $this->Html->politicianLink($politicianMatch->politician) ?></h4>
-                        <p>
-                            <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
-                                'percentage_match' => $politicianMatch->true_match_percentage,
-                                'politician_name' => $this->Html->politicianLink($politicianMatch->politician),
-                            ]) ?>
-                        </p>
+                        <div class="media-left">
+                            <?= $this->cell('Profile/Picture', [], ['user' => $politicianMatch->politician]) ?>
+                        </div>
                     <?php endif ?>
+                    <div class="media-body">
+                        <?php if ($politicianMatch !== null): ?>
+                            <h4 class="media-heading"><?= $this->Html->politicianLink($politicianMatch->politician) ?></h4>
+                            <p>
+                                <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
+                                    'percentage_match' => $politicianMatch->true_match_percentage,
+                                    'politician_name' => $this->Html->politicianLink($politicianMatch->politician),
+                                ]) ?>
+                            </p>
+                        <?php endif ?>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <?= $this->Html->link(
-                        __('Answer some more questions!'),
-                        ['_name' => 'citizen:questions'],
-                        ['class' => ['btn', 'btn-primary', 'btn-block', $ceilingReached ? 'disabled' : null]]
-                    ) ?>
-                </div>
+            </div>
+            <div class="col">
+                <?= $this->Html->link(
+                    __('Answer some more questions!'),
+                    ['_name' => 'citizen:questions'],
+                    ['class' => ['btn', 'btn-primary', 'btn-block', $ceilingReached ? 'disabled' : null]]
+                ) ?>
             </div>
         </div>
-
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Virtual Ballot') ?></h3>
+<div class="card-deck">
+    <div class="card mb-3">
+        <h4 class="card-header">
+            <?= __('My Municipality') ?>
+        </h4>
+        <div class="card-body">
+            <?php if ($currentUser->electoral_district === null): ?>
+                <p>
+                    <?= __('By selecting your electoral district, we can show you your municipality profile!') ?>
+                </p>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?= $this->Html->link(
+                            __('Select electoral district'),
+                            ['_name' => 'users:onboarding'],
+                            ['class' => ['btn', 'btn-primary', 'btn-block']]
+                        ) ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?= $this->element('Widgets/MunicipalProfile/stats', ['municipality' => $currentUser->electoral_district]) ?>
+
+                <div class="row mt-3">
+                    <div class="col-sm-6">
+                        <?= $this->Html->link(
+                            __('Go to municipal profile'),
+                            ['_name' => 'municipality:default'],
+                            ['class' => ['btn', 'btn-primary', 'btn-block']]
+                        ) ?>
+                    </div>
+                </div>
+            <?php endif ?>
+        </div>
     </div>
-    <div class="panel-body">
-        <?php if ($currentUser->electoral_district === null): ?>
-            <p>
-                <?= __('By selecting your electoral district, we can show you your virtual ballot!') ?>
-            </p>
+    <div class="card mb-3">
+        <h4 class="card-header">
+            <?= __('My Virtual Ballot') ?>
+        </h4>
+        <div class="card-body">
+            <?php if ($currentUser->electoral_district === null): ?>
+                <p>
+                    <?= __('By selecting your electoral district, we can show you your virtual ballot!') ?>
+                </p>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <?= $this->Html->link(
-                        __('Select electoral district'),
-                        ['_name' => 'users:onboarding'],
-                        ['class' => ['btn', 'btn-primary', 'btn-block']]
-                    ) ?>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?= $this->Html->link(
+                            __('Select electoral district'),
+                            ['_name' => 'users:onboarding'],
+                            ['class' => ['btn', 'btn-primary', 'btn-block']]
+                        ) ?>
+                    </div>
                 </div>
-            </div>
-        <?php else: ?>
-            <p>
-                <?= __('You have indicated you are in the municipality of {municipality}.', [
-                    'municipality' => $this->Html->link($currentUser->electoral_district->name, [
-                        '_name' => 'district',
-                        $currentUser->electoral_district->slug,
-                    ]),
-                ]) ?>
-            </p>
-            <p>
-                <?= __('From this, we can work out who you should be voting for in the upcoming New Jersey gubernatorial election, 2017!') ?>
-            </p>
+            <?php else: ?>
+                <p>
+                    <?= __('You have indicated you are in the municipality of {municipality}.', [
+                        'municipality' => $this->Html->link($currentUser->electoral_district->name, [
+                            '_name' => 'district',
+                            $currentUser->electoral_district->slug,
+                        ]),
+                    ]) ?>
+                </p>
+                <p>
+                    <?= __('From this, we can work out who you should be voting for in the upcoming New Jersey gubernatorial election, 2017!') ?>
+                </p>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <?= $this->Html->link(
-                        __("Let's see my virtual ballot"),
-                        ['_name' => 'citizen:ballots'],
-                        ['class' => ['btn', 'btn-primary', 'btn-block']]
-                    ) ?>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?= $this->Html->link(
+                            __("Let's see my virtual ballot"),
+                            ['_name' => 'citizen:ballots'],
+                            ['class' => ['btn', 'btn-primary', 'btn-block']]
+                        ) ?>
+                    </div>
                 </div>
-            </div>
-        <?php endif ?>
+            <?php endif ?>
+        </div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= __('What should OurSociety be thinking about?') ?></h3>
-    </div>
-    <div class="panel-body">
+<div class="card mb-3">
+    <h4 class="card-header">
+        <?= __('What should OurSociety be thinking about?') ?>
+    </h4>
+    <div class="card-body">
         <div class="row">
             <div class="col-md-6">
                 <p>

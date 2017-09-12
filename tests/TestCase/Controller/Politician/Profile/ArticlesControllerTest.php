@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller\Politician\Profile;
 
-use OurSociety\Model\Entity\PoliticianArticle;
-use OurSociety\Model\Table\PoliticianArticlesTable;
-use OurSociety\Test\Fixture\PoliticianArticlesFixture;
+use OurSociety\Model\Entity\Article;
+use OurSociety\Model\Table\ArticlesTable;
+use OurSociety\Test\Fixture\ArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
 
@@ -21,7 +21,7 @@ class ArticlesControllerTest extends IntegrationTestCase
      */
     public function testView(string $id, string $flash = null): void
     {
-        /** @var PoliticianArticle $article */
+        /** @var Article $article */
         $article = $this->table()->get($id);
 
         $this->auth(UsersFixture::POLITICIAN_EMAIL);
@@ -37,15 +37,15 @@ class ArticlesControllerTest extends IntegrationTestCase
     {
         return [
             'success (approved and published)' => [
-                'id' => PoliticianArticlesFixture::PUBLISHED_AND_APPROVED_ID,
+                'id' => ArticlesFixture::PUBLISHED_AND_APPROVED_ID,
                 'flash' => null,
             ],
             'success (unpublished)' => [
-                'id' => PoliticianArticlesFixture::UNPUBLISHED_ID,
+                'id' => ArticlesFixture::UNPUBLISHED_ID,
                 'flash' => 'This article is currently unpublished. Please publish it so it can be viewed by citizens.',
             ],
             'success (unapproved)' => [
-                'id' => PoliticianArticlesFixture::UNAPPROVED_ID,
+                'id' => ArticlesFixture::UNAPPROVED_ID,
                 'flash' => 'This article is currently awaiting moderation. Once approved it will be available to citizens.',
             ],
         ];
@@ -74,7 +74,7 @@ class ArticlesControllerTest extends IntegrationTestCase
 
     public function testEdit(): void
     {
-        $article = $this->table()->get(PoliticianArticlesFixture::UNPUBLISHED_ID);
+        $article = $this->table()->get(ArticlesFixture::UNPUBLISHED_ID);
 
         $this->auth(UsersFixture::POLITICIAN_EMAIL);
         $this->get(sprintf('/politician/profile/articles/edit/%s', $article->id));
@@ -105,8 +105,8 @@ class ArticlesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('<input type="checkbox" name="published" value="1" id="published" checked="checked">');
     }
 
-    private function table(): PoliticianArticlesTable
+    private function table(): ArticlesTable
     {
-        return PoliticianArticlesTable::instance();
+        return ArticlesTable::instance();
     }
 }

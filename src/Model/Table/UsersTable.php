@@ -11,6 +11,7 @@ use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 use Cake\Validation as Cake;
 use Josegonzalez\Upload\Model\Behavior\UploadBehavior;
+use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Validation\Validator as AppValidator;
@@ -58,6 +59,12 @@ class UsersTable extends AppTable
         ]);
         $this->hasMany('ValueMatches')->setForeignKey('citizen_id');
 
+        $this->addBehavior(CounterCacheBehavior::class, [
+            'ElectoralDistricts' => [
+                'citizen_count' => ['finder' => 'isCitizen'],
+                'politician_count' => ['finder' => 'isPolitician'],
+            ]
+        ]);
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
         $this->addBehavior(UploadBehavior::class, [
             'picture' => [
@@ -139,11 +146,11 @@ class UsersTable extends AppTable
             ->order(['Users.role' => 'ASC', 'Users.name' => 'ASC']);
     }
 
-    public function getBySlug(string $slug, string $role = User::ROLE_CITIZEN): User
+    public function getBySlug(string $slug, string $role = null): User
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this
-            ->find('politicianForCitizen', ['role' => $role])
+            ->find('politicianForCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
             ->where(['slug' => $slug])
             ->firstOrFail();
     }
