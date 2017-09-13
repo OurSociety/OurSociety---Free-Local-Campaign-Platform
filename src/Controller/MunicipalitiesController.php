@@ -96,6 +96,8 @@ class MunicipalitiesController extends CrudController
 
     public function edit(string $municipalitySlug): ?Response
     {
+        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
+
         $this->Crud->action()->setConfig([
             'relatedModels' => false,
             'scaffold' => [

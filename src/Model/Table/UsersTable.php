@@ -108,6 +108,8 @@ class UsersTable extends AppTable
             ->requirePresence('name', 'create')
             // token
             ->allowEmpty('token')
+            // picture
+            ->allowEmpty('picture')
             // token_expires
             ->allowEmpty('token_expires')
             ->dateTime('token_expires')

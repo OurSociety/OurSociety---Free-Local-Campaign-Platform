@@ -146,10 +146,13 @@ class ArticlesController extends CrudController
     {
         $this->Crud->action()->setConfig([
             'scaffold' => [
+                'page_title' => 'Submit Your Own Idea',
                 'fields' => [
                     'id' => ['type' => 'hidden'],
                     'politician_id' => ['type' => 'hidden'],
-                    'name' => ['label' => 'Article Title'],
+                    'name' => ['label' => false, 'placeholder' => 'Article Title'],
+                    'article_type' => ['label' => false, 'placeholder' => 'Article Type'],
+                    'aspect' => ['label' => false, 'placeholder' => 'Article Aspect'],
                     'body' => ['type' => 'editor', 'label' => false],
                     'version' => ['type' => 'hidden'],
                 ],

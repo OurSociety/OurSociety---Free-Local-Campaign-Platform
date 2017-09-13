@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Widget;
 
+use Cake\View\Form\ContextInterface;
 use Cake\View\Widget as Cake;
 //use CrudView\View\Widget as CrudView;
 
@@ -18,6 +19,10 @@ use Cake\View\Widget as Cake;
 class DateTimeWidget extends Cake\DateTimeWidget
 //class DateTimeWidget extends CrudView\DateTimeWidget
 {
+    public function render(array $data, ContextInterface $context)
+    {
+        return str_replace('glyphicon', 'fa', parent::render($data, $context));
+    }
 
     protected function _daySelect($options, $context): string
     {
@@ -38,5 +43,20 @@ class DateTimeWidget extends Cake\DateTimeWidget
         $options += ['placeholder' => 'Year'];
 
         return parent::_yearSelect($options, $context);
+    }
+
+    protected function _hourSelect($options, $context): string
+    {
+        $options += ['placeholder' => 'Hour'];
+
+        return parent::_hourSelect($options, $context);
+    }
+
+    protected function _minuteSelect($options, $context): string
+    {
+        unset($options['interval']);
+        $options += ['placeholder' => 'Minute', 'interval' => 5];
+
+        return parent::_minuteSelect($options, $context);
     }
 }

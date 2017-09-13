@@ -12,12 +12,23 @@
     <li class="breadcrumb-item active"><?= $event->name ?></li>
 </ol>
 
-<h1>
-    <?= $event->name ?>
-    <small class="text-muted">
-        @ <?= $event->location ?>
-    </small>
-</h1>
+<div class="row">
+    <div class="col">
+        <h1>
+            <?= $event->name ?>
+            <small class="text-muted">
+                @ <?= $event->location ?>
+            </small>
+        </h1>
+    </div>
+    <div class="col col-auto">
+        <?= $this->Html->link(
+            __('Edit Event'),
+            ['_name' => 'municipality:events:edit', 'event' => $event->id, 'municipality' => $event->electoral_district->slug],
+            ['class' => ['btn btn-outline-dark'], 'icon' => 'pencil']
+        ) ?>
+    </div>
+</div>
 
 <h3 class="text-muted">
     <?= $this->Time->niceLong($event->start) ?>

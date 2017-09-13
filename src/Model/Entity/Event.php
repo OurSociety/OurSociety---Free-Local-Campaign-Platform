@@ -18,11 +18,13 @@ use OurSociety\View\AppView;
  * @property DateTime $end
  * @property string $category_id
  * @property string $electoral_district_id
+ * @property string $user_id
  * @property DateTime $created
  * @property DateTime $modified
  *
  * @property ElectoralDistrict $electoral_district
  * @property bool $is_example True if entity is example.
+ * @property User $user
  */
 class Event extends AppEntity
 {

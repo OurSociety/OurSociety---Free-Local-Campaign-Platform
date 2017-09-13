@@ -1195,7 +1195,7 @@ bootstrap-sass@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"
 
-bootstrap@twbs/bootstrap#v4-dev:
+bootstrap@^4.0.0-alpha.6, bootstrap@twbs/bootstrap#v4-dev:
   version "4.0.0-beta"
   resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/576636047754711ccd702f6916a57218f0460085"
 
@@ -3964,7 +3964,7 @@ jdenticon@^1.7.2:
     canvas-renderer "~1.0.0"
     requirejs "^2.3.3"
 
-jquery@^3.2.1:
+"jquery@^1.9.1 || ^2.0 || ^3.0", jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -4079,8 +4079,8 @@ kind-of@^4.0.0:
     is-buffer "^1.1.5"
 
 laravel-mix@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/laravel-mix/-/laravel-mix-1.4.2.tgz#5fff0434c98c027e68ffb28c3f54bac95d7e2d1f"
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/laravel-mix/-/laravel-mix-1.4.3.tgz#7e42888bb1663026a3cea57af4dc5dcae2ffab3b"
   dependencies:
     autoprefixer "^7.1.1"
     babel-core "^6.24.1"
@@ -4109,8 +4109,8 @@ laravel-mix@^1.4.2:
     uglify-js "^2.8.28"
     uglifyjs-webpack-plugin "^0.4.6"
     vue-loader "^12.1.1"
-    vue-template-compiler "^2.3.3"
-    webpack "^3.4.0"
+    vue-template-compiler "^2.4.2"
+    webpack "^3.5.0"
     webpack-chunk-hash "^0.4.0"
     webpack-dev-server "^2.5.1"
     webpack-merge "^4.1.0"
@@ -4720,7 +4720,19 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   dependencies:
     minimist "0.0.8"
 
-moment@^2.10.6, moment@^2.18.1:
+moment-timezone@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
+  dependencies:
+    moment ">= 2.6.0"
+
+moment-timezone@^0.5.11:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.10, moment@^2.10.6, moment@^2.17, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -6923,6 +6935,29 @@ tempfile@^2.0.0:
     temp-dir "^1.0.0"
     uuid "^3.0.1"
 
+tempusdominus-bootstrap-4@^5.0.0-alpha9:
+  version "5.0.0-alpha9"
+  resolved "https://registry.yarnpkg.com/tempusdominus-bootstrap-4/-/tempusdominus-bootstrap-4-5.0.0-alpha9.tgz#ab07ad8707257cbce6e72d967739d6ba531724c5"
+  dependencies:
+    bootstrap "^4.0.0-alpha.6"
+    jquery "^1.9.1 || ^2.0 || ^3.0"
+    moment "^2.17"
+    moment-timezone "^0.5.11"
+    tempusdominus-core "5.0.0-alpha6"
+    tether "^1.4.0"
+
+tempusdominus-core@5.0.0-alpha6:
+  version "5.0.0-alpha6"
+  resolved "https://registry.yarnpkg.com/tempusdominus-core/-/tempusdominus-core-5.0.0-alpha6.tgz#4315ce326a0bb4ce1d07e667975d0ebd5a2318ce"
+  dependencies:
+    jquery "^1.9.1 || ^2.0 || ^3.0"
+    moment "^2.10"
+    moment-timezone "^0.4.0"
+
+tether@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
+
 tfunk@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/tfunk/-/tfunk-3.1.0.tgz#38e4414fc64977d87afdaa72facb6d29f82f7b5b"
@@ -7328,7 +7363,7 @@ vue-style-loader@^3.0.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.3.3, vue-template-compiler@^2.4.2:
+vue-template-compiler@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.4.2.tgz#5a45d843f148b098f6c1d1e35ac20c4956d30ad1"
   dependencies:
@@ -7424,9 +7459,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.4.0:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.4.1.tgz#4c3f4f3fb318155a4db0cb6a36ff05c5697418f4"
+webpack@^3.5.0:
+  version "3.5.6"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.6.tgz#a492fb6c1ed7f573816f90e00c8fbb5a20cc5c36"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"

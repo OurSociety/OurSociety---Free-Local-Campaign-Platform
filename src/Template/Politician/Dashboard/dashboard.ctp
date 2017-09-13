@@ -24,8 +24,13 @@
         ['class' => ['btn', 'btn-primary', $currentUser->answer_count === 50 ? 'disabled' : '']]
     ) ?>
     <?= $this->Html->link(
-        __('View Profile'),
+        __('Politician Profile'),
         ['_name' => 'politician:profile'],
+        ['class' => 'btn btn-primary']
+    ) ?>
+    <?= $this->Html->link(
+        __('Municipal Profile'),
+        ['_name' => 'municipality:default'],
         ['class' => 'btn btn-primary']
     ) ?>
 </div>
