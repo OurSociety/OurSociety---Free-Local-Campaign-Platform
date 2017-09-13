@@ -51,6 +51,11 @@ use OurSociety\View\AppView;
  */
 class ElectoralDistrict extends AppEntity
 {
+    public function equals(ElectoralDistrict $municipality): bool
+    {
+        return $this->id === $municipality->id;
+    }
+
     public function renderLink(AppView $view, $url = null): string
     {
         return $view->Html->link($this->name, $url ?: ['_name' => 'district', 'district' => $this->slug]);

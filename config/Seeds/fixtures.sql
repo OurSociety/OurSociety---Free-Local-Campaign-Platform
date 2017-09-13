@@ -41,6 +41,9 @@ CREATE TABLE `article_types` (
 
 LOCK TABLES `article_types` WRITE;
 /*!40000 ALTER TABLE `article_types` DISABLE KEYS */;
+INSERT INTO `article_types` VALUES ('4c6b0d5e-89f1-11e7-b18e-6c4008a68a60','Plan');
+INSERT INTO `article_types` VALUES ('531ae5c0-89f1-11e7-a903-6c4008a68a60','Policy');
+INSERT INTO `article_types` VALUES ('55728c1a-89f1-11e7-99f9-6c4008a68a60','Vision');
 /*!40000 ALTER TABLE `article_types` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `articles`;
@@ -1412,6 +1415,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES ('dee7181a-9835-11e7-80f6-6c4008a68a60','Example Event','Example Location','Non ipsum voluptates voluptatem esse repellendus. Qui laboriosam, repudiandae consequuntur ullam corporis qui exercitationem fugiat adipisci nisi amet, sequi blanditiis fugit, corrupti, beatae voluptatem, occaecat non praesentium dolor numquam deserunt explicabo. Ipsam error sed architecto adipisci culpa, laudantium, incididunt ipsum, deserunt aute omnis corrupti, est excepturi ipsum, incidunt, quo cillum cum quam qui dignissimos eius elit, id, beatae ea ducimus, enim tempore, illo ipsum vel eum omnis culpa, excepteur omnis magna aliqua. Ex ea blanditiis aperiam laudantium, repudiandae cupidatat hic sit cupiditate anim voluptatem. Et enim aut dolore.','2018-12-12 00:00:00',NULL,'77371e03-159e-3146-9ffd-2ec34fa44eaa','50802eba-977a-11e7-b6d8-6c4008a68a60','573111be-759e-11e7-a371-6c4008a68a60','2017-09-13 02:44:54','2017-09-13 02:44:54');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `external_identifiers`;
@@ -1635,13 +1639,13 @@ CREATE TABLE `politician_videos` (
 
 LOCK TABLES `politician_videos` WRITE;
 /*!40000 ALTER TABLE `politician_videos` DISABLE KEYS */;
-INSERT INTO `politician_videos` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','','VtVuY3vlnzE',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('23ab4609-26e8-3227-a8a9-41a3e0c66931','573111be-759e-11e7-a371-6c4008a68a60','','9AJz3quMPsA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('794e428c-53ca-35df-a09e-111f32ecd7b4','573111be-759e-11e7-a371-6c4008a68a60','','mKGvpF2zTXA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('b6141312-a703-3c45-aaa7-c9ce3fc6b676','573111be-759e-11e7-a371-6c4008a68a60','','6DLQ_fyFkzA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('db2c8d74-106f-3734-bff1-674d5e045f1b','573111be-759e-11e7-a371-6c4008a68a60','','S_mCWnDCSY8',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','','W7NNOfkcKRg',1,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('ff430a43-9376-3ec2-876f-53922c672118','573111be-759e-11e7-a371-6c4008a68a60','','WGi9z6UdlUU',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','VtVuY3vlnzE',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('23ab4609-26e8-3227-a8a9-41a3e0c66931','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','9AJz3quMPsA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('794e428c-53ca-35df-a09e-111f32ecd7b4','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','mKGvpF2zTXA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('b6141312-a703-3c45-aaa7-c9ce3fc6b676','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','6DLQ_fyFkzA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('db2c8d74-106f-3734-bff1-674d5e045f1b','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','S_mCWnDCSY8',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','W7NNOfkcKRg',1,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `politician_videos` VALUES ('ff430a43-9376-3ec2-876f-53922c672118','573111be-759e-11e7-a371-6c4008a68a60','45bb1599-816c-4d84-a9fb-8a25c0134634','WGi9z6UdlUU',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
 /*!40000 ALTER TABLE `politician_videos` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `questions`;
@@ -2225,8 +2229,9 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES ('46b4b442-75aa-11e7-b7f8-6c4008a68a60','citizen-2','citizen2@example.net',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$RSWPlcxxDIhqkpNfoKOqneE6TgAIOj.fvZr5ypoii8z/U8wB6U5mq','Citizen 2','citizen',10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
 INSERT INTO `users` VALUES ('5205ae34-759e-11e7-9add-6c4008a68a60','oursociety-team','team@oursociety.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$DNoXh.E6tH47LpOyRaTKMOOEwZ3gATey9NWmxAtRP2HH9jEZwjy7e','OurSociety Team','admin',0,'logo.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-08-07 02:19:06','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-08-07 02:19:06');
 INSERT INTO `users` VALUES ('54064c3e-759e-11e7-b151-6c4008a68a60','citizen-1','citizen@example.net',NULL,'12345','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Citizen 1','citizen',11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'123456','2017-07-31 08:09:46','2017-09-12 10:44:20','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('573111be-759e-11e7-a371-6c4008a68a60','john-doe','politician@example.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890','$2y$10$13YLuVeJUmQ5Kx2oYnifyev8YLHzFt2LN1G7UHmLzHItSpReJNIBO','John Doe','politician',50,NULL,NULL,NULL,NULL,NULL,'John Doe II','Edison','NJ','US','1984-01-01',NULL,NULL,NULL,NULL,NULL,NULL,'2017-08-06 18:18:31','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('573111be-759e-11e7-a371-6c4008a68a60','john-doe','politician@example.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890','$2y$10$13YLuVeJUmQ5Kx2oYnifyev8YLHzFt2LN1G7UHmLzHItSpReJNIBO','John Doe','politician',50,NULL,NULL,NULL,NULL,NULL,'John Doe II','Edison','NJ','US','1984-01-01',NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-13 02:13:00','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
 INSERT INTO `users` VALUES ('847d8844-75aa-11e7-b6b8-6c4008a68a60','citizen-3','citizen3@example.net',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$.VpADapLFTFOIKALSll9ce1s5U4GKnTJVz9otaCO8b7iRSbRwXeU6','Citizen 3','citizen',50,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('97d7cdae-8907-4880-8c7b-82b478e75810','ron-rivers','ron@oursociety.org',NULL,'08902','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Ron Rivers','citizen',0,'https://www.oursociety.org/img/ronbio.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'2017-09-09 15:45:54',NULL,'2017-08-03 21:58:26','2017-08-16 15:51:21');
 INSERT INTO `users` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','imported-politician','imported-politician@example.com','possible.real.email@example.com',NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890 x1234 / 123-213-2345','$2y$10$uCYX0GpaXkwbJKJaTs6HiOL3cl5C/JAgavF00FLYoV/giiP01PPm6','Imported Politician','politician',0,'example-politician.png','123 Street, Town, ST 01234',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'State Senate District 8',NULL,0,NULL,'123456',NULL,NULL,NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

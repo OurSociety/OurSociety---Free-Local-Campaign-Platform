@@ -22,19 +22,20 @@ class ValueMatchCell extends Cell
      * @param int|null $limit
      * @return void
      */
-    public function display(User $politician, ?User $citizen = null, ?int $limit = self::LIMIT): void
+    public function display(User $politician, ?User $citizen = null, ?int $limit = null): void
     {
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
         $citizen = $citizen ?: $politician;
+        $limit = $limit ?? self::LIMIT;
 
         $this->set([
-            'currentUser' => $this->request->session()->read('Auth.User'),
             'match' => $users->getMatchPercentage($citizen, $politician),
             'similarities' => $users->Categories->getMatchPercentages($citizen, $politician, false, $limit)->toArray(),
             'differences' => $users->Categories->getMatchPercentages($citizen, $politician, true, $limit)->toArray(),
             'politician' => $politician,
             'limit' => $limit,
+            'isExample' => $citizen->isPolitician() || $citizen->isPathwayPolitician(),
         ]);
     }
 

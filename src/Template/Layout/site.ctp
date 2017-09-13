@@ -42,16 +42,17 @@ $callToActionLink = $this->Url->build([
         </ul>
     </div>
 
-    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-        <?php if ($this->get('currentUser')): ?>
-            <?= $this->cell('Navbar/User') ?>
-        <?php endif ?>
-    </ul>
-
     <?php if ($this->get('currentUser')): ?>
-        <?= $this->Html->link(__('Logout'), ['_name' => 'users:logout'], [
-            'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
-        ]) ?>
+        <ul class="navbar-nav os-navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <li class="nav-item">
+                <?= $this->cell('Navbar/User') ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Logout'), ['_name' => 'users:logout'], [
+                    'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
+                ]) ?>
+            </li>
+        </ul>
     <?php else: ?>
         <?= $this->Html->link(__('Login'), ['_name' => 'users:login'], [
             'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']

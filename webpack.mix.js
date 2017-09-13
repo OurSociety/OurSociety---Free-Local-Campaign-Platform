@@ -33,6 +33,7 @@ mix
   .autoload({
     'jquery': ['$', 'window.jQuery', 'jQuery'], // auto-`require('jquery')` if these variables are used
     'popper.js/dist/umd/popper.js': ['Popper'],
+    'moment': ['moment'],
   })
   .extract(['bootstrap', 'bootstrap-sass', 'jdenticon/dist/jdenticon.js', 'jquery', 'popper.js', 'selectize', 'trumbowyg'])
   .options({
@@ -124,3 +125,21 @@ if (process.env.npm_lifecycle_event === 'hot') {
   // yarn dev|prod|watch
   mix.version() // version does not work in hot mode
 }
+
+Mix.listen('configReady', (webpackConfig) => {
+
+  // TODO: Delete webpack.config.js and move logic to here. See https://github.com/JeffreyWay/laravel-mix/pull/1077
+  // // remove original rule
+  // webpackConfig.module.rules = webpackConfig.module.rules.filter(rule => String(rule.test) !== String(/\.s[ac]ss$/))
+  //
+  // // add modified rule
+  // webpackConfig.module.rules.push({
+  //   test: /\.s[ac]ss$/,
+  //   loaders: [
+  //     {loader: 'style-loader'},
+  //     {loader: 'css-loader', options: {sourceMap: true}},
+  //     {loader: 'sass-loader', options: {sourceMap: true}},
+  //   ],
+  // })
+
+})

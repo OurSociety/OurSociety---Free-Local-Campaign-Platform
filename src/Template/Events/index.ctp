@@ -16,16 +16,24 @@
     <?= __('Upcoming Events') ?>
 </h1>
 
-<p>
-    <?= __('Here is a list of upcoming events in the {municipality} area.', [
-        'municipality' => $this->Html->link($municipality->display_name, ['_name' => 'municipality', 'municipality' => $municipality->slug])
-    ]) ?>
-</p>
+<?php if (count($events) === 0): ?>
+    <p>
+        <?= __('There are no events happening in {municipality}.', [
+            'municipality' => $this->Html->link($municipality->display_name, ['_name' => 'municipality', 'municipality' => $municipality->slug])
+        ]) ?>
+    </p>
+<?php else: ?>
+    <p>
+        <?= __('The following events are happening in {municipality}:', [
+            'municipality' => $this->Html->link($municipality->display_name, ['_name' => 'municipality', 'municipality' => $municipality->slug])
+        ]) ?>
+    </p>
 
-<ul>
-    <?php foreach ($events as $event): ?>
-        <li>
-            <?= $event->renderSummaryElement($this) ?>
-        </li>
-    <?php endforeach ?>
-</ul>
+    <ul>
+        <?php foreach ($events as $event): ?>
+            <li>
+                <?= $event->renderSummaryElement($this) ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php endif ?>

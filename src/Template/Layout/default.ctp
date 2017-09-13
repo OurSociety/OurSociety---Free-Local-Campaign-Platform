@@ -38,7 +38,7 @@ $this->start('navbar');
                 ); ?>
             </div>
             <div class="collapse navbar-collapse" id="navbar-top">
-                <div class="navbar-right">
+                <div class="navbar-right text-muted">
                     <?php if ($this->get('currentUser')): ?>
                         <?= $this->cell('Navbar/User', [['style' => 'float: left; margin-top: 8px;']]) ?>
                         <?=''// $this->element('topbar'); ?>

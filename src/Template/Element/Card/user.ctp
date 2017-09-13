@@ -5,20 +5,31 @@
  */
 ?>
 
-<div class="card text-white<?= $user->is_example === true ? ' example' : '' ?>">
+<?php if ($user->is_example === true): ?>
+    <div class="card text-white example">
+<?php else: ?>
+    <a class="card text-white" href="<?= $this->Url->build([
+        '_name' => 'pathway-politician',
+        'citizen' => $user->slug,
+    ]) ?>">
+<?php endif ?>
 
-    <?php if ($user->picture !== null): ?>
-        <img class="card-img" src="<?= $user->picture ?>" alt="Card image">
-    <?php else: ?>
-        <?= $this->Html->jdenticon($user->id) ?>
-    <?php endif ?>
+        <?php if ($user->picture !== null): ?>
+            <img class="card-img" src="<?= $user->picture ?>" alt="Card image">
+        <?php else: ?>
+            <?= $this->Html->jdenticon($user->id) ?>
+        <?php endif ?>
 
-    <div class="card-img-overlay text-center">
-        <h5 class="card-title align-bottom" style="background: rgba(0,0,0,.5); margin: -1.25rem; padding: 1rem">
-            <?= !$user->is_example
-                ? $user->name
-                : __('Your Name Here!') ?>
-        </h5>
+        <div class="card-img-overlay text-center">
+            <h5 class="card-title align-bottom" style="background: rgba(0,0,0,.5); margin: -1.25rem; padding: 1rem">
+                <?= !$user->is_example
+                    ? $user->name
+                    : __('Your Name Here!') ?>
+            </h5>
+        </div>
+
+<?php if ($user->is_example === true): ?>
     </div>
-
-</div>
+<?php else: ?>
+    </a>
+<?php endif ?>

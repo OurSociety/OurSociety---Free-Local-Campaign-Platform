@@ -15,42 +15,6 @@ if ($actualCount < $desiredCount):
 endif;
 ?>
 
-<div class="row">
-    <div class="col">
-        <h2>
-            <?= __('Trending Policies, Plans & Values') ?>
-        </h2>
-    </div>
-    <div class="col-auto">
-        <div class="btn-group">
-            <?= $this->Html->link(
-                __('Submit Your Own Idea'),
-                ['_name' => 'municipality:article:new', 'municipality' => $municipality->slug],
-                ['icon' => 'fire', 'class' => ['btn', 'btn-outline-dark']]
-            ) ?>
-            <?= $this->Html->link(
-                __('View All'),
-                ['_name' => 'municipality:articles', 'municipality' => $municipality->slug],
-                ['icon' => 'list', 'class' => ['btn', 'btn-outline-dark']]
-            ) ?>
-            <?php /*
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-fire"></i>
-                <?= __('Hot') ?>
-            </div>
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-asterisk"></i>
-                <?= __('New') ?>
-            </div>
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-line-chart"></i>
-                <?= __('Top') ?>
-            </div>
-            */ ?>
-        </div>
-    </div>
-</div>
-
 <div class="card-deck pt-2">
     <?php foreach ($articles as $article): ?>
         <?= $article->renderCardElement($this) ?>

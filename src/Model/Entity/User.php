@@ -48,7 +48,7 @@ use OurSociety\View\AppView;
  * @property Category[] $categories
  * @property ElectoralDistrict $electoral_district
  * @property Article[] $articles
- * @property PoliticianAwards[] $awards
+ * @property PoliticianAward[] $awards
  * @property PoliticianPosition[] $positions
  * @property PoliticianQualification[] $qualifications
  * @property PoliticianVideo[] $videos
@@ -159,6 +159,19 @@ class User extends AppEntity
         return new self($data);
     }
 
+    public function canEditMunicipality(ElectoralDistrict $municipality): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        if ($this->isPolitician() && $this->isInMunicipality($municipality)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Has onboarded?
      *
@@ -169,6 +182,11 @@ class User extends AppEntity
     public function hasOnboarded(): bool
     {
         return $this->electoral_district !== null;
+    }
+
+    public function isInMunicipality(ElectoralDistrict $municipality): bool
+    {
+        return $this->electoral_district->equals($municipality);
     }
 
     /**
@@ -232,6 +250,7 @@ class User extends AppEntity
         $user = $this->withLastSeen();
 
         $table = TableRegistry::get('Users');
+        $table->removeBehavior('CounterCache');
         $table->removeBehavior('Timestamp');
         $table->saveOrFail($user);
     }
@@ -244,6 +263,11 @@ class User extends AppEntity
     public function isCitizen(): bool
     {
         return $this->role === self::ROLE_CITIZEN;
+    }
+
+    public function isPathwayPolitician(): bool
+    {
+        return $this->isCitizen() && $this->pathway_politician;
     }
 
     public function isPolitician(): bool

@@ -11,7 +11,7 @@ namespace OurSociety\Model\Entity;
  * @property string $name
  * @property string $description
  *
- * @property \OurSociety\Model\Entity\Politician $politician
+ * @property \OurSociety\Model\Entity\User $politician
  */
 class PoliticianAward extends AppEntity
 {

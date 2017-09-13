@@ -7,6 +7,9 @@
 
 <?= $this->Html->image($user, [
     'alt' => __('Profile picture of {user_name}', ['user_name' => $user->name]),
-    'class' => ['img-responsive'],
+    'class' => [
+        'img-fluid',
+        'img-responsive' // TODO: Remove when bootstrap 3 dropped.
+    ],
     'style' => 'min-width: 100%',
 ]) ?>
