@@ -14,6 +14,8 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        $this->viewBuilder()->setLayout('site');
+
         $user = $this->getCurrentUser();
 
         if (!$user->hasOnboarded()) {

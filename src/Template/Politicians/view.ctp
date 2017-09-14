@@ -4,17 +4,12 @@
  * @var \OurSociety\Model\Entity\User|null $currentUser The currently logged in user, if any.
  * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
  */
+
+$this->Breadcrumbs->add('Browse Politicians', ['_name' => 'politicians']);
+$this->Breadcrumbs->add($politician->name);
 ?>
 
 <?php $this->extend('/Common/Politicians/view') ?>
-
-<?php $this->start('breadcrumbs'); ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'politicians']) ?></li>
-    <li><?= $politician->name ?></li>
-</ol>
-<?php $this->end() ?>
 
 <?php $this->start('profile_picture') ?>
     <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>

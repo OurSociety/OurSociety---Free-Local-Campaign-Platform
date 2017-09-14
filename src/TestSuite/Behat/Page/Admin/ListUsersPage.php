@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Page\Admin;
 
+use OurSociety\TestSuite\Behat\Page\Crud;
+
 /**
  * Index page.
  */

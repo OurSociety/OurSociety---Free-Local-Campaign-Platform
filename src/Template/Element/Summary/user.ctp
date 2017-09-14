@@ -22,7 +22,7 @@
             <?= $user->renderLink($this) ?>
         </h5>
         <h6>
-            <?= $user->office_type->name ?>
+            <?= $user->office_type ? $user->office_type->name : __('Unknown Office') ?>
         </h6>
         <ul class="list-unstyled">
             <?php /*

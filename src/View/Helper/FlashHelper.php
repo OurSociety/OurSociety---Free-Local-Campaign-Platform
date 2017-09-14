@@ -13,6 +13,8 @@ class FlashHelper extends BootstrapUI\FlashHelper
 {
     public function __construct(AppView $View, array $config = [])
     {
+        $config += ['element' => 'flash'];
+
         if ($View->getBootstrapVersion() === 4) {
             $config += ['class' => ['alert', 'alert-dismissible', 'fade', 'show']];
         }

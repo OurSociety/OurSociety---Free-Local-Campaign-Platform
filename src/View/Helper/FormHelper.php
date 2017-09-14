@@ -29,6 +29,10 @@ class FormHelper extends BootstrapUI\FormHelper
         ];
 
         if ($View->getBootstrapVersion() === 4) {
+            $checkboxTemplate = <<<HTML
+<input class="custom-control-input" type="checkbox" name="{{name}}" value="{{value}}"{{attrs}}>
+<span class="custom-control-indicator"></span>
+HTML;
             $dateWidgetTemplate = <<<HTML
 <ul class="list-inline">
     <li class="list-inline-item year">{{year}}</li>
@@ -43,8 +47,15 @@ HTML;
 
             $defaultConfig += [
                 'templates' => [
+                    'checkbox' => $checkboxTemplate,
                     'dateWidget' => $dateWidgetTemplate,
                     'help' => '<small class="form-text text-muted">{{content}}</small>'
+                ],
+                'templateSet' => [
+                    'default' => [
+                        'checkboxContainer' => '<div class="custom-controls-stacked">{{content}}{{help}}</div>',
+                        'checkboxContainerError' => '<div class="custom-controls-stacked has-error">{{content}}{{error}}{{help}}</div>',
+                    ],
                 ],
             ];
         }
@@ -72,5 +83,22 @@ HTML;
             Log::warning(sprintf('Missing link "%s": %s', $title, is_array($url) ? json_encode($url) : $url));
             return '';
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string|array $label
+     */
+    protected function _inputLabel($fieldName, $label, $options): string
+    {
+        if ($options['type'] === 'checkbox') {
+            if (is_string($label)) {
+                $label = ['text' => $label];
+            }
+            $label = $this->injectClasses(['custom-control', 'custom-checkbox'], $label);
+        }
+
+        return parent::_inputLabel($fieldName, $label, $options);
     }
 }

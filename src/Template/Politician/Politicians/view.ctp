@@ -3,16 +3,12 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $politician
  */
+
+$this->Breadcrumbs->add('My Dashboard', ['_name' => 'politician:dashboard']);
+$this->Breadcrumbs->add('My Profile')
 ?>
 
 <?php $this->extend('/Common/Politicians/view') ?>
-
-<?php $this->start('breadcrumbs') ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= __('Profile') ?></li>
-</ol>
-<?php $this->end() ?>
 
 <?php $this->start('profile_picture') ?>
     <?= $this->cell('Profile/Picture', [], ['user' => $politician]) ?>

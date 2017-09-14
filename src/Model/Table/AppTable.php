@@ -14,7 +14,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior as App;
 use OurSociety\Validation\Validator as AppValidator;
-use Search\Manager as SearchManager;
 use Search\Model\Behavior as Search;
 
 /**
@@ -33,8 +32,9 @@ abstract class AppTable extends Table
     use Traits\ClassNameSupportTrait;
     use Traits\InvokableFinderTrait;
 
-    public static function instance(?string $alias = null, ?array $options = [])
+    public static function instance(?string $alias = null, ?array $options = null)
     {
+        $options = $options ?? [];
         $alias = $alias ?: preg_replace('#.*\\\\(.*)Table#', '$1', static::class);
         $options += TableRegistry::exists($alias) ? [] : ['className' => static::class];
 
@@ -71,7 +71,7 @@ abstract class AppTable extends Table
         ;
 
 
-        if ($this->getSchema()->column('slug') !== null) {
+        if ($this->hasSlugField()) {
             $validator
                 // slug
                 //->requirePresence('slug', 'create') // TODO: Breaks registration
@@ -90,19 +90,32 @@ abstract class AppTable extends Table
         }
     }
 
+    public function getSlugFieldName(): string
+    {
+        return 'slug';
+    }
+
+    public function hasSlugField(): bool
+    {
+        return $this->getSchema()->hasColumn($this->getSlugFieldName());
+    }
+
     /**
      * Upsert (update/insert).
      *
      * Updates a record if one is found matching conditions, otherwise inserts a new record.
      *
      * @param array $conditions The conditions to find existing record.
-     * @param array $data The data to save (will be merged with `$conditions`).
-     * @param array|ArrayAccess $options The options to use when saving.
+     * @param array|null $data The data to save (will be merged with `$conditions`).
+     * @param array|ArrayAccess|null $options The options to use when saving.
      * @return Entity The saved entity.
      * @throws PersistenceFailedException When the entity couldn't be saved.
      */
-    public function upsert(array $conditions, array $data = [], array $options = []): Entity
+    public function upsert(array $conditions, ?array $data = null, ?array $options = null): Entity
     {
+        $data = $data ?? [];
+        $options = $options ?? [];
+
         $options += ['fail' => true];
         $saveMethod = $options['fail'] === true ? 'saveOrFail' : 'save';
         unset($options['fail']);

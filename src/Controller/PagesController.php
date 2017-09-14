@@ -29,6 +29,7 @@ class PagesController extends AppController
         parent::beforeFilter($event);
 
         $this->Auth->allow('display');
+        $this->viewBuilder()->setLayout('site');
     }
 
     /**
@@ -42,10 +43,9 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
     {
-        if ($path === ['tos']) {
-            $this->viewBuilder()->setLayout('site');
+        if ($path === ['home']) {
+            $this->set('container', false);
         }
-
 
         $count = count($path);
         if (!$count) {

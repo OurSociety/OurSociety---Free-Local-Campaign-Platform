@@ -68,7 +68,7 @@ class AppView extends CrudView\CrudView
      */
     public function isEmbed(): bool
     {
-        return $this->layout() === 'embed';
+        return $this->getLayout() === 'embed';
     }
 
     /**
@@ -80,7 +80,7 @@ class AppView extends CrudView\CrudView
      */
     private function isSite(): bool
     {
-        return $this->layout() === 'site';
+        return $this->getLayout() === 'site';
     }
 
     /**
@@ -153,12 +153,12 @@ class AppView extends CrudView\CrudView
     protected function _setupLayout(): void
     {
         // This check is so we don't break error pages by changing layout.
-        if ($this->layout() !== 'CrudView.default') {
+        if ($this->getLayout() !== 'CrudView.default') {
             return;
         }
 
         // Use the current prefixes default template, not the CrudView one.
-        $this->layout('default');
+        $this->setLayout('default');
     }
 
     /**

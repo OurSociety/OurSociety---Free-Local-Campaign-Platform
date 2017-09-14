@@ -62,7 +62,6 @@ abstract class CrudController extends AppController
         return [
             'maxYear' => date('Y'),
             'minYear' => $this->Auth->user('born') ? $this->Auth->user('born')->year : 1900,
-            'placeholder' => 'asd',
             'empty' => ['month' => 'Month', 'year' => 'Year'],
             'style' => ['year' => 'display: none'],
             'day' => false,

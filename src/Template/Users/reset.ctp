@@ -4,11 +4,11 @@
  * @var \OurSociety\Model\Entity\User $user The user entity.
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user.
  */
+
+$this->Breadcrumbs->add(__('Account profile'), $currentUser ? ['_name' => 'users:profile'] : null);
+$this->Breadcrumbs->add(__('Password reset'));
 ?>
-<ol class="breadcrumb">
-    <li><?= $currentUser ? $this->Html->link(__('Account profile'), ['_name' => 'users:profile']) : __('Account profile') ?></li>
-    <li>Password reset</li>
-</ol>
+
 <section class="users form">
     <?= $this->Form->create($user) ?>
     <fieldset>

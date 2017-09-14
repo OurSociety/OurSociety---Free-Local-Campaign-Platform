@@ -5,12 +5,11 @@ namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
-use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
 use OurSociety\View\AppView;
 
 abstract class AppEntity extends Entity
 {
-    use LazyLoadEntityTrait;
+    use Traits\ScaffoldTrait;
 
     public function __construct(array $properties = [], array $options = [])
     {

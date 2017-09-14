@@ -7,6 +7,8 @@
  */
 $this->extend('base');
 
+$container = $container ?? true;
+
 $callToActionLink = $this->Url->build([
     '_name' => 'users:register',
     '?' => [
@@ -32,13 +34,14 @@ $callToActionLink = $this->Url->build([
                 <li class="nav-item<?= $this->request->getUri()->getPath() === '/municipality' ? ' active' : null ?>">
                     <?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default'], ['class' => ['nav-link']]) ?>
                 </li>
-                <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
-                    <?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
-                </li>
             <?php else: ?>
-                <li class="nav-item"><?= $this->Html->link(__('Home'), ['_name' => 'pages:home'], ['class' => ['nav-link']]) ?></li>
-                <li class="nav-item"><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?></li>
+                <li class="nav-item<?= $this->request->getUri()->getPath() === '/home' ? ' active' : null ?>">
+                    <?= $this->Html->link(__('Home'), ['_name' => 'pages:home'], ['class' => ['nav-link']]) ?>
+                </li>
             <?php endif ?>
+            <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
+                <?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
+            </li>
         </ul>
     </div>
 
@@ -54,7 +57,7 @@ $callToActionLink = $this->Url->build([
             </li>
         <?php else: ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Login'), ['_name' => 'users:login'], [
+                <?= $this->Html->link(__('Sign In'), ['_name' => 'users:login'], [
                     'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
                 ]) ?>
             </li>
@@ -63,14 +66,19 @@ $callToActionLink = $this->Url->build([
 
 </header>
 
-<main id="content">
-    <div class="container my-5">
-        <main class="os-content">
-            <?= $this->Flash->render(); ?>
-            <?= $this->fetch('content') ?>
-        </main>
-    </div>
-</main>
+<?= $this->Breadcrumbs->render() ?>
+
+<?php if ($container === true): ?>
+<div class="container my-4">
+    <?php endif ?>
+
+    <?= $this->Flash->render(); ?>
+
+    <?= $this->fetch('content') ?>
+
+    <?php if ($container === true): ?>
+</div>
+<?php endif ?>
 
 <footer class="os-footer text-muted">
     <div class="container-fluid p-3 p-md-5">

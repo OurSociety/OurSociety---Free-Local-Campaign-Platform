@@ -38,14 +38,6 @@ class UsersController extends CrudController
 
         $this->Crud->action()->setConfig([
             'scaffold' => [
-                'fields' => [
-                    'name' => ['title' => 'Full Name'],
-                    'role',
-                    'answer_count' => ['title' => 'Answers'],
-                    'email',
-                    'last_seen',
-                    'verified' => ['element' => 'asd'],
-                ],
                 'breadcrumbs' => [
                     new Breadcrumb('Users'),
                     new Breadcrumb('Dashboard'),
@@ -68,7 +60,7 @@ class UsersController extends CrudController
                     'answer_count' => ['title' => 'Answers'],
                     'email',
                     'last_seen',
-                    'verified' => ['element' => 'asd'],
+                    'verified',
                 ],
                 'breadcrumbs' => [
                     new Breadcrumb('Dashboard', ['_name' => 'admin:users:dashboard']),
@@ -92,12 +84,40 @@ class UsersController extends CrudController
 
     protected function _form(): ?Response
     {
-        $this->Crud->action()->setConfig('scaffold.fields', [
-            'id' => ['type' => 'hidden'],
-            'name' => ['label' => __('Full name')],
-            'email' => ['type' => 'email', 'label' => __('Email address')],
-            'role' => ['options' => array_combine(User::ROLES, User::ROLES)],
-            'verified' => ['type' => 'checkbox', 'label' => __('Email verified?')],
+        $this->Crud->action()->setConfig([
+            'scaffold' => [
+                'fields' => [
+                    'id' => ['type' => 'hidden'],
+                ],
+                'form_primary_tab' => 'User',
+                'form_tab_groups' => [
+                    'User' => [
+                        'name' => ['label' => __('Full name')],
+                        'email' => ['type' => 'email', 'label' => __('Email address')],
+                        'role' => ['options' => array_combine(User::ROLES, User::ROLES)],
+                        'verified' => ['type' => 'checkbox', 'label' => __('Email verified?')],
+                        'electoral_district_id',
+                        'phone' => ['type' => 'phone'],
+                        'picture' => ['type' => 'file'],
+                        'pathway_politician',
+                    ],
+                    'Politician' => [
+                        'address_1',
+                        'address_2',
+                        'city',
+                        'state',
+                        'zip',
+                        'birth_name',
+                        'birth_city',
+                        'birth_state',
+                        'birth_country',
+                        'born' => ['empty' => true],
+                        'position',
+                        'office_type_id',
+                        'incumbent',
+                    ],
+                ],
+            ],
         ]);
 
         return $this->Crud->execute();
@@ -117,16 +137,16 @@ class UsersController extends CrudController
         }
 
         /** @var User $user */
-        $user = $this->loadModel('Users')->find()->where(['slug' => $this->request->getData('user')])->firstOrFail();
+        $user = $this->loadModel('Users')->find('auth')->where(['slug' => $this->request->getData('user')])->firstOrFail();
 
         /** @var User $authAdmin */
-        $authAdmin = $this->request->session()->read('Auth.Admin');
+        $authAdmin = $this->request->getSession()->read('Auth.Admin');
 
         if ($authAdmin === null) {
-            $this->request->session()->write('Auth.Admin', $this->Auth->user());
+            $this->request->getSession()->write('Auth.Admin', $this->Auth->user());
             $this->Flash->warning(\__('You have assumed the identity of {name}.', ['name' => $user->name]));
         } elseif ($user->id === $authAdmin->id) {
-            $this->request->session()->delete('Auth.Admin');
+            $this->request->getSession()->delete('Auth.Admin');
             $this->Flash->info(\__('Your identity has been reverted back to {name}.', ['name' => $user->name]));
         }
 

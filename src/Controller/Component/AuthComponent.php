@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace OurSociety\Controller\Component;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use OurSociety\Auth as AppAuth;
 use OurSociety\Controller\AppController;
 use Cake\Controller\Component as Cake;
 use OurSociety\Model\Entity\User;
+use Psr\Log\LogLevel;
 
 /**
  * Application auth component settings.
@@ -50,7 +52,11 @@ class AuthComponent extends Cake\AuthComponent
         try {
             $authUser = TableRegistry::get('Users')->find('auth')->where(['Users.id' => $id])->firstOrFail();
             $this->setUser($authUser);
-        } catch (RecordNotFoundException $e) {
+        } catch (RecordNotFoundException $exception) {
+            $this->log('User ID "%s" not found - logging user out.', LogLevel::INFO, [
+                'user' => $user,
+                'exception' => $exception,
+            ]);
             $this->logout();
         }
     }

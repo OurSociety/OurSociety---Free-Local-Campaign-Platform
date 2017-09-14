@@ -5,15 +5,13 @@
  * @var \OurSociety\Model\Entity\Answer[] $answers The answers to questions.
  * @var \OurSociety\Model\Entity\Category[] $categories The question categories.
  */
+
+$this->Breadcrumbs->add(__('My Dashboard'))
 ?>
-<ol class="breadcrumb">
-    <li>Politician</li>
-    <li>Dashboard</li>
-</ol>
 
-<?= $this->Html->link(__('View Profile'), ['_name' => 'politician:profile'], ['class' => ['btn btn-default pull-right']]) ?>
+<?= $this->Html->link(__('View Profile'), ['_name' => 'politician:profile'], ['class' => ['btn btn-primary pull-right']]) ?>
 
-<h2>Politician Dashboard</h2>
+<h2><?= __('My Dashboard') ?></h2>
 
 <hr>
 
@@ -37,10 +35,8 @@
 
 <section class="row">
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= __('Questions answered') ?></h3>
-            </div>
+        <div class="card card-default">
+            <h4 class="card-header"><?= __('Questions answered') ?></h4>
             <table class="table table-bordered table-striped table-sm" style="table-layout: fixed">
                 <thead>
                 <tr>
@@ -60,10 +56,8 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= __('Progress by category') ?></h3>
-            </div>
+        <div class="card card-default">
+            <h4 class="card-header"><?= __('Progress by category') ?></h4>
             <table class="table table-bordered table-striped table-sm">
                 <thead>
                 <tr>

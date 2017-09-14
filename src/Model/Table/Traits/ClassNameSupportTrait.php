@@ -32,6 +32,15 @@ trait ClassNameSupportTrait
         parent::removeBehavior($this->getBehaviorName($name));
     }
 
+    public function removeBehaviorIfLoaded($name): void
+    {
+        $name = $this->getBehaviorName($name);
+
+        if (parent::hasBehavior($name)) {
+            parent::removeBehavior($name);
+        }
+    }
+
     /**
      * Get behavior name.
      *
