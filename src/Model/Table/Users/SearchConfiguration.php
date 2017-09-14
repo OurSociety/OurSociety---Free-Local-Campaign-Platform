@@ -7,9 +7,9 @@ use Search\Manager as Search;
 
 trait SearchConfiguration
 {
-    public function searchConfiguration(): Search
+    public function searchManager(): Search
     {
-        return parent::searchConfiguration()
+        return $this->behaviors()->Search->searchManager()
             ->add('name', 'Search.Like', [
                 'before' => true, 'after' => true,
                 'fieldMode' => 'OR', 'comparison' => 'LIKE',

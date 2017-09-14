@@ -1,9 +1,14 @@
 <?php
+declare(strict_types=1);
+
 /**
  * The Front Controller for handling every request
  */
 
-// for built-in server
+// Check platform requirements
+require dirname(__DIR__) . '/config/requirements.php';
+
+// For built-in server
 if (PHP_SAPI === 'cli-server') {
     $_SERVER['PHP_SELF'] = '/' . basename(__FILE__);
 

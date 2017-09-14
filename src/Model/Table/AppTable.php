@@ -90,12 +90,6 @@ abstract class AppTable extends Table
         }
     }
 
-    public function searchConfiguration(): SearchManager
-    {
-        // Setup search filter using search manager
-        return $this->searchManager();
-    }
-
     /**
      * Upsert (update/insert).
      *

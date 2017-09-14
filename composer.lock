@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d47e18a2c11eb789ee377150d48b8022",
+    "content-hash": "ebfb2ba9e58c38aee3c89e48585272da",
     "packages": [
         {
             "name": "aura/intl",
@@ -92,16 +92,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.4.13",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "f9cd66fe071d1cfb2fa6aec94ee37a7fd0916c03"
+                "reference": "6829ddd2bcc48fc29dc98dccd23b8f746ec4ebec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/f9cd66fe071d1cfb2fa6aec94ee37a7fd0916c03",
-                "reference": "f9cd66fe071d1cfb2fa6aec94ee37a7fd0916c03",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/6829ddd2bcc48fc29dc98dccd23b8f746ec4ebec",
+                "reference": "6829ddd2bcc48fc29dc98dccd23b8f746ec4ebec",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2017-08-17T03:06:44+00:00"
+            "time": "2017-09-12T01:49:28+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -235,16 +235,16 @@
         },
         {
             "name": "cakephp/localized",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/localized.git",
-                "reference": "1450373739d1f30d57d1e973b7baaaa554c6ea21"
+                "reference": "6acc393497a973524b4cff4bcb4f22bcc3d16f9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/localized/zipball/1450373739d1f30d57d1e973b7baaaa554c6ea21",
-                "reference": "1450373739d1f30d57d1e973b7baaaa554c6ea21",
+                "url": "https://api.github.com/repos/cakephp/localized/zipball/6acc393497a973524b4cff4bcb4f22bcc3d16f9f",
+                "reference": "6acc393497a973524b4cff4bcb4f22bcc3d16f9f",
                 "shasum": ""
             },
             "require": {
@@ -252,7 +252,7 @@
                 "php": ">=5.4"
             },
             "require-dev": {
-                "cakephp/cakephp-codesniffer": "^2.1",
+                "cakephp/cakephp-codesniffer": "^3.0",
                 "phpunit/phpunit": "^4.8|^5.7|^6.0"
             },
             "type": "cakephp-plugin",
@@ -279,7 +279,7 @@
                 "l10n",
                 "localized"
             ],
-            "time": "2017-03-18T07:25:52+00:00"
+            "time": "2017-09-12T17:20:46+00:00"
         },
         {
             "name": "cakephp/migrations",
@@ -724,16 +724,16 @@
         },
         {
             "name": "friendsofcake/crud-users",
-            "version": "0.5.0",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/crud-users.git",
-                "reference": "5963bcc63f85bdabfe50e71cb4d5c9f95d1ad3d5"
+                "reference": "a5ea034e6e9b72d49accf0337746ce2f3eb8cc9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/crud-users/zipball/5963bcc63f85bdabfe50e71cb4d5c9f95d1ad3d5",
-                "reference": "5963bcc63f85bdabfe50e71cb4d5c9f95d1ad3d5",
+                "url": "https://api.github.com/repos/FriendsOfCake/crud-users/zipball/a5ea034e6e9b72d49accf0337746ce2f3eb8cc9e",
+                "reference": "a5ea034e6e9b72d49accf0337746ce2f3eb8cc9e",
                 "shasum": ""
             },
             "require": {
@@ -757,7 +757,7 @@
             "authors": [
                 {
                     "name": "ADmad",
-                    "homepage": "https://github.com/ADmad",
+                    "homepage": "https://github.com/admad",
                     "role": "Contributor"
                 },
                 {
@@ -773,7 +773,7 @@
                 "cakephp",
                 "crud"
             ],
-            "time": "2017-06-08T19:29:49+00:00"
+            "time": "2017-08-12T20:00:13+00:00"
         },
         {
             "name": "friendsofcake/crud-view",
@@ -838,20 +838,20 @@
         },
         {
             "name": "friendsofcake/search",
-            "version": "3.2.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/search.git",
-                "reference": "0a70927c25a988074bb38cc15954bb7a1e50e207"
+                "reference": "d9e2aa306a64a291c80eabdbb39433c3444e54b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/0a70927c25a988074bb38cc15954bb7a1e50e207",
-                "reference": "0a70927c25a988074bb38cc15954bb7a1e50e207",
+                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/d9e2aa306a64a291c80eabdbb39433c3444e54b1",
+                "reference": "d9e2aa306a64a291c80eabdbb39433c3444e54b1",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": "^3.0"
+                "cakephp/cakephp": "^3.4"
             },
             "require-dev": {
                 "friendsofcake/cakephp-test-utilities": "dev-master",
@@ -887,7 +887,7 @@
                 "cakephp3",
                 "search"
             ],
-            "time": "2017-08-04T04:34:14+00:00"
+            "time": "2017-08-19T12:23:03+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -1000,16 +1000,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.23",
+            "version": "v0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/google-api-php-client-services.git",
-                "reference": "402cbac930add01bf65d151d3f2048a5bdfbd320"
+                "reference": "3e90db2d96265bbe1f3e855f9558e6bb12ae2dc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/402cbac930add01bf65d151d3f2048a5bdfbd320",
-                "reference": "402cbac930add01bf65d151d3f2048a5bdfbd320",
+                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/3e90db2d96265bbe1f3e855f9558e6bb12ae2dc6",
+                "reference": "3e90db2d96265bbe1f3e855f9558e6bb12ae2dc6",
                 "shasum": ""
             },
             "require": {
@@ -1033,7 +1033,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2017-09-09T00:24:34+00:00"
+            "time": "2017-09-13T20:25:35+00:00"
         },
         {
             "name": "google/auth",
@@ -4657,16 +4657,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "1d23172f9dc1687a97c195a777b0199f14f7b26e"
+                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/1d23172f9dc1687a97c195a777b0199f14f7b26e",
-                "reference": "1d23172f9dc1687a97c195a777b0199f14f7b26e",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/2faa791b66bac33ca40031d8bce03b7dc8143490",
+                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490",
                 "shasum": ""
             },
             "require": {
@@ -4685,8 +4685,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev",
-                    "dev-develop": "1.6-dev"
+                    "dev-master": "1.6-dev",
+                    "dev-develop": "1.7-dev"
                 }
             },
             "autoload": {
@@ -4705,7 +4705,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-08-22T20:38:56+00:00"
+            "time": "2017-09-13T14:47:08+00:00"
         }
     ],
     "packages-dev": [
@@ -5403,21 +5403,21 @@
         },
         {
             "name": "cakephp/bake",
-            "version": "1.3.7",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "4bbb541ee27d12fe63f15cf5acf70b94553de209"
+                "reference": "53e40910aec77743ed1e30d4925a43b37197729d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/4bbb541ee27d12fe63f15cf5acf70b94553de209",
-                "reference": "4bbb541ee27d12fe63f15cf5acf70b94553de209",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/53e40910aec77743ed1e30d4925a43b37197729d",
+                "reference": "53e40910aec77743ed1e30d4925a43b37197729d",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": ">=3.4.0 <4.0.0",
-                "cakephp/plugin-installer": "*",
+                "cakephp/cakephp": ">=3.5.0,<4.0.0",
+                "cakephp/plugin-installer": "~1.0",
                 "php": ">=5.6.0"
             },
             "require-dev": {
@@ -5440,13 +5440,13 @@
                     "homepage": "https://github.com/cakephp/bake/graphs/contributors"
                 }
             ],
-            "description": "Bake plugin for CakePHP 3.0",
+            "description": "Bake plugin for CakePHP 3",
             "homepage": "https://github.com/cakephp/bake",
             "keywords": [
                 "bake",
                 "cakephp"
             ],
-            "time": "2017-07-01T15:59:12+00:00"
+            "time": "2017-08-19T02:47:18+00:00"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
@@ -5602,173 +5602,6 @@
                 "phpspec"
             ],
             "time": "2017-07-31T12:37:12+00:00"
-        },
-        {
-            "name": "clue/stdio-react",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/php-stdio-react.git",
-                "reference": "c307fc7ab581c9494606d09c9243833bcf65e8c9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/php-stdio-react/zipball/c307fc7ab581c9494606d09c9243833bcf65e8c9",
-                "reference": "c307fc7ab581c9494606d09c9243833bcf65e8c9",
-                "shasum": ""
-            },
-            "require": {
-                "clue/term-react": "^0.1.1",
-                "clue/utf8-react": "^0.1",
-                "php": ">=5.3",
-                "react/event-loop": "0.3.*|0.4.*",
-                "react/stream": "^0.4.2"
-            },
-            "require-dev": {
-                "clue/arguments": "^2.0",
-                "clue/commander": "^1.2"
-            },
-            "suggest": {
-                "ext-mbstring": "Using ext-mbstring should provide slightly better performance for handling I/O"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\React\\Stdio\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@lueck.tv"
-                }
-            ],
-            "description": "Async, event-driven console input & output (STDIN, STDOUT), built on top of React PHP",
-            "homepage": "https://github.com/clue/php-stdio-react",
-            "keywords": [
-                "async",
-                "autocomplete",
-                "autocompletion",
-                "history",
-                "reactphp",
-                "readline",
-                "stdin",
-                "stdio",
-                "stdout"
-            ],
-            "time": "2017-01-08T15:46:37+00:00"
-        },
-        {
-            "name": "clue/term-react",
-            "version": "v0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/php-term-react.git",
-                "reference": "a45e0af4769465305f2e9a25dd3bf4d4161a7aa3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/php-term-react/zipball/a45e0af4769465305f2e9a25dd3bf4d4161a7aa3",
-                "reference": "a45e0af4769465305f2e9a25dd3bf4d4161a7aa3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3",
-                "react/stream": "^0.6 || ^0.5 || ^0.4 || ^0.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.0 || ^4.8",
-                "react/event-loop": "^0.4 || ^0.3",
-                "react/stream": "^0.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\React\\Term\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@lueck.tv"
-                }
-            ],
-            "description": "Streaming terminal emulator, built on top of React PHP",
-            "homepage": "https://github.com/clue/php-term-react",
-            "keywords": [
-                "C0",
-                "CSI",
-                "ansi",
-                "apc",
-                "ascii",
-                "c1",
-                "control codes",
-                "dps",
-                "osc",
-                "pm",
-                "reactphp",
-                "streaming",
-                "terminal",
-                "vt100",
-                "xterm"
-            ],
-            "time": "2017-04-06T16:58:43+00:00"
-        },
-        {
-            "name": "clue/utf8-react",
-            "version": "v0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/php-utf8-react.git",
-                "reference": "a91d00fa7864fda692377621f90bbd5ec1f8bc73"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/php-utf8-react/zipball/a91d00fa7864fda692377621f90bbd5ec1f8bc73",
-                "reference": "a91d00fa7864fda692377621f90bbd5ec1f8bc73",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3",
-                "react/stream": "^0.6 || ^0.5 || ^0.4 || ^0.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.0 || ^4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\React\\Utf8\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@lueck.tv"
-                }
-            ],
-            "description": "Streaming UTF-8 parser for React PHP",
-            "homepage": "https://github.com/clue/php-utf8-react",
-            "keywords": [
-                "reactphp",
-                "streaming",
-                "unicode",
-                "utf-8",
-                "utf8"
-            ],
-            "time": "2017-04-07T17:51:09+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -6062,16 +5895,16 @@
         },
         {
             "name": "dereuromark/cakephp-ide-helper",
-            "version": "0.8.5",
+            "version": "0.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-ide-helper.git",
-                "reference": "02b50357f679a96c90e5e3217ca7d99d7200e0c5"
+                "reference": "4ba312608bbcdc05c4e76ea9f794a09e4e528b6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/02b50357f679a96c90e5e3217ca7d99d7200e0c5",
-                "reference": "02b50357f679a96c90e5e3217ca7d99d7200e0c5",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/4ba312608bbcdc05c4e76ea9f794a09e4e528b6f",
+                "reference": "4ba312608bbcdc05c4e76ea9f794a09e4e528b6f",
                 "shasum": ""
             },
             "require": {
@@ -6119,7 +5952,7 @@
                 "phpstorm",
                 "plugin"
             ],
-            "time": "2017-08-17T09:23:44+00:00"
+            "time": "2017-09-07T17:33:59+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -6153,54 +5986,6 @@
             ],
             "description": "implementation of xdg base directory specification for php",
             "time": "2014-10-24T07:27:01+00:00"
-        },
-        {
-            "name": "evenement/evenement",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/igorw/evenement.git",
-                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/igorw/evenement/zipball/6ba9a777870ab49f417e703229d53931ed40fd7a",
-                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0||^5.7||^4.8.35"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Evenement": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                }
-            ],
-            "description": "Événement is a very simple event dispatching library for PHP",
-            "keywords": [
-                "event-dispatcher",
-                "event-emitter"
-            ],
-            "time": "2017-07-17T17:39:19+00:00"
         },
         {
             "name": "fabpot/goutte",
@@ -6250,6 +6035,46 @@
                 "scraper"
             ],
             "time": "2017-01-03T13:21:43+00:00"
+        },
+        {
+            "name": "fonsecas72/behat-giffy-extension",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fonsecas72/behat-giffy-extension.git",
+                "reference": "ea86e1b0e4ff23a5fc11bff349521c5da702d231"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fonsecas72/behat-giffy-extension/zipball/ea86e1b0e4ff23a5fc11bff349521c5da702d231",
+                "reference": "ea86e1b0e4ff23a5fc11bff349521c5da702d231",
+                "shasum": ""
+            },
+            "require": {
+                "sybio/gif-creator": "^1.0"
+            },
+            "type": "behat-extension",
+            "autoload": {
+                "psr-4": {
+                    "Fonsecas72\\GiffyExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hugo Fonseca",
+                    "email": "hdtfonseca@gmail.com"
+                }
+            ],
+            "description": "Takes screenshots for every browser interaction made",
+            "keywords": [
+                "debug",
+                "screenshot"
+            ],
+            "time": "2016-08-01T15:59:52+00:00"
         },
         {
             "name": "gnugat/redaktilo",
@@ -6511,59 +6336,6 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
-        },
-        {
-            "name": "jolicode/jolinotif",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jolicode/JoliNotif.git",
-                "reference": "cc1bba75b52b5dc2820e19dd39ddff4b461592c9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jolicode/JoliNotif/zipball/cc1bba75b52b5dc2820e19dd39ddff4b461592c9",
-                "reference": "cc1bba75b52b5dc2820e19dd39ddff4b461592c9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "symfony/process": "~2.3|~3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0",
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joli\\JoliNotif\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Loïck Piera",
-                    "email": "pyrech@gmail.com"
-                }
-            ],
-            "description": "Send desktop notifications on Windows, Linux, MacOS.",
-            "keywords": [
-                "MAC",
-                "growl",
-                "linux",
-                "notification",
-                "windows"
-            ],
-            "time": "2017-07-17T13:07:43+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -7718,103 +7490,17 @@
             "time": "2017-01-10T20:21:21+00:00"
         },
         {
-            "name": "react/event-loop",
-            "version": "v0.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactphp/event-loop.git",
-                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
-                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "suggest": {
-                "ext-event": "~1.0",
-                "ext-libev": "*",
-                "ext-libevent": ">=0.1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "React\\EventLoop\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Event loop abstraction layer that libraries can use for evented I/O.",
-            "keywords": [
-                "asynchronous",
-                "event-loop"
-            ],
-            "time": "2017-04-27T10:56:23+00:00"
-        },
-        {
-            "name": "react/stream",
-            "version": "v0.4.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactphp/stream.git",
-                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/stream/zipball/44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
-                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
-                "shasum": ""
-            },
-            "require": {
-                "evenement/evenement": "^2.0|^1.0",
-                "php": ">=5.3.8"
-            },
-            "require-dev": {
-                "clue/stream-filter": "~1.2",
-                "react/event-loop": "^0.4|^0.3",
-                "react/promise": "^2.0|^1.0"
-            },
-            "suggest": {
-                "react/event-loop": "^0.4",
-                "react/promise": "^2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "React\\Stream\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Basic readable and writable stream interfaces that support piping.",
-            "keywords": [
-                "pipe",
-                "stream"
-            ],
-            "time": "2017-01-25T14:44:14+00:00"
-        },
-        {
             "name": "scriptfusion/phpunit-immediate-exception-printer",
-            "version": "1.3.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ScriptFUSION/PHPUnit-Immediate-Exception-Printer.git",
-                "reference": "eecb20334dd09defe8fa6c15fce253357d7cf84e"
+                "reference": "df2b810ac7013bbb55910f5c4011f813f69e6b1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ScriptFUSION/PHPUnit-Immediate-Exception-Printer/zipball/eecb20334dd09defe8fa6c15fce253357d7cf84e",
-                "reference": "eecb20334dd09defe8fa6c15fce253357d7cf84e",
+                "url": "https://api.github.com/repos/ScriptFUSION/PHPUnit-Immediate-Exception-Printer/zipball/df2b810ac7013bbb55910f5c4011f813f69e6b1d",
+                "reference": "df2b810ac7013bbb55910f5c4011f813f69e6b1d",
                 "shasum": ""
             },
             "require": {
@@ -7834,7 +7520,7 @@
                 }
             ],
             "description": "Immediately prints exception and assertion failures during testing.",
-            "time": "2017-07-29T19:55:53+00:00"
+            "time": "2017-08-16T22:49:09+00:00"
         },
         {
             "name": "seld/cli-prompt",
@@ -8149,61 +7835,6 @@
             "time": "2017-09-09T12:56:45+00:00"
         },
         {
-            "name": "spatie/phpunit-watcher",
-            "version": "1.3.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/phpunit-watcher.git",
-                "reference": "4f2c34abc1ca6930bc51b577020f532459ff39fd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/phpunit-watcher/zipball/4f2c34abc1ca6930bc51b577020f532459ff39fd",
-                "reference": "4f2c34abc1ca6930bc51b577020f532459ff39fd",
-                "shasum": ""
-            },
-            "require": {
-                "clue/stdio-react": "^1.0",
-                "jolicode/jolinotif": "^1.2",
-                "php": "^7.0",
-                "symfony/console": "^3.0",
-                "symfony/process": "^3.0",
-                "symfony/yaml": "^3.0",
-                "yosymfony/resource-watcher": "^1.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0"
-            },
-            "bin": [
-                "phpunit-watcher"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\PhpUnitWatcher\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Automatically rerun PHPUnit tests when source code changes",
-            "homepage": "https://github.com/spatie/phpunit-watcher",
-            "keywords": [
-                "phpunit-watcher",
-                "spatie"
-            ],
-            "time": "2017-08-29T12:15:43+00:00"
-        },
-        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.0.2",
             "source": {
@@ -8253,6 +7884,51 @@
                 "standards"
             ],
             "time": "2017-07-18T01:12:32+00:00"
+        },
+        {
+            "name": "sybio/gif-creator",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sybio/GifCreator.git",
+                "reference": "250fc2f705181693c6c40b3d569d62353164bcbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sybio/GifCreator/zipball/250fc2f705181693c6c40b3d569d62353164bcbf",
+                "reference": "250fc2f705181693c6c40b3d569d62353164bcbf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "GifCreator": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Clément Guillemain",
+                    "homepage": "http://clementguillemain.fr",
+                    "role": "Developer / Freelancer"
+                }
+            ],
+            "description": "PHP class that creates animated GIF from multiple images",
+            "homepage": "https://github.com/Sybio/GifCreator",
+            "keywords": [
+                "animated",
+                "creation",
+                "encode",
+                "gif",
+                "php"
+            ],
+            "time": "2012-10-13T09:04:46+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -9152,58 +8828,6 @@
                 "templating"
             ],
             "time": "2017-06-07T18:47:58+00:00"
-        },
-        {
-            "name": "yosymfony/resource-watcher",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yosymfony/Resource-watcher.git",
-                "reference": "c20a2cf2b90579d9804ec63dc3991ebe140f0d18"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yosymfony/Resource-watcher/zipball/c20a2cf2b90579d9804ec63dc3991ebe140f0d18",
-                "reference": "c20a2cf2b90579d9804ec63dc3991ebe140f0d18",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.5",
-                "symfony/finder": "^2.7|^3.0"
-            },
-            "require-dev": {
-                "symfony/filesystem": "^2.7|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Yosymfony\\ResourceWatcher\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Victor Puertas",
-                    "email": "vpgugr@gmail.com"
-                }
-            ],
-            "description": "A simple resource watcher using Symfony Finder",
-            "homepage": "http://yosymfony.com",
-            "keywords": [
-                "finder",
-                "resources",
-                "symfony",
-                "watcher"
-            ],
-            "time": "2017-01-14T17:56:57+00:00"
         },
         {
             "name": "zendframework/zend-code",

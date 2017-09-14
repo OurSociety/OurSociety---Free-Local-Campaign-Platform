@@ -5,9 +5,12 @@ namespace OurSociety\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Faker\Factory as Example;
+use Muffin\Slug\Slugger\CakeSlugger;
+use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\View\AppView;
 
 /**
@@ -151,6 +154,7 @@ class User extends AppEntity
         $data = ($data ?? []) + [
             'id' => Text::uuid(),
             'name' => $name,
+            'slug' => (new CakeSlugger)->slug($name),
             'office_type' => OfficeType::random(),
             'email' => Text::slug($name, '.') . '@example.com',
             'is_example' => true,
@@ -250,8 +254,8 @@ class User extends AppEntity
         $user = $this->withLastSeen();
 
         $table = TableRegistry::get('Users');
-        $table->removeBehavior('CounterCache');
-        $table->removeBehavior('Timestamp');
+        $table->removeBehavior(CounterCacheBehavior::class);
+        $table->removeBehavior(TimestampBehavior::class);
         $table->saveOrFail($user);
     }
 

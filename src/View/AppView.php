@@ -44,7 +44,7 @@ class AppView extends CrudView\CrudView
      */
     public function getBootstrapVersion(): int
     {
-        return ($this->isSite() || $this->isEmbed() || $this->isEmbed()) ? 4 : 3;
+        return ($this->isSite() || $this->isEmbed() || $this->isAdmin()) ? 4 : 3;
     }
 
     /**

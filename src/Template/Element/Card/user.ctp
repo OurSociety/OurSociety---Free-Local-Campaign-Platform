@@ -14,11 +14,7 @@
     ]) ?>">
 <?php endif ?>
 
-        <?php if ($user->picture !== null): ?>
-            <img class="card-img" src="<?= $user->picture ?>" alt="Card image">
-        <?php else: ?>
-            <?= $this->Html->jdenticon($user->id) ?>
-        <?php endif ?>
+        <?= $this->Html->image($user, ['class' => 'card-img']) ?>
 
         <div class="card-img-overlay text-center">
             <h5 class="card-title align-bottom" style="background: rgba(0,0,0,.5); margin: -1.25rem; padding: 1rem">
