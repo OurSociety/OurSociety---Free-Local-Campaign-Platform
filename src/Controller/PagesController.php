@@ -5,17 +5,17 @@ namespace OurSociety\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Psr\Http\Message\ResponseInterface as Response;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Static content controller
  *
  * This controller will render views from Template/Pages/
  *
- * @link http://book.cakephp.org/3.0/en/controllers/pages-controller.html
+ * @link https://book.cakephp.org/3.0/en/controllers/pages-controller.html
  */
 class PagesController extends AppController
 {
@@ -66,9 +66,9 @@ class PagesController extends AppController
 
         try {
             return $this->render(implode('/', $path));
-        } catch (MissingTemplateException $e) {
+        } catch (MissingTemplateException $exception) {
             if (Configure::read('debug')) {
-                throw $e;
+                throw $exception;
             }
             throw new NotFoundException();
         }

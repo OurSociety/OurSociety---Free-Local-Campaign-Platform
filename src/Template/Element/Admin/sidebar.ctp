@@ -46,9 +46,10 @@
             <?php if ($this->request->getParam('action') !== 'dashboard'): ?>
                 <ul class="nav bd-sidenav">
                     <li><a href="/admin/answers">Answers</a></li>
+                    <li><a href="/admin/articles">Articles</a></li>
                     <li><a href="/admin/aspects">Aspects</a></li>
                     <li><a href="/admin/aspects/users">Aspects by User</a></li>
-                    <li><a href="/admin/politician-articles">Politician Articles</a></li>
+                    <li><a href="/admin/events">Events</a></li>
                     <li><a href="/admin/politician-awards">Politician Awards</a></li>
                     <li><a href="/admin/politician-positions">Politician Positions</a></li>
                     <li><a href="/admin/politician-qualifications">Politician Qualifications</a></li>

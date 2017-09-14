@@ -18,14 +18,14 @@ use Cake\Routing\Middleware\RoutingMiddleware;
 class Application extends BaseApplication
 {
     /**
-     * Setup the middleware your application will use.
+     * Setup the middleware queue your application will use.
      *
-     * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to setup.
-     * @return \Cake\Http\MiddlewareQueue The updated middleware.
+     * @param MiddlewareQueue $middlewareQueue The middleware queue to setup.
+     * @return MiddlewareQueue The updated middleware queue.
      */
-    public function middleware($middleware): MiddlewareQueue
+    public function middleware($middlewareQueue): MiddlewareQueue
     {
-        $middleware
+        $middlewareQueue
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(ErrorHandlerMiddleware::class)
@@ -33,9 +33,9 @@ class Application extends BaseApplication
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(AssetMiddleware::class)
 
-            // Apply routing
-            ->add(RoutingMiddleware::class);
+            // Add routing middleware.
+            ->add(new RoutingMiddleware($this));
 
-        return $middleware;
+        return $middlewareQueue;
     }
 }

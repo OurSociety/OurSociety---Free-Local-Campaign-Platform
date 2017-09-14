@@ -15,10 +15,24 @@ class Installer
 {
 
     /**
+     * An array of directories to be made writable
+     */
+    const WRITABLE_DIRS = [
+        'logs',
+        'tmp',
+        'tmp/cache',
+        'tmp/cache/models',
+        'tmp/cache/persistent',
+        'tmp/cache/views',
+        'tmp/sessions',
+        'tmp/tests'
+    ];
+
+    /**
      * Does some routine installation tasks so people don't have to.
      *
      * @param \Composer\Script\Event $event The composer event object.
-     * @throws \Exception Exception raised by validator.
+     * @throws \RuntimeException Exception raised by validator.
      * @return void
      */
     public static function postInstall(Event $event): void
@@ -87,18 +101,7 @@ class Installer
      */
     public static function createWritableDirectories(string $dir, IO $io): void
     {
-        $paths = [
-            'logs',
-            'tmp',
-            'tmp/cache',
-            'tmp/cache/models',
-            'tmp/cache/persistent',
-            'tmp/cache/views',
-            'tmp/sessions',
-            'tmp/tests'
-        ];
-
-        foreach ($paths as $path) {
+        foreach (static::WRITABLE_DIRS as $path) {
             $path = $dir . '/' . $path;
             if (!file_exists($path)) {
                 if (!@mkdir($path) && !is_dir($path)) {
@@ -166,10 +169,24 @@ class Installer
      */
     public static function setSecuritySalt(string $dir, IO $io): void
     {
-        $config = $dir . '/config/app.php';
+        $newKey = hash('sha256', Security::randomBytes(64));
+        static::setSecuritySaltInFile($dir, $io, $newKey, 'app.php');
+    }
+
+    /**
+     * Set the security.salt value in a given file
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @param string $newKey key to set in the file
+     * @param string $file A path to a file relative to the application's root
+     * @return void
+     */
+    public static function setSecuritySaltInFile(string $dir, IO $io, string $newKey, string $file): void
+    {
+        $config = $dir . '/config/' . $file;
         $content = file_get_contents($config);
 
-        $newKey = hash('sha256', Security::randomBytes(64));
         $content = str_replace('__SALT__', $newKey, $content, $count);
 
         if ($count === 0) {
@@ -180,10 +197,40 @@ class Installer
 
         $result = file_put_contents($config, $content);
         if ($result) {
-            $io->write('Updated Security.salt value in config/app.php');
+            $io->write('Updated Security.salt value in config/' . $file);
 
             return;
         }
         $io->write('Unable to update Security.salt value.');
+    }
+
+    /**
+     * Set the APP_NAME value in a given file
+     *
+     * @param string $dir The application's root directory.
+     * @param \Composer\IO\IOInterface $io IO interface to write to console.
+     * @param string $appName app name to set in the file
+     * @param string $file A path to a file relative to the application's root
+     * @return void
+     */
+    public static function setAppNameInFile(string $dir, IO $io, string $appName, string $file): void
+    {
+        $config = $dir . '/config/' . $file;
+        $content = file_get_contents($config);
+        $content = str_replace('__APP_NAME__', $appName, $content, $count);
+
+        if ($count === 0) {
+            $io->write('No __APP_NAME__ placeholder to replace.');
+
+            return;
+        }
+
+        $result = file_put_contents($config, $content);
+        if ($result) {
+            $io->write('Updated __APP_NAME__ value in config/' . $file);
+
+            return;
+        }
+        $io->write('Unable to update __APP_NAME__ value.');
     }
 }

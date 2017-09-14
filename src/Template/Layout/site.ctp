@@ -42,8 +42,8 @@ $callToActionLink = $this->Url->build([
         </ul>
     </div>
 
-    <?php if ($this->get('currentUser')): ?>
-        <ul class="navbar-nav os-navbar-nav flex-row ml-md-auto d-none d-md-flex">
+    <ul class="navbar-nav os-navbar-nav flex-row ml-md-auto d-none d-md-flex">
+        <?php if ($this->get('currentUser')): ?>
             <li class="nav-item">
                 <?= $this->cell('Navbar/User') ?>
             </li>
@@ -52,12 +52,14 @@ $callToActionLink = $this->Url->build([
                     'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
                 ]) ?>
             </li>
-        </ul>
-    <?php else: ?>
-        <?= $this->Html->link(__('Login'), ['_name' => 'users:login'], [
-            'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
-        ]) ?>
-    <?php endif ?>
+        <?php else: ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Login'), ['_name' => 'users:login'], [
+                    'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
+                ]) ?>
+            </li>
+        <?php endif ?>
+    </ul>
 
 </header>
 
