@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use Cake\I18n\Date;
+use Cake\I18n\Time;
+
 /**
  * PoliticianAward Entity
  *
@@ -10,8 +13,11 @@ namespace OurSociety\Model\Entity;
  * @property string $politician_id
  * @property string $name
  * @property string $description
+ * @property Date $obtained
+ * @property Time $created
+ * @property Time $modified
  *
- * @property \OurSociety\Model\Entity\User $politician
+ * @property User $politician
  */
 class PoliticianAward extends AppEntity
 {

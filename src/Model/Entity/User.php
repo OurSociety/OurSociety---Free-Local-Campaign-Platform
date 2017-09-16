@@ -11,7 +11,9 @@ use Cake\Utility\Text;
 use Faker\Factory as Example;
 use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
+use OurSociety\Model\Table\AppTable;
 use OurSociety\View\AppView;
+use OurSociety\View\Scaffold;
 
 /**
  * User Entity
@@ -152,13 +154,13 @@ class User extends AppEntity
         $example = Example::create();
         $name = $example->firstName . ' ' . $example->lastName;
         $data = ($data ?? []) + [
-            'id' => Text::uuid(),
-            'name' => $name,
-            'slug' => (new CakeSlugger)->slug($name),
-            'office_type' => OfficeType::random(),
-            'email' => Text::slug($name, '.') . '@example.com',
-            'is_example' => true,
-        ];
+                'id' => Text::uuid(),
+                'name' => $name,
+                'slug' => (new CakeSlugger)->slug($name),
+                'office_type' => OfficeType::random(),
+                'email' => Text::slug($name, '.') . '@example.com',
+                'is_example' => true,
+            ];
 
         return new self($data);
     }
@@ -253,9 +255,10 @@ class User extends AppEntity
     {
         $user = $this->withLastSeen();
 
+        /** @var AppTable $table */
         $table = TableRegistry::get('Users');
-        $table->removeBehavior(CounterCacheBehavior::class);
-        $table->removeBehavior(TimestampBehavior::class);
+        $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
+        $table->removeBehaviorIfLoaded(TimestampBehavior::class);
         $table->saveOrFail($user);
     }
 
@@ -321,5 +324,20 @@ class User extends AppEntity
         return mb_strlen($password) > 0
             ? (new DefaultPasswordHasher)->hash($password)
             : null;
+    }
+
+    /**
+     * @return Scaffold\FieldList|Scaffold\Field[]
+     */
+    public function getScaffoldFieldList(): Scaffold\FieldList
+    {
+        return Scaffold\FieldList::fromArray($this->getModel(), [
+            'name' => ['title' => 'Full Name'],
+            'role',
+            'answer_count' => ['title' => 'Answers'],
+            'email',
+            'last_seen',
+            'verified',
+        ]);
     }
 }

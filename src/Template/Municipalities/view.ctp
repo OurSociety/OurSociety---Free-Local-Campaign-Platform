@@ -4,6 +4,8 @@
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user, if any.
  */
+
+$this->Breadcrumbs->add('My Municipality')
 ?>
 
 <div class="row">
@@ -65,19 +67,19 @@
                 ['icon' => 'list', 'class' => ['btn', 'btn-outline-dark']]
             ) ?>
             <?php /*
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-fire"></i>
-                <?= __('Hot') ?>
-            </div>
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-asterisk"></i>
-                <?= __('New') ?>
-            </div>
-            <div class="btn btn-outline-dark disabled">
-                <i class="fa fa-fw fa-line-chart"></i>
-                <?= __('Top') ?>
-            </div>
-            */ ?>
+        <div class="btn btn-outline-dark disabled">
+            <i class="fa fa-fw fa-fire"></i>
+            <?= __('Hot') ?>
+        </div>
+        <div class="btn btn-outline-dark disabled">
+            <i class="fa fa-fw fa-asterisk"></i>
+            <?= __('New') ?>
+        </div>
+        <div class="btn btn-outline-dark disabled">
+            <i class="fa fa-fw fa-line-chart"></i>
+            <?= __('Top') ?>
+        </div>
+        */ ?>
         </div>
     </div>
 </div>
@@ -97,9 +99,13 @@
 
     <div class="col-md-6">
         <?= $this->element('Widgets/MunicipalProfile/videos', ['videos' => $municipality->videos]) ?>
+
+
+
         <?= $this->element('Widgets/MunicipalProfile/events', ['events' => $municipality->events]) ?>
     </div>
 </div>
 
 <hr>
+
 <?= $this->element('Widgets/MunicipalProfile/pathway_politicians', ['pathwayPoliticians' => $municipality->pathway_politicians]) ?>

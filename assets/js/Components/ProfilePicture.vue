@@ -18,7 +18,7 @@
                     </div>
                     <div v-else>
                         <svg
-                            data-jdenticon-value="asda"
+                            data-jdenticon-value="__HASH__"
                             alt="$alternateText"
                             width="100%"
                         ></svg>

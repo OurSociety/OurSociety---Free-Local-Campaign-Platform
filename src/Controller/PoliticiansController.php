@@ -32,6 +32,7 @@ class PoliticiansController extends CrudController
 
         $this->modelClass = 'Users';
         $this->Auth->allow(['index', 'view', 'claim']);
+        $this->viewBuilder()->setLayout('site');
     }
 
     public function index(): ?Response
@@ -69,7 +70,7 @@ class PoliticiansController extends CrudController
         if ($politician->verified === null) {
             $link = function (string $text, array $url): string {
                 /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
-                return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
+                return sprintf('<a href="%s" class="alert-link">%s</a>', Router::url($url), $text);
             };
 
             $this->Flash->warning(__(
@@ -156,7 +157,7 @@ class PoliticiansController extends CrudController
         if ($politician->verified === null) {
             $link = function (string $text, array $url): string {
                 /** @noinspection HtmlUnknownTarget,UnknownInspectionInspection */
-                return sprintf('<a href="%s">%s</a>', Router::url($url), $text);
+                return sprintf('<a href="%s" class="alert-link">%s</a>', Router::url($url), $text);
             };
 
             $this->Flash->warning(__(

@@ -12,6 +12,7 @@ $this->extend('base');
  */
 $this->start('page');
 ?>
+    <?= $this->Breadcrumbs->render() ?>
     <?= $this->Flash->render(); ?>
     <?= $this->fetch('content'); ?>
 <?php
@@ -53,7 +54,7 @@ $this->start('navbar');
                         <ul class="nav navbar-nav">
                             <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
                             <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
-                            <li><?= $this->Html->link(__('Login'), ['_name' => 'users:login']) ?></li>
+                            <li><?= $this->Html->link(__('Sign In'), ['_name' => 'users:login']) ?></li>
                         </ul>
                     <?php endif ?>
                 </div>

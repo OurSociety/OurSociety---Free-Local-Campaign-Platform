@@ -12,12 +12,11 @@ trait InvokableFinderTrait
     /**
      * {@inheritdoc}
      */
-    public function callFinder($type, Query $query, array $options = [])
+    public function callFinder($type, Query $query, array $options = null)
     {
         $query->applyOptions($options);
         $options = $query->getOptions();
 
-        // TODO: Replace with proper way to get table name, not alias.
         $finderClassName = sprintf(
             '%s\\Model\\Table\\Finder\\%s\\%sFinder',
             Configure::read('App.namespace'),

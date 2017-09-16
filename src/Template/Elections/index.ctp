@@ -5,10 +5,9 @@
  * @var \OurSociety\View\AppView $this The view.
  * @var \OurSociety\Model\Entity\Election[] $elections
  */
+
+$this->Breadcrumbs->add(__('Elections'));
 ?>
-<ol class="breadcrumb">
-    <li><?= __('Elections') ?></li>
-</ol>
 
 <h1>
     <?= __('Elections') ?>

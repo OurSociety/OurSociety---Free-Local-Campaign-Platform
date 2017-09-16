@@ -11,7 +11,7 @@ class StatesController extends CrudController
     public function index(): ?Response
     {
         //$this->Crud->action()->setConfig('scaffold.fields', [
-        //    'name' => ['help' => 'asd'],
+        //    'name' => ['help' => ''],
         //    'email',
         //    'created',
         //    'modified',

@@ -15,6 +15,10 @@ $getError = function (\OurSociety\Model\Entity\Question $question, string $field
         return null;
     }
 
+    if (count($question->answers) === 0) {
+        return null;
+    }
+
     $errors = $question->answers[0]->getError($field);
 
     if (count($errors) === 0) {

@@ -7,6 +7,7 @@ use Cake\Datasource\EntityInterface as Entity;
 use Cake\Localized\Validation\UsValidation;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
+use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 use Cake\Validation as Cake;
@@ -23,6 +24,7 @@ use OurSociety\Validation\Validator as AppValidator;
  * @property CategoriesTable|Association\BelongsToMany $Categories
  * @property ValueMatchesTable|Association\HasMany $ValueMatches
  *
+ * @method User[]|ResultSet findByRole(string $role)
  * @method User get($primaryKey, $options = [])
  * @method User newEntity($data = null, array $options = [])
  * @method User[] newEntities(array $data, array $options = [])
@@ -101,7 +103,7 @@ class UsersTable extends AppTable
             ->setProvider('us', UsValidation::class)
             ->add('zip', 'zip', ['rule' => 'postal', 'provider' => 'us', 'message' => 'Please enter a valid ZIP code (e.g. 12345 or 12345-6789)'])
             // password
-            ->notEmpty('password')
+            ->minLength('password', 4) // TODO: This is after hashing :(
             ->requirePresence('password', 'create')
             // name
             ->notBlank('name')

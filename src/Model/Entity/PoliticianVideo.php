@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use Cake\Utility\Text;
 use OurSociety\View\AppView;
 
 /**
@@ -23,7 +24,7 @@ class PoliticianVideo extends AppEntity
 {
     public static function example(): self
     {
-        return new self(['youtube_video_id' => 'C0DPdy98e4c', 'is_example' => true]);
+        return new self(['id' => Text::uuid(), 'youtube_video_id' => 'C0DPdy98e4c', 'is_example' => true]);
     }
 
     public function renderEmbed(AppView $view): string
@@ -34,7 +35,7 @@ class PoliticianVideo extends AppEntity
     protected function _getYoutubeVideoThumbnail(): string
     {
         return $this->properties['youtube_video_thumbnail']
-            ?? sprintf('http://img.youtube.com/vi/%s/mqdefault.jpg', $this->youtube_video_id);
+            ?? sprintf('https://img.youtube.com/vi/%s/mqdefault.jpg', $this->youtube_video_id);
     }
 
     protected function _getYoutubeVideoUrl(): string

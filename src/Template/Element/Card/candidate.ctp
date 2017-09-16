@@ -5,7 +5,7 @@
  */
 
 if ($candidate->politician === null) {
-    $candidate->politician = \OurSociety\Model\Entity\User::example(['slug' => 'asd']);
+    $candidate->politician = \OurSociety\Model\Entity\User::example(['slug' => \Cake\Utility\Text::uuid()]);
 }
 ?>
 

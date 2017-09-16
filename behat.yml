@@ -2,8 +2,8 @@ default:
     autoload:
         '': %paths.base%/src/TestSuite/Behat/Context
     formatters:
-#        html:
-#            output_path: %paths.base%/build/story/report
+        html:
+            output_path: %paths.base%/build/features/report
         pretty:
             verbose: true
             paths: false
@@ -41,13 +41,13 @@ default:
                 local:
                     screenshot_directory: build/story/screenshots
                     clear_screenshot_directory: true
-#        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
-#            name: html
-#            renderer: Behat2
-#            file_name: index
-#            print_args: true
-#            print_outp: true
-#            loop_break: true
+        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+            name: html
+            renderer: Behat2
+            file_name: index
+            print_args: true
+            print_outp: true
+            loop_break: true
         LeanPHP\Behat\CodeCoverage\Extension:
             auth: ~
             drivers:
@@ -75,12 +75,12 @@ default:
 #                - OurSociety\TestSuite\Behat\Context\LoggedInContext:
 #                    - role: politician
                 - OurSociety\TestSuite\Behat\Context\PoliticianContext
-#        admin:
-#            paths:
-#                - %paths.base%/features/admin
-#            contexts:
+        admin:
+            paths:
+                - %paths.base%/features/admin
+            contexts:
 #                - OurSociety\TestSuite\Behat\Context\FeatureContext
-#                - OurSociety\TestSuite\Behat\Context\AdminContext
+                - OurSociety\TestSuite\Behat\Context\AdminContext
 debug:
     extensions:
         Behat\MinkExtension:

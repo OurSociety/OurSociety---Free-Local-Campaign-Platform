@@ -5,114 +5,227 @@
 
 $this->assign('scope', 's-home');
 ?>
-<section class="jumbotron text-center">
-    <img height="350" data-src="holder.js/100px350?theme=gray">
 
-    <h2>Grassroots - Transparent - Issue Focused</h2>
+<main class="os-masthead" id="content" role="main">
+    <div class="container text-white text-center">
 
-    <p>Changing the way we campaign and vote one question at a time</p>
+        <h1>
+            <svg class="mb-3 align-middle" width="128" height="128" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/brand-sprite.svg#logo-white-transparent"></use>
+            </svg>
+            <!--OurSociety-->
+        </h1>
 
-    <?= $this->Html->link('Register', ['_name' => 'users:register'], ['class' => 'btn btn-primary']) ?>
+        <h2>
+            <?= __('Grassroots') ?>
+            &ndash;
+            <?= __('Transparent') ?>
+            &ndash;
+            <?= __('Issue Focused') ?>
+        </h2>
 
-    <p class="text-muted small">
-        <small>
+        <p class="lead">
+            <?= __('Changing the way we campaign and vote one question at a time') ?>
+        </p>
+
+        <p class="lead">
+            <?= $this->Html->link('Join OurSociety', ['_name' => 'users:register'], ['class' => ['btn', 'btn-lg', 'btn-os-yellow']]) ?>
+        </p>
+
+        <p class="text-muted">
             <?= __('Already have an account?') ?>
-            <?= $this->Html->link('Login', ['_name' => 'users:login']) ?>
-        </small>
-    </p>
-</section>
-
-<hr />
-
-<section class="row">
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/1.png') ?>
-        <h4>2 million voters</h4>
+            <?= $this->Html->link('Sign In', ['_name' => 'users:login'], ['class' => 'text-white']) ?>
+        </p>
     </div>
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/3.png') ?>
-        <h4>50 NJ politicians</h4>
-    </div>
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/2.png') ?>
-        <h4># of something</h4>
-    </div>
-</section>
+</main>
 
-<section class="row">
-    <div class="col-xs-12">
-        <h2 class="text-center">Featured</h2>
+<section class="os-featurette">
+    <div class="container">
+        <h2 class="os-featurette-title">
+            <?= __('Politics for everyone, everywhere') ?>
+        </h2>
 
-        <div class="row">
-            <article class="col-lg-4 text-justify">
-                <img data-src="holder.js/100px250?theme=gray" class="img-responsive">
-                <h3>Post #1</h3>
-                <p>
+        <p class="lead">
+            <?= __('OurSociety aims to make politics more open and accessible.') ?>
+            <?= __("It's made for folks of all interests; from the ordinary citizen, to running candidates, to elected officials.") ?>
+        </p>
+
+        <div class="row text-center">
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-users" style="color: #582c83"></i>
+                <h4>
+                    <?= __('2 million voters') ?>
+                </h4>
+                <p class="card-text">
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
                     do eiusmod tempr incididunt ut labore et dolore magna aliqua.
                 </p>
-            </article>
-
-            <article class="col-lg-4 text-justify">
-                <img height="250" data-src="holder.js/100px250?theme=gray" class="img-responsive">
-                <h3>Post #2</h3>
-                <p>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-calendar" style="color: #582c83"></i>
+                <h4>
+                    <?= __('50 NJ politicians') ?>
+                </h4>
+                <p class="card-text">
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
                     do eiusmod tempr incididunt ut labore et dolore magna aliqua.
                 </p>
-            </article>
-
-            <article class="col-lg-4 text-justify">
-                <img data-src="holder.js/100px250?theme=gray" class="img-responsive">
-                <h3>Post #3</h3>
-                <p>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-map" style="color: #582c83"></i>
+                <h4>
+                    <?= __('231 Municipalities') ?>
+                </h4>
+                <p class="card-text">
                     Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
                     do eiusmod tempr incididunt ut labore et dolore magna aliqua.
                 </p>
-            </article>
+            </div>
+        </div>
+
+        <hr class="half-rule mx-auto">
+
+        <div class="text-center">
+            <p>
+                <strong>
+                    OurSociety is a 501(c) non-profit
+                </strong>
+                with the purpose to create a more transparent, collaborative,
+                and highly engaging democratic process that empowers grassroots leadership through our web platform.
+                The platform is based on issues, ideals and plans - not charisma and cash.
+            </p>
+            <a href="https://www.oursociety.org/purpose.php" class="btn btn-os-purple">Our Purpose</a>
         </div>
     </div>
 </section>
 
-<section class="row text-center">
-    <div class="col-xs-12">
-        <h2>About Us</h2>
-        <p>
-            OurSociety is a 501(c) non-profit with the purpose to create a more transparent, collaborative,
-            and highly engaging democratic process that empowers grassroots leadership through our web platform.
-            The platform is based on issues, ideals and plans - not charisma and cash.
+<section class="os-featurette">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col">
+                <h2 class="os-featurette-title">
+                    <?= __('Plans, Policies and Visions') ?>
+                </h2>
+
+                <p class="lead">
+                    <?= __('We provide a publishing platform for local government to promote their viewpoints.') ?>
+                    <?= __('These are some featured articles to give you an idea of the types of content available.') ?>
+                </p>
+
+                <div class="card-deck">
+
+                    <article class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="https://www.oursociety.org/img/reimagine500x500.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Article #1</h4>
+                            <p class="card-text">
+                                Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                                do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <p>
+                                <small class="text-muted"><?= random_int(3, 7) ?> minute read</small>
+                            </p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </article>
+
+                    <article class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="https://www.oursociety.org/img/expandingpossible500x500.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Article #2</h4>
+                            <p class="card-text">
+                                Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                                do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <p>
+                                <small class="text-muted"><?= random_int(3, 7) ?> minute read</small>
+                            </p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </article>
+
+                    <article class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="https://www.oursociety.org/img/collabdemo500x500.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">Article #3</h4>
+                            <p class="card-text">
+                                Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                                do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <p>
+                                <small class="text-muted"><?= random_int(3, 7) ?> minute read</small>
+                            </p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="os-featurette">
+    <div class="container">
+        <h2 class="os-featurette-title">
+            <?= __('Another Heading, To Catch Attention') ?>
+        </h2>
+
+        <p class="lead">
+            <?= __('We need some text here to lead into the features and icons below.') ?>
+            <?= __('This should help keep visitors on the site for longer and increase conversion rates.') ?>
         </p>
-    </div>
-</section>
 
-<section class="row">
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/4.png') ?>
-        <h4>Impact Report</h4>
-    </div>
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/5.png') ?>
-        <h4>Governance</h4>
-    </div>
-    <div class="col-xs-4 text-center">
-        <?= $this->Html->image('../img/icon/6.png') ?>
-        <h4>Mission</h4>
-    </div>
-</section>
+        <div class="row text-center">
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-bar-chart" style="color: #582c83"></i>
+                <h4>
+                    <?= __('Impact Report') ?>
+                </h4>
+                <p class="card-text">
+                    Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                    do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-refresh" style="color: #582c83"></i>
+                <h4>
+                    <?= __('Governance') ?>
+                </h4>
+                <p class="card-text">
+                    Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                    do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <i class="fa fa-4x fa-line-chart" style="color: #582c83"></i>
+                <h4>
+                    <?= __('Mission') ?>
+                </h4>
+                <p class="card-text">
+                    Lorem ipsum dolar sit amet, consecutor adipiscing elit, sed
+                    do eiusmod tempr incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+        </div>
 
-<section class="row">
-    <div class="col-xs-12">
-        <h2 class="text-center">Let's level the playing field</h2>
+        <hr class="half-rule mx-auto">
 
-        <ul class="list-unstyled">
-            <li>
-                <?= $this->Html->image('../img/icon/tw.png') ?>
-                Follow us on Twitter
-            </li>
-            <li>
-                <?= $this->Html->image('../img/icon/fb.png') ?>
-                Follow us on Facebook
-            </li>
-        </ul>
+        <div class="text-center">
+            <h3>
+                    <?= __("Let's level the playing field!") ?>
+            </h3>
+
+            <div class="btn-group mt-4">
+                <a href="https://www.oursociety.org/purpose.php" class="btn btn-outline-light" style="background-color: #0084b4">
+                    <i class="fa fa-fw fa-twitter"></i>
+                    <?= __('Follow us on Twitter') ?>
+                </a>
+                <a href="https://www.oursociety.org/purpose.php" class="btn btn-outline-light" style="background-color: #3b5998">
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                    <?= __('Follow us on Facebook') ?>
+                </a>
+            </div>
+        </div>
     </div>
 </section>

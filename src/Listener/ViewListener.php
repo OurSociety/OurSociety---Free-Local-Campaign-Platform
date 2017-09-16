@@ -5,14 +5,20 @@ namespace OurSociety\Listener;
 
 use Cake\Core\Configure;
 use Cake\Database\Exception as DatabaseException;
+use Cake\Log\LogTrait;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use CrudView\Listener as CrudView;
 use CrudView\Menu\MenuItem;
 use OurSociety\Controller\CrudController;
+use OurSociety\Model\Table\AppTable;
+use Psr\Log\LogLevel;
 
 class ViewListener extends CrudView\ViewListener
 {
+    use LogTrait;
+
     /**
      * {@inheritdoc}
      *
@@ -195,7 +201,7 @@ class ViewListener extends CrudView\ViewListener
         $table = $this->_table();
         $tableSchema = $table->getSchema();
 
-        $defaultEmpty = function (array $options, string $field) use ($tableSchema) {
+        $defaultEmpty = function (array $options, string $field) {
             if (isset($options['empty'])) {
                 return $options;
             }
@@ -209,7 +215,7 @@ class ViewListener extends CrudView\ViewListener
         };
 
         $defaultHelp = function (array $options, string $field) use ($tableSchema){
-            $comment = $tableSchema->column($field)['comment'];
+            $comment = $tableSchema->getColumn($field)['comment'];
             if ($comment !== '' && !isset($options['help'])) {
                 $options['help'] = $comment ?? null;
             }
@@ -225,17 +231,45 @@ class ViewListener extends CrudView\ViewListener
 
     protected function _table(): Table
     {
-        /** @var Table $table */
+        /** @var AppTable $table */
         $table = parent::_table();
 
         try {
-            if ($table->getSchema()->column('slug') !== null) {
+            if ($table->hasSlugField()) {
                 //$table->setPrimaryKey('slug'); // TODO: This breaks relations or CRUD navigation depending on set/unset
             }
         } catch (DatabaseException $exception) {
-            // no-op: ignore exceptions for missing tables.
+            $this->log(sprintf('Skipping missing table "%s"', $table->getAlias()), LogLevel::DEBUG, $exception);
         }
 
         return $table;
+    }
+
+    /**
+     * {@inheritdoc}. Replaces parent method to properly support [$field => $options] format.
+     */
+    protected function _getFormTabGroups(array $fields = []): array
+    {
+        $action = $this->_action();
+        $groups = (array)$action->getConfig('scaffold.form_tab_groups');
+
+        if (empty($groups)) {
+            return [];
+        }
+
+        foreach ($groups as $group => $groupFields) {
+            $groups[$group] = Hash::normalize($groupFields);
+        }
+
+        $groupedFields = array_keys(array_merge(...array_values($groups)));
+        $ungroupedFields = array_diff_key(Hash::normalize($fields), Hash::normalize($groupedFields));
+
+        if ($ungroupedFields) {
+            $primaryGroup = $action->getConfig('scaffold.form_primary_tab') ?: __d('crud', 'Primary');
+
+            $groups = Hash::merge([$primaryGroup => $ungroupedFields], $groups);
+        }
+
+        return $groups;
     }
 }

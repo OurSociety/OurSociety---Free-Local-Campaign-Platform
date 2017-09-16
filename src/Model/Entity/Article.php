@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Utility\Inflector;
 use Faker\Factory as Example;
 use OurSociety\View\AppView;
+use OurSociety\View\Scaffold\FieldList;
 
 /**
  * Article Entity
@@ -45,6 +45,16 @@ class Article extends AppEntity
         ];
 
         return new self($data);
+    }
+
+    public function getScaffoldFieldList(): FieldList
+    {
+        return FieldList::fromArray($this->getModel(), [
+            'politician_id',
+            'name' => ['Article Title'],
+            'approved',
+            'published',
+        ]);
     }
 
     public function renderMunicipalViewLink(AppView $view, array $options = null): string

@@ -1,14 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User[] $politicians The list of politicians.
  */
+
+$this->Breadcrumbs->add('Browse Politicians');
 ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= __('Politicians') ?></li>
-</ol>
 
 <h2><?= __('Politicians') ?></h2>
 
@@ -36,17 +33,17 @@ declare(strict_types=1);
                             : __('Candidate for {position}', [
                                 'position' => $politician->position ?? __('Unknown Position')
                             ]) ?></p>
-                    <dl class="dl-horizontal">
-                        <dt>Questions answered</dt>
-                        <dd><?= $politician->answer_count ?></dd>
-                        <dt>Articles posted</dt>
-                        <dd><?= count($politician->articles) ?></dd>
-                        <dt>Videos uploaded</dt>
-                        <dd><?= count($politician->awards) ?></dd>
-                        <dt>Previous positions</dt>
-                        <dd><?= count($politician->positions) ?></dd>
-                        <dt>Qualifications</dt>
-                        <dd><?= count($politician->qualifications) ?></dd>
+                    <dl class="row">
+                        <dt class="col-sm-6">Questions answered</dt>
+                        <dd class="col-sm-6"><?= $politician->answer_count ?></dd>
+                        <dt class="col-sm-6">Articles posted</dt>
+                        <dd class="col-sm-6"><?= count($politician->articles) ?></dd>
+                        <dt class="col-sm-6">Videos uploaded</dt>
+                        <dd class="col-sm-6"><?= count($politician->awards) ?></dd>
+                        <dt class="col-sm-6">Previous positions</dt>
+                        <dd class="col-sm-6"><?= count($politician->positions) ?></dd>
+                        <dt class="col-sm-6">Qualifications</dt>
+                        <dd class="col-sm-6"><?= count($politician->qualifications) ?></dd>
                     </dl>
                 </div>
             </div>

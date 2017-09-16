@@ -44,4 +44,9 @@ class CrudComponent extends Crud\CrudComponent
 
         return parent::removeListener($name);
     }
+
+    public function setScaffoldFields(array $config): void
+    {
+        $this->action()->setConfig('scaffold.fields', $config);
+    }
 }

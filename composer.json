@@ -56,8 +56,10 @@
         "cakephp/debug_kit": "^3.2",
         "ciaranmcnulty/phpspec-typehintedmethods": "^3.0",
         "dereuromark/cakephp-ide-helper": "^0.9",
+        "emuse/behat-html-formatter": "dev-master@dev",
         "fonsecas72/behat-giffy-extension": "^1.0",
         "guzzlehttp/guzzle": "6.3.0 as 4.2.4",
+        "ingenerator/behat-tableassert": "^1.1",
         "kint-php/kint": "^2.1",
         "leanphp/behat-code-coverage": "3.1.x-dev@dev",
         "leanphp/phpspec-code-coverage": "dev-phpspec-4@dev",
@@ -67,9 +69,11 @@
         "psy/psysh": "@stable",
         "pyrech/composer-changelogs": "^1.5",
         "scriptfusion/phpunit-immediate-exception-printer": "^2.0",
+        "sebastian/diff": "2.0.1 as 1.4.3",
         "sensiolabs/behat-page-object-extension": "^2.0",
         "sllh/composer-versions-check": "^2.0",
-        "spatie/db-dumper": "^2.7"
+        "spatie/db-dumper": "^2.7",
+        "traviscarden/behat-table-comparison": "^0.2.1"
     },
     "config": {
         "sort-packages": true

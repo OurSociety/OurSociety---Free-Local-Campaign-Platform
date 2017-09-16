@@ -1,9 +1,17 @@
+<?php
+use Cake\Utility\Text;
+
+/**
+ * @var \OurSociety\View\AppView $this The view.
+ * @var array $formTabGroups
+ */
+?>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs" role="tablist">
         <?php $firstTab = key($formTabGroups) ?>
         <?php foreach ($formTabGroups as $group => $groupFields) : ?>
-            <li role="presentation" <?= $group === $firstTab ? 'class="active"' : '' ?>>
-                <a href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
+            <li role="presentation" class="nav-item">
+                <a class="nav-link<?= $group === $firstTab ? ' active' : '' ?>" href="#tab-<?= mb_strtolower(Text::slug($group)) ?>" role="tab" data-toggle="tab"><?= $group ?></a>
             </li>
         <?php endforeach ?>
     </ul>
@@ -14,7 +22,7 @@
                 role="tabpanel"
                 class="tab-pane <?= $group === $firstTab ? 'active' : '' ?>"
             >
-                <?= $this->Form->inputs($groupFields, ['legend' => false]) ?>
+                <?= $this->Form->controls($groupFields, ['legend' => false]) ?>
             </div>
         <?php endforeach ?>
     </div>

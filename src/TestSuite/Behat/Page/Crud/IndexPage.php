@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace OurSociety\TestSuite\Behat\Page\Crud;
 
 use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ElementNotFoundException;
+use Ingenerator\BehatTableAssert\AssertTable;
+use Ingenerator\BehatTableAssert\TableParser\HTMLTable;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Page;
 
 /**
@@ -14,22 +17,18 @@ class IndexPage extends Page
     /**
      * Determine if a table has all items.
      *
-     * @param TableNode $table The table node.
+     * @param TableNode $expected The table node.
      * @return bool True if all table items exist.
+     * @throws ElementNotFoundException
      */
-    public function hasTableItems(TableNode $table): bool
+    public function assertRecords(TableNode $expected): void
     {
-        foreach ($table->getHash() as $row) {
-            foreach ($row as $heading => $value) {
-                $heading = $this->find('css', sprintf('.scaffold-action-index .table thead tr th:contains("%s")', $heading));
-                $cell = $this->find('css', sprintf('.scaffold-action-index .table tbody tr:contains("%s")', $value));
+        $indexTable = $this->find('css', '.scaffold-action-index table');
 
-                if (in_array(null, [$heading, $cell])) {
-                    return false;
-                }
-            }
+        if (!$indexTable) {
+            throw new ElementNotFoundException($this->getDriver(), 'form', 'css', 'form#search');
         }
 
-        return true;
+        (new AssertTable)->isComparable($expected, HTMLTable::fromMinkTable($indexTable), ['ignoreExtraColumns' => true]);
     }
 }
