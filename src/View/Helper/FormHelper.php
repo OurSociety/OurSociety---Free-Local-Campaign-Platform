@@ -92,6 +92,8 @@ HTML;
      */
     protected function _inputLabel($fieldName, $label, $options): string
     {
+        $label = $label ?? [];
+
         if ($options['type'] === 'checkbox') {
             if (is_string($label)) {
                 $label = ['text' => $label];

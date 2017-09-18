@@ -236,7 +236,7 @@ class ViewListener extends CrudView\ViewListener
 
         try {
             if ($table->hasSlugField()) {
-                //$table->setPrimaryKey('slug'); // TODO: This breaks relations or CRUD navigation depending on set/unset
+                $table->setPrimaryKey('slug'); // TODO: This breaks relations or CRUD navigation depending on set/unset
             }
         } catch (DatabaseException $exception) {
             $this->log(sprintf('Skipping missing table "%s"', $table->getAlias()), LogLevel::DEBUG, $exception);

@@ -17,14 +17,14 @@
             </div>
         </div>
         <?= $this->Form->control('email', [
-            'label' => false,
-            'placeholder' => 'Email Address',
+            'label' => __('Email Address'),
+            //'placeholder' => __('Email Address'),
             'required' => true,
             'default' => $this->request->getQuery('email'),
         ]) ?>
         <?= $this->Form->control('password', [
-            'label' => false,
-            'placeholder' => 'Password',
+            'label' => __('Password'),
+            //'placeholder' => __('Password'),
             'required' => true,
             'help' => $this->Html->link(__('Forgot password?'), ['_name' => 'users:forgot'])
         ]) ?>

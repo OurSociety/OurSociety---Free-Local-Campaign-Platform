@@ -66,6 +66,7 @@ default:
             paths:
                 - %paths.base%/features/public
             contexts:
+                - OurSociety\TestSuite\Behat\Context\BrowserContext
                 - OurSociety\TestSuite\Behat\Context\PublicContext
         politician:
             paths:

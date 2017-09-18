@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Politician\Profile;
 
 use Cake\Event\Event;
+use Cake\ORM\Query;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\Article;
 use OurSociety\Model\Entity\User;
@@ -25,13 +26,18 @@ class ArticlesController extends CrudController
                     'published',
                     'approved',
                 ],
+                'actions_blacklist' => [
+                    'export'
+                ],
             ],
         ]);
 
         $this->Crud->on('beforePaginate', function (Event $event) {
-            $event->getSubject()->query = $event->getSubject()->query->where([
-                'Politicians.slug' => $this->Auth->user('slug'),
-            ]);
+            $event->getSubject()->query = $event->getSubject()->query->matching('Politicians', function (Query $query) {
+                return $query->where([
+                    'Politicians.slug' => $this->Auth->user('slug'),
+                ]);
+            });
         });
 
         return $this->Crud->execute();
