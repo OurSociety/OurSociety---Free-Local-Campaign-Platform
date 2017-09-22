@@ -56,14 +56,45 @@ class ElectoralDistrict extends AppEntity
         return $this->id === $municipality->id;
     }
 
-    public function renderLink(AppView $view, $url = null): string
+    public function getRoute(): array
     {
-        return $view->Html->link($this->name, $url ?: ['_name' => 'district', 'district' => $this->slug]);
+        return ['_name' => 'district', 'district' => $this->slug];
+    }
+
+    public function renderLink(AppView $view, $url = null, ?array $options = null): string
+    {
+        return $view->Html->link($this->name, $url ?: $this->getRoute(), $options ?? []);
     }
 
     public function isMunicipality()
     {
         return $this->district_type->isMunicipality();
+    }
+
+    public function printDistrictType(): string
+    {
+        return $this->district_type ? $this->district_type->name : __('Unknown District Type');
+    }
+
+    public function hasDescription(): bool
+    {
+        return $this->description !== null;
+    }
+
+    public function renderMap(AppView $view): string
+    {
+        if ($this->polygon === null) {
+            return '';
+        }
+
+        $script = <<<JAVASCRIPT
+drawMap('zip', null, {$this->polygon})
+JAVASCRIPT;
+
+        $mapElement = $view->Html->div('card-img-top map pull-right', '', ['id' => 'zip']);
+        $mapScript = $view->Html->scriptBlock($script);
+
+        return $mapElement . $mapScript;
     }
 
     protected function _getDisplayName(): string

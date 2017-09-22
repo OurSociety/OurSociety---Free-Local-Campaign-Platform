@@ -6,6 +6,11 @@ namespace OurSociety\Model\Table\Finder;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 
+/**
+ * Finder.
+ *
+ * Base class for all invokable finders.
+ */
 abstract class Finder
 {
     /**
@@ -23,6 +28,13 @@ abstract class Finder
         $this->table = $table;
     }
 
+    /**
+     * Logic for the custom finder goes here.
+     *
+     * @param Query $query The original query.
+     * @param array $options Any options for the find call.
+     * @return Query The custom query.
+     */
     abstract public function __invoke(Query $query, array $options = []): Query;
 
     /**

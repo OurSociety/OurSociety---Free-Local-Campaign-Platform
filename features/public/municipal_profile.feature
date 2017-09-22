@@ -6,8 +6,24 @@ Feature: Public municipal profile
 
   Scenario: Visitors can view aggregate content for a jurisdiction
     When I am on the "Example City" municipal profile
-#    Then I can see the mayor
-#    And I can see town information
+    Then I should see the heading "Example City"
+    And I should see the mayor "Example Mayor" with the email "mayor@example.com"
+    And I should see town information containing "Example City was named after the fact that it is an example."
+    And I should see a map
+    And I should see the following statistics:
+      | Statistic                    | Count |
+      | Number of Citizens           | 4     |
+      | Number of Politicians        | 2     |
+      | Articles being fact-checked  | 1     |
+      | Number of Articles This Year | 5     |
+    And I should see the following articles:
+      | Title           | Type | Body                        | Read time |
+      | Example Article | Plan | This is an example article. | 4 min     |
+    And I should see a "Submit Your Own Idea" button that links to "/municipality/example-city/article/new"
+    And I should see a "View All" button that links to "/municipality/example-city/articles"
+
+    And I should see a "View All" button that links to "/municipality/example-city/events"
+
 #    And I can see elected officials
 #    Given I am on “/nj/municipality/west-ocean”
 #    Then I can see the heading “West Ocean”

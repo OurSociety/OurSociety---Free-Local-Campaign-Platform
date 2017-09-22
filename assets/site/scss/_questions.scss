@@ -1,0 +1,37 @@
+.form-question-answers {
+    .form-group.radio {
+        margin-bottom: 0;
+        .radio {
+            label {
+                background-color: $os-purple-brand-secondary;
+                border: $card-border-width solid $card-border-color;
+                border-radius: $card-border-radius;
+                color: $white;
+                font-size: $blockquote-font-size;
+                padding: $input-btn-padding-y $input-btn-padding-x;
+                width: 100%;
+                input {
+                    margin-right: $input-btn-padding-x;
+                }
+            }
+        }
+    }
+}
+
+.form-question-importance {
+    .form-group.radio {
+        margin-bottom: 0;
+    }
+    .radio {
+        label {
+            background-color: $card-cap-bg;
+            border: $card-border-width solid $card-border-color;
+            border-radius: $card-border-radius;
+            padding: $input-btn-padding-y $input-btn-padding-x;
+            margin-right: $input-btn-padding-x;
+            input {
+                margin-right: $input-btn-padding-x;
+            }
+        }
+    }
+}

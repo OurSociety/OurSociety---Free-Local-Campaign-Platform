@@ -8,7 +8,7 @@
 ?>
 
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-    <a href="<?= $this->Url->build(['_name' => 'pages:home']) ?>" aria-label="OurSociety" class="navbar-brand">
+    <a href="<?= $this->Url->build(['_name' => 'home']) ?>" aria-label="OurSociety" class="navbar-brand">
         <svg class="align-middle" width="36" height="36" xmlns="http://www.w3.org/2000/svg" focusable="false">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/brand-sprite.svg#logo-white-transparent"></use>
         </svg>
@@ -26,7 +26,7 @@
                 </li>
             <?php else: ?>
                 <li class="nav-item<?= $this->request->getUri()->getPath() === '/home' ? ' active' : null ?>">
-                    <?= $this->Html->link(__('Home'), ['_name' => 'pages:home'], ['class' => ['nav-link']]) ?>
+                    <?= $this->Html->link(__('Home'), ['_name' => 'home'], ['class' => ['nav-link']]) ?>
                 </li>
             <?php endif ?>
             <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
@@ -41,7 +41,7 @@
                 <?= $this->cell('Navbar/User') ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Logout'), ['_name' => 'users:logout'], [
+                <?= $this->Html->link(__('Sign Out'), ['_name' => 'users:logout'], [
                     'class' => ['btn', 'btn-bd-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
                 ]) ?>
             </li>

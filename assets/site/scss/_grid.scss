@@ -1,3 +1,10 @@
 .container-fluid {
-    padding: $grid-gutter-width;
+    // TODO: Commented because this adds white padding around onboarding page (not wanted)
+    // TODO: Find out why this was added in first place (landing page suspected, and find different solution)
+    //padding: $grid-gutter-width;
+}
+
+// Equal height cards - from https://github.com/twbs/bootstrap/issues/20321#issuecomment-309210866
+.row.equal-height > [class*='col-'] {
+    display: flex;
 }

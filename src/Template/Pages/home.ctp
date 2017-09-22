@@ -6,7 +6,7 @@
 $this->assign('scope', 's-home');
 ?>
 
-<main class="os-masthead" id="content" role="main">
+<main class="os-masthead row" id="content" role="main">
     <div class="container text-white text-center">
 
         <h1>

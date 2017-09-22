@@ -1195,9 +1195,13 @@ bootstrap-sass@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"
 
-bootstrap@^4.0.0-alpha.6, bootstrap@twbs/bootstrap#v4-dev:
+bootstrap@^4.0.0-alpha.6:
   version "4.0.0-beta"
   resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/576636047754711ccd702f6916a57218f0460085"
+
+bootstrap@twbs/bootstrap#v4-dev:
+  version "4.0.0-beta"
+  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/b4d84b9cdfe0fc1c3d73770f5b7cb428f79d5e68"
 
 brace-expansion@^1.1.7:
   version "1.1.8"

@@ -5,41 +5,70 @@
  */
 ?>
 
-<section class="users form">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <div class="row">
-            <div class="col">
-                <legend><?= __('Join OurSociety') ?></legend>
+<div class="row">
+    <div class="col-md-6 p-5 bg-light">
+        <h1 class="pb-3">
+            <?= __('Register an account.') ?>
+        </h1>
+
+        <section class="users form">
+            <?= $this->Form->create($user) ?>
+            <fieldset>
+                <div class="row">
+                    <div class="col">
+                        <legend class="text-nowrap">
+                            <?= __('Join OurSociety') ?>
+                        </legend>
+                    </div>
+                    <div class="col col-auto text-muted mb-2">
+                        <?= __('Already have an account?') ?>
+                        <?= $this->Html->link(
+                            __('Sign in'),
+                            ['_name' => 'users:login'],
+                            ['class' => ['btn', 'btn-outline-primary', 'btn-sm', 'ml-2']]
+                        ) ?>
+                    </div>
+                </div>
+                <?= $this->Form->control('name', [
+                    'placeholder' => __('Full name'),
+                    'label' => false,
+                    'required' => true,
+                ]) ?>
+                <?= $this->Form->control('email', [
+                    'placeholder' => __('Email address'),
+                    'label' => false,
+                    'required' => true,
+                ]) ?>
+                <?= $this->Form->control('password', [
+                    'placeholder' => __('Password'),
+                    'label' => false,
+                    'required' => true,
+                ]) ?>
+            </fieldset>
+            <div class="row">
+                <div class="col">
+                    <small>
+                        <?= __('Already have an account?') ?>
+                        <?= $this->Html->link(__('Sign in!'), ['_name' => 'users:login']) ?>
+                    </small>
+                </div>
+                <div class="col col-md-7 col-lg-5">
+                    <?= $this->Form->button(__('Join OurSociety'), ['class' => ['btn-secondary', 'btn-block', 'btn-lg']]) ?>
+                </div>
             </div>
-            <div class="col col-auto text-muted">
-                Already have an account?
-                <?= $this->Html->link(__('Sign in'), ['_name' => 'users:login'], ['class' => 'btn btn-outline-primary btn-sm ml-2']) ?>
-            </div>
-        </div>
-        <?= $this->Form->control('name', [
-            'placeholder' => __('Full name'),
-            'label' => false,
-        ]) ?>
-        <?= $this->Form->control('email', [
-            'placeholder' => __('Email address'),
-            'label' => false,
-        ]) ?>
-        <?= $this->Form->control('password', [
-            'placeholder' => __('Password'),
-            'label' => false,
-        ]) ?>
-    </fieldset>
-    <div class="row">
-        <div class="col">
-            <small>
-                <?= __('Already have an account?') ?>
-                <?= $this->Html->link(__('Sign in!'), ['_name' => 'users:login']) ?>
-            </small>
-        </div>
-        <div class="col col-md-4 col-lg-2">
-            <?= $this->Form->button(__('Join OurSociety'), ['class' => ['btn-secondary btn-block btn-lg']]) ?>
-        </div>
+            <?= $this->Form->end() ?>
+        </section>
     </div>
-    <?= $this->Form->end() ?>
-</section>
+
+    <div class="col-md-6 p-5 text-white" style="background-color: #871898">
+        <h1 class="display-4 mb-5" style="font-weight: bold">
+            <?= __('Our Purpose') ?>
+        </h1>
+        <h4 class="mb-5">
+            <?= __('Create a more transparent, collaborative, and highly engaged democratic process that empowers grassroots leadership.') ?>
+        </h4>
+        <h2>
+            <?= $this->element('logo') ?>
+        </h2>
+    </div>
+</div>

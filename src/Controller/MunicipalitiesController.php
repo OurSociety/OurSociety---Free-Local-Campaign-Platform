@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
 use OurSociety\Controller\Action\IndexAction;
 use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Log\LogLevel;
 
 /**
  * Municipalities Controller
@@ -57,6 +59,19 @@ class MunicipalitiesController extends CrudController
 
     public function view(?string $municipalitySlug = null): ?Response
     {
+        if ($municipalitySlug === null) {
+            return $this->redirectToUserMunicipality();
+        }
+
+        if ($municipalitySlug === null) {
+            /** @var ElectoralDistrict $municipality */
+            $municipality = ElectoralDistrictsTable::instance()->find()->where([
+                'id' => $this->getCurrentUser()->electoral_district_id,
+            ])->firstOrFail();
+
+            $this->request->addParams(['pass' => [$municipality->slug]]);
+        }
+
         $this->Crud->on('beforeFind', function (Event $event) use ($municipalitySlug) {
             if ($municipalitySlug !== null) {
                 return;
@@ -119,5 +134,24 @@ class MunicipalitiesController extends CrudController
         });
 
         return $this->Crud->execute();
+    }
+
+    private function redirectToUserMunicipality(): Response
+    {
+        $user = $this->getCurrentUser();
+
+        try {
+            $slug = $user->getMunicipalitySlug();
+        } catch (NotFoundException $exception) {
+            $this->log(
+                'User tried to navigate to "My Municipality" page before onboarding so was redirected.',
+                LogLevel::DEBUG,
+                ['user' => $user]
+            );
+
+            return $this->redirect(['_name' => 'users:onboarding']);
+        }
+
+        return $this->redirect(['action' => 'view', $slug]);
     }
 }

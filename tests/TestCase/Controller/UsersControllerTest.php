@@ -93,7 +93,7 @@ EMAIL
                 $this->assertResponseContains(UsersController::MESSAGE_LOGIN_SUCCESS);
                 $this->assertResponseNotContains(UsersController::MESSAGE_LOGIN_ERROR);
                 $this->assertResponseContains('Signed in as');
-                $this->assertResponseContains('Logout');
+                $this->assertResponseContains('Sign Out');
                 $this->assertResponseNotContains('Login');
                 $this->resumeSession();
                 $this->get(['_name' => 'users:login']);

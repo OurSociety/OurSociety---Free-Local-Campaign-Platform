@@ -58,17 +58,6 @@ class ElectoralDistrictsController extends CrudController
             ]);
         });
 
-        //$this->Crud->on('beforeRender', function (Event $event) {
-        //    /** @var ElectoralDistrict $electoralDistrict */
-        //    $electoralDistrict = $event->getSubject()->entity;
-        //    if ($electoralDistrict->isMunicipality()) {
-        //        //$this->viewBuilder()->setLayout('site');
-        //        //$this->viewBuilder()->setTemplatePath(ROOT . 'src' . DS . 'Template' . DS . 'ElectoralDistricts');
-        //        $this->Crud->disable('view');
-        //        $this->render('municipality', 'site');
-        //    }
-        //});
-
         return $this->Crud->execute();
     }
 }

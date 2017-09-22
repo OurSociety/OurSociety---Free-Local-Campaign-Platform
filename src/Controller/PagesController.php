@@ -44,7 +44,10 @@ class PagesController extends AppController
     public function display(string ...$path): ?Response
     {
         if ($path === ['home']) {
-            $this->set('container', false);
+            $this->set('containerClass', 'container-fluid');
+            if (Configure::read('debug') === false) {
+                $this->redirect('https://www.oursociety.org');
+            }
         }
 
         $count = count($path);

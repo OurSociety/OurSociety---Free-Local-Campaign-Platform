@@ -30,23 +30,24 @@ Feature: Users can log in
     Then I should be on "/login"
     And I should see "Sorry, that email and password combination was not recognized."
 
-  Scenario: Citizens can log in
+  Scenario: Citizens can log in to dashboard
     Given I am on "/login"
-    When I fill in "Email" with "citizen@example.net"
-    And I fill in "Password" with "democracy"
-    And I press "Sign In"
-    Then I should see "Welcome to OurSociety!"
-    And I should see "Citizen 1"
-    And I should see "Sign Out"
-
-  Scenario: Citizens can log in
-    Given I am on "/login"
-    When I fill in "Email" with "citizen@example.net"
+    When I fill in "Email" with "onboarded-citizen@example.net"
     And I fill in "Password" with "democracy"
     And I press "Sign In"
     Then I should be on "/citizen"
     And I should see "Welcome to OurSociety!"
-    And I should see "Citizen 1"
+    And I should see "Onboarded Citizen"
+    And I should see "Sign Out"
+
+  Scenario: New citizens must go through onboarding process
+    Given I am on "/login"
+    When I fill in "Email" with "new-citizen@example.net"
+    And I fill in "Password" with "democracy"
+    And I press "Sign In"
+    Then I should be on "/onboarding"
+    And I should see "Welcome to OurSociety!"
+    And I should see "New Citizen"
     And I should see "Sign Out"
 
   Scenario: Politicians can log in

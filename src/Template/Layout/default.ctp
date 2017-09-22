@@ -34,7 +34,7 @@ $this->start('navbar');
                 </button>
                 <?= $this->Html->link(
                     $this->Html->image('banner.png', ['title' => 'OurSociety', 'alt' => 'Brand']),
-                    ['_name' => 'pages:home'],
+                    ['_name' => 'home'],
                     ['class' => 'navbar-brand', 'escape' => false]
                 ); ?>
             </div>
@@ -44,15 +44,15 @@ $this->start('navbar');
                         <?= $this->cell('Navbar/User', [['style' => 'float: left; margin-top: 8px;']]) ?>
                         <?=''// $this->element('topbar'); ?>
                         <ul class="nav navbar-nav">
-                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'home']) ?></li>
                             <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
                             <li><?= $this->Html->dashboardLink($currentUser->role, __('Dashboard')) ?></li>
                             <li role="separator" class="divider"></li>
-                            <li><?= $this->Html->link(__('Logout'), ['_name' => 'users:logout']) ?></li>
+                            <li><?= $this->Html->link(__('Sign Out'), ['_name' => 'users:logout']) ?></li>
                         </ul>
                     <?php else: ?>
                         <ul class="nav navbar-nav">
-                            <li><?= $this->Html->link(__('Home'), ['_name' => 'pages:home']) ?></li>
+                            <li><?= $this->Html->link(__('Home'), ['_name' => 'home']) ?></li>
                             <li><?= $this->Html->link(__('Politicians'), ['_name' => 'politicians']) ?></li>
                             <li><?= $this->Html->link(__('Sign In'), ['_name' => 'users:login']) ?></li>
                         </ul>

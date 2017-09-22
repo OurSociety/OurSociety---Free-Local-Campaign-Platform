@@ -25,7 +25,7 @@ class DashboardController extends AppController
         }
 
         if ($user->answer_count === 0) {
-            $this->Flash->success('Please answer the following questions before we take you to the dashboard.');
+            $this->Flash->info(__('Please answer the following questions, then we will take you to your dashboard.'));
 
             return $this->redirect(['_name' => 'citizen:questions']);
         }

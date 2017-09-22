@@ -1,50 +1,35 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User[] $politicians The list of politicians.
+ * @var string $title
+ * @var \OurSociety\Model\Entity\User[]|\Cake\ORM\ResultSet $politicians The list of politicians.
  */
 
-$this->Breadcrumbs->add('Browse Politicians');
+$this->Breadcrumbs->add($title);
 ?>
 
-<h2><?= __('Politicians') ?></h2>
+<h1>
+    <?= __($title) ?>
+</h1>
 
-<hr>
-
-<section class="row">
+<section class="row equal-height">
     <?php foreach ($politicians as $politician): ?>
-        <div class="col-md-6">
-            <div class="media">
-                <div class="media-left">
-                    <?= $this->Html->politicianLink(
-                        $politician,
-                        $this->Html->jdenticon($politician->slug, [
-                            'class' => ['media-object'],
-                            'alt' => __('Profile picture of {politician_name}', ['politician_name' => $politician->name]),
-                            'height' => '150',
-                        ]),
-                        ['escape' => false]
-                    ) ?>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading"><?= $this->Html->politicianLink($politician) ?></h4>
-                    <p><?= $politician->incumbent === true
-                            ? $politician->position ?? __('Unknown Position')
-                            : __('Candidate for {position}', [
-                                'position' => $politician->position ?? __('Unknown Position')
-                            ]) ?></p>
-                    <dl class="row">
-                        <dt class="col-sm-6">Questions answered</dt>
-                        <dd class="col-sm-6"><?= $politician->answer_count ?></dd>
-                        <dt class="col-sm-6">Articles posted</dt>
-                        <dd class="col-sm-6"><?= count($politician->articles) ?></dd>
-                        <dt class="col-sm-6">Videos uploaded</dt>
-                        <dd class="col-sm-6"><?= count($politician->awards) ?></dd>
-                        <dt class="col-sm-6">Previous positions</dt>
-                        <dd class="col-sm-6"><?= count($politician->positions) ?></dd>
-                        <dt class="col-sm-6">Qualifications</dt>
-                        <dd class="col-sm-6"><?= count($politician->qualifications) ?></dd>
-                    </dl>
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 pb-3">
+            <div class="card">
+                <?= $this->Html->politicianLink(
+                    $politician,
+                    $this->Html->jdenticon($politician->slug, [
+                        'class' => ['card-img-top bg-light'],
+                        'alt' => __('Profile picture of {politician_name}', ['politician_name' => $politician->name]),
+                        'height' => '150',
+                    ]),
+                    ['escape' => false]
+                ) ?>
+                <div class="card-body">
+                    <h4 class="card-title"><?= $this->Html->politicianLink($politician) ?></h4>
+                    <p class="card-text">
+                        <?= $politician->printPosition() ?>
+                    </p>
                 </div>
             </div>
         </div>

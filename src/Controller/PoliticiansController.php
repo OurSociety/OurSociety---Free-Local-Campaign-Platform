@@ -40,6 +40,7 @@ class PoliticiansController extends CrudController
         $this->Crud->action()->setConfig([
             'findMethod' => 'politicianForCitizen',
             'scaffold' => [
+                'page_title' => 'Browse Politicians',
                 'fields' => [
                     'name',
                     'picture',

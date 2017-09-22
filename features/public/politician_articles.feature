@@ -23,7 +23,7 @@ Feature: Politicians can post articles
         And I press "Login"
         Then I should see "Welcome to OurSociety!"
         And I should see "Citizen 1"
-        And I should see "Logout"
+        And I should see "Sign Out"
 
     Scenario: Politicians can log in
         Given I am on "/login"
@@ -32,7 +32,7 @@ Feature: Politicians can post articles
         And I press "Login"
         Then I should see "Welcome to OurSociety!"
         And I should see "John Doe"
-        And I should see "Logout"
+        And I should see "Sign Out"
 
     Scenario: Administrators can log in
         Given I am on "/login"
