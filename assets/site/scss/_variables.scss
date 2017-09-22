@@ -1,9 +1,15 @@
+// Variables
+//
+// Variables not prefixed with `$os-` override default values set by Bootstrap 4 in the following file:
+//
+// ./node_modules/bootstrap/scss/_variables.scss
 
-// Bootstrap Overrides
-$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-$grid-gutter-width: 15px;
 
-// Brand colors
+//
+// Color system
+//
+
+// Official OurSociety brand colors
 $os-purple-brand-primary: #582c83;
 $os-purple-brand-secondary: #871898;
 
@@ -23,5 +29,31 @@ $theme-colors: (
     primary: $os-purple-brand-primary,
     secondary: $os-purple-brand-secondary,
 );
+
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+//$enable-shadows:            true;
+//$enable-gradients:          true;
+$enable-hover-media-query:  true;
+
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-gutter-width: 15px;
+
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+
+// Carousel
 
 $carousel-control-color: $os-purple-brand-secondary;

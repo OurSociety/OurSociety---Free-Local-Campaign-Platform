@@ -41,7 +41,7 @@ default:
                 local:
                     screenshot_directory: build/story/screenshots
                     clear_screenshot_directory: true
-        emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+        OurSociety\TestSuite\Behat\Extension\HTMLFormatter\BehatHTMLFormatterExtension:
             name: html
             renderer: Behat2
             file_name: index
@@ -66,6 +66,7 @@ default:
             paths:
                 - %paths.base%/features/public
             contexts:
+                - OurSociety\TestSuite\Behat\Context\BrowserContext
                 - OurSociety\TestSuite\Behat\Context\PublicContext
         politician:
             paths:

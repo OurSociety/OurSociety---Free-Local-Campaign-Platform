@@ -158,7 +158,7 @@ class AppView extends CrudView\CrudView
         }
 
         // Use the current prefixes default template, not the CrudView one.
-        $this->setLayout('default');
+        $this->setLayout($this->isAdmin() ? 'default' : 'site');
     }
 
     /**

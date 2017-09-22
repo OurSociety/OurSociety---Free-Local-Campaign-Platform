@@ -1,0 +1,13 @@
+.os-logo {
+    display: inline-block;
+    .beta-ribbon {
+        position: relative;
+        span {
+            font-size: .75rem;
+            bottom: -0.25rem;
+            color: $yellow;
+            right: .5rem;
+            position: absolute;
+        }
+    }
+}

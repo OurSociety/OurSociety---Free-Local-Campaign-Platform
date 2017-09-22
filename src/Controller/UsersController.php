@@ -109,8 +109,6 @@ class UsersController extends CrudController
      */
     public function login(): ?Response
     {
-        $this->viewBuilder()->setLayout('site');
-
         $this->config('messages.success.text', __(self::MESSAGE_LOGIN_SUCCESS));
         $this->config('messages.error.text', __(self::MESSAGE_LOGIN_ERROR));
 
@@ -138,6 +136,8 @@ class UsersController extends CrudController
                 }
             }
         });
+
+        $this->set(['containerClass' => 'container-fluid']);
 
         return $this->Crud->execute();
     }
@@ -172,14 +172,14 @@ class UsersController extends CrudController
      */
     public function register(): ?Response
     {
-        $this->viewBuilder()->setLayout('site');
-
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
                 $this->Auth->refreshSession($event->getSubject()->entity);
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });
+
+        $this->set(['containerClass' => 'container-fluid']);
 
         return $this->Crud->execute();
     }
@@ -241,9 +241,9 @@ class UsersController extends CrudController
      */
     public function onboarding(): ?Response
     {
-        //$this->viewBuilder()->setLayout('site');
+        $this->set(['containerClass' => 'container-fluid']);
 
-        $this->Crud->action()->setConfig('messages.success.text', 'Thanks, your location has been noted!');
+        $this->Crud->action()->setConfig('messages.success.text', 'Your location has been stored.');
 
         $this->Crud->on('beforeFind', function (Event $event) {
             $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);

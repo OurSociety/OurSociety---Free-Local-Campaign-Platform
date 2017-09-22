@@ -25,7 +25,7 @@ class HtmlHelper extends BootstrapUI\HtmlHelper
     public function dashboardLink(string $role = null, string $title = null, array $options = null): string
     {
         if ($role === null && $this->request->getParam('prefix') === false) {
-            return $this->link(__($title ?: 'Home'), ['_name' => 'pages:home'], $options ?? []);
+            return $this->link(__($title ?: 'Home'), ['_name' => 'home'], $options ?? []);
         }
 
         if ($role === null) {

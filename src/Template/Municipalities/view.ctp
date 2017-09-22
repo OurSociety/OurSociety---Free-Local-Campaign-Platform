@@ -18,15 +18,23 @@ $this->Breadcrumbs->add('My Municipality')
             </small>
         </h1>
     </div>
-    <?php if ($currentUser && $currentUser->canEditMunicipality($municipality)): ?>
-        <div class="col-auto">
+    <div class="col-auto">
+        <?php if ($currentUser): ?>
+            <?php if ($currentUser->canEditMunicipality($municipality)): ?>
+                <?= $this->Html->link(
+                    __('Edit Municipal Profile'),
+                    ['_name' => 'municipality:edit', 'municipality' => $municipality->slug],
+                    ['class' => ['btn', 'btn-outline-dark'], 'icon' => 'pencil']
+                ) ?>
+            <?php endif ?>
+        <?php else: ?>
             <?= $this->Html->link(
-                __('Edit Municipal Profile'),
-                ['_name' => 'municipality:edit', 'municipality' => $municipality->slug],
-                ['class' => ['btn btn-outline-dark'], 'icon' => 'pencil']
+                __('Create an Account'),
+                ['_name' => 'users:login'],
+                ['class' => ['btn', 'btn-secondary'], 'icon' => 'user-o']
             ) ?>
-        </div>
-    <?php endif ?>
+        <?php endif ?>
+    </div>
 </div>
 
 <hr>

@@ -22,7 +22,7 @@ class PagesControllerTest extends IntegrationTestCase
         $this->assertResponseSuccess();
         $this->assertRedirect('index.html');
 
-        $this->get(['_name' => 'pages:home']);
+        $this->get(['_name' => 'home']);
         $this->assertResponseOk();
         $this->assertResponseContains('OurSociety');
         $this->assertResponseContains('<html lang="en">');
@@ -35,9 +35,9 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testMultipleGet(): void
     {
-        $this->get(['_name' => 'pages:home']);
+        $this->get(['_name' => 'home']);
         $this->assertResponseOk();
-        $this->get(['_name' => 'pages:home']);
+        $this->get(['_name' => 'home']);
         $this->assertResponseOk();
     }
 

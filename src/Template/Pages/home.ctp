@@ -6,7 +6,7 @@
 $this->assign('scope', 's-home');
 ?>
 
-<main class="os-masthead" id="content" role="main">
+<main class="os-masthead row" id="content" role="main">
     <div class="container text-white text-center">
 
         <h1>
@@ -223,7 +223,7 @@ $this->assign('scope', 's-home');
                 </a>
                 <a href="https://www.oursociety.org/purpose.php" class="btn btn-outline-light" style="background-color: #3b5998">
                     <i class="fa fa-fw fa-facebook-official"></i>
-                    <?= __('Follow us on Facebook') ?>
+                    <?= __('Like us on Facebook') ?>
                 </a>
             </div>
         </div>

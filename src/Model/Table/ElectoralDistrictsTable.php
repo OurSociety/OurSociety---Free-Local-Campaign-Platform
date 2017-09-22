@@ -54,13 +54,13 @@ class ElectoralDistrictsTable extends AppTable
             ->enableAutoFields()
             ->select(array_diff($this->getSchema()->columns(), ['polygon']));
 
-        if ($primary === true) {
+        //if ($primary === true) {
             $aliasedField = $query->repository()->aliasField('polygon');
             $underscoredAliasedField = str_replace('.', '__', $aliasedField);
             $polygonAsGeoJSON = $query->newExpr(sprintf('ST_AsGeoJSON(%s)', $aliasedField));
 
             $query->select([$underscoredAliasedField => $polygonAsGeoJSON]);
-        }
+        //}
     }
 
     protected function getDefaultOrder(): array

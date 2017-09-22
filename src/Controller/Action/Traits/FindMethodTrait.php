@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Action\Traits;
 
 use Crud\Event\Subject;
+use OurSociety\Model\Table\AppTable;
 
 trait FindMethodTrait
 {
@@ -14,14 +15,18 @@ trait FindMethodTrait
      */
     protected function _findRecord($id, Subject $subject)
     {
+        /** @var AppTable $repository */
         $repository = $this->_table();
 
         $query = $repository->find($this->findMethod());
-        $primaryKey = $repository->getSchema()->column('slug') !== null
-            ? 'slug'
-            : $repository->getPrimaryKey();
-        $aliasedPrimaryKeys = $query->aliasField($primaryKey);
-        $query->where([current($aliasedPrimaryKeys) => $id]);
+
+        if ($repository->hasSlugField()) {
+            $query->find('slugged', ['slug' => $id]);
+        } else {
+            $query->where([
+                $repository->aliasField($repository->getPrimaryKey()) => $id
+            ]);
+        }
 
         $subject->set([
             'repository' => $repository,

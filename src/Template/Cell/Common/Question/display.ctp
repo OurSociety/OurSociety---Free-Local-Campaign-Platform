@@ -31,28 +31,43 @@ $getError = function (\OurSociety\Model\Entity\Question $question, string $field
 $importanceError = $getError($question, 'importance');
 $answerError = $getError($question, 'answer');
 ?>
-<article class="panel panel-default js-question">
-    <div class="panel-heading">
-        <div class="pull-right small text-muted">
-            Not sure?
-            <?= $this->Html->link(__('Answer Later'), sprintf('#question-%d', $number), [
-                'aria-controls' => sprintf('question-%d', $number),
-                'class' => ['js-question-link', 'text-info'],
-                'data-toggle' => 'collapse',
-            ]) ?>
+<article class="card card-default js-question">
+    <div class="card-header">
+        <div class="row">
+            <h4 class="col mb-0"><?= __('Question #{number}', ['number' => $number]) ?></h4>
+            <div class="col-auto small text-muted">
+                Not sure?
+                <?= $this->Html->link(__('Answer Later'), sprintf('#question-%d', $number), [
+                    'aria-controls' => sprintf('question-%d', $number),
+                    'class' => ['js-question-link', 'text-info'],
+                    'data-toggle' => 'collapse',
+                ]) ?>
+            </div>
         </div>
-        <h3 class="panel-title"><?= __('Question #{number}', ['number' => $number]) ?></h3>
     </div>
-    <div class="panel-collapse collapse in" id="question-<?= $number ?>" aria-expanded="true">
-        <div class="panel-body">
-            <div class="row row-md-flex-center">
+    <div class="card-collapse collapse show" id="question-<?= $number ?>" aria-expanded="true">
+        <div class="card-body">
+            <div class="row">
                 <div class="col-md-6">
-                    <blockquote>
-                        <?= $this->Html->icon($question->category->slug, ['iconSet' => 'topic', 'height' => 100, 'width' => 100]) ?>
-                        <p><?= $question->question ?></p>
-                        <footer>Category: <cite><?= $question->category->name ?></cite></footer>
-                    </blockquote>
-
+                    <div class="row">
+                        <div class="col-sm-auto order-sm-12 text-center">
+                            <?= $this->Html->icon(
+                                $question->category->slug,
+                                ['iconSet' => 'topic', 'height' => 100, 'width' => 100]
+                            ) ?>
+                        </div>
+                        <div class="col-sm">
+                            <blockquote class="blockquote">
+                                <p><?= $question->question ?></p>
+                                <footer class="blockquote-footer">
+                                    <?= __('Category') ?>:
+                                    <cite>
+                                        <?= $question->category->name ?>
+                                    </cite>
+                                </footer>
+                            </blockquote>
+                        </div>
+                    </div>
                     <fieldset class="form-question-importance">
                         <legend><?= __('How important is this topic to you?') ?></legend>
                         <div <?= $importanceError !== null ? ' class="has-error"' : null ?>>
@@ -85,7 +100,7 @@ $answerError = $getError($question, 'answer');
                 </div>
             </div>
         </div>
-        <div class="panel-footer small">
+        <div class="card-footer small">
             <?= $this->Html->link(__('Report this question'), '#', ['class' => 'text-muted']) ?>
         </div>
     </div>

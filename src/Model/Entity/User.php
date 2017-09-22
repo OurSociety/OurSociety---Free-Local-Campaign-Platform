@@ -5,6 +5,7 @@ namespace OurSociety\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
@@ -178,6 +179,37 @@ class User extends AppEntity
         return false;
     }
 
+    public function getDashboardRoute(): array
+    {
+        return ['_name' => sprintf('%s:dashboard', $this->role)];
+    }
+
+    public function getMunicipalitySlug(): string
+    {
+        $municipality = $this->electoral_district;
+
+        if ($municipality === null) {
+            throw new NotFoundException();
+        }
+
+        return $municipality->slug;
+    }
+
+    /**
+     * @return Scaffold\FieldList|Scaffold\Field[]
+     */
+    public function getScaffoldFieldList(): Scaffold\FieldList
+    {
+        return Scaffold\FieldList::fromArray($this->getModel(), [
+            'name' => ['title' => 'Full Name'],
+            'role',
+            'answer_count' => ['title' => 'Answers'],
+            'email',
+            'last_seen',
+            'verified',
+        ]);
+    }
+
     /**
      * Has onboarded?
      *
@@ -190,9 +222,29 @@ class User extends AppEntity
         return $this->electoral_district !== null;
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isCitizen(): bool
+    {
+        return $this->role === self::ROLE_CITIZEN;
+    }
+
     public function isInMunicipality(ElectoralDistrict $municipality): bool
     {
         return $this->electoral_district->equals($municipality);
+    }
+
+    public function isPathwayPolitician(): bool
+    {
+        return $this->isCitizen() && $this->pathway_politician;
+    }
+
+    public function isPolitician(): bool
+    {
+        return $this->role === self::ROLE_POLITICIAN;
     }
 
     /**
@@ -205,6 +257,54 @@ class User extends AppEntity
         $expires = $this->token_expires ?? Time::now();
 
         return $expires->lte(Time::now());
+    }
+
+    public function printPosition(): string
+    {
+        $position = $this->position ?? __('Unknown Position');
+
+        if ($this->incumbent === false) {
+            return __('Candidate for {position}', ['position' => $position]);
+        }
+
+        return $position;
+    }
+
+    /**
+     * Render link to profile.
+     *
+     * @param AppView $view The view.
+     * @param string|array|null $url The url (if overridden).
+     * @return string The HTML link.
+     */
+    public function renderLink(AppView $view, $url = null): string
+    {
+        if ($url === null && $this->isPolitician()) {
+            return $view->Html->link($this->name, [
+                '_name' => 'politician',
+                'politician' => $this->slug,
+            ]);
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * Seen.
+     *
+     * Convenience method to set a user as seen, which updated the last_seen timestamp.
+     *
+     * @return void
+     */
+    public function seen(): void
+    {
+        $user = $this->withLastSeen();
+
+        /** @var AppTable $table */
+        $table = TableRegistry::get('Users');
+        $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
+        $table->removeBehaviorIfLoaded(TimestampBehavior::class);
+        $table->saveOrFail($user);
     }
 
     /**
@@ -244,63 +344,6 @@ class User extends AppEntity
         return $user;
     }
 
-    /**
-     * Seen.
-     *
-     * Convenience method to set a user as seen, which updated the last_seen timestamp.
-     *
-     * @return void
-     */
-    public function seen(): void
-    {
-        $user = $this->withLastSeen();
-
-        /** @var AppTable $table */
-        $table = TableRegistry::get('Users');
-        $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
-        $table->removeBehaviorIfLoaded(TimestampBehavior::class);
-        $table->saveOrFail($user);
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role === self::ROLE_ADMIN;
-    }
-
-    public function isCitizen(): bool
-    {
-        return $this->role === self::ROLE_CITIZEN;
-    }
-
-    public function isPathwayPolitician(): bool
-    {
-        return $this->isCitizen() && $this->pathway_politician;
-    }
-
-    public function isPolitician(): bool
-    {
-        return $this->role === self::ROLE_POLITICIAN;
-    }
-
-    /**
-     * Render link to profile.
-     *
-     * @param AppView $view The view.
-     * @param string|array|null $url The url (if overridden).
-     * @return string The HTML link.
-     */
-    public function renderLink(AppView $view, $url = null): string
-    {
-        if ($url === null && $this->isPolitician()) {
-            return $view->Html->link($this->name, [
-                '_name' => 'politician',
-                'politician' => $this->slug,
-            ]);
-        }
-
-        return $this->name;
-    }
-
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;
@@ -324,20 +367,5 @@ class User extends AppEntity
         return mb_strlen($password) > 0
             ? (new DefaultPasswordHasher)->hash($password)
             : null;
-    }
-
-    /**
-     * @return Scaffold\FieldList|Scaffold\Field[]
-     */
-    public function getScaffoldFieldList(): Scaffold\FieldList
-    {
-        return Scaffold\FieldList::fromArray($this->getModel(), [
-            'name' => ['title' => 'Full Name'],
-            'role',
-            'answer_count' => ['title' => 'Answers'],
-            'email',
-            'last_seen',
-            'verified',
-        ]);
     }
 }

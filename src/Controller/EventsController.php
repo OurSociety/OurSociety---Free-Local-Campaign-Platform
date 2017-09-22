@@ -24,17 +24,17 @@ class EventsController extends CrudController
         parent::beforeFilter($event);
     }
 
-    public function index($eventSlug): ?Response
+    public function index($municipalitySlug): ?Response
     {
         $this->set([
-            'municipality' => $this->Events->ElectoralDistricts->find('slugged', ['slug' => $eventSlug])->firstOrFail(),
+            'municipality' => $this->Events->ElectoralDistricts->find('slugged', ['slug' => $municipalitySlug])->firstOrFail(),
         ]);
 
-        $this->Crud->on('beforePaginate', function (Event $event) use ($eventSlug) {
+        $this->Crud->on('beforePaginate', function (Event $event) use ($municipalitySlug) {
             /** @var Query $query */
             $query = $event->getSubject()->query;
-            $query->matching('ElectoralDistricts', function (Query $query) use ($eventSlug) {
-                return $query->where(['ElectoralDistricts.slug' => $eventSlug]);
+            $query->matching('ElectoralDistricts', function (Query $query) use ($municipalitySlug) {
+                return $query->where(['ElectoralDistricts.slug' => $municipalitySlug]);
             });
         });
 

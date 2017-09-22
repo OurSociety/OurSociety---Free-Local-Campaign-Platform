@@ -14,7 +14,7 @@ class SlugBehavior extends Slug\SlugBehavior
     public function __construct(AppTable $table, array $config = [])
     {
         $field = $config['field'] ?? $this->_defaultConfig['field'];
-        if ($table->getSchema()->hasColumn($field)) {
+        if (!$table->getSchema()->hasColumn($field)) {
             throw new DisableBehaviorException(sprintf("Slug behavior disabled on tables with no '%s' field.", $field));
         }
 

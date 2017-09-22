@@ -167,7 +167,7 @@ class ViewListener extends CrudView\ViewListener
      */
     protected function _getSiteTitleLink(): array
     {
-        return ['_name' => 'pages:home'];
+        return ['_name' => 'home'];
     }
 
     /**

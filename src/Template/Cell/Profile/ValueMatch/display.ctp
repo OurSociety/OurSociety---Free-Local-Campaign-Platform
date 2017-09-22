@@ -18,10 +18,10 @@
 
         <div class="row text-left">
             <div class="col-xs-offset-1 col-xs-5 <!-- bs3 | bs4 --> col-auto mx-auto">
-                <?= $this->cell('Profile/ValueMatch::topics', ['Similarities', $similarities]) ?>
+                <?= $this->cell('Profile/ValueMatch::topics', ['Most Similar', $similarities]) ?>
             </div>
             <div class="col-xs-offset-1 col-xs-5 <!-- bs4 | bs4 --> col-auto mx-auto">
-                <?= $this->cell('Profile/ValueMatch::topics', ['Differences', $differences]) ?>
+                <?= $this->cell('Profile/ValueMatch::topics', ['Least Similar', $differences]) ?>
             </div>
         </div>
 
