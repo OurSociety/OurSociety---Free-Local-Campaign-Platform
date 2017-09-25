@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Admin;
 
-use Cake\Event\Event;
-use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianAward;
 use Psr\Http\Message\ResponseInterface as Response;

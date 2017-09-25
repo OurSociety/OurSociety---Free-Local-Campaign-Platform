@@ -44,7 +44,7 @@ class AnswersTable extends AppTable
         $this->addBehavior(CounterCacheBehavior::class, [
             'Users' => ['answer_count'],
             // TODO: Implement scope for following counter-caches
-            //'Questions' => ['citizen_answer_count', 'politician_answer_count'],
+            'Questions' => ['citizen_answer_count', 'politician_answer_count'],
         ]);
 
         $this->belongsTo('Questions');

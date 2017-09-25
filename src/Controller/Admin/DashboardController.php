@@ -6,7 +6,6 @@ namespace OurSociety\Controller\Admin;
 use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
 use OurSociety\Model\Entity\User;
-use OurSociety\Model\Table\DashboardTotalsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use OurSociety\Controller\AppController;
 
@@ -22,6 +21,8 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        return $this->redirect(['_name' => 'admin:users:dashboard']);
+
         $users = $this->loadModel('Users');
 
         switch ($this->request->getQuery('range', 'week')) {

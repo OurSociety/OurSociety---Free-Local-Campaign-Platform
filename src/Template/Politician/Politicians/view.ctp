@@ -22,25 +22,25 @@ $this->Breadcrumbs->add('My Profile')
 <?php $this->end() ?>
 
 <?php $this->start('actions_articles') ?>
-<?= $this->Html->link('Edit Articles', ['_name' => 'politician:profile:articles'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
+    <?= $this->Html->link('Edit Articles', ['_name' => 'politician:profile:articles'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_videos') ?>
-<?= $this->Html->link('Edit Videos', ['_name' => 'politician:profile:videos'], ['class' => 'btn btn-sm btn-default', 'id' => 'button-edit-videos']) ?>
+    <?= $this->Html->link('Edit Videos', ['_name' => 'politician:profile:videos'], ['class' => 'btn btn-sm btn-default', 'id' => 'button-edit-videos']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_positions') ?>
-<?= $this->Html->link('Edit Positions', ['_name' => 'politician:profile:positions'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
+    <?= $this->Html->link('Edit Positions', ['_name' => 'politician:profile:positions'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_education') ?>
-<?= $this->Html->link('Edit Qualifications', ['_name' => 'politician:profile:qualifications'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
+    <?= $this->Html->link('Edit Qualifications', ['_name' => 'politician:profile:qualifications'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_awards') ?>
-<?= $this->Html->link('Edit Awards', ['_name' => 'politician:profile:awards'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
+    <?= $this->Html->link('Edit Awards', ['_name' => 'politician:profile:awards'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>
 
 <?php $this->start('actions_born') ?>
-<?= $this->Html->link('Edit Profile', ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
+    <?= $this->Html->link('Edit Profile', ['_name' => 'politician:profile:edit'], ['class' => 'btn btn-sm btn-default pull-right']) ?>
 <?php $this->end() ?>

@@ -56,22 +56,7 @@ $numbers = [
     <?php endforeach ?>
 </div>
 
-<?php
-/**
- * Charts
- */
-?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
-<div class="row pb-3">
-    <div class="col">
-        <?= $this->element('Dashboard/Chart/user_role') ?>
-    </div>
-    <div class="col">
-        <?= $this->element('Dashboard/Chart/user_cohort') ?>
-    </div>
-</div>
-
-<section class="row">
+<section class="row pb-3">
     <div class="col-md-6">
         <div class="card card-default">
             <h4 class="card-header">
@@ -135,3 +120,18 @@ $numbers = [
         </div>
     </div>
 </section>
+
+<?php
+/**
+ * Charts
+ */
+?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+<div class="row">
+    <div class="col">
+        <?= $this->element('Dashboard/Chart/user_role') ?>
+    </div>
+    <div class="col">
+        <?= $this->element('Dashboard/Chart/user_cohort') ?>
+    </div>
+</div>

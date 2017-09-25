@@ -1,28 +1,33 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this View class.
- * @var \OurSociety\Model\Entity\User[] $pathwayPoliticians The pathway politicians.
+ * @var User[] $pathwayPoliticians The pathway politicians.
  */
+
+use OurSociety\Model\Entity\User;
 
 $pathwayPoliticians = $pathwayPoliticians ?? [];
 $actualCount = count($pathwayPoliticians);
 $desiredCount = 5;
 
 if ($actualCount < $desiredCount):
-    $examplePathwayPoliticians = \OurSociety\Model\Entity\User::examples($desiredCount - $actualCount);
+    $examplePathwayPoliticians = User::examples($desiredCount - $actualCount);
     $pathwayPoliticians = array_merge($pathwayPoliticians, $examplePathwayPoliticians);
 endif;
 ?>
 
 <h2>
-    <?= __('Pathway Politicians') ?>
+    <?= __('Community Contributors') ?>
 </h2>
 
 <p>
-    What is a pathway politician anyway?
-    Varius natoque ad augue amet ante orci lectus morbi ut, ullamcorper dictum tortor sed dolor cursus urna eleifend,
-    placerat malesuada himenaeos vitae sociosqu vivamus cras suspendisse.
-    <?= $this->Html->link('Share your story!', '#') ?>
+    <?= __('Community Contributors are local citizens with a genuine interest in improving the community.') ?>
+    <?= __('They are not running for elected office but have taken the time to develop great ideas for Policies and Plans that could impact your municipality.') ?>
+</p>
+
+<p>
+    <?= __('Take time to read through their thoughts and vote them Up or Down after you analyze the content.') ?>
+    <?= __('Your local elected officials will be reviewing popular concepts for implementation in your town!') ?>
 </p>
 
 <div class="card-deck pt-2">

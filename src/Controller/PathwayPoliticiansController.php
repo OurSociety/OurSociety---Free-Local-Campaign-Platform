@@ -14,7 +14,6 @@ class PathwayPoliticiansController extends CrudController
     {
         parent::initialize();
 
-        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
         $this->modelClass = 'Users';
         $this->Auth->allow('view');
     }

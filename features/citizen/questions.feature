@@ -1,15 +1,14 @@
-#@citizen @questions @values
-#Feature: Citizens can answers questions
-#    In order to compare societal values
-#    As a citizen
-#    I want to answer questions about societal aspects
-#
-#    @navigation
-#    Scenario: Citizens see 10 random questions by default.
-#        When I log in as "John Doe"
-#        Then I am on "/citizen/questions"
-#        And  I should see the heading "Societal Values"
-#        And  I should see "10" random questions
+@citizen @questions @values
+Feature: Citizens can answers questions
+    In order to compare societal values
+    As a citizen
+    I want to answer questions about societal aspects
+
+    @navigation
+    Scenario: Citizens see 10 random questions by default.
+        When I am on "/citizen/questions"
+        And  I should see the heading "Societal Values"
+        And  I should see "10" random questions
 #
 #    @visual
 #    Scenario: Citizens see 10 random questions by default.

@@ -5,7 +5,7 @@
 .os-footer {
     font-size: 85%;
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: map-get($theme-colors, 'light');
 
     a {
         font-weight: 500;

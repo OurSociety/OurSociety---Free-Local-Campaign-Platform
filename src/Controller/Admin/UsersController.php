@@ -132,15 +132,14 @@ class UsersController extends CrudController
 
     public function switch(): ?Response
     {
-        if (!$this->request->is(['put', 'post'])) {
-            throw new BadRequestException('Only accepts PUT/POST requests.');
-        }
-
-        /** @var User $user */
-        $user = $this->loadModel('Users')->find('auth')->where(['slug' => $this->request->getData('user')])->firstOrFail();
-
         /** @var User $authAdmin */
         $authAdmin = $this->request->getSession()->read('Auth.Admin');
+
+        /** @var User $user */
+        $slug = $this->request->getData('user');
+        $user = $slug !== null
+            ? $this->loadModel('Users')->find('auth')->where(['slug' => $slug])->firstOrFail()
+            : $authAdmin;
 
         if ($authAdmin === null) {
             $this->request->getSession()->write('Auth.Admin', $this->Auth->user());

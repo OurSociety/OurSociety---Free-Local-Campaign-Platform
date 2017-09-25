@@ -59,7 +59,10 @@ $this->Breadcrumbs->add('My Municipality')
 <div class="row">
     <div class="col">
         <h2>
-            <?= __('Trending Policies, Plans & Values') ?>
+            <?= __('Articles') ?>
+            <small class="text-muted">
+                Policies, Plans, and Visions
+            </small>
         </h2>
     </div>
     <div class="col-auto">

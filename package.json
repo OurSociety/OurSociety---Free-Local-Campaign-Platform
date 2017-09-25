@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "bs-docs": "(cd node_modules/bootstrap && bundle install && yarn docs-serve)",
-    "dev": "NODE_ENV=development webpack --progress --hide-modules",
-    "watch": "NODE_ENV=development webpack --watch --progress --hide-modules",
-    "watch-poll": "NODE_ENV=development webpack --watch --watch-poll --progress --hide-modules",
-    "hot": "NODE_ENV=development webpack-dev-server --inline --hot",
-    "prod": "NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "NODE_ENV=development webpack --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
     "@material/elevation": "^0.1.11",

@@ -50,3 +50,19 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
         'articles' => $politician->articles,
     ]) ?>
 </section>
+
+<hr>
+
+<section>
+    <h3><?= __('About {name}',  ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
+    <div class="row">
+        <div class="col-md-8">
+            <?= $this->element('Widgets/PoliticianProfile/positions') ?>
+            <?= $this->element('Widgets/PoliticianProfile/qualifications') ?>
+            <?= $this->element('Widgets/PoliticianProfile/awards') ?>
+        </div>
+        <div class="col-md-4">
+            <?= $this->element('Widgets/PoliticianProfile/born') ?>
+        </div>
+    </div>
+</section>

@@ -2,10 +2,18 @@
 /**
  * @var \OurSociety\Model\Entity\User $currentUser The current user.
  */
+
+// Disable during development.
+if (\Cake\Core\Configure::read('debug')) {
+    return;
+}
+
+// Disable for team members.
 if ($currentUser !== null && $currentUser->isAdmin()) {
     return;
 }
 ?>
+
 <!-- Google Analytics -->
 <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;

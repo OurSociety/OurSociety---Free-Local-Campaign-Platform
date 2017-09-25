@@ -46,6 +46,17 @@ mix
       rules: [
         {
           test: /\.svg((\?.*)?|$)/,
+          include: path.resolve(__dirname, 'assets/img/icon/badge'),
+          use: [
+            {
+              loader: 'svg-sprite-loader',
+              options: { extract: true, spriteFilename: 'img/icons-badges.svg' }
+            },
+            'svgo-loader'
+          ]
+        },
+        {
+          test: /\.svg((\?.*)?|$)/,
           include: path.resolve(__dirname, 'assets/img/icon/topic'),
           use: [
             {
@@ -127,19 +138,25 @@ if (process.env.npm_lifecycle_event === 'hot') {
 }
 
 Mix.listen('configReady', (webpackConfig) => {
+  webpackConfig.module.rules.forEach(rule => {
+    // Modify rule for images:
+    if (String(rule.test) === String(/\.(png|jpe?g|gif)$/)) {
+      // Rename paths to "img" instead of "images":
+      rule.loaders[0].options.name = path => {
+        if (!/node_modules/.test(path)) {
+          return 'img/[name].[ext]?[hash]';
+        }
 
-  // TODO: Delete webpack.config.js and move logic to here. See https://github.com/JeffreyWay/laravel-mix/pull/1077
-  // // remove original rule
-  // webpackConfig.module.rules = webpackConfig.module.rules.filter(rule => String(rule.test) !== String(/\.s[ac]ss$/))
-  //
-  // // add modified rule
-  // webpackConfig.module.rules.push({
-  //   test: /\.s[ac]ss$/,
-  //   loaders: [
-  //     {loader: 'style-loader'},
-  //     {loader: 'css-loader', options: {sourceMap: true}},
-  //     {loader: 'sass-loader', options: {sourceMap: true}},
-  //   ],
-  // })
+        return 'img/vendor/' + path.replace(/.*(node_modules|images|image|img|assets)\//g, '') + '?[hash]';
+      };
+    }
 
+    // Modify rule for fonts:
+    if (String(rule.test) === String(/\.(woff2?|ttf|eot|svg|otf)$/)) {
+      // Tweak test to only match SVGs with "font" in their path:
+      // TODO: s/node_modules/font and fix missing loader for trumbowyg icons
+      rule.test = /(\.(woff2?|ttf|eot|otf)$|node_modules.*\.svg$)/;
+      //rule.test = /(\.(woff2?|ttf|eot|otf)$|font.*\.svg$)/;
+    }
+  });
 })

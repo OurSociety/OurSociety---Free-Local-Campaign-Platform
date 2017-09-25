@@ -16,8 +16,6 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
-        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
-
         $user = $this->getCurrentUser();
 
         if (!$user->hasOnboarded()) {

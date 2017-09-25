@@ -100,12 +100,12 @@ $childrenByType = collection($electoralDistrict->children)->groupBy($groupByType
 <?php if ($electoralDistrict->children): ?>
     <?php foreach ($childrenByType as $districtTypeName => $children): ?>
         <h3><?= Inflector::pluralize($districtTypeName) ?></h3>
-        <div class="card-deck">
-        <?php $i = 0; foreach ($children as $child): ?>
+        <div class="card-deck mb-3">
+        <?php $i = 1; foreach ($children as $child): ?>
             <?= $child->renderCardElement($this) ?>
-            <?php if ($i % 3): ?>
-                </div>
-                <div class="card-deck">
+            <?php if ($i % 3 === 0): ?>
+        </div>
+        <div class="card-deck mb-3">
             <?php endif ?>
             <?php $i++; endforeach ?>
         </div>
