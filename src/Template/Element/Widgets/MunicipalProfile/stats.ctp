@@ -10,7 +10,7 @@ $cards = [
         'mobile' => true,
     ],
     [
-        'label' => 'Number of Politicians',
+        'label' => 'Number of Representatives',
         'number' => $municipality->politician_count,
         'mobile' => false,
     ],

@@ -6,7 +6,6 @@ namespace OurSociety\Model\Table;
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\ORM\Association;
 use Cake\ORM\Behavior;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
@@ -85,27 +84,10 @@ class QuestionsTable extends AppTable
             ->add($rules->existsIn(['category_id'], 'Categories'));
     }
 
-    protected function findBatch(Query $query, array $options): Query
-    {
-        $user = $options['user'] ?? null;
-
-        if (!$user instanceof User) {
-            throw new \InvalidArgumentException('User required');
-        }
-
-        $whereUserHasAnsweredThisQuestion = function (Query $query) use ($user) {
-            return $query->where(['Answers.user_id' => $user->id]);
-        };
-
-        return $query
-            ->notMatching('Answers', $whereUserHasAnsweredThisQuestion)
-            ->where(['Questions.level' => $user->level])
-            ->contain(['Categories' => ['fields' => ['slug', 'name']]])
-            ->order(defined('SEED') ? sprintf('RAND(%s)', SEED) : 'RAND()');
-    }
-
     public function getLevelQuestionTotal(User $user): int
     {
-        return $this->find()->where(['Questions.level' => $user->level])->count();
+        return $this->find()->where([
+            $this->aliasField('level') => $user->level ?? 1,
+        ])->count();
     }
 }

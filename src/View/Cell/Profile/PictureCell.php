@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Cell\Profile;
 
-use Cake\Event\EventManager;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\View\Cell;
 use OurSociety\Model\Entity\User;
 
@@ -20,16 +17,7 @@ class PictureCell extends Cell
      */
     protected $user;
 
-    public function __construct(
-        ServerRequest $request = null,
-        Response $response = null,
-        EventManager $eventManager = null,
-        array $cellOptions = []
-    ) {
-        $this->_validCellOptions = ['user'];
-
-        parent::__construct($request, $response, $eventManager, $cellOptions);
-    }
+    protected $_validCellOptions = ['user'];
 
     /**
      * Default display method.

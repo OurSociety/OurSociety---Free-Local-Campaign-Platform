@@ -29,7 +29,6 @@ class PagesController extends AppController
         parent::beforeFilter($event);
 
         $this->Auth->allow('display');
-        $this->viewBuilder()->setLayout('site');
     }
 
     /**
@@ -45,9 +44,9 @@ class PagesController extends AppController
     {
         if ($path === ['home']) {
             $this->set('containerClass', 'container-fluid');
-            if (Configure::read('debug') === false) {
+            //if (Configure::read('debug') === false) {
                 $this->redirect('https://www.oursociety.org');
-            }
+            //}
         }
 
         $count = count($path);

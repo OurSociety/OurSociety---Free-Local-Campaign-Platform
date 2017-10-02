@@ -18,8 +18,6 @@ class BallotController extends AppController
 {
     public function index(): ?Response
     {
-        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
-
         /** @var User $user */
         $user = $this->Auth->user();
 

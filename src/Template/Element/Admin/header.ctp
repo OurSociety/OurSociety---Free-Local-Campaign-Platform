@@ -30,7 +30,7 @@
                 </li>
             <?php endif ?>
             <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
-                <?= $this->Html->link(__('Browse Politicians'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
+                <?= $this->Html->link(__('Representatives'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
             </li>
         </ul>
     </div>

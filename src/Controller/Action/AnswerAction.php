@@ -132,8 +132,15 @@ class AnswerAction extends BaseAction
         /** @var AppController $controller */
         $controller = $this->_controller();
 
+        $oldLevel = $controller->getCurrentUser()->level;
         $controller->Auth->refreshSession();
-        $controller->Flash->success('Your answers have been saved. Keep answering to improve your score!');
+        $newLevel = $controller->getCurrentUser()->level;
+
+        if ($oldLevel === $newLevel) {
+            $controller->Flash->success('Your answers have been saved. Keep answering to improve your score!');
+        } else {
+            $controller->Flash->success('Congratulations, you just leveled up! Keep answering to reach the next level!');
+        }
 
         return $controller->redirect($this->getConfig('redirectUrl'));
     }

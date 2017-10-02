@@ -13,7 +13,7 @@
         grey: 'rgb(201, 203, 207)'
     };
 
-    wiendow.onload = function() {
+    window.onload = function() {
         new Chart(
             document.getElementById('chart-user-cohort').getContext('2d'),
             {

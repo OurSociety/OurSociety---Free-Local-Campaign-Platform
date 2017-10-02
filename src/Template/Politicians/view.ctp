@@ -5,7 +5,7 @@
  * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
  */
 
-$this->Breadcrumbs->add('Browse Politicians', ['_name' => 'politicians']);
+$this->Breadcrumbs->add('Representatives', ['_name' => 'politicians']);
 $this->Breadcrumbs->add($politician->name);
 ?>
 

@@ -83,8 +83,6 @@ class ArticlesController extends CrudController
 
     public function view(string $politicianSlug, string $articleSlug): ?Response
     {
-        $this->viewBuilder()->setLayout('site');
-
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
         /** @var ArticlesTable $articles */
@@ -110,8 +108,6 @@ class ArticlesController extends CrudController
 
     public function add($municipalitySlug): ?Response
     {
-        $this->viewBuilder()->setLayout('site');
-
         $getMunicipalityId = function () use ($municipalitySlug): string {
             /** @var ArticlesTable $table */
             $table = $this->loadModel();

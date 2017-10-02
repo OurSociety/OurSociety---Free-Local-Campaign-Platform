@@ -6,6 +6,7 @@ namespace OurSociety\Model\Table\Answers\Callback;
 use ArrayObject;
 use Cake\Database\Connection;
 use Cake\Event\Event;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\User;
@@ -13,32 +14,40 @@ use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Model\Table\QuestionsTable;
 use OurSociety\Model\Table\UsersTable;
 
+/**
+ * Trait AfterSave
+ *
+ * @property QuestionsTable|Association\BelongsTo $Questions
+ * @property UsersTable|Association\BelongsTo $Users
+ */
 trait AfterSave
 {
     public function afterSave(Event $event, Answer $answer, ArrayObject $options): void
     {
-        /** @var UsersTable $usersTable */
-        $usersTable = $this->Users;
-        /** @var User $userFrom */
-        $userFrom = $answer->user;
+        $this->updateUser($answer);
+        $this->updateValueMatches($answer);
+    }
 
-        if ($userFrom === null) {
-            $userFrom = $usersTable->get($answer->user_id);
-        }
+    public function updateUser(Answer $answer): void
+    {
+        $user = $answer->user ?? $this->Users->get($answer->user_id);
 
-        $question = $answer->question;
-        if ($question === null) {
-            /** @var QuestionsTable $questionsTable */
-            $questionsTable = $this->Questions;
-            $question = $questionsTable->get($answer->question_id);
+        $remainingQuestions = $this->Questions->find('batch', ['user' => $user])->count();
+
+        if ($remainingQuestions === 0) {
+            $user->levelUp();
         }
+    }
+
+    protected function updateValueMatches(Answer $answer): void
+    {
+        $userFrom = $answer->user ?? $this->Users->get($answer->user_id);
+        $question = $answer->question ?? $this->Questions->get($answer->question_id);
 
         /** @var User[] $usersTo */
-        $usersTo = $usersTable->find()->where([
+        $usersTo = $this->Users->find()->where([
             'answer_count >' => 0,
-            'role' => $userFrom->isPolitician()
-                ? User::ROLE_CITIZEN
-                : User::ROLE_POLITICIAN,
+            'role' => $userFrom->isPolitician() ? User::ROLE_CITIZEN : User::ROLE_POLITICIAN,
         ])->all();
 
         $data = [];
@@ -48,12 +57,12 @@ trait AfterSave
                 'politician_id' => $userFrom->isPolitician() ? $userFrom->id : $userTo->id,
             ];
             $data[] = $dataDefault + [
-                    'category_id' => $question->category_id,
-                ];
+                'category_id' => $question->category_id,
+            ];
         }
 
         $conditions = ['or' => []];
-        foreach ((array)$data as $condition) {
+        foreach ($data as $condition) {
             if ($condition['category_id'] === null) {
                 unset($condition['category_id']);
                 $condition['category_id IS'] = null;
@@ -61,7 +70,7 @@ trait AfterSave
             $conditions['or'][] = $condition;
         }
         /** @var ValueMatch[] $outdatedMatches */
-        $outdatedMatches = $usersTable->ValueMatches->find()->where($conditions)->all();
+        $outdatedMatches = $this->Users->ValueMatches->find()->where($conditions)->all();
 
         foreach ($outdatedMatches as $outdatedMatch) {
             foreach ($data as &$datum) {
@@ -95,16 +104,16 @@ trait AfterSave
 
                 /** @var Connection $connection */
                 $query = <<<SQL
-    SELECT (SQRT(
+SELECT (SQRT(
     SUM(IFNULL((
-    LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-GREATEST(ABS(citizen.answer), ABS(politician.answer))
-), 1) * citizen.importance) / SUM(citizen.importance) * 100
-*
-SUM(IFNULL((
-LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-GREATEST(ABS(citizen.answer), ABS(politician.answer))
-), 1) * politician.importance) / SUM(politician.importance) * 100
+        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
+        GREATEST(ABS(citizen.answer), ABS(politician.answer))
+    ), 1) * citizen.importance) / SUM(citizen.importance) * 100
+    *
+    SUM(IFNULL((
+        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
+        GREATEST(ABS(citizen.answer), ABS(politician.answer))
+    ), 1) * politician.importance) / SUM(politician.importance) * 100
 )) AS match_percentage
 FROM answers as citizen
 LEFT JOIN answers as politician
@@ -116,7 +125,12 @@ SQL;
 
                 $connection = $this->getConnection();
                 $statement = $connection->execute($query, [$datum['citizen_id'], $datum['politician_id']]);
-                $matchPercentage = $statement->fetch('assoc')['match_percentage'];
+                $row = $statement->fetch('assoc');
+                if ($row === false) {
+                    throw new NotFoundException();
+                }
+                /** @var array $row */
+                $matchPercentage = $row['match_percentage'];
 
                 $trueMatchPercentage = max($matchPercentage - $errorPercentage, 0);
             }
@@ -130,8 +144,8 @@ SQL;
         }
         unset($datum);
 
-        $updatedMatches = $usersTable->ValueMatches->patchEntities($outdatedMatches, $data);
+        $updatedMatches = $this->Users->ValueMatches->patchEntities($outdatedMatches, $data);
 
-        $usersTable->ValueMatches->saveMany($updatedMatches);
+        $this->Users->ValueMatches->saveMany($updatedMatches);
     }
 }

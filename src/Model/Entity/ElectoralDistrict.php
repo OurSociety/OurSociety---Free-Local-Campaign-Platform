@@ -58,6 +58,10 @@ class ElectoralDistrict extends AppEntity
 
     public function getRoute(): array
     {
+        if ($this->district_type->isMunicipality()) {
+            return ['_name' => 'municipality', 'municipality' => $this->slug];
+        }
+
         return ['_name' => 'district', 'district' => $this->slug];
     }
 

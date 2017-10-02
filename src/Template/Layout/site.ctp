@@ -27,8 +27,8 @@ else:
     ]);
 endif;
 $links = $links->append([
-    ['title' => __('Browse Places'), 'url' => ['_name' => 'district', 'district' => 'new-jersey']],
-    ['title' => __('Browse Politicians'), 'url' => ['_name' => 'politicians']],
+    ['title' => __('Municipalities'), 'url' => ['_name' => 'district', 'district' => 'new-jersey']],
+    ['title' => __('Representatives'), 'url' => ['_name' => 'politicians']],
 ]);
 ?>
 
@@ -42,11 +42,13 @@ $links = $links->append([
             <?php foreach ($links as $link): ?>
                 <?php
                 $liClasses = ['nav-item'];
-                if ($this->request->getUri()->getPath() === $this->Url->build($link['url'])):
+                $requestPath = $this->request->getUri()->getPath();
+                $linkPath = $this->Url->build($link['url']);
+                if ($requestPath === $linkPath):
                     $liClasses[] = 'active';
                 endif;
                 ?>
-                <li class="<?= implode(' ', $liClasses) ?>">
+                <li class="<?= implode(' ', $liClasses) ?> text-nowrap">
                     <?= $this->Html->link($link['title'], $link['url'], ['class' => ['nav-link']]) ?>
                 </li>
             <?php endforeach ?>
@@ -54,7 +56,37 @@ $links = $links->append([
     </div>
 
     <ul class="navbar-nav os-navbar-nav flex-row ml-md-auto d-none d-md-flex">
-        <?php if ($this->get('currentUser')): ?>
+        <?php if ($currentUser !== null): ?>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-nowrap" href="#" id="navbarDropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?= $currentUser->renderProfilePicture($this, [
+                        'class' => ['align-middle', 'bg-light', 'rounded-circle', 'mr-2'],
+                        'style' => 'height: 32px; width: 32px; border: 2px solid white'
+                    ]) ?>
+                    <?= $currentUser->name ?>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <?php if ($currentUser->isAdmin()): ?>
+                        <?= $this->Html->link(__('Admin'), ['_name' => 'admin:dashboard'], ['class' => ['dropdown-item'], 'icon' => 'lock']) ?>
+                        <div class="dropdown-divider"></div>
+                    <?php else: ?>
+                        <?php if ($this->request->getSession()->read('Auth.Admin') !== null): ?>
+                            <?= $this->Html->link(__('Admin'), ['_name' => 'admin:users:switch'], ['class' => ['dropdown-item'], 'icon' => 'sign-in']) ?>
+                            <div class="dropdown-divider"></div>
+                        <?php endif ?>
+                        <?= $this->Html->link(__('Profile'), $currentUser->getProfileRoute(), ['class' => ['dropdown-item'], 'icon' => 'user']) ?>
+                    <?php endif ?>
+                    <?= $this->Html->link(__('Plans'), ['_name' => 'plans'], ['class' => ['dropdown-item'], 'icon' => 'th-list']) ?>
+                    <?= $this->Html->link(__('Billing'), $currentUser->getAccountRoute(), ['class' => ['dropdown-item'], 'icon' => 'credit-card']) ?>
+                    <div class="dropdown-divider"></div>
+                    <?= $this->Html->link(__('Sign Out'), $currentUser->getLogoutRoute(), [
+                        'class' => ['dropdown-item'],
+                        'icon' => 'sign-out',
+                    ]) ?>
+                </div>
+            </li>
+            <!--
             <li class="nav-item">
                 <?= $this->cell('Navbar/User') ?>
             </li>
@@ -63,6 +95,7 @@ $links = $links->append([
                     'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3']
                 ]) ?>
             </li>
+            -->
         <?php else: ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Sign In'), ['_name' => 'users:login'], [

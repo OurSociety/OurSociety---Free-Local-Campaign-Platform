@@ -14,6 +14,7 @@ use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Table\AppTable;
 use OurSociety\View\AppView;
+use OurSociety\View\Cell\Profile\PictureCell;
 use OurSociety\View\Scaffold;
 
 /**
@@ -21,7 +22,6 @@ use OurSociety\View\Scaffold;
  *
  * @property string $id The UUID.
  * @property string $slug The slug.
- * @property string $level The current level of user.
  * @property string $email The email address.
  * @property string $email_temp The temporary email address for imported candidates.
  * @property string $position The position for politicians.
@@ -35,6 +35,8 @@ use OurSociety\View\Scaffold;
  * @property \Cake\I18n\FrozenTime|null $token_expires The expiry timestamp.
  * @property \Cake\I18n\FrozenTime|null $verified The email verification timestamp.
  * @property string $role The role.
+ * @property null|string $plan The current ChargeBee plan ID.
+ * @property int $level The current level of user.
  * @property int $answer_count The amount of questions answered.
  * @property string|null $picture The profile picture.
  * @property string|null $address_1 The first address line.
@@ -179,9 +181,24 @@ class User extends AppEntity
         return false;
     }
 
+    public function getAccountRoute(): array
+    {
+        return ['_name' => 'billing'];
+    }
+
     public function getDashboardRoute(): array
     {
         return ['_name' => sprintf('%s:dashboard', $this->role)];
+    }
+
+    public function getLogoutRoute(): array
+    {
+        return ['_name' => 'users:logout'];
+    }
+
+    public function getProfileRoute(): array
+    {
+        return ['_name' => sprintf('%s:profile', $this->role)];
     }
 
     public function getMunicipalitySlug(): string
@@ -257,6 +274,17 @@ class User extends AppEntity
         $expires = $this->token_expires ?? Time::now();
 
         return $expires->lte(Time::now());
+    }
+
+    public function levelUp(): void
+    {
+        $user = $this->withNextLevel();
+
+        /** @var AppTable $table */
+        $table = TableRegistry::get('Users');
+        $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
+        $table->removeBehaviorIfLoaded(TimestampBehavior::class);
+        $table->saveOrFail($user);
     }
 
     public function printPosition(): string
@@ -344,14 +372,37 @@ class User extends AppEntity
         return $user;
     }
 
+    /**
+     *
+     * @see PictureCell
+     * @param AppView $view
+     * @return string
+     */
+    public function renderProfilePicture(AppView $view, array $options = null): string
+    {
+        $options = $options ?? [
+            'alt' => __('Profile picture of {user_name}', ['user_name' => $this->name]),
+            'class' => ['img-fluid'],
+            'style' => 'min-width: 100%',
+        ];
+
+        return $view->Html->image($this, $options);
+    }
+
+    public function persistPlan($planId): void
+    {
+        $user = $this->withPlan($planId);
+
+        /** @var AppTable $table */
+        $table = TableRegistry::get('Users');
+        $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
+        $table->removeBehaviorIfLoaded(TimestampBehavior::class);
+        $table->saveOrFail($user);
+    }
+
     protected function _getAge(): ?int
     {
         return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;
-    }
-
-    protected function _getLevel(): ?int
-    {
-        return 1;
     }
 
     /**
@@ -367,5 +418,22 @@ class User extends AppEntity
         return mb_strlen($password) > 0
             ? (new DefaultPasswordHasher)->hash($password)
             : null;
+    }
+
+    private function withNextLevel()
+    {
+        $user = clone $this;
+
+        ++$user->level;
+
+        return $user;
+    }
+
+    private function withPlan(?string $planId = null): self
+    {
+        $user = clone $this;
+        $user->plan = $planId;
+
+        return $user;
     }
 }

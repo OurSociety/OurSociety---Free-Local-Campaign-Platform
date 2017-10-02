@@ -32,7 +32,6 @@ class PoliticiansController extends CrudController
 
         $this->modelClass = 'Users';
         $this->Auth->allow(['index', 'view', 'claim']);
-        $this->viewBuilder()->setLayout('site');
     }
 
     public function index(): ?Response
@@ -40,7 +39,7 @@ class PoliticiansController extends CrudController
         $this->Crud->action()->setConfig([
             'findMethod' => 'politicianForCitizen',
             'scaffold' => [
-                'page_title' => 'Browse Politicians',
+                'page_title' => 'Representatives',
                 'fields' => [
                     'name',
                     'picture',
@@ -182,4 +181,5 @@ class PoliticiansController extends CrudController
         $this->render('embed');
 
         return null;
-    }}
+    }
+}

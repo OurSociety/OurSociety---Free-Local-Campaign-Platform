@@ -82,21 +82,19 @@ class MunicipalitiesController extends CrudController
             ]);
         });
 
-        $this->Crud->on('beforeRender', function (Event $event) {
-            /** @var ElectoralDistrict $electoralDistrict */
-            $electoralDistrict = $event->getSubject()->entity;
-            if ($electoralDistrict->isMunicipality()) {
-                $this->viewBuilder()->setLayout('site');
-            }
-        });
+        //$this->Crud->on('beforeRender', function (Event $event) {
+        //    /** @var ElectoralDistrict $electoralDistrict */
+        //    $electoralDistrict = $event->getSubject()->entity;
+        //    if ($electoralDistrict->isMunicipality()) {
+        //        //$this->viewBuilder()->setLayout('site');
+        //    }
+        //});
 
         return $this->Crud->execute();
     }
 
     public function articles(string $slug): ?Response
     {
-        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
-
         $this->set([
             'municipality' => $this->loadModel()->find()->where(['slug' => $slug])->firstOrFail(),
         ]);
@@ -111,8 +109,6 @@ class MunicipalitiesController extends CrudController
 
     public function edit(string $municipalitySlug): ?Response
     {
-        $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
-
         $this->Crud->action()->setConfig([
             'relatedModels' => false,
             'scaffold' => [

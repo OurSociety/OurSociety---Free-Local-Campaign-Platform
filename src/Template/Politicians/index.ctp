@@ -15,7 +15,7 @@ $this->Breadcrumbs->add($title);
 <section class="row equal-height">
     <?php foreach ($politicians as $politician): ?>
         <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 pb-3">
-            <div class="card">
+            <div class="card w-100">
                 <?= $this->Html->politicianLink(
                     $politician,
                     $this->Html->jdenticon($politician->slug, [

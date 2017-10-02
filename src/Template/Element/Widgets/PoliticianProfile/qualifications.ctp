@@ -12,7 +12,7 @@
             <?= $this->fetch('actions_education') ?>
         </h4>
         <?php if (count($politician->qualifications) === 0): ?>
-            <p><?= __("This politician hasn't added any qualifications.") ?></p>
+            <p><?= __("This {role} hasn't added any qualifications.", ['role' => $politician->role]) ?></p>
         <?php else: ?>
             <ul>
                 <?php foreach ($politician->qualifications as $qualification): ?>
