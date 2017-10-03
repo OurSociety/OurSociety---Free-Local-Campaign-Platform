@@ -3,11 +3,10 @@
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The profile being edited.
  */
+
+$this->Breadcrumbs->add(__('Account profile'), ['_name' => 'users:profile']);
+$this->Breadcrumbs->add(__('Edit details'));
 ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Account profile'), ['_name' => 'users:profile']) ?></li>
-    <li>Edit details</li>
-</ol>
 
 <section class="users form">
     <?= $this->Form->create($user) ?>

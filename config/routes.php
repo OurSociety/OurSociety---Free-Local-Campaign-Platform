@@ -72,8 +72,8 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
     $routes->connect('/ballot/:election', ['controller' => 'Ballot', 'action' => 'view'], ['_name' => 'ballot', 'pass' => ['election']]);
     $routes->connect('/profile', ['controller' => 'PathwayPoliticians', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'PathwayPoliticians', 'action' => 'edit'], ['_name' => 'profile:edit']);
-    $routes->connect('/questions', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);
+    $routes->connect('/your-voice', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->fallbacks(DashedRoute::class);
 });
 

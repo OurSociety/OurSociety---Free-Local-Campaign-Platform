@@ -32,6 +32,7 @@ use OurSociety\Validation\Validator as AppValidator;
  * @method User patchEntity(Entity $entity, array $data, array $options = [])
  * @method User[] patchEntities($entities, array $data, array $options = [])
  * @method User findOrCreate($search, callable $callback = null, $options = [])
+ * @method UsersTable static instance(?string $alias = null, ?array $options = [])
  */
 class UsersTable extends AppTable
 {
