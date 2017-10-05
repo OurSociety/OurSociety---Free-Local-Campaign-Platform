@@ -68,8 +68,10 @@ use OurSociety\View\Scaffold;
  * @property OfficeType $office_type
  * @property bool $is_example
  */
-class User extends AppEntity
+class User extends AppEntity implements SearchableEntity
 {
+    use Traits\SearchableTrait;
+
     public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
     public const ROLES_LABELS = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
     public const ROLE_ADMIN = 'admin';
@@ -435,5 +437,10 @@ class User extends AppEntity
         $user->plan = $planId;
 
         return $user;
+    }
+
+    public function searchableAs(): string
+    {
+        return 'people';
     }
 }

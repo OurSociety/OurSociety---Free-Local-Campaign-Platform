@@ -1,3 +1,16 @@
+<?php
+$searchOptions = [
+    'appId' => env('ALGOLIA_APPLICATION_ID'),
+    'apiKey' => env('ALGOLIA_SEARCH_API_KEY'),
+    'indexName' => 'places',
+];
+?>
+
+<script>
+    //window.searchOptions = <?//= json_encode($searchOptions) ?>//;
+</script>
+
+<!--
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1/leaflet.css" />
 <script src="https://cdn.jsdelivr.net/leaflet/1/leaflet.js"></script>
 
@@ -102,4 +115,150 @@
             map.fitBounds(featureGroup.getBounds().pad(0.5), {animate: false});
         }
     })();
+</script>
+-->
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.0/dist/instantsearch.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.0/dist/instantsearch-theme-algolia.min.css">
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.0/dist/instantsearch.min.js"></script>
+
+<div class="card text-center">
+    <div class="card-header">
+        <div id="search-box">
+            <!-- SearchBox widget will appear here -->
+        </div>
+    </div>
+    <div class="row text-left">
+        <div class="col-md-4 py-3 pl-3">
+            <div id="stats" class="mb-3">
+                <!-- Stats widget will appear here -->
+            </div>
+
+            <hr>
+
+            <div id="tree" class="mb-3">
+                <!-- RefinementList widget will appear here -->
+            </div>
+
+            <div id="refinement-list" class="mb-3">
+                <!-- RefinementList widget will appear here -->
+            </div>
+
+            <div id="current-refined-values" class="mb-3">
+                <!-- CurrentRefinedValues widget will appear here -->
+            </div>
+
+            <div id="clear-all">
+                <!-- ClearAll widget will appear here -->
+            </div>
+        </div>
+        <div class="col">
+            <ul class="list-group list-group-flush" id="hits">
+                <!-- Hits widget will appear here -->
+            </ul>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        <div id="pagination">
+            <!-- Pagination widget will appear here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const search = instantsearch({
+        appId: '<?= env('ALGOLIA_APPLICATION_ID') ?>',
+        apiKey: '<?= env('ALGOLIA_SEARCH_API_KEY') ?>',
+        indexName: 'places',
+        urlSync: true
+    });
+
+    // initialize currentRefinedValues
+    search.addWidget(
+        instantsearch.widgets.currentRefinedValues({
+            container: '#current-refined-values',
+            // This widget can also contain a clear all link to remove all filters,
+            // we disable it in this example since we use `clearAll` widget on its own.
+            clearAll: false,
+            templates: {
+                header: 'Selected categories'
+            }
+        })
+    );
+
+    search.addWidget(instantsearch.widgets.hierarchicalMenu({
+        container: '#tree',
+        attributes: ['tree.lvl0', 'tree.lvl1', 'tree.lvl2'],
+        templates: {
+            header: 'Hierarchical categories'
+        }
+    }));
+
+    search.addWidget(
+        instantsearch.widgets.stats({
+            container: '#stats',
+            autoHideContainer: false
+        })
+    );
+
+    // initialize clearAll
+    search.addWidget(
+        instantsearch.widgets.clearAll({
+            container: '#clear-all',
+            templates: {
+                link: 'Reset everything'
+            },
+            autoHideContainer: false
+        })
+    );
+
+    // initialize pagination
+    search.addWidget(
+        instantsearch.widgets.pagination({
+            container: '#pagination',
+            maxPages: 20,
+            // default is to scroll to 'body', here we disable this behavior
+            scrollTo: false
+        })
+    );
+
+    // initialize RefinementList
+    search.addWidget(
+        instantsearch.widgets.refinementList({
+            container: '#refinement-list',
+            attributeName: 'parent',
+            templates: {
+                header: 'Flat categories'
+            }
+        })
+    );
+
+    // initialize SearchBox
+    search.addWidget(
+        instantsearch.widgets.searchBox({
+            container: '#search-box',
+            placeholder: 'Search for places',
+            poweredBy: true
+        })
+    );
+
+    // initialize hits widget
+    search.addWidget(
+        instantsearch.widgets.hits({
+            container: '#hits',
+            templates: {
+                empty: 'No results',
+                item: `
+                    <li class="list-group-item border border-light">
+                        <!--<em>Hit {{objectID}}</em>: -->
+                        <a class="card-link" href="/place/{{{_highlightResult.slug.value}}}">{{{_highlightResult.name.value}}}</a>
+                    </li>
+                `
+            }
+        })
+    );
+
+    search.start();
 </script>

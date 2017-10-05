@@ -13,6 +13,7 @@
     "require": {
         "php": ">=7.1",
         "TeamTNT/php-stripe-webhook-tester": "^1.1",
+        "algolia/algoliasearch-client-php": "^1.20",
         "cakedc/enum": "^1.1",
         "cakephp/cakephp": "^3.5",
         "cakephp/localized": "^3.3",
