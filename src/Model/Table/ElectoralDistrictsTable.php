@@ -8,6 +8,7 @@ use Cake\Event\Event;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\HasMany;
 use Cake\ORM\Query;
+use OurSociety\Model\Behavior\SearchEngineBehavior;
 
 /**
  * ElectoralDistrictsTable.
@@ -30,6 +31,7 @@ class ElectoralDistrictsTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->addBehavior(SearchEngineBehavior::class);
         $this->setDisplayField('label');
         $this->belongsTo('Counties', ['className' => self::class])->setForeignKey('county_id');
         $this->belongsTo('DistrictTypes')->setForeignKey('type_id');

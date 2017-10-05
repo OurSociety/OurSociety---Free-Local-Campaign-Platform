@@ -10,8 +10,10 @@ trait ClassNameSupportTrait
     /**
      * {@inheritdoc}
      */
-    public function addBehavior($name, array $options = []): void
+    public function addBehavior($name, array $options = null): void
     {
+        $options = $options ?? [];
+
         if (class_exists($name)) {
             $options += ['className' => $name];
             $name = $options['name'] ?? $this->getBehaviorName($name);
@@ -22,6 +24,14 @@ trait ClassNameSupportTrait
         } catch (DisableBehaviorException $exception) {
             // no-op: The behavior disabled itself on purpose.
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasBehavior($name)
+    {
+        return parent::hasBehavior($this->getBehaviorName($name));
     }
 
     /**

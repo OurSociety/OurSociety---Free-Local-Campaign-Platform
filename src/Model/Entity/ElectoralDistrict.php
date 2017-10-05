@@ -49,8 +49,10 @@ use OurSociety\View\AppView;
  *
  * @property string $display_name
  */
-class ElectoralDistrict extends AppEntity
+class ElectoralDistrict extends AppEntity implements SearchableEntity
 {
+    use Traits\SearchableTrait;
+
     public function equals(ElectoralDistrict $municipality): bool
     {
         return $this->id === $municipality->id;
@@ -65,9 +67,9 @@ class ElectoralDistrict extends AppEntity
         return ['_name' => 'district', 'district' => $this->slug];
     }
 
-    public function renderLink(AppView $view, $url = null, ?array $options = null): string
+    public function hasDescription(): bool
     {
-        return $view->Html->link($this->name, $url ?: $this->getRoute(), $options ?? []);
+        return $this->description !== null;
     }
 
     public function isMunicipality()
@@ -80,9 +82,9 @@ class ElectoralDistrict extends AppEntity
         return $this->district_type ? $this->district_type->name : __('Unknown District Type');
     }
 
-    public function hasDescription(): bool
+    public function renderLink(AppView $view, $url = null, ?array $options = null): string
     {
-        return $this->description !== null;
+        return $view->Html->link($this->name, $url ?: $this->getRoute(), $options ?? []);
     }
 
     public function renderMap(AppView $view): string
@@ -99,6 +101,27 @@ JAVASCRIPT;
         $mapScript = $view->Html->scriptBlock($script);
 
         return $mapElement . $mapScript;
+    }
+
+    public function searchableAs(): string
+    {
+        return 'places';
+    }
+
+    public function toSearchableArray(): array
+    {
+        $tree = [
+            'lvl0' => 'United States',
+            'lvl1' => 'United States > New Jersey',
+            'lvl2' => 'United States > New Jersey > ' . ($this->parent->name ?? 'Unknown'),
+        ];
+
+        return [
+            'slug' => $this->slug,
+            'name' => $this->name,
+            'parent' => $this->parent->name ?? null,
+            'tree' => $tree,
+        ];
     }
 
     protected function _getDisplayName(): string

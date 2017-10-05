@@ -6,6 +6,7 @@ namespace OurSociety\Controller;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
+use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -56,6 +57,14 @@ class ElectoralDistrictsController extends CrudController
                 'Children' => ['DistrictTypes'],
                 'Contests' => ['Elections'],
             ]);
+        });
+
+        $this->Crud->on('beforeRender', function (Event $event) {
+            /** @var ElectoralDistrict $place */
+            $place = $event->getSubject()->entity;
+            if ($place->isMunicipality()) {
+                return $this->redirect(['_name' => 'municipality', 'municipality' => $place->slug]);
+            }
         });
 
         return $this->Crud->execute();
