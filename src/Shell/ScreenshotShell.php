@@ -4,11 +4,9 @@ declare(strict_types=1);
 namespace OurSociety\Shell;
 
 use Cake\Console\ConsoleOptionParser;
-use Cake\Console\Shell;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
 use Imagick;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
@@ -18,7 +16,7 @@ use Spatie\Browsershot\Browsershot;
 /**
  * Screenshot shell command.
  */
-class ScreenshotShell extends Shell
+class ScreenshotShell extends AppShell
 {
     public const USER_AGENT = 'BrowserShot';
     private const BREAKPOINTS = [

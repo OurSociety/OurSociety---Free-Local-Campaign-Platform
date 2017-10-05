@@ -13,6 +13,7 @@ use Cake\Utility\Text;
 use Cake\Validation as Cake;
 use Josegonzalez\Upload\Model\Behavior\UploadBehavior;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
+use OurSociety\Model\Behavior\SearchEngineBehavior;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Validation\Validator as AppValidator;
@@ -49,6 +50,7 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
+        $this->addBehavior(SearchEngineBehavior::class, ['finder' => 'publicSearch']);
         $this->hasMany('Answers');
         $this->belongsToMany('Categories');
         $this->belongsTo('OfficeTypes');

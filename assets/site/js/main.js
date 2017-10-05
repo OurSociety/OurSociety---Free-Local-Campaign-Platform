@@ -7,3 +7,4 @@ import 'jdenticon/dist/jdenticon.js'
 import './_editor' // wysiwyg editor
 import './_video' // video carousel
 import './_onboarding' // onboarding dropdowns
+import './_search'

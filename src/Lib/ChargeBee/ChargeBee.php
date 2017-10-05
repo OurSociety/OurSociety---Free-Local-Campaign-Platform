@@ -11,7 +11,7 @@ use ChargeBee_InvalidRequestException;
 use ChargeBee_PortalSession;
 use OurSociety\Model\Entity\User;
 
-class ChargeBee
+final class ChargeBee
 {
     private const API_ERROR_CODE_404 = 'resource_not_found';
 
