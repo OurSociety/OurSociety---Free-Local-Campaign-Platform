@@ -29,6 +29,13 @@ class ArticlesController extends CrudController
      */
     public $Users;
 
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->Auth->allow(['view', 'viewFromMunicipalityProfile']);
+    }
+
     public function index(string $politician): ?Response
     {
         $this->Crud->action()->setConfig([
@@ -91,36 +98,37 @@ class ArticlesController extends CrudController
     {
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
-        /** @var ArticlesTable $articles */
-        $articles = $this->loadModel('Articles');
-
         $politician = $users->getBySlug($politicianSlug, $this->Auth->user()->role);
-        $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
-
-        if ($article->approved === null || $article->published === null) {
-            return $this->redirect([
-                '_name' => 'politician:profile:article',
-                'article' => $article->slug,
-            ]);
-        }
 
         $this->set([
             'politician' => $politician,
-            'article' => $article,
         ]);
 
-        return null;
+        return $this->viewFromProfile($articleSlug);
     }
 
     public function viewFromMunicipalityProfile(string $municipalitySlug, string $articleSlug): ?Response
     {
         /** @var ElectoralDistrictsTable $municipalities */
         $municipalities = $this->loadModel('ElectoralDistricts');
+        $municipality = $municipalities->getBySlug($municipalitySlug);
+
+        $this->set([
+            'municipality' => $municipality,
+        ]);
+
+        $this->viewFromProfile($articleSlug);
+
+        return $this->render('view_municipality');
+    }
+
+    protected function viewFromProfile(string $articleSlug): ?Response
+    {
         /** @var ArticlesTable $articles */
         $articles = $this->loadModel('Articles');
-
-        $municipality = $municipalities->getBySlug($municipalitySlug);
-        $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
+        $user = $this->getCurrentUser();
+        $role = $user ? $user->role : null;
+        $article = $articles->getBySlug($articleSlug, $role);
 
         if ($article->approved === null || $article->published === null) {
             return $this->redirect([
@@ -129,12 +137,7 @@ class ArticlesController extends CrudController
             ]);
         }
 
-        $this->set([
-            'municipality' => $municipality,
-            'article' => $article,
-        ]);
-
-        $this->render('view_municipality');
+        $this->set('article', $article);
 
         return null;
     }

@@ -6,7 +6,7 @@ namespace OurSociety\Model\Table;
 use Cake\Database\Connection;
 use Cake\Datasource\ConnectionManager;
 
-class DashboardTotalsTable
+class DashboardTotalsTable extends AppTable
 {
     public static function getRows(string $name, string $period): array
     {

@@ -6,7 +6,7 @@ namespace OurSociety\Model\Table\Finder\Users;
 use Cake\ORM\Query;
 use OurSociety\Model\Table\Finder\Finder;
 
-class IsPathwayPoliticianFinder extends Finder
+class IsCommunityContributorFinder extends Finder
 {
     /**
      * {@inheritdoc}. Custom finder to grab the current mayor.
@@ -14,7 +14,7 @@ class IsPathwayPoliticianFinder extends Finder
     public function __invoke(Query $query, array $options = []): Query
     {
         return $query->where([
-            $this->aliasField($query, 'pathway_politician') => true,
+            $this->aliasField($query, 'community_contributor') => true,
         ]);
     }
 }

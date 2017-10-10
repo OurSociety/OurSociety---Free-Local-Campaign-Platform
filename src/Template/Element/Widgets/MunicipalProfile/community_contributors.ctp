@@ -1,18 +1,18 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this View class.
- * @var User[] $pathwayPoliticians The pathway politicians.
+ * @var User[] $communityContributors The community contributors.
  */
 
 use OurSociety\Model\Entity\User;
 
-$pathwayPoliticians = $pathwayPoliticians ?? [];
-$actualCount = count($pathwayPoliticians);
+$communityContributors = $communityContributors ?? [];
+$actualCount = count($communityContributors);
 $desiredCount = 5;
 
 if ($actualCount < $desiredCount):
-    $examplePathwayPoliticians = User::examples($desiredCount - $actualCount);
-    $pathwayPoliticians = array_merge($pathwayPoliticians, $examplePathwayPoliticians);
+    $exampleCommunityContributors = User::examples($desiredCount - $actualCount);
+    $communityContributors = array_merge($communityContributors, $exampleCommunityContributors);
 endif;
 ?>
 
@@ -31,7 +31,7 @@ endif;
 </p>
 
 <div class="card-deck pt-2">
-    <?php foreach ($pathwayPoliticians as $user): ?>
+    <?php foreach ($communityContributors as $user): ?>
         <?= $user->renderCardElement($this) ?>
     <?php endforeach ?>
 </div>

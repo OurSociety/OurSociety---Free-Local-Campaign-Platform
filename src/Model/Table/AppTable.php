@@ -32,15 +32,6 @@ abstract class AppTable extends Table
     use Traits\ClassNameSupportTrait;
     use Traits\InvokableFinderTrait;
 
-    public static function instance(?string $alias = null, ?array $options = null)
-    {
-        $options = $options ?? [];
-        $alias = $alias ?: preg_replace('#.*\\\\(.*)Table#', '$1', static::class);
-        $options += TableRegistry::exists($alias) ? [] : ['className' => static::class];
-
-        return TableRegistry::get($alias, $options);
-    }
-
     /**
      * {@inheritdoc}
      */

@@ -40,7 +40,7 @@ use OurSociety\View\AppView;
  * @property Event[] $events
  * @property User $mayor
  * @property Election $upcoming_election
- * @property User[] $pathway_politicians
+ * @property User[] $community_contributors
  * @property ElectoralDistrict $county
  * @property ElectoralDistrict $state
  * @property Article[] $articles
@@ -134,6 +134,13 @@ JAVASCRIPT;
         ];
     }
 
+    protected function _getName(): ?string
+    {
+        $name = $this->_properties['name'] ?? null;
+
+        return is_string($name) ? ucwords($name) : $name;
+    }
+
     protected function _getDisplayName(): string
     {
         return $this->short_name ?: preg_replace('/ (borough|county|district|township)$/i', '', $this->name);
@@ -141,7 +148,6 @@ JAVASCRIPT;
 
     protected function _getLabel(): string
     {
-        return $this->_properties['name'] .
-            ($this->parent ? ' (' . $this->parent->name . ')' : '');
+        return $this->_properties['name'] . ($this->parent ? ' (' . $this->parent->name . ')' : '');
     }
 }

@@ -35,7 +35,7 @@ class ValueMatchCell extends Cell
             'differences' => $users->Categories->getMatchPercentages($citizen, $politician, true, $limit)->toArray(),
             'politician' => $politician,
             'limit' => $limit,
-            'isExample' => $citizen->isPolitician() || $citizen->isPathwayPolitician(),
+            'isExample' => $citizen->isPolitician() || $citizen->isCommunityContributor(),
         ]);
     }
 

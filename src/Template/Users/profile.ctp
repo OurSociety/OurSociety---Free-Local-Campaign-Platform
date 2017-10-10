@@ -3,32 +3,31 @@
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The user.
  */
-?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Account profile'), ['_name' => 'users:profile']) ?></li>
-    <li><?= $user->name ?></li>
-</ol>
 
-<h2>Profile</h2>
+$user = \OurSociety\ORM\TableRegistry::get('Users')->get('fadbd13b-35d1-4b62-82e7-f60ee2709467');
+$this->Breadcrumbs->add(__('Dashboard'), $user->getDashboardRoute());
+$this->Breadcrumbs->add(__('Profile'), $user->getProfileRoute());
+?>
+
+<h2><?= $user->name ?></h2>
 
 <hr>
 
 <div class="media">
     <div class="media-left">
-        <?= $this->Html->image($user->picture) ?>
+        <?= $user->renderProfilePicture($this, ['class' => 'img-thumbnail mr-3', 'style' => 'max-width: 100px']) ?>
     </div>
     <div class="media-body">
-        <h4 class="media-heading"><?= $user->name ?></h4>
         <dl>
-            <dt>Phone number</dt>
+            <dt><?= __('Phone number') ?></dt>
             <dd><?= $user->phone ?? $this->Html->tag('span', '&mdash;', ['class' => 'text-muted']) ?></dd>
-            <dt>Email</dt>
-            <dd><?= $this->Html->link($user->email, 'mailto:' . $user->email) ?></dd>
-            <dt>Member since</dt>
+            <dt><?= __('Email') ?></dt>
+            <dd><?= $user->renderEmailLink($this) ?></dd>
+            <dt><?= __('Member since') ?></dt>
             <dd><abbr title="<?= $user->created ?>"><?= $user->created->timeAgoInWords() ?></abbr></dd>
         </dl>
     </div>
 </div>
 
-<?= $this->Html->link(__('Edit details'), ['_name' => 'users:edit'], ['class' => 'btn btn-sm btn-default']) ?>
-<?= $this->Html->link(__('Change password'), ['_name' => 'users:reset'], ['class' => 'btn btn-sm btn-default']) ?>
+<?= $this->Html->link(__('Edit details'), ['_name' => 'users:edit'], ['class' => 'btn btn-sm btn-primary mr-3']) ?>
+<?= $this->Html->link(__('Change password'), ['_name' => 'users:reset'], ['class' => 'btn btn-sm btn-primary mr-3']) ?>

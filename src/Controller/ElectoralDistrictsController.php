@@ -36,13 +36,17 @@ class ElectoralDistrictsController extends CrudController
             /** @var Query $query */
             $query = $event->getSubject()->query;
             $query
+                ->select([
+                    'name'
+                ])
                 ->where([
                     array_values($query->aliasField('name'))[0] . ' LIKE' => '%' . $this->request->getQuery('name') . '%',
                 ])
                 ->matching('DistrictTypes', function (Query $query) {
                     return $query->where(['id_vip' => 'municipality']);
                 })
-                ->contain(['Parents']);
+                //->contain(['Parents'])
+            ;
         });
 
         return $this->Crud->execute();

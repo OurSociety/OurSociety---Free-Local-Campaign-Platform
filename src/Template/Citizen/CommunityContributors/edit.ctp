@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var User $pathwayPolitician The pathway politician.
+ * @var User $communityContributor The community contributor.
  * @var User $currentUser The current user.
  */
 use OurSociety\Model\Entity\User;
@@ -13,7 +13,7 @@ use OurSociety\Model\Entity\User;
     <li class="breadcrumb-item active"><?= __('Edit Profile') ?></li>
 </ol>
 
-<?= $this->Form->create($pathwayPolitician, ['align' => ['sm' => ['left' => 3, 'middle' => 9]], 'type' => 'file']) ?>
+<?= $this->Form->create($communityContributor, ['align' => ['sm' => ['left' => 3, 'middle' => 9]], 'type' => 'file']) ?>
 
 <h2>
     <?= __('Edit Profile') ?>

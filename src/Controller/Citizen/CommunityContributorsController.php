@@ -9,9 +9,9 @@ use OurSociety\Model\Entity\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * PathwayPolitician Controller
+ * Citizen community contributors controller
  */
-class PathwayPoliticiansController extends CrudController
+class CommunityContributorsController extends CrudController
 {
     public function initialize(): void
     {
@@ -25,7 +25,7 @@ class PathwayPoliticiansController extends CrudController
         /** @var User $politician */
         $politician = $this->loadModel('Users')
             ->find()
-            //->find('pathwayPolitician')
+            //->find('communityContributor')
             ->where(['slug' => $this->Auth->user('slug')])
             ->firstOrFail();
 

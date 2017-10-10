@@ -6,7 +6,7 @@ namespace OurSociety\View\Helper;
 use BootstrapUI\View\Helper as BootstrapUI;
 use Cake\Log\Log;
 use Cake\Routing\Exception\MissingRouteException;
-use OurSociety\View\AppView;
+use Cake\View\View;
 use OurSociety\View\Widget;
 
 /**
@@ -14,7 +14,7 @@ use OurSociety\View\Widget;
  */
 class FormHelper extends BootstrapUI\FormHelper
 {
-    public function __construct(AppView $View, array $config = [])
+    public function __construct(View $View, array $config = [])
     {
         $defaultConfig = [
             'widgets' => [
@@ -28,37 +28,35 @@ class FormHelper extends BootstrapUI\FormHelper
             ],
         ];
 
-        if ($View->getBootstrapVersion() === 4) {
-            $checkboxTemplate = <<<HTML
+        $checkboxTemplate = <<<HTML
 <input class="custom-control-input" type="checkbox" name="{{name}}" value="{{value}}"{{attrs}}>
 <span class="custom-control-indicator"></span>
 HTML;
-            $dateWidgetTemplate = <<<HTML
+        $dateWidgetTemplate = <<<HTML
 <ul class="list-inline">
-    <li class="list-inline-item year">{{year}}</li>
-    <li class="list-inline-item month">{{month}}</li>
-    <li class="list-inline-item day">{{day}}</li>
-    <li class="list-inline-item hour">{{hour}}</li>
-    <li class="list-inline-item minute">{{minute}}</li>
-    <li class="list-inline-item second">{{second}}</li>
-    <li class="list-inline-item meridian">{{meridian}}</li>
+<li class="list-inline-item year">{{year}}</li>
+<li class="list-inline-item month">{{month}}</li>
+<li class="list-inline-item day">{{day}}</li>
+<li class="list-inline-item hour">{{hour}}</li>
+<li class="list-inline-item minute">{{minute}}</li>
+<li class="list-inline-item second">{{second}}</li>
+<li class="list-inline-item meridian">{{meridian}}</li>
 </ul>
 HTML;
 
-            $defaultConfig += [
-                'templates' => [
-                    'checkbox' => $checkboxTemplate,
-                    'dateWidget' => $dateWidgetTemplate,
-                    'help' => '<small class="form-text text-muted">{{content}}</small>'
+        $defaultConfig += [
+            'templates' => [
+                'checkbox' => $checkboxTemplate,
+                'dateWidget' => $dateWidgetTemplate,
+                'help' => '<small class="form-text text-muted">{{content}}</small>'
+            ],
+            'templateSet' => [
+                'default' => [
+                    'checkboxContainer' => '<div class="custom-controls-stacked">{{content}}{{help}}</div>',
+                    'checkboxContainerError' => '<div class="custom-controls-stacked has-error">{{content}}{{error}}{{help}}</div>',
                 ],
-                'templateSet' => [
-                    'default' => [
-                        'checkboxContainer' => '<div class="custom-controls-stacked">{{content}}{{help}}</div>',
-                        'checkboxContainerError' => '<div class="custom-controls-stacked has-error">{{content}}{{error}}{{help}}</div>',
-                    ],
-                ],
-            ];
-        }
+            ],
+        ];
 
         parent::__construct($View, $defaultConfig + $config);
     }

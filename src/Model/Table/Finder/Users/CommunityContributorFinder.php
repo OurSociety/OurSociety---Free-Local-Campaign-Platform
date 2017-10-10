@@ -8,7 +8,7 @@ use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\Finder\Finder;
 use OurSociety\Model\Table;
 
-class PathwayPoliticianFinder extends Finder
+class CommunityContributorFinder extends Finder
 {
     public function __invoke(Query $query, array $options = []): Query
     {
@@ -18,6 +18,6 @@ class PathwayPoliticianFinder extends Finder
             'finder' => isset($options['role']) && $options['role'] === User::ROLE_CITIZEN ? 'forCitizen' : 'all',
         ]);
 
-        return $query->find('isPathwayPolitician')->contain(['Articles']);
+        return $query->find('isCommunityContributor')->contain(['Articles']);
     }
 }

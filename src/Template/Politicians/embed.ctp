@@ -17,10 +17,7 @@
     <?= $politician->position ?>
 </p>
 
-<?= $this->Html->image($politician, [
-    'alt' => __('Profile picture of {user_name}', ['user_name' => $politician->name]),
-    'class' => ['img-responsive'], 'style' => 'max-height: 200px',
-]) ?>
+<?= $politician->renderProfilePicture($this, ['style' => 'max-height: 200px']) ?>
 
 <hr>
 
@@ -28,6 +25,7 @@
     <?= __('My Platform') ?>
 </h2>
 
+<?php if ($politician->featured_video !== null): ?>
 <div class="row">
     <?php if (count($politician->videos) === 0): ?>
         <div class="col">
@@ -42,6 +40,7 @@
         </div>
     <?php endif ?>
 </div>
+<?php endif ?>
 
 <hr>
 

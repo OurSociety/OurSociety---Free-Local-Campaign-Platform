@@ -11,7 +11,7 @@ $this->start('user_signed_in');
     <?= __('Signed in as {name}', [
         'name' => $this->Html->link(
             $user['name'],
-            $user->isPathwayPolitician()
+            $user->isCommunityContributor()
                 ? ['_name' => 'citizen:profile']
                 : ['_name' => 'users:profile'],
             ['class' => ['text-white']]

@@ -17,11 +17,13 @@ class UrlHelper extends Cake\UrlHelper
         return parent::image($path, $options);
     }
 
-    public function profilePicture(User $user, array $options = []): string
+    public function profilePicture(User $user, array $options = null): string
     {
-        $path = $user->picture;
-        $pathPrefix = sprintf('upload/profile/picture/%s/', $user->id);
+        $options = $options ?? [];
 
-        return $this->assetUrl($path, $options + compact('pathPrefix'));
+        $path = $user->picture;
+        $options += ['pathPrefix' => sprintf('upload/profile/picture/%s/', $user->id)];
+
+        return $this->assetUrl($path, $options);
     }
 }

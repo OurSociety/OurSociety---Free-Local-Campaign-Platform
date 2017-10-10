@@ -5,7 +5,7 @@
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user, if any.
  */
 
-if ($currentUser->isInMunicipality($municipality)) {
+if ($currentUser && $currentUser->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {
     $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());
@@ -124,4 +124,4 @@ if ($currentUser->isInMunicipality($municipality)) {
 
 <hr>
 
-<?= $this->element('Widgets/MunicipalProfile/pathway_politicians', ['pathwayPoliticians' => $municipality->pathway_politicians]) ?>
+<?= $this->element('Widgets/MunicipalProfile/community_contributors', ['communityContributors' => $municipality->community_contributors]) ?>

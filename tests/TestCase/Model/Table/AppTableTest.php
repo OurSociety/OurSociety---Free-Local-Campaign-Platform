@@ -5,6 +5,7 @@ namespace OurSociety\Test\TestCase\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Utility\Text;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\TestSuite\TestCase;
 
 /**
@@ -19,13 +20,6 @@ abstract class AppTableTest extends TestCase
      */
     public $table;
 
-    protected static function instance(): Table
-    {
-        $tableClass = preg_replace('#^(.*\\\\)Test\\\\TestCase\\\\(.*)Test$#', '$1$2', static::class);
-
-        return $tableClass::instance();
-    }
-
     /**
      * setUp method
      *
@@ -35,7 +29,11 @@ abstract class AppTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->table = static::instance();
+        $this->table = TableRegistry::get(preg_replace(
+            '#^(.*\\\\)Test\\\\TestCase\\\\(.*)Test$#',
+            '$1$2',
+            static::class
+        ));
     }
 
     /**
@@ -58,12 +56,12 @@ abstract class AppTableTest extends TestCase
      * @param mixed $value The value to set the field.
      * @param array $error The expected error(s) for the field.
      */
-    public function testValidationDefault(string $field, $value, array $error = []): void
+    public function testValidationDefault(string $field, $value, array $error = null): void
     {
         $entity = $this->table->newEntity([$field => $value]);
         $actual = $entity->getError($field);
 
-        self::assertEquals($error, $actual);
+        self::assertEquals($error ?? [], $actual);
     }
 
     /**
@@ -104,6 +102,6 @@ abstract class AppTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        self::markTestIncomplete('Not implemented yet.');
     }
 }

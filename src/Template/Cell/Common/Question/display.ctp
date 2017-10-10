@@ -35,11 +35,10 @@ $answerError = $getError($question, 'answer');
     <div class="card-header">
         <div class="row">
             <h4 class="col mb-0"><?= __('Question #{number}', ['number' => $number]) ?></h4>
-            <div class="col-auto small text-muted">
-                Not sure?
+            <div class="col-auto text-muted">
                 <?= $this->Html->link(__('Answer Later'), sprintf('#question-%d', $number), [
                     'aria-controls' => sprintf('question-%d', $number),
-                    'class' => ['js-question-link', 'text-info'],
+                    'class' => ['js-question-link', 'btn', 'btn-link', 'text-secondary', 'p-0'],
                     'data-toggle' => 'collapse',
                 ]) ?>
             </div>
@@ -101,7 +100,11 @@ $answerError = $getError($question, 'answer');
             </div>
         </div>
         <div class="card-footer small">
-            <?= $this->Html->link(__('Report this question'), '#', ['class' => 'text-muted']) ?>
+            <?= $this->Html->link(
+                __('Report this question'),
+                ['controller' => 'Reports', 'action' => 'add', '?' => ['question_id' => $question->id]],
+                ['class' => 'text-muted', 'target' => '_blank']
+            ) ?>
         </div>
     </div>
 </article>

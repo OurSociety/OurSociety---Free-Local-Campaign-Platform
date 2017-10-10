@@ -15,6 +15,8 @@
     <?= $article->name ?>
 </h2>
 
+Posted by <?= $article->renderProfileLink($this) ?>
+
 <hr>
 
 <?= $article->body ?>

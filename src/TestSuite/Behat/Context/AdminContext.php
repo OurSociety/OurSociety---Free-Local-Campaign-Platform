@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\TestSuite\Behat\Context;
 
 use Behat\Gherkin\Node\TableNode;
-use Cake\ORM\TableRegistry;
-use OurSociety\Model\Table\AppTable;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\TestSuite\Behat\Page;
 
 class AdminContext extends PageContext
@@ -33,7 +32,6 @@ class AdminContext extends PageContext
      */
     public function theFollowingUsers(string $modelName, TableNode $table)
     {
-        /** @var AppTable $repository */
         $repository = TableRegistry::get($modelName);
 
         collection($table->getHash())->each(function($row) use ($repository) {

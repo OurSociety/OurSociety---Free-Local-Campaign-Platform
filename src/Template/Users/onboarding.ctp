@@ -131,12 +131,9 @@
                     <div class="card-header">
                         <div class="row">
                             <h4 class="col mb-0"><?= __('Question #{number}', ['number' => 1]) ?></h4>
-                            <div class="col-auto small text-muted">
-                                Not sure?
-                                <?= $this->Html->link(__('Answer Later'), '#question-1', [
-                                    'aria-controls' => '#question-1',
-                                    'class' => ['js-question-link', 'text-info'],
-                                    'data-toggle' => 'collapse',
+                            <div class="col-auto text-muted">
+                                <?= $this->Html->link(__('Answer Later'), '#', [
+                                    'class' => ['btn', 'btn-link', 'text-secondary', 'disabled', 'p-0'],
                                 ]) ?>
                             </div>
                         </div>

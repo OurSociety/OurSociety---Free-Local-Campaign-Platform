@@ -10,9 +10,9 @@ class PublicSearchFinder extends Finder
 {
     public function __invoke(Query $query, array $options = []): Query
     {
-        $pathwayPoliticians = $query->find('isPathwayPolitician');
+        $communityContributors = $query->find('isCommunityContributor');
         $politicians = $query->find('isPolitician');
 
-        return $pathwayPoliticians->union($politicians);
+        return $communityContributors->union($politicians);
     }
 }

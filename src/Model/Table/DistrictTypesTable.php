@@ -12,11 +12,6 @@ use Cake\ORM\Query;
  */
 class DistrictTypesTable extends AppTable
 {
-    public static function instance(?string $alias = null, ?array $options = []): self
-    {
-        return parent::instance($alias, $options);
-    }
-
     /**
      * {@inheritdoc}
      */

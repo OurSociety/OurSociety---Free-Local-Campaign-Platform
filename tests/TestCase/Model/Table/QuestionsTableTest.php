@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Model\Table;
 
-use Cake\ORM\Table;
 use Cake\Utility\Text;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\Question;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\QuestionsTable;
-use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\Test\Fixture\UsersFixture;
 
 /**
@@ -18,16 +17,6 @@ use OurSociety\Test\Fixture\UsersFixture;
  */
 class QuestionsTableTest extends AppTableTest
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @return QuestionsTable
-     */
-    protected static function instance(): Table
-    {
-        return QuestionsTable::instance();
-    }
-
     /**
      * Test initialize method
      *
@@ -61,7 +50,7 @@ class QuestionsTableTest extends AppTableTest
         $table = $this->table;
 
         /** @var User $user */
-        $user = UsersTable::instance()->get(UsersFixture::CITIZEN_ID);
+        $user = TableRegistry::get('Users')->get(UsersFixture::CITIZEN_ID);
 
         $formEntitiesToModelData = function (Question $question): array {
             return [

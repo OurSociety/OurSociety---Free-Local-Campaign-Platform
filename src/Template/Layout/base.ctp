@@ -4,7 +4,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html lang="<?= Locale::getPrimaryLanguage(\Cake\I18n\I18n::locale()) ?>">
+<html lang="<?= Locale::getPrimaryLanguage(\Cake\I18n\I18n::getLocale()) ?>">
 <head>
     <?= $this->Html->charset(); ?>
     <title><?= $this->get('title', 'OurSociety') ?></title>

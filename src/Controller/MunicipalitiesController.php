@@ -4,12 +4,11 @@ declare(strict_types=1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LogLevel;
+use RuntimeException;
 
 /**
  * Municipalities Controller
@@ -24,9 +23,12 @@ class MunicipalitiesController extends CrudController
 
         $this->modelClass = 'ElectoralDistricts';
 
+        $allowedActions = ['articles'];
         if ($this->request->getParam('action') === 'view' && $this->request->getParam('municipality') !== false) {
-            $this->Auth->allow(['view']);
+            $allowedActions[] = 'view';
         }
+
+        $this->Auth->allow($allowedActions);
     }
 
     /**
@@ -107,7 +109,7 @@ class MunicipalitiesController extends CrudController
         $user = $this->getCurrentUser();
 
         if ($user === null) {
-            throw new \RuntimeException('Guests should not be able to access this method.');
+            throw new RuntimeException('Guests should not be able to access this method.');
         }
 
         return $this->redirect($user->getMunicipalityRoute());

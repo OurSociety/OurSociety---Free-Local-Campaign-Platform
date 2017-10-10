@@ -5,6 +5,8 @@ use OurSociety\Controller\AppController;
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The user entity.
  */
+
+$this->set('title', 'OurSociety - Sign In');
 ?>
 
 <div class="row">
