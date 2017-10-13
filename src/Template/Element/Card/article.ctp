@@ -7,10 +7,7 @@
 
 <div class="card<?= $article->is_example ? ' example' : null ?>">
 
-    <?= $this->Html->icon(
-        $article->aspect ? $article->aspect->slug : 'government-operation-politics',
-        ['iconSet' => 'topic', 'style' => 'opacity: .05', 'height' => '275']
-    ) ?>
+    <?= $article->renderAspectIcon($this, ['style' => 'opacity: .05', 'height' => '275']) ?>
 
     <div class="card-img-overlay text-center">
         <h5 class="card-title">
@@ -18,12 +15,10 @@
         </h5>
 
         <h6 class="card-subtitle mb-2 text-muted">
-            <?= $article->article_type
-                ? $article->article_type->name
-                : 'Miscellaneous' ?>
+            <?= $article->printArticleType() ?>
         </h6>
 
-        <?= \Cake\Utility\Text::truncateByWidth($article->body, 100, ['html' => true]) ?>
+        <?= $article->printTruncatedBody() ?>
 
         <p class="card-text">
             <small class="text-muted">

@@ -13,18 +13,14 @@
 
         <h6>
             <span class="text-muted">
-                <?= $article->article_type
-                    ? $article->article_type->name
-                    : 'Miscellaneous' ?>
-                &ndash;
-                <?= $this->Time->niceLong($article->published) ?>
+                <?= $article->printArticleType() ?> &ndash; <?= $this->Time->niceLong($article->published) ?>
             </span>
         </h6>
 
-        <?= \Cake\Utility\Text::truncateByWidth($article->body, 300, ['html' => true]) ?>
+        <p>
+            <?= $article->printTruncatedBody(300) ?>
+        </p>
     </div>
 
-    <?= $article->aspect
-        ? $this->Html->icon($article->aspect->slug, ['class' => ['d-flex', 'ml-3'], 'iconSet' => 'topic'])
-        : null ?>
+    <?= $article->renderAspectIcon($this, ['class' => ['d-flex', 'ml-3']]) ?>
 </div>

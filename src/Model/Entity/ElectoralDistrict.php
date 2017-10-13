@@ -58,6 +58,16 @@ class ElectoralDistrict extends AppEntity implements SearchableEntity
         return $this->id === $municipality->id;
     }
 
+    public function getArticlesRoute(): array
+    {
+        return ['_name' => 'municipality:articles', 'municipality' => $this->slug];
+    }
+
+    public function getBrowseRoute(): array
+    {
+        return ['_name' => 'district', 'district' => 'new-jersey'];
+    }
+
     public function getRoute(): array
     {
         if ($this->district_type->isMunicipality()) {

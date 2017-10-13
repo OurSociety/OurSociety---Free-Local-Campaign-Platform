@@ -40,7 +40,7 @@ class ArticlesTable extends AppTable
 
         $this->belongsTo('Aspects', ['className' => CategoriesTable::class]);
         $this->belongsTo('ArticleTypes');
-        $this->belongsTo('ElectoralDistricts')->setFinder('municipality')->setStrategy('select');
+        $this->belongsTo('ElectoralDistricts')->setFinder('isMunicipality')->setStrategy('select');
         $this->belongsTo('Politicians', ['className' => UsersTable::class]);
 
         $this->addBehavior(CounterCacheBehavior::class, [
@@ -74,8 +74,9 @@ class ArticlesTable extends AppTable
     public function getBySlug(string $slug, string $role = null): Article
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->find('forCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
-            ->where(['slug' => $slug])
+        return $this
+            ->find('forCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
+            ->find('slugged', ['slug' => $slug])
             ->firstOrFail();
     }
 

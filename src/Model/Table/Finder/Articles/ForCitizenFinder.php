@@ -17,6 +17,6 @@ class ForCitizenFinder extends Finder
             $query->find('approved')->find('published');
         }
 
-        return $query->find('latest');
+        return $query->find('latest')->contain('ElectoralDistricts')->orderDesc('published');
     }
 }

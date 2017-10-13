@@ -11,6 +11,7 @@ use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\Article;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\ArticlesTable;
+use OurSociety\Model\Table\ElectoralDistrictsTable;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -83,6 +84,11 @@ class ArticlesController extends CrudController
 
     public function view(string $politicianSlug, string $articleSlug): ?Response
     {
+        return $this->viewFromPoliticianProfile($politicianSlug, $articleSlug);
+    }
+
+    protected function viewFromPoliticianProfile(string $politicianSlug, string $articleSlug): ?Response
+    {
         /** @var UsersTable $users */
         $users = $this->loadModel('Users');
         /** @var ArticlesTable $articles */
@@ -102,6 +108,33 @@ class ArticlesController extends CrudController
             'politician' => $politician,
             'article' => $article,
         ]);
+
+        return null;
+    }
+
+    public function viewFromMunicipalityProfile(string $municipalitySlug, string $articleSlug): ?Response
+    {
+        /** @var ElectoralDistrictsTable $municipalities */
+        $municipalities = $this->loadModel('ElectoralDistricts');
+        /** @var ArticlesTable $articles */
+        $articles = $this->loadModel('Articles');
+
+        $municipality = $municipalities->getBySlug($municipalitySlug);
+        $article = $articles->getBySlug($articleSlug, $this->Auth->user()->role);
+
+        if ($article->approved === null || $article->published === null) {
+            return $this->redirect([
+                '_name' => 'politician:profile:article',
+                'article' => $article->slug,
+            ]);
+        }
+
+        $this->set([
+            'municipality' => $municipality,
+            'article' => $article,
+        ]);
+
+        $this->render('view_municipality');
 
         return null;
     }

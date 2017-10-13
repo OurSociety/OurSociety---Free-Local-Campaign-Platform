@@ -7,8 +7,6 @@ use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
-use OurSociety\Controller\Action\IndexAction;
-use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LogLevel;
@@ -29,8 +27,6 @@ class MunicipalitiesController extends CrudController
         if ($this->request->getParam('action') === 'view' && $this->request->getParam('municipality') !== false) {
             $this->Auth->allow(['view']);
         }
-
-        $this->Crud->mapAction('articles', IndexAction::class);
     }
 
     /**
@@ -63,48 +59,22 @@ class MunicipalitiesController extends CrudController
             return $this->redirectToUserMunicipality();
         }
 
-        if ($municipalitySlug === null) {
-            /** @var ElectoralDistrict $municipality */
-            $municipality = ElectoralDistrictsTable::instance()->find()->where([
-                'id' => $this->getCurrentUser()->electoral_district_id,
-            ])->firstOrFail();
-
-            $this->request->addParams(['pass' => [$municipality->slug]]);
-        }
-
-        $this->Crud->on('beforeFind', function (Event $event) use ($municipalitySlug) {
-            if ($municipalitySlug !== null) {
-                return;
-            }
-
-            $event->getSubject()->query = ElectoralDistrictsTable::instance()->find()->where([
-                'id' => $this->getCurrentUser()->electoral_district_id,
-            ]);
-        });
-
-        //$this->Crud->on('beforeRender', function (Event $event) {
-        //    /** @var ElectoralDistrict $electoralDistrict */
-        //    $electoralDistrict = $event->getSubject()->entity;
-        //    if ($electoralDistrict->isMunicipality()) {
-        //        //$this->viewBuilder()->setLayout('site');
-        //    }
-        //});
+        $this->Crud->action()->setConfig('findMethod', 'forMunicipalityProfile');
 
         return $this->Crud->execute();
     }
 
     public function articles(string $slug): ?Response
     {
+        /** @var ElectoralDistrictsTable $table */
+        $table = $this->loadModel();
+
         $this->set([
-            'municipality' => $this->loadModel()->find()->where(['slug' => $slug])->firstOrFail(),
+            'municipality' => $table->getBySlug($slug),
+            'articles' => $table->getArticlesBySlug($slug),
         ]);
 
-        $this->modelClass = 'Articles';
-        $this->Crud->action()->setConfig([
-            'viewVar' => 'articles',
-        ]);
-
-        return $this->Crud->execute();
+        return null;
     }
 
     public function edit(string $municipalitySlug): ?Response
@@ -136,18 +106,10 @@ class MunicipalitiesController extends CrudController
     {
         $user = $this->getCurrentUser();
 
-        try {
-            $slug = $user->getMunicipalitySlug();
-        } catch (NotFoundException $exception) {
-            $this->log(
-                'User tried to navigate to "My Municipality" page before onboarding so was redirected.',
-                LogLevel::DEBUG,
-                ['user' => $user]
-            );
-
-            return $this->redirect(['_name' => 'users:onboarding']);
+        if ($user === null) {
+            throw new \RuntimeException('Guests should not be able to access this method.');
         }
 
-        return $this->redirect(['action' => 'view', $slug]);
+        return $this->redirect($user->getMunicipalityRoute());
     }
 }

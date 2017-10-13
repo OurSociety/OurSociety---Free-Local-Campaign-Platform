@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Utility\Text;
 use Faker\Factory as Example;
 use OurSociety\View\AppView;
 use OurSociety\View\Scaffold\FieldList;
@@ -23,9 +24,11 @@ use OurSociety\View\Scaffold\FieldList;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \OurSociety\Model\Entity\User $politician
  * @property \OurSociety\Model\Entity\Category $aspect
  * @property \OurSociety\Model\Entity\ArticleType $article_type
+ * @property \OurSociety\Model\Entity\ElectoralDistrict $electoral_district
+ * @property \OurSociety\Model\Entity\User $politician
+ *
  * @property int $read_time Estimated read time (in minutes)
  * @property bool $is_example
  */
@@ -39,7 +42,7 @@ class Article extends AppEntity
             'name' => 'Example Article',
             'body' => '<p>' . implode($example->paragraphs(random_int(10, 50)), '</p><p>') . '</p>',
             'aspect' => Category::random(),
-            'article_type' => new Entity(['name' => ['Policy', 'Plan', 'Vision'][random_int(0, 2)]]),
+            'article_type' => ArticleType::example(),
             'politician' => User::example(),
             'is_example' => true,
         ];
@@ -57,6 +60,19 @@ class Article extends AppEntity
         ]);
     }
 
+    public function printArticleType(): string
+    {
+        return ($this->article_type ?? new ArticleType)->printName();
+    }
+
+    public function renderAspectIcon(AppView $view, array $options = null): string
+    {
+        $name = $this->aspect ? $this->aspect->slug : 'government-operation-politics';
+        $options = ($options ?? []) + ['iconSet' => 'topic'];
+
+        return $view->Html->icon($name, $options);
+    }
+
     public function renderMunicipalViewLink(AppView $view, array $options = null): string
     {
         $text = $options['text'] ?? $this->name;
@@ -66,8 +82,8 @@ class Article extends AppEntity
         }
 
         return $view->Html->link($text, [
-            '_name' => 'politician:article',
-            'politician' => $this->politician->slug,
+            '_name' => 'municipality:article',
+            'municipality' => $this->electoral_district->slug,
             'article' => $this->slug,
         ], $options ?? []);
     }
@@ -80,6 +96,14 @@ class Article extends AppEntity
             'action' => 'edit',
             $this->slug
         ], ['class' => 'btn btn-default']);
+    }
+
+    public function printTruncatedBody(int $length = null): string
+    {
+        $bodyHtml = $this->_properties['body'] ?? 'Error: article body not found!';
+        $bodyPlain = strip_tags(str_replace('<', ' <', $bodyHtml));
+
+        return Text::truncateByWidth($bodyPlain, $length ?? 100);
     }
 
     /**

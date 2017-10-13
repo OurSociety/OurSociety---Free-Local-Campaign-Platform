@@ -27,7 +27,7 @@ else:
     ]);
 endif;
 $links = $links->append([
-    ['title' => __('Municipalities'), 'url' => ['_name' => 'district', 'district' => 'new-jersey']],
+    ['title' => __('Municipalities'), 'url' => (new \OurSociety\Model\Entity\ElectoralDistrict)->getBrowseRoute()],
     ['title' => __('Representatives'), 'url' => ['_name' => 'politicians']],
 ]);
 ?>

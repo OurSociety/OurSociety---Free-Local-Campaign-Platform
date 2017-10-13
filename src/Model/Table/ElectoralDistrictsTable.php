@@ -5,20 +5,29 @@ namespace OurSociety\Model\Table;
 
 use ArrayObject;
 use Cake\Event\Event;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
+use Cake\ORM\Association;
 use Cake\ORM\Query;
 use OurSociety\Model\Behavior\SearchEngineBehavior;
+use OurSociety\Model\Entity\ElectoralDistrict;
 
 /**
  * ElectoralDistrictsTable.
  *
- * @property HasMany|ElectoralDistrictsTable $Children
- * @property HasMany|ContestsTable $Contests
- * @property HasMany|ElectionsTable $Elections
- * @property HasMany|OfficesTable $Offices
- * @property BelongsTo|DistrictTypesTable $DistrictTypes
- * @property BelongsTo|ElectoralDistrictsTable $Parents
+ * @property Association\BelongsTo|DistrictTypesTable $DistrictTypes
+ * @property Association\BelongsTo|ElectoralDistrictsTable $Counties
+ * @property Association\BelongsTo|ElectoralDistrictsTable $Parents
+ * @property Association\BelongsTo|ElectoralDistrictsTable $States
+ * @property Association\HasMany|ArticlesTable $Articles
+ * @property Association\HasMany|ElectoralDistrictsTable $Children
+ * @property Association\HasMany|ContestsTable $Contests
+ * @property Association\HasMany|UsersTable $ElectedOfficials
+ * @property Association\HasMany|ElectionsTable $Elections
+ * @property Association\HasMany|EventsTable $Events
+ * @property Association\HasMany|OfficesTable $Offices
+ * @property Association\HasMany|UsersTable $PathwayPoliticians
+ * @property Association\HasMany|PoliticianVideosTable $Videos
+ * @property Association\HasOne|UsersTable $Mayors
+ * @property Association\HasOne|ElectionsTable $UpcomingElections
  *
  * @method Query findByIdOcd(string $ocdId)
  */
@@ -46,8 +55,8 @@ class ElectoralDistrictsTable extends AppTable
         $this->hasMany('Offices');
         $this->hasMany('PathwayPoliticians', ['className' => UsersTable::class])->setFinder('isPathwayPolitician');
         $this->hasMany('Videos', ['className' => PoliticianVideosTable::class]);
-        $this->hasOne('UpcomingElections', ['className' => ElectionsTable::class])->setFinder('upcoming');
         $this->hasOne('Mayors', ['className' => UsersTable::class])->setFinder('isMayor')->setStrategy('select');
+        $this->hasOne('UpcomingElections', ['className' => ElectionsTable::class])->setFinder('upcoming');
     }
 
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary): void
@@ -65,6 +74,19 @@ class ElectoralDistrictsTable extends AppTable
         //}
     }
 
+    public function getArticlesBySlug(string $slug)
+    {
+        return $this->Articles->find('forCitizen')
+            ->matching('ElectoralDistricts', function (Query $query) use ($slug) {
+                return $query->find('slugged', ['slug' => $slug]);
+            });
+    }
+
+    public function getBySlug(string $slug): ElectoralDistrict
+    {
+        return $this->find('slugged', ['slug' => $slug])->firstOrFail();
+    }
+
     protected function getDefaultOrder(): array
     {
         return [
@@ -76,12 +98,5 @@ class ElectoralDistrictsTable extends AppTable
                 ]);
             }
         ];
-    }
-
-    protected function findMunicipality(Query $query, array $options): Query
-    {
-        return $query->matching('DistrictTypes', function (Query $query) {
-            return $query->where(['DistrictTypes.id_vip' => 'municipality']);
-        });
     }
 }

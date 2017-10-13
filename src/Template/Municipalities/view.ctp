@@ -5,7 +5,12 @@
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user, if any.
  */
 
-$this->Breadcrumbs->add('My Municipality')
+if ($currentUser->isInMunicipality($municipality)) {
+    $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
+} else {
+    $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());
+    $this->Breadcrumbs->add($municipality->name, $municipality->getRoute());
+}
 ?>
 
 <div class="row">

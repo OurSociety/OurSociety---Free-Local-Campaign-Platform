@@ -6,6 +6,7 @@ namespace OurSociety\Model\Entity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
@@ -203,15 +204,26 @@ class User extends AppEntity implements SearchableEntity
         return ['_name' => sprintf('%s:profile', $this->role)];
     }
 
-    public function getMunicipalitySlug(): string
+    public function getPublicProfileRoute(array $params = null): array
+    {
+        /** @noinspection DegradedSwitchInspection */
+        switch ($this->role) {
+            case 'politician':
+                return ['_name' => 'politician', 'politician' => $this->slug] + ($params ?? []);
+            default:
+                throw new NotImplementedException(sprintf('Public profile route for role "%s" not implemented', $this->role));
+        }
+    }
+
+    public function getMunicipalityRoute(): array
     {
         $municipality = $this->electoral_district;
 
         if ($municipality === null) {
-            throw new NotFoundException();
+            return ['_name' => 'users:onboarding'];
         }
 
-        return $municipality->slug;
+        return ['action' => 'view', $municipality->slug];
     }
 
     /**

@@ -157,8 +157,8 @@ class UsersTable extends AppTable
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this
+            ->find('slugged', ['slug' => $slug])
             ->find('politicianForCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
-            ->where(['slug' => $slug])
             ->firstOrFail();
     }
 

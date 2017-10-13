@@ -31,6 +31,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
     $routes->connect('/municipality/:municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/article/new', ['controller' => 'Articles', 'action' => 'add'], ['_name' => 'municipality:article:new', 'pass' => ['municipality']]);
+    $routes->connect('/municipality/:municipality/article/:article', ['controller' => 'Articles', 'action' => 'viewFromMunicipalityProfile'], ['_name' => 'municipality:article', 'pass' => ['municipality', 'article']]);
     $routes->connect('/municipality/:municipality/articles', ['controller' => 'Municipalities', 'action' => 'articles'], ['_name' => 'municipality:articles', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/edit', ['controller' => 'Municipalities', 'action' => 'edit'], ['_name' => 'municipality:edit', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/event/:event', ['controller' => 'Events', 'action' => 'view'], ['_name' => 'municipality:event', 'pass' => ['event', 'municipality']]);
