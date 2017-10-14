@@ -6,9 +6,9 @@ namespace OurSociety\Controller;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * PathwayPolitician Controller
+ * Community contributors controller
  */
-class PathwayPoliticiansController extends CrudController
+class CommunityContributorsController extends CrudController
 {
     public function initialize(): void
     {
@@ -20,7 +20,7 @@ class PathwayPoliticiansController extends CrudController
 
     public function view($citizenSlug): ?Response
     {
-        $this->Crud->action()->setConfig(['viewVar' => 'politician', 'findMethod' => 'pathwayPolitician']);
+        $this->Crud->action()->setConfig(['viewVar' => 'politician', 'findMethod' => 'communityContributor']);
 
         return $this->Crud->execute();
     }

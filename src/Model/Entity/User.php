@@ -5,15 +5,12 @@ namespace OurSociety\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\Time;
-use Cake\Network\Exception\NotFoundException;
-use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\Behavior\TimestampBehavior;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Faker\Factory as Example;
 use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
-use OurSociety\Model\Table\AppTable;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\View\AppView;
 use OurSociety\View\Cell\Profile\PictureCell;
 use OurSociety\View\Scaffold;
@@ -27,7 +24,8 @@ use OurSociety\View\Scaffold;
  * @property string $email_temp The temporary email address for imported candidates.
  * @property string $position The position for politicians.
  * @property int $electoral_district_id The electoral district ID.
- * @property int $incumbent True if currently in office, false otherwise.
+ * @property bool $incumbent True if currently in office, false otherwise.
+ * @property bool $community_contributor True if citizen is a community contributor, false otherwise.
  * @property int $zip The zip code.
  * @property string $phone The phone number.
  * @property string $password The password.
@@ -189,6 +187,16 @@ class User extends AppEntity implements SearchableEntity
         return ['_name' => 'billing'];
     }
 
+    public function getCommunityContributorProfileRoute(): array
+    {
+        return ['_name' => 'community-contributor', 'citizen' => $this->slug];
+    }
+
+    public function getExampleCommunityContributorProfileRoute(): array
+    {
+        return ['_name' => 'community-contributor', 'citizen' => 'ron-rivers'];
+    }
+
     public function getDashboardRoute(): array
     {
         return ['_name' => sprintf('%s:dashboard', $this->role)];
@@ -211,7 +219,7 @@ class User extends AppEntity implements SearchableEntity
             case 'politician':
                 return ['_name' => 'politician', 'politician' => $this->slug] + ($params ?? []);
             default:
-                throw new NotImplementedException(sprintf('Public profile route for role "%s" not implemented', $this->role));
+                return ['_name' => 'pathway-politician', 'citizen' => $this->slug] + ($params ?? []);
         }
     }
 
@@ -268,9 +276,11 @@ class User extends AppEntity implements SearchableEntity
         return $this->electoral_district->equals($municipality);
     }
 
-    public function isPathwayPolitician(): bool
+    public function isCommunityContributor(): bool
     {
-        return $this->isCitizen() && $this->pathway_politician;
+        $isCommunityContributor = $this->_properties['community_contributor'] ?? false;
+
+        return $this->isCitizen() && $isCommunityContributor;
     }
 
     public function isPolitician(): bool
@@ -285,20 +295,33 @@ class User extends AppEntity implements SearchableEntity
      */
     public function isTokenExpired(): bool
     {
-        $expires = $this->token_expires ?? Time::now();
+        if ($this->token_expires === null) {
+            return false;
+        }
 
-        return $expires->lte(Time::now());
+        return $this->token_expires->isPast();
     }
 
     public function levelUp(): void
     {
         $user = $this->withNextLevel();
 
-        /** @var AppTable $table */
         $table = TableRegistry::get('Users');
         $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
         $table->removeBehaviorIfLoaded(TimestampBehavior::class);
         $table->saveOrFail($user);
+    }
+
+    public function printName(): string
+    {
+        $isExample = $this->_properties['is_example'] ?? false;
+        $name = $this->_properties['name'] ?? __('Unnamed');
+
+        if ($isExample) {
+            return __('Your Name Here!');
+        }
+
+        return $name;
     }
 
     public function printPosition(): string
@@ -310,6 +333,11 @@ class User extends AppEntity implements SearchableEntity
         }
 
         return $position;
+    }
+
+    public function renderEmailLink(AppView $view): string
+    {
+        return $view->Html->email($this->email);
     }
 
     /**
@@ -342,7 +370,6 @@ class User extends AppEntity implements SearchableEntity
     {
         $user = $this->withLastSeen();
 
-        /** @var AppTable $table */
         $table = TableRegistry::get('Users');
         $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
         $table->removeBehaviorIfLoaded(TimestampBehavior::class);
@@ -407,7 +434,6 @@ class User extends AppEntity implements SearchableEntity
     {
         $user = $this->withPlan($planId);
 
-        /** @var AppTable $table */
         $table = TableRegistry::get('Users');
         $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
         $table->removeBehaviorIfLoaded(TimestampBehavior::class);
@@ -429,15 +455,12 @@ class User extends AppEntity implements SearchableEntity
      */
     protected function _setPassword(?string $password): ?string
     {
-        return mb_strlen($password) > 0
-            ? (new DefaultPasswordHasher)->hash($password)
-            : null;
+        return mb_strlen($password) > 0 ? (new DefaultPasswordHasher)->hash($password) : null;
     }
 
     private function withNextLevel()
     {
         $user = clone $this;
-
         ++$user->level;
 
         return $user;

@@ -9,7 +9,6 @@ use Cake\Http\Client;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use OurSociety\Model\Entity\ElectoralDistrict;
-use OurSociety\Model\Table\DistrictTypesTable;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use OurSociety\Model\Table\OfficesTable;
 use RuntimeException;
@@ -176,7 +175,7 @@ class ImportGoogleCivicDataTask extends Shell
                 return self::CODE_ERROR;
             }
 
-            $municipalityType = DistrictTypesTable::instance()->findByName('municipality')->firstOrFail();
+            $municipalityType = TableRegistry::get('DistrictTypes')->findByName('municipality')->firstOrFail();
             $parentDistrict = $table->findByOcdId('ocd-division/country:us/state:nj/sldu:' . $number)->firstOrFail();
 
             /** @var ElectoralDistrict $district */

@@ -1,0 +1,10 @@
+@import "~toastr/toastr.scss";
+
+.toast-top-right {
+    top: 12px + 64px;
+    right: 12px;
+}
+
+#toast-container > div {
+    opacity: 1;
+}

@@ -106,6 +106,11 @@ class Article extends AppEntity
         return Text::truncateByWidth($bodyPlain, $length ?? 100);
     }
 
+    public function renderProfileLink(AppView $view): string
+    {
+        return $view->Html->link($this->politician->name, $this->politician->getPublicProfileRoute());
+    }
+
     /**
      * Read time.
      *

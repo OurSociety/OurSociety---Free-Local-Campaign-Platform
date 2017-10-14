@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace OurSociety\Middleware;
 
 use Cake\Network\Session;
-use Cake\ORM\TableRegistry;
 use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\Shell\ScreenshotShell;
 use OurSociety\Test\Fixture\UsersFixture;
 use Psr\Http\Message\ResponseInterface;
@@ -40,7 +40,7 @@ class ScreenshotMiddleware
         $password = $matches[1];
 
         /** @var UsersTable $users */
-        $users = UsersTable::instance();
+        $users = TableRegistry::get('Users');
         $user = $users->find('auth')->where([
             'email' => UsersFixture::ADMIN_EMAIL,
             'password' => $password,

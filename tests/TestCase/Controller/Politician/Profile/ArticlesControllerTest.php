@@ -5,6 +5,7 @@ namespace OurSociety\Test\TestCase\Controller\Politician\Profile;
 
 use OurSociety\Model\Entity\Article;
 use OurSociety\Model\Table\ArticlesTable;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\Test\Fixture\ArticlesFixture;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\IntegrationTestCase;
@@ -107,6 +108,6 @@ class ArticlesControllerTest extends IntegrationTestCase
 
     private function table(): ArticlesTable
     {
-        return ArticlesTable::instance();
+        return TableRegistry::get('Articles');
     }
 }

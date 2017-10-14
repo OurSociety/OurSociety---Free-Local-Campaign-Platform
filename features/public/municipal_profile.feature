@@ -39,13 +39,13 @@ Feature: Public municipal profile
 #    And I can see a list of future events sorted by most imminent
 #    And How many to show?
 #    And I can click “See all events”
-#    And I can see {number} pathway politicians
+#    And I can see {number} community contributors
 #    And How many to show?
-#    And I can click on a pathway politician to see their user profile
-#    And I can (click/scroll/view a list)? to see the next page of pathway politicians
+#    And I can click on a community contributor to see their user profile
+#    And I can (click/scroll/view a list)? to see the next page of community contributors
 #    And (CB: This whole scenario could be split into multiple smaller scenarios)
 #
-#  Scenario: Citizens can create a pathway politician profile
+#  Scenario: Citizens can create a community contributor profile
 #    Given I am on “/citizen/dashboard” (?)
 #    And I see an opportunity to create content
 #    And I click the link and it takes me to profile I can fill in (similar to politician?)

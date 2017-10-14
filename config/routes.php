@@ -4,6 +4,7 @@ declare(strict_types=1);
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
+use OurSociety\Routing\Route\SluggedRoute;
 
 /**
  * Default route class used by scopes.
@@ -39,7 +40,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/municipality/:municipality/events', ['controller' => 'Events', 'action' => 'index'], ['_name' => 'municipality:events', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/events/add', ['controller' => 'Events', 'action' => 'add'], ['_name' => 'municipality:events:add', 'pass' => ['municipality']]);
     $routes->connect('/onboarding', ['controller' => 'Users', 'action' => 'onboarding'], ['_name' => 'users:onboarding']);
-    $routes->connect('/pathway-politician/:citizen', ['controller' => 'PathwayPoliticians', 'action' => 'view'], ['_name' => 'pathway-politician', 'pass' => ['citizen']]);
+    $routes->connect('/community-contributor/:citizen', ['controller' => 'CommunityContributors', 'action' => 'view'], ['_name' => 'community-contributor', 'pass' => ['citizen']]);
     $routes->connect('/place/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
     $routes->connect('/place/lookup', ['controller' => 'ElectoralDistricts', 'action' => 'lookup'], ['_name' => 'district:lookup']);
     $routes->connect('/plans', ['controller' => 'Plans', 'action' => 'index'], ['_name' => 'plans']);
@@ -58,6 +59,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
 
     $routes->redirect('/docs/onboarding', 'https://drive.google.com/file/d/0BwuM2zudya6ub0Y2Zm5meWdwN00/view');
+    $routes->redirect('/team', 'https://www.oursociety.org/faq/team/');
+    $routes->redirect('/purpose', 'https://www.oursociety.org/faq/purpose/');
 
     $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
 });
@@ -71,8 +74,8 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
     $routes->connect('/ballots', ['controller' => 'Ballot', 'action' => 'index'], ['_name' => 'ballots']);
     $routes->connect('/ballot/:election', ['controller' => 'Ballot', 'action' => 'view'], ['_name' => 'ballot', 'pass' => ['election']]);
-    $routes->connect('/profile', ['controller' => 'PathwayPoliticians', 'action' => 'view'], ['_name' => 'profile']);
-    $routes->connect('/profile/edit', ['controller' => 'PathwayPoliticians', 'action' => 'edit'], ['_name' => 'profile:edit']);
+    $routes->connect('/profile', ['controller' => 'CommunityContributors', 'action' => 'view'], ['_name' => 'profile']);
+    $routes->connect('/profile/edit', ['controller' => 'CommunityContributors', 'action' => 'edit'], ['_name' => 'profile:edit']);
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);
     $routes->connect('/your-voice', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->fallbacks(DashedRoute::class);
@@ -116,7 +119,7 @@ Router::prefix('admin', ['_namePrefix' => 'admin:'], function (RouteBuilder $rou
     $routes->connect('/users/switch', ['controller' => 'Users', 'action' => 'switch'], ['_name' => 'users:switch']);
     $routes->connect('/users/dashboard', ['controller' => 'Users', 'action' => 'dashboard'], ['_name' => 'users:dashboard']);
     $routes->connect('/aspects/users', ['controller' => 'AspectsUsers', 'action' => 'index']);
-    $routes->fallbacks(DashedRoute::class);
+    $routes->fallbacks(SluggedRoute::class);
 });
 
 /**

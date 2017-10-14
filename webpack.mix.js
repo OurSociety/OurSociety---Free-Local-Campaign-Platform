@@ -34,9 +34,14 @@ mix
     'jquery': ['$', 'window.jQuery', 'jQuery'], // auto-`require('jquery')` if these variables are used
     'popper.js/dist/umd/popper.js': ['Popper'],
     'moment': ['moment'],
+    'toastr': ['toastr'],
   })
   .extract(['bootstrap', 'bootstrap-sass', 'jdenticon/dist/jdenticon.js', 'jquery', 'popper.js', 'selectize', 'trumbowyg'])
   .options({
+    fileLoaderDirs: {
+      images: 'img',
+      fonts: 'fonts',
+    }
     // clearConsole: false
   })
   .setPublicPath('webroot')
@@ -140,16 +145,16 @@ if (process.env.npm_lifecycle_event === 'hot') {
 Mix.listen('configReady', (webpackConfig) => {
   webpackConfig.module.rules.forEach(rule => {
     // Modify rule for images:
-    if (String(rule.test) === String(/\.(png|jpe?g|gif)$/)) {
-      // Rename paths to "img" instead of "images":
-      rule.loaders[0].options.name = path => {
-        if (!/node_modules/.test(path)) {
-          return 'img/[name].[ext]?[hash]';
-        }
-
-        return 'img/vendor/' + path.replace(/.*(node_modules|images|image|img|assets)\//g, '') + '?[hash]';
-      };
-    }
+    // if (String(rule.test) === String(/\.(png|jpe?g|gif)$/)) {
+    //   // Rename paths to "img" instead of "images":
+    //   rule.loaders[0].options.name = path => {
+    //     if (!/node_modules/.test(path)) {
+    //       return 'img/[name].[ext]?[hash]';
+    //     }
+    //
+    //     return 'img/vendor/' + path.replace(/.*(node_modules|images|image|img|assets)\//g, '') + '?[hash]';
+    //   };
+    // }
 
     // Modify rule for fonts:
     if (String(rule.test) === String(/\.(woff2?|ttf|eot|svg|otf)$/)) {

@@ -8,3 +8,4 @@ import './_editor' // wysiwyg editor
 import './_video' // video carousel
 import './_onboarding' // onboarding dropdowns
 import './_search'
+import './_flash' // flash/toast notifications

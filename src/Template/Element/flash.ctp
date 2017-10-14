@@ -16,4 +16,16 @@ BUTTON;
 }
 ?>
 
-<?= $this->Html->div($class, $message, $params['attributes']) ?>
+<?=''// $this->Html->div($class, $message, $params['attributes']) ?>
+
+<?php
+$message = json_encode([
+    'message' => $message,
+    'style' => str_replace('alert-', '', array_pop($class)),
+]);
+$script = <<<JS
+    let message = 'Welcome to OurSociety!';
+    flash.push(${message})
+JS;
+$this->Html->scriptBlock($script, ['block' => true]);
+?>

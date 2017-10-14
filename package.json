@@ -37,6 +37,7 @@
     "svg-sprite-loader": "^3.0.6",
     "svgo-loader": "^1.2.1",
     "tempusdominus-bootstrap-4": "^5.0.0-alpha9",
+    "toastr": "^2.1.2",
     "trumbowyg": "^2.7.0",
     "vue": "^2.4.2",
     "vue-clip": "^1.0.0",

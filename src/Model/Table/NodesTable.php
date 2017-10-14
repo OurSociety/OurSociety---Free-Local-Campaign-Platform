@@ -38,8 +38,8 @@ class NodesTable extends AppTable
 
         $this->addBehavior('Tree');
 
-        $this->belongsTo('ParentNodes');
-        $this->hasMany('ChildNodes');
+        //$this->belongsTo('ParentNodes');
+        //$this->hasMany('ChildNodes');
     }
 
     /**
@@ -49,17 +49,13 @@ class NodesTable extends AppTable
     {
         return parent::validationDefault($validator)
             // table
-            ->notEmpty('table')
-            ->requirePresence('table', 'create')
-            ->scalar('table')
+            //->notEmpty('table')
+            //->requirePresence('table', 'create')
+            //->scalar('table')
             // foreign_key
             ->notEmpty('foreign_key')
             ->requirePresence('foreign_key', 'create')
-            ->uuid('foreign_key')
-            // level
-            ->integer('level')
-            ->notEmpty('level')
-            ->requirePresence('level', 'create');
+            ->uuid('foreign_key');
     }
 
     /**
@@ -67,7 +63,7 @@ class NodesTable extends AppTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        return parent::buildRules($rules)
-            ->add($rules->existsIn(['parent_id'], 'ParentNodes'));
+        return parent::buildRules($rules);
+            //->add($rules->existsIn(['parent_id'], 'Nodes'));
     }
 }

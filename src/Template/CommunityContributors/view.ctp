@@ -10,7 +10,7 @@ $this->Breadcrumbs->add(__('Community Contributor'));
 $this->Breadcrumbs->add($politician->name);
 ?>
 
-<?php $this->extend('/Common/PathwayPoliticians/view') ?>
+<?php $this->extend('/Common/CommunityContributors/view') ?>
 
 <?php $this->start('actions_heading') ?>
     <?= $this->Html->link(__('Your Profile'), ['_name' => 'citizen:profile:edit'], ['class' => 'btn btn-warning']) ?>

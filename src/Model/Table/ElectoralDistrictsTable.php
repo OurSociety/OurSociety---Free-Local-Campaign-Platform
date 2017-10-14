@@ -53,7 +53,7 @@ class ElectoralDistrictsTable extends AppTable
         $this->hasMany('Elections');
         $this->hasMany('Events');
         $this->hasMany('Offices');
-        $this->hasMany('PathwayPoliticians', ['className' => UsersTable::class])->setFinder('isPathwayPolitician');
+        $this->hasMany('CommunityContributors', ['className' => UsersTable::class])->setFinder('isCommunityContributor');
         $this->hasMany('Videos', ['className' => PoliticianVideosTable::class]);
         $this->hasOne('Mayors', ['className' => UsersTable::class])->setFinder('isMayor')->setStrategy('select');
         $this->hasOne('UpcomingElections', ['className' => ElectionsTable::class])->setFinder('upcoming');

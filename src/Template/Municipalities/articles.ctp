@@ -6,7 +6,9 @@
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
  */
 
-if ($currentUser->isInMunicipality($municipality)) {
+$this->set('title', sprintf('%s Articles', $municipality->name));
+
+if ($currentUser && $currentUser->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {
     $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());
@@ -18,7 +20,7 @@ $this->Breadcrumbs->add(__('Articles'));
 <h1>
     <?= __('Articles') ?>
     <small class="text-muted">
-        <?= __('Policies, Plans & Values') ?>
+        <?= __('Policies, Plans & Visions') ?>
     </small>
 </h1>
 

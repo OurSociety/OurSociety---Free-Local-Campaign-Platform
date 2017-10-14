@@ -6,6 +6,7 @@ namespace OurSociety\ORM;
 use Cake\Collection\Collection;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM as Cake;
+use OurSociety\Model\Table\AppTable;
 use \RuntimeException;
 
 class TableRegistry extends Cake\TableRegistry
@@ -30,12 +31,13 @@ class TableRegistry extends Cake\TableRegistry
         });
     }
 
-    public static function get($name, array $options = null)
+    public static function get($name, array $options = null): AppTable
     {
-        if (is_string($options['connection'])) {
+        if (isset($options['connection']) && is_string($options['connection'])) {
             $options['connection'] = ConnectionManager::get($options['connection']);
         }
 
-        return parent::get($name, $options);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return parent::get($name, $options ?? []);
     }
 }

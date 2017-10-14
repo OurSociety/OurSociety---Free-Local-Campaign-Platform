@@ -1,3 +1,17 @@
+// instantsearch() function without reference to the widgets or connectors
+import instantsearch from 'instantsearch.js/es';
+
+// import connectors individually
+// import {connectSearchBox} from 'instantsearch.js/es/connectors';
+
+// import widgets individually
+// import {searchBox} from 'instantsearch.js/es/widgets';
+
+// const search = instantsearch({ ... });
+
+// search.addWidget(searchBox({ ... }));
+// search.addWidget(connectSearchBox(function() { ... })({ ... }))
+
 // noinspection SpellCheckingInspection
 // import instantsearch from 'instantsearch.js';
 // import searchBox from 'instantsearch.js/es/widgets';

@@ -18,14 +18,14 @@ Feature: Admin can manage users
         Given I am logged in as an admin
         When I visit the user list page
         Then I should see the following records listed:
-            | Full Name           | Role       |
-            | Citizen 2           | citizen    |
-            | Citizen 3           | citizen    |
-            | Imported Politician | politician |
-            | John Doe            | politician |
-            | OurSociety Team     | admin      |
-            | Pathway Citizen     | citizen    |
-            | Ron Rivers          | citizen    |
+            | Full Name             | Role       |
+            | Citizen 2             | citizen    |
+            | Citizen 3             | citizen    |
+            | Imported Politician   | politician |
+            | John Doe              | politician |
+            | OurSociety Team       | admin      |
+            | Community Contributor | citizen    |
+            | Ron Rivers            | citizen    |
 
     Scenario: Delete user
         Given I am logged in as an admin

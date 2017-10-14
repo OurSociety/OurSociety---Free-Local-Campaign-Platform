@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace OurSociety\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\Network\Exception\BadRequestException;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\Action\DashboardAction;
 use OurSociety\Model\Entity\User;
@@ -99,7 +98,7 @@ class UsersController extends CrudController
                         'electoral_district_id',
                         'phone' => ['type' => 'phone'],
                         'picture' => ['type' => 'file'],
-                        'pathway_politician',
+                        'community_contributor',
                     ],
                     'Politician' => [
                         'address_1',

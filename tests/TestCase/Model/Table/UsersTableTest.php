@@ -19,9 +19,8 @@ class UsersTableTest extends AppTableTest
 
     public function testSave(): void
     {
-        $table = self::instance();
         /** @var User $user */
-        $user = $table->saveOrFail($table->newEntity([
+        $user = $this->table->saveOrFail($this->table->newEntity([
             'email' => 'test@example.com',
             'zip' => '07501',
             'password' => 'password',

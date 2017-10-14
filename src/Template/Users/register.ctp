@@ -3,10 +3,12 @@
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The user entity.
  */
+
+$this->set('title', 'Join OurSociety');
 ?>
 
 <div class="row">
-    <div class="col-md-6 p-5 bg-light">
+    <div class="col-md-6 p-5 os-bg-split-light">
         <h1 class="pb-3">
             <?= __('Register an account.') ?>
         </h1>
@@ -60,7 +62,7 @@
         </section>
     </div>
 
-    <div class="col-md-6 p-5 text-white" style="background-color: #871898">
+    <div class="col-md-6 p-5 text-white os-bg-split-dark">
         <h1 class="display-4 mb-5" style="font-weight: bold">
             <?= __('Our Purpose') ?>
         </h1>

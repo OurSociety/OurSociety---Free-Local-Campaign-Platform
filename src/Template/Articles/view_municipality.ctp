@@ -8,7 +8,7 @@
 
 $this->extend('/Common/Articles/view');
 
-if ($currentUser->isInMunicipality($municipality)) {
+if ($currentUser && $currentUser->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {
     $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());

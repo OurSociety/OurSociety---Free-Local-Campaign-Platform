@@ -10,12 +10,12 @@ $this->Breadcrumbs->add(__('Community Contributor'));
 $this->Breadcrumbs->add(__('My Profile'));
 ?>
 
-<?php $this->extend('/Common/PathwayPoliticians/view') ?>
+<?php $this->extend('/Common/CommunityContributors/view') ?>
 
 <?php $this->start('actions_heading') ?>
     <div class="btn-group">
         <?= $this->Html->link(__('Getting Started'), '/docs/onboarding', ['class' => 'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Example Profile'), ['_name' => 'pathway-politician', 'citizen' => 'ron-rivers'], ['class' => 'btn btn-info']) ?>
+        <?= $this->Html->link(__('Example Profile'), $currentUser->getExampleCommunityContributorProfileRoute(), ['class' => 'btn btn-info']) ?>
         <?= $this->Html->link(__('Your Profile'), ['_name' => 'citizen:profile:edit'], ['class' => 'btn btn-warning']) ?>
     </div>
 <?php $this->end() ?>
