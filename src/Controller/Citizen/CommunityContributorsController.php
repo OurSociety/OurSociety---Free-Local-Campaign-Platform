@@ -5,7 +5,6 @@ namespace OurSociety\Controller\Citizen;
 
 use Cake\Event\Event;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -22,8 +21,7 @@ class CommunityContributorsController extends CrudController
 
     public function view(): ?Response
     {
-        $slug = $this->getCurrentUserSlug();
-        $this->setRequestPassedParam($slug);
+        $this->setSlugParam();
 
         $this->Crud->action()->setConfig([
             'viewVar' => 'politician',
@@ -36,19 +34,18 @@ class CommunityContributorsController extends CrudController
     public function edit(string $slug = null): ?Response
     {
         if ($slug === null) {
-            $slug = $this->getCurrentUserSlug();
-            $this->setRequestPassedParam($slug);
+            $this->setSlugParam();
         }
 
         //$this->Crud->on('beforeFind', function (Event $event) {
         //    /** @var Query $query */
         //    $query = $event->getSubject()->query;
-        //    $query->where(['Users.id' => $this->Auth->user('id')], [], true);
+        //    $query->where(['Users.id' => $this->getIdentity()->id], [], true);
         //});
 
         $this->Crud->on('afterSave', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->Auth->refreshSession();
+                $this->refreshIdentity();
             }
         });
 
@@ -60,23 +57,14 @@ class CommunityContributorsController extends CrudController
     }
 
     /**
-     * Get slug of the currently logged in user.
+     * Set slug param.
      *
-     * @return string
-     */
-    private function getCurrentUserSlug(): string
-    {
-        return $this->getCurrentUser()->slug;
-    }
-
-    /**
-     * Set the passed param for current request.
+     * Sets the first passed parameter to the slug of the authenticated user.
      *
-     * @param string $first The first passed param.
      * @return void
      */
-    private function setRequestPassedParam(string $first): void
+    private function setSlugParam(): void
     {
-        $this->request->addParams(['pass' => [$first]]);
+        $this->request->addParams(['pass' => [$this->getIdentity()->slug]]);
     }
 }

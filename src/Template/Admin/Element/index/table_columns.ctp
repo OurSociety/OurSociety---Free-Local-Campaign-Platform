@@ -1,7 +1,7 @@
 <?php
 
 use OurSociety\ORM\TableRegistry;
-use OurSociety\View\Scaffold\FieldList;
+use OurSociety\View\Component\Field\FieldList;
 
 /**
  * @var \OurSociety\View\AppView $this

@@ -18,4 +18,9 @@ class OfficeType extends AppEntity
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return TableRegistry::get('OfficeTypes')->find()->order('RAND()')->firstOrFail();
     }
+
+    public function getIcon(): string
+    {
+        return 'building-o';
+    }
 }

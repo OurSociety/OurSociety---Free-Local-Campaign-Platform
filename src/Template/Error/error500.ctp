@@ -4,45 +4,44 @@
  * @var string $url The URL of the page.
  * @var \OurSociety\View\AppView $this
  */
+
 use Cake\Core\Configure;
-use Cake\Error\Debugger;
 
-$this->layout = 'error';
+//$this->layout = 'error';
+if (Configure::read('debug') === true) {
+    echo $this->element('Error/debug', compact('code', 'message', 'url'));
 
-if (Configure::read('debug')):
-    $this->layout = 'dev_error';
+    return;
+}
 
-    $this->assign('title', $message);
-    $this->assign('templateName', 'error500.ctp');
-
-    $this->start('file');
+$links = [
+    'url' => $this->Html->link($this->Url->build($url, true), $url),
+    'contact' => $this->Html->link(__('contact'), ['_name' => 'contact']),
+    'refreshing' => $this->Html->link(__('refreshing'), 'javascript:window.location.reload(true)'),
+    'homepage' => $this->Html->link(__('homepage'), ['_name' => 'home']),
+];
 ?>
-<?php if (!empty($error->queryString)) : ?>
-    <p class="notice">
-        <strong>SQL Query: </strong>
-        <?= h($error->queryString) ?>
-    </p>
-<?php endif; ?>
-<?php if (!empty($error->params)) : ?>
-        <strong>SQL Query Params: </strong>
-        <?php Debugger::dump($error->params) ?>
-<?php endif; ?>
-<?php if ($error instanceof Error) : ?>
-        <strong>Error in: </strong>
-        <?= sprintf('%s, line %s', str_replace(ROOT, 'ROOT', $error->getFile()), $error->getLine()) ?>
-<?php endif; ?>
-<?php
-    echo $this->element('auto_table_warning');
 
-    if (extension_loaded('xdebug')):
-        xdebug_print_function_stack();
-    endif;
+<div class="jumbotron">
+    <div class="container">
 
-    $this->end();
-endif;
-?>
-<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= h($message) ?>
-</p>
+        <h1><?= __('Sorry!') ?></h1>
+
+        <?php if ($message !== 'An Internal Error Has Occurred.') : ?>
+
+            <p><?= $message ?></p>
+
+        <?php else: ?>
+
+            <p><?= __('Something went terribly wrong on {url}.', $links) ?></p>
+
+            <p>
+                <?= __('We track these errors automatically, but if the problem persists feel free to {contact} us.', $links) ?>
+            </p>
+
+            <p><?= __('In the meantime, try {refreshing} or going to the {homepage}.', $links) ?></p>
+
+        <?php endif; ?>
+
+    </div>
+</div>

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -7,7 +7,6 @@ use Cake\Datasource\EntityInterface as Entity;
 use Cake\Localized\Validation\UsValidation;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use Cake\Utility\Text;
 use Cake\Validation as Cake;
@@ -16,6 +15,7 @@ use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Behavior\SearchEngineBehavior;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Entity\ValueMatch;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -25,7 +25,9 @@ use OurSociety\Validation\Validator as AppValidator;
  * @property CategoriesTable|Association\BelongsToMany $Categories
  * @property ValueMatchesTable|Association\HasMany $ValueMatches
  *
- * @method User[]|ResultSet findByRole(string $role)
+ * @method Query findById(string $name)
+ * @method Query findByName(string $name)
+ * @method Query findByRole(string $role)
  * @method User get($primaryKey, $options = [])
  * @method User newEntity($data = null, array $options = [])
  * @method User[] newEntities(array $data, array $options = [])
@@ -39,9 +41,17 @@ class UsersTable extends AppTable
 {
     use Users\SearchConfiguration;
 
-    public const LIMIT_DASHBOARD = 5;
-    public const ERROR_ROLE_NOT_IN_LIST = 'The only valid roles are "{0}".';
     public const ERROR_EMAIL_UNIQUE = 'This email address is already in use. Each account must have a unique email address.';
+
+    public const ERROR_ROLE_NOT_IN_LIST = 'The only valid roles are "{0}".';
+
+    public const LIMIT_DASHBOARD = 5;
+
+    public static function instance(array $options = null): self
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return TableRegistry::get('Users', $options ?? []);
+    }
 
     /**
      * {@inheritdoc}
@@ -68,7 +78,7 @@ class UsersTable extends AppTable
             'ElectoralDistricts' => [
                 'citizen_count' => ['finder' => 'isCitizen'],
                 'politician_count' => ['finder' => 'isPolitician'],
-            ]
+            ],
         ]);
         //$this->addBehavior('CakeDC/Enum.Enum', ['lists' => ['role' => ['strategy' => 'const', 'prefix' => 'ROLE']]]);
         $this->addBehavior(UploadBehavior::class, [
@@ -83,7 +93,7 @@ class UsersTable extends AppTable
                     }
 
                     return $filename;
-                }
+                },
             ],
         ]);
     }
@@ -96,9 +106,9 @@ class UsersTable extends AppTable
     public function validationDefault(Cake\Validator $validator): AppValidator
     {
         return parent::validationDefault($validator)
-            ->setProvider('default', new Cake\Validation) // TODO: Find out why our validation class breaks email validation.
+            ->setProvider('default', new Cake\Validation)// TODO: Find out why our validation class breaks email validation.
             // email
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => __(self::ERROR_EMAIL_UNIQUE)])
+            //->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => __(self::ERROR_EMAIL_UNIQUE)]) // TODO: Breaks reset password action
             //->email('email', false, 'Please enter a valid email address')
             ->notBlank('email')
             ->requirePresence('email', 'create')
@@ -106,7 +116,7 @@ class UsersTable extends AppTable
             ->setProvider('us', UsValidation::class)
             ->add('zip', 'zip', ['rule' => 'postal', 'provider' => 'us', 'message' => 'Please enter a valid ZIP code (e.g. 12345 or 12345-6789)'])
             // password
-            ->minLength('password', 4) // TODO: This is after hashing :(
+            ->minLength('password', 4)// TODO: This is after hashing :(
             ->requirePresence('password', 'create')
             // name
             ->notBlank('name')
@@ -153,7 +163,7 @@ class UsersTable extends AppTable
             ->order(['Users.role' => 'ASC', 'Users.name' => 'ASC']);
     }
 
-    public function getBySlug(string $slug, string $role = null): User
+    public function getBySlug(string $slug, string $role = null): Entity
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -10,7 +10,6 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior as Cake;
 use Cake\ORM\Exception\PersistenceFailedException;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior as App;
 use OurSociety\Validation\Validator as AppValidator;
@@ -58,8 +57,7 @@ abstract class AppTable extends Table
         $validator
             // id
             ->uuid('id')
-            ->allowEmpty('id', 'create')
-        ;
+            ->allowEmpty('id', 'create');
 
 
         if ($this->hasSlugField()) {
@@ -121,5 +119,10 @@ abstract class AppTable extends Table
         }
 
         return $this->{$saveMethod}($entity, $options);
+    }
+
+    public function getBySlug(string $slug): Entity
+    {
+        return $this->find('slugged', ['slug' => $slug])->firstOrFail();
     }
 }

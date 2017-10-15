@@ -7,7 +7,6 @@ use OurSociety\Controller\AppController;
 use OurSociety\Model\Entity\Contest;
 use OurSociety\Model\Entity\Election;
 use OurSociety\Model\Entity\ElectoralDistrict;
-use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\ElectionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -18,8 +17,7 @@ class BallotController extends AppController
 {
     public function index(): ?Response
     {
-        /** @var User $user */
-        $user = $this->Auth->user();
+        $user = $this->getIdentity();
 
         $electoralDistrictsTable = $this->loadModel('ElectoralDistricts');
 
@@ -51,8 +49,7 @@ class BallotController extends AppController
     {
         $this->viewBuilder()->setLayout('site'); // TODO: Remove when default layout is Bootstrap 4.
 
-        /** @var User $user */
-        $user = $this->Auth->user();
+        $user = $this->getIdentity();
 
         /** @var ElectionsTable $electionsTable */
         $electionsTable = $this->loadModel('Elections');
@@ -74,7 +71,7 @@ class BallotController extends AppController
                             'Politician',
                         ],
                         'Offices',
-                    ]
+                    ],
                 ])
                 ->firstOrFail();
 

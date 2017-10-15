@@ -1,7 +1,6 @@
 <?php
-namespace OurSociety\Model\Entity;
 
-use Cake\ORM\Entity;
+namespace OurSociety\Model\Entity;
 
 /**
  * Submission Entity
@@ -15,7 +14,7 @@ use Cake\ORM\Entity;
  *
  * @property \OurSociety\Model\Entity\User $user
  */
-class Submission extends Entity
+class Submission extends AppEntity
 {
 
     /**
@@ -33,6 +32,11 @@ class Submission extends Entity
         'done' => true,
         'created' => true,
         'modified' => true,
-        'user' => true
+        'user' => true,
     ];
+
+    public function getIcon(): string
+    {
+        return 'question-circle-o';
+    }
 }

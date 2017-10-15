@@ -16,12 +16,13 @@
     .aa-input-search {
         width: 300px;
         padding: 12px 28px 12px 12px;
-        border: 2px solid #e4e4e4;
+        /*border: 2px solid #e4e4e4;*/
+        border: 0;
         border-radius: 4px;
         -webkit-transition: .2s;
         transition: .2s;
         font-family: "Montserrat", sans-serif;
-        box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);
+        /*box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);*/
         font-size: 11px;
         box-sizing: border-box;
         color: #333;
@@ -38,7 +39,7 @@
     .aa-input-search:focus {
         outline: 0;
         border-color: #3a96cf;
-        box-shadow: 4px 4px 0 rgba(58, 150, 207, 0.1);
+        /*box-shadow: 4px 4px 0 rgba(58, 150, 207, 0.1);*/
     }
 
     .aa-input-icon {
@@ -64,7 +65,7 @@
         font-family: "Montserrat", sans-serif;
         width: 300px;
         margin-top: 10px;
-        box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);
+        /*box-shadow: 4px 4px 0 rgba(241, 241, 241, 0.35);*/
         font-size: 11px;
         border-radius: 4px;
         box-sizing: border-box;

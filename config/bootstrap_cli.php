@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;

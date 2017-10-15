@@ -121,9 +121,7 @@ class ViewListener extends CrudView\ViewListener
      */
     protected function _getUtilityNavigation(): array
     {
-        $currentUser = $this->_controller()->Auth->user();
-
-        if (!$currentUser) {
+        if ($this->_request()->getAttribute('identity') !== null) {
             return [];
         }
 

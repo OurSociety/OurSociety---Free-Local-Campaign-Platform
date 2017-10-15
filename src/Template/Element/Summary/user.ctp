@@ -8,13 +8,7 @@
 <div class="media pb-3<?= $user->is_example === true ? ' example' : '' ?>">
     <div class="d-flex mr-3 align-self-center">
         <div style="height: 100px; width: 100px;">
-            <?php if ($user->picture !== null): ?>
-                <div class="img-thumbnail rounded-circle">
-                    <div class="circle-avatar" style="background-image: url(<?= $user->picture ?>)"></div>
-                </div>
-            <?php else: ?>
-                <?= $this->Html->jdenticon($user->id, ['class' => ['img-thumbnail', 'rounded-circle']]) ?>
-            <?php endif ?>
+            <?= $user->renderProfilePicture($this) ?>
         </div>
     </div>
     <div class="media-body align-self-center">

@@ -190,7 +190,7 @@ foreach (['time', 'date', 'datetime', 'timestamp'] as $name) {
 /*
  * Disable Kint debugger in production.
  */
-Kint::$enabled_mode = Configure::read('debug');
+Kint::settings(['enabled_mode' => Configure::read('debug')]);
 
 /*
  * Only try to load DebugKit in development mode
@@ -211,6 +211,7 @@ Plugin::load('Crys/CounterCacheShell');
 Plugin::load('CsvView');
 Plugin::load('Gourmet/KnpMenu');
 Plugin::load('Josegonzalez/Upload');
+Plugin::load('LilHermit/Bootstrap4', ['bootstrap' => true]);
 Plugin::load('Muffin/Orderly');
 Plugin::load('Muffin/Slug');
 Plugin::load('Search');

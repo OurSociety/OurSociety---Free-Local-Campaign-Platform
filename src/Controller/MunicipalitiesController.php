@@ -8,7 +8,6 @@ use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
-use RuntimeException;
 
 /**
  * Municipalities Controller
@@ -22,13 +21,6 @@ class MunicipalitiesController extends CrudController
         parent::initialize();
 
         $this->modelClass = 'ElectoralDistricts';
-
-        $allowedActions = ['articles'];
-        if ($this->request->getParam('action') === 'view' && $this->request->getParam('municipality') !== false) {
-            $allowedActions[] = 'view';
-        }
-
-        $this->Auth->allow($allowedActions);
     }
 
     /**
@@ -37,6 +29,10 @@ class MunicipalitiesController extends CrudController
      */
     public function lookup(): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->Crud->addListener('api', ApiListener::class);
 
         $this->Crud->on('beforeLookup', function (Event $event) {
@@ -57,6 +53,10 @@ class MunicipalitiesController extends CrudController
 
     public function view(?string $municipalitySlug = null): ?Response
     {
+        if ($this->hasIdentity() === false && $this->request->getParam('municipality') === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         if ($municipalitySlug === null) {
             return $this->redirectToUserMunicipality();
         }
@@ -81,6 +81,10 @@ class MunicipalitiesController extends CrudController
 
     public function edit(string $municipalitySlug): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->Crud->action()->setConfig([
             'relatedModels' => false,
             'scaffold' => [
@@ -88,7 +92,7 @@ class MunicipalitiesController extends CrudController
                 'form_submit_button_text' => 'Update Town Information',
                 'form_submit_extra_buttons' => false,
                 'fields' => [
-                    'description' => ['placeholder' => 'Town Information', 'label' => false]
+                    'description' => ['placeholder' => 'Town Information', 'label' => false],
                 ],
             ],
         ]);
@@ -106,12 +110,10 @@ class MunicipalitiesController extends CrudController
 
     private function redirectToUserMunicipality(): Response
     {
-        $user = $this->getCurrentUser();
-
-        if ($user === null) {
-            throw new RuntimeException('Guests should not be able to access this method.');
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
         }
 
-        return $this->redirect($user->getMunicipalityRoute());
+        return $this->redirect($this->getIdentity()->getMunicipalityRoute());
     }
 }

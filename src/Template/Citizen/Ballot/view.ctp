@@ -5,15 +5,13 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Contest[] $contests
  * @var \OurSociety\Model\Entity\Election $election
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  */
-?>
 
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Citizen Dashboard'), ['_name' => 'citizen:dashboard']) ?></li>
-    <li>Virtual Ballot</li>
-    <li><?= $election->name ?></li>
-</ol>
+$this->Breadcrumbs->add(__('Citizen Dashboard'), ['_name' => 'citizen:dashboard']);
+$this->Breadcrumbs->add(__('Virtual Ballot'));
+$this->Breadcrumbs->add($election->name);
+?>
 
 <h1>
     <?= __('Virtual Ballot') ?>
@@ -21,7 +19,7 @@
 
 <p>
     <?= __('Below is a "virtual" ballot displaying your candidates in the {electoral_district} area in the upcoming {election} election.', [
-        'electoral_district' => $currentUser->electoral_district->renderLink($this),
+        'electoral_district' => $identity->electoral_district->renderLink($this),
         'election' => $election->renderLink($this),
     ]) ?>
 </p>

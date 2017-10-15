@@ -6,9 +6,14 @@ namespace OurSociety\Controller;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Mailer\MailerAwareTrait;
-use Crud\Action as Crud;
-use CrudUsers\Action as CrudUsers;
-use OurSociety\Controller\Action;
+use Crud\Action\EditAction;
+use Crud\Action\ViewAction;
+use CrudUsers\Action\ForgotPasswordAction;
+use CrudUsers\Action\LogoutAction;
+use CrudUsers\Action\ResetPasswordAction;
+use CrudUsers\Action\VerifyAction;
+use OurSociety\Controller\Action\LoginAction;
+use OurSociety\Controller\Action\RegisterAction;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -16,17 +21,25 @@ use Psr\Http\Message\ResponseInterface as Response;
 /**
  * @property UsersTable $Users
  */
-class UsersController extends CrudController
+class UsersController extends AppController
 {
     use MailerAwareTrait;
 
-    const MESSAGE_FORGOT_SUCCESS = 'Please check your email for recovery instructions.';
     const MESSAGE_FORGOT_ERROR = 'Sorry, an account with that email address could not be found.';
-    const MESSAGE_LOGIN_SUCCESS = 'Welcome to OurSociety!';
-    const MESSAGE_LOGIN_ERROR = 'Sorry, that email and password combination was not recognized.';
-    const MESSAGE_LOGOUT_SUCCESS = 'You have been logged out.';
-    const MESSAGE_RESET_SUCCESS = 'Password updated successfully';
+
+    const MESSAGE_FORGOT_SUCCESS = 'Please check your email for recovery instructions.';
+
+    //const MESSAGE_LOGIN_ERROR = 'Sorry, that email and password combination was not recognized.';
+    //
+    //const MESSAGE_LOGIN_SUCCESS = 'Welcome to OurSociety!';
+    //
+    //const MESSAGE_REMEMBER_ME_SUCCESS = 'Welcome back, {name}!';
+
+    const MESSAGE_LOGOUT_SUCCESS = 'You have been signed out.';
+
     const MESSAGE_RESET_ERROR = 'Could not update the account';
+
+    const MESSAGE_RESET_SUCCESS = 'Password updated successfully';
 
     /**
      * {@inheritdoc}
@@ -38,30 +51,22 @@ class UsersController extends CrudController
     {
         parent::initialize();
 
+        if ($this->Crud === false) {
+            return;
+        }
+
         collection([
-            'forgot' => CrudUsers\ForgotPasswordAction::class,
-            'login' => Action\LoginAction::class,
-            'logout' => CrudUsers\LogoutAction::class,
-            'onboarding' => Crud\EditAction::class,
-            'profile' => Crud\ViewAction::class,
-            'register' => Action\RegisterAction::class,
-            'reset' => CrudUsers\ResetPasswordAction::class,
-            'verify' => CrudUsers\VerifyAction::class,
+            'forgot' => ForgotPasswordAction::class,
+            'login' => LoginAction::class,
+            'logout' => LogoutAction::class,
+            'onboarding' => EditAction::class,
+            'profile' => ViewAction::class,
+            'register' => RegisterAction::class,
+            'reset' => ResetPasswordAction::class,
+            'verify' => VerifyAction::class,
         ])->each(function (string $actionClass, string $actionName) {
             $this->Crud->mapAction($actionName, $actionClass);
         });
-
-        $this->Auth->allow(['forgot', 'login', 'logout', 'register', 'reset', 'verify']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function beforeFilter(Event $event): ?Response
-    {
-        $this->config('scaffold.sidebar_navigation', false);
-
-        return parent::beforeFilter($event);
     }
 
     /**
@@ -70,8 +75,12 @@ class UsersController extends CrudController
      */
     public function edit(string $slug = null): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         if ($slug === null) {
-            $slug = $this->getCurrentUser()->slug;
+            $slug = $this->getIdentity()->slug;
             $this->request->addParams(['pass' => [$slug]]);
         }
 
@@ -105,58 +114,16 @@ class UsersController extends CrudController
     }
 
     /**
-     * @route GET /login
-     * @routeName users:login
-     */
-    public function login(): ?Response
-    {
-        $this->config('messages.success.text', __(self::MESSAGE_LOGIN_SUCCESS));
-        $this->config('messages.error.text', __(self::MESSAGE_LOGIN_ERROR));
-
-        $this->Crud->on('afterLogin', function (Event $event) {
-            if ($event->getSubject()->success === true) {
-                /** @var User $user */
-                $user = $event->getSubject()->user;
-
-                // Last seen time
-                $user->seen();
-
-                // Set redirect URL to correct dashboard
-                $routeName = 'users:onboarding';
-                if ($user->hasOnboarded()) {
-                    $routeName = sprintf('%s:dashboard', $user->role);
-                }
-                $this->Auth->setConfig('loginRedirect', ['_name' => $routeName]);
-
-
-                // Remember me cookie
-                if ((bool)$this->request->getData(self::COOKIE_NAME_REMEMBER_ME) === true) {
-                    $this->Cookie->configKey(self::COOKIE_NAME_REMEMBER_ME, [
-                        'expires' => '+1 year',
-                        'httpOnly' => true,
-                    ]);
-                    $this->Cookie->write(self::COOKIE_NAME_REMEMBER_ME, [
-                        'email' => $this->request->getData('email'),
-                        'password' => $this->request->getData('password'),
-                    ]);
-                }
-            }
-        });
-
-        $this->set(['containerClass' => 'container-fluid']);
-
-        return $this->Crud->execute();
-    }
-
-    /**
-     * @route GET /logout
+     * @route GET /sign-out
      * @routeName users:logout
      */
     public function logout(): ?Response
     {
-        $this->config('messages.success.text', __(self::MESSAGE_LOGOUT_SUCCESS));
+        $this->deleteRememberMeCookie();
+        $this->Authentication->logout();
+        $this->Flash->info(__(self::MESSAGE_LOGOUT_SUCCESS));
 
-        return $this->Crud->execute();
+        return $this->redirect(['_name' => 'users:login']);
     }
 
     /**
@@ -165,23 +132,29 @@ class UsersController extends CrudController
      */
     public function profile(): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->Crud->on('beforeFind', function (Event $event) {
-            $event->subject->query = $event->subject->repository->find()->where(['id' => $this->Auth->user('id')]);
+            $event->subject->query = $event->subject->repository->find()->where(['id' => $this->getIdentity()->id]);
         });
 
         return $this->Crud->execute();
     }
 
     /**
-     * @route GET /register
+     * @route GET /join-oursociety
      * @routeName users:register
      */
     public function register(): ?Response
     {
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->Auth->refreshSession($event->getSubject()->entity);
-                $this->config('redirectUrl', ['_name' => 'users:onboarding']);
+                /** @var User $user */
+                $user = $event->getSubject()->entity;
+                $this->authenticateIdentity($user->id);
+                $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });
 
@@ -191,7 +164,7 @@ class UsersController extends CrudController
     }
 
     /**
-     * @route GET /reset
+     * @route GET /reset-password
      * @routeName users:reset
      */
     public function reset(): ?Response
@@ -201,6 +174,7 @@ class UsersController extends CrudController
         $this->config('tokenField', 'token');
 
         $this->Crud->on('verifyToken', [$this, '_verifyToken']);
+
         $this->Crud->on('afterResetPassword', function (Event $event) {
             if ($event->getSubject()->success === false) {
                 return;
@@ -247,17 +221,21 @@ class UsersController extends CrudController
      */
     public function onboarding(): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->set(['containerClass' => 'container-fluid']);
 
         $this->Crud->action()->setConfig('messages.success.text', 'Your location has been stored.');
 
         $this->Crud->on('beforeFind', function (Event $event) {
-            $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->Auth->user('id')]);
+            $event->getSubject()->query = $this->Users->find()->where(['Users.id' => $this->getIdentity()->id]);
         });
 
         $this->Crud->on('beforeRedirect', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->Auth->refreshSession();
+                $this->refreshIdentity();
                 $event->getSubject()->url = ['_name' => 'citizen:dashboard'];
             }
         });
@@ -269,5 +247,54 @@ class UsersController extends CrudController
     private function config($key, $value = null, $merge = null)
     {
         return $this->Crud->action()->setConfig($key, $value, $merge ?? true);
+    }
+
+    //private function createRememberMeCookie(): void
+    //{
+    //    $isKeepMeLoggedInChecked = (bool)$this->request->getData('remember_me');
+    //
+    //    if ($isKeepMeLoggedInChecked === false) {
+    //        return;
+    //    }
+    //
+    //    //$cookie = new AuthenticationTokenCookie($this->getIdentity());
+    //
+    //    /** @var TokensTable $tokensTable */
+    //    $tokensTable = TableRegistry::get('Tokens');
+    //    $token = $tokensTable->createToken($this->getIdentity());
+    //
+    //    $cookie = (new Cookie('token'))
+    //        ->withValue($token->cookie_value)
+    //        ->withExpiry($token->expires);
+    //
+    //    $this->response = $this->response->withCookie($cookie);
+    //
+    //    //$this->Cookie->write(self::COOKIE_NAME_REMEMBER_ME, [
+    //    //    'email' => $this->request->getData('email'),
+    //    //    'password' => $this->request->getData('password'),
+    //    //]);
+    //
+    //    //if ((bool)$this->request->getData(self::COOKIE_NAME_REMEMBER_ME) === false) {
+    //    //    return;
+    //    //}
+    //    //
+    //    //$this->Cookie->configKey(self::COOKIE_NAME_REMEMBER_ME, [
+    //    //    'expires' => '+1 year',
+    //    //    'httpOnly' => true,
+    //    //    'secure' => true,
+    //    //    'encryption' => false, // The EncryptedCookieMiddleware handles this.
+    //    //]);
+    //    //
+    //    //$this->Cookie->write(self::COOKIE_NAME_REMEMBER_ME, [
+    //    //    'email' => $this->request->getData('email'),
+    //    //    'password' => $this->request->getData('password'),
+    //    //]);
+    //}
+
+    private function deleteRememberMeCookie(): void
+    {
+        if ($this->Cookie->check(self::COOKIE_NAME_REMEMBER_ME)) {
+            $this->Cookie->delete(self::COOKIE_NAME_REMEMBER_ME);
+        }
     }
 }

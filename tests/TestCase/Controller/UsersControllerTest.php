@@ -1,9 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
+use OurSociety\Action\LoginAction;
 use OurSociety\Controller\UsersController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Test\Fixture\UsersFixture;
@@ -13,6 +14,14 @@ use OurSociety\TestSuite\Traits;
 class UsersControllerTest extends IntegrationTestCase
 {
     use Traits\EmailAssertionsTrait;
+
+    private static function findRecord(string $email): User
+    {
+        /** @var User $user */
+        $user = TableRegistry::get('Users')->find()->where(['email' => $email])->firstOrFail();
+
+        return $user;
+    }
 
     /**
      * @dataProvider provideForgot
@@ -31,16 +40,17 @@ class UsersControllerTest extends IntegrationTestCase
                 $this->post(['_name' => 'users:forgot'], ['email' => UsersFixture::CITIZEN_EMAIL]);
                 $this->assertResponseSuccess();
                 $this->assertResponseCode(302);
-                $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => 'citizen@example.net']]);
+                $this->assertRedirect(['_name' => 'users:reset', '?' => ['email' => UsersFixture::CITIZEN_EMAIL]]);
                 $this->assertFlash(UsersController::MESSAGE_FORGOT_SUCCESS);
-                self::assertEmailTo('citizen@example.net');
+                self::assertEmailTo(UsersFixture::CITIZEN_EMAIL);
                 self::assertEmailSubject('Forgot password');
+                $encodedEmail = urlencode(UsersFixture::CITIZEN_EMAIL);
                 self::assertEmailBody(UsersFixture::CITIZEN_1_NAME, <<<EMAIL
 Your verification code is: {TOKEN}
 
 Alternatively, click or copy the following address into your web browser:
 
-https://test.oursociety.org/reset?email=citizen%40example.net&token={TOKEN}
+https://test.oursociety.org/reset-password?email=${encodedEmail}&token={TOKEN}
 EMAIL
                 );
                 break;
@@ -70,12 +80,11 @@ EMAIL
     {
         $this->get(['_name' => 'users:login']);
         $this->assertResponseOk();
-        $this->assertResponseContains('Please enter your email and password');
         $this->assertResponseContains('Email');
         $this->assertResponseContains('Password');
-        $this->assertResponseContains('Login');
-        $this->assertResponseContains('Remember me');
-        $this->assertResponseContains('Forgot Password');
+        $this->assertResponseContains('Sign In');
+        $this->assertResponseContains('Keep me signed in');
+        $this->assertResponseContains('Forgot password?');
 
         $this->post(['_name' => 'users:login'], $data);
         switch ($expected) {
@@ -90,11 +99,10 @@ EMAIL
                     $this->get(parse_url($this->_response->getHeader('Location')[0])['path']);
                 }
                 $this->assertResponseOk();
-                $this->assertResponseContains(UsersController::MESSAGE_LOGIN_SUCCESS);
-                $this->assertResponseNotContains(UsersController::MESSAGE_LOGIN_ERROR);
-                $this->assertResponseContains('Signed in as');
+                $this->assertResponseContains(LoginAction::MESSAGE_LOGIN_SUCCESS);
+                $this->assertResponseNotContains(LoginAction::MESSAGE_LOGIN_ERROR);
                 $this->assertResponseContains('Sign Out');
-                $this->assertResponseNotContains('Login');
+                $this->assertResponseNotContains('Sign In');
                 $this->resumeSession();
                 $this->get(['_name' => 'users:login']);
                 $this->assertResponseSuccess();
@@ -103,8 +111,8 @@ EMAIL
                 break;
             case 'error':
                 $this->assertResponseOk();
-                $this->assertResponseContains(UsersController::MESSAGE_LOGIN_ERROR);
-                $this->assertResponseNotContains(UsersController::MESSAGE_LOGIN_SUCCESS);
+                $this->assertResponseContains(LoginAction::MESSAGE_LOGIN_ERROR);
+                $this->assertResponseNotContains(LoginAction::MESSAGE_LOGIN_SUCCESS);
                 break;
         }
     }
@@ -162,8 +170,8 @@ EMAIL
     public function provideLogout(): array
     {
         return [
-            'success (logged in)' => ['email' => UsersFixture::ADMIN_EMAIL],
-            'success (NOT logged in)' => ['email' => null],
+            'success (signed in)' => ['email' => UsersFixture::ADMIN_EMAIL],
+            'success (NOT signed in)' => ['email' => null],
         ];
     }
 
@@ -183,7 +191,7 @@ EMAIL
         $this->assertResponseContains('Password');
         $this->assertResponseContains('Register');
 
-        $this->post('/register', ['method' => '_POST'] + $data);
+        $this->post(['_name' => 'users:register'], ['method' => '_POST'] + $data);
         switch ($expected) {
             case 'success':
                 $this->assertResponseSuccess();
@@ -335,13 +343,5 @@ EMAIL
             //    'user' => UsersFixture::EMAIL_CITIZEN, // TODO: Password change page for authenticated users.
             //],
         ];
-    }
-
-    private static function findRecord(string $email): User
-    {
-        /** @var User $user */
-        $user = TableRegistry::get('Users')->find()->where(['email' => $email])->firstOrFail();
-
-        return $user;
     }
 }

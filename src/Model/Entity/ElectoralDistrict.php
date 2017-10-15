@@ -103,11 +103,12 @@ class ElectoralDistrict extends AppEntity implements SearchableEntity
             return '';
         }
 
+        $elementId = sprintf('place-%s', $this->slug);
         $script = <<<JAVASCRIPT
-drawMap('zip', null, {$this->polygon})
+drawMap('${elementId}', null, {$this->polygon})
 JAVASCRIPT;
 
-        $mapElement = $view->Html->div('card-img-top map pull-right', '', ['id' => 'zip']);
+        $mapElement = $view->Html->div('card-img-top map pull-right', '', ['id' => $elementId]);
         $mapScript = $view->Html->scriptBlock($script);
 
         return $mapElement . $mapScript;
@@ -142,6 +143,11 @@ JAVASCRIPT;
     public function getEventsIndexRoute(): array
     {
         return ['_name' => 'municipality:events', 'municipality' => $this->slug];
+    }
+
+    public function getIcon(): string
+    {
+        return 'street-view';
     }
 
     protected function _getName(): ?string

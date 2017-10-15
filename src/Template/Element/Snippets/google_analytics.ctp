@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \OurSociety\Model\Entity\User $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User $identity The current user.
  */
 
 // Disable during development.
@@ -9,14 +9,17 @@ if (\Cake\Core\Configure::read('debug')) {
 }
 
 // Disable for team members.
-if ($currentUser !== null && $currentUser->isAdmin()) {
+if ($identity !== null && $identity->isAdmin()) {
     return;
 }
 ?>
 
 <!-- Google Analytics -->
 <script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    window.ga = window.ga || function () {
+        (ga.q = ga.q || []).push(arguments)
+    };
+    ga.l = +new Date;
     ga('create', 'UA-102777595-2', 'auto');
     ga('set', 'transport', 'beacon');
     ga('send', 'pageview');

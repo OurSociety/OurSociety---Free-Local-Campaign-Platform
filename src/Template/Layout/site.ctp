@@ -3,7 +3,7 @@
  * Embed layout.
  *
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\User $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User $identity The current user.
  */
 
 $this->extend('base');

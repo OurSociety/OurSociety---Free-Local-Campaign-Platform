@@ -12,12 +12,6 @@ $this->Breadcrumbs->add($municipality->name, $municipality->getViewRoute());
 $this->Breadcrumbs->add(__('Upcoming Events'));
 ?>
 
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default']) ?></li>
-    <li class="breadcrumb-item"><?= $this->Html->link($municipality->display_name, $municipality->getViewRoute()) ?></li>
-    <li class="breadcrumb-item active"><?= __('Upcoming Events') ?></li>
-</ol>
-
 <h1>
     <?= __('Upcoming Events') ?>
 </h1>

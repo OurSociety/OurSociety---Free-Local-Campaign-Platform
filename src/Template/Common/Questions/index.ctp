@@ -2,7 +2,7 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
+ * @var \OurSociety\Model\Entity\User $identity The currently authenticated user.
  */
 
 $defaultLimit = \OurSociety\Model\Table\QuestionsTable::LIMIT_BATCH;
@@ -32,6 +32,6 @@ $defaultLimit = \OurSociety\Model\Table\QuestionsTable::LIMIT_BATCH;
 
 <p><?= __($this->fetch('introduction'), ['count' => count($questions)]) ?></p>
 
-<section class="well well-sm">
+<section class="card card-body bg-light">
     <?= $this->cell('Common/Question::batch', [$questions]) ?>
 </section>

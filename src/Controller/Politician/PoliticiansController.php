@@ -32,7 +32,7 @@ class PoliticiansController extends CrudController
         /** @var User $politician */
         $politician = $this->loadModel('Users')
             ->find('politician')
-            ->where(['slug' => $this->Auth->user('slug')])
+            ->where(['slug' => $this->getIdentity()->slug])
             ->firstOrFail();
 
         if ($politician->verified === null) {
@@ -48,15 +48,17 @@ class PoliticiansController extends CrudController
 
     public function edit(): ?Response
     {
+        $this->request->addParams(['pass' => [$this->getIdentity()->slug]]);
+
         $this->Crud->on('beforeFind', function (Event $event) {
             /** @var Query $query */
             $query = $event->getSubject()->query;
-            $query->where(['Users.id' => $this->Auth->user('id')], [], true);
+            $query->where(['Users.id' => $this->getIdentity()->id], [], true);
         });
 
         $this->Crud->on('afterSave', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->Auth->refreshSession();
+                $this->refreshIdentity();
             }
         });
 
@@ -73,13 +75,11 @@ class PoliticiansController extends CrudController
             throw new BadRequestException('Only PUT/POST requests.');
         }
 
+        $user = $this->getIdentity();
+
         /** @var UsersTable $users */
         $users = $this->loadModel();
-        /** @var User $user */
-        $user = $this->Auth->user();
-
         $user = $users->patchEntity($user, ['picture' => $this->request->getData('file')]);
-
         $users->save($user);
 
         $errors = $user->getErrors();
@@ -100,8 +100,9 @@ class PoliticiansController extends CrudController
     public function embed(): ?Response
     {
         $this->set([
-            'politician' => $this->Users->get($this->Auth->user()->id),
+            'politician' => $this->Users->get($this->getIdentity()->id),
         ]);
+
         return null;
     }
 }

@@ -3,14 +3,12 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
+ * @var \OurSociety\Model\Entity\User $identity The currently authenticated user.
  * @var bool $edit True if editing profile, false otherwise.
  */
 
 $email = $politician->verified === null ? $politician->email : $politician->email_temp;
 ?>
-
-<?= $this->fetch('breadcrumbs') ?>
 
 <h2>
     <?= $politician->name ?>
@@ -20,6 +18,10 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
 </h2>
 
 <hr>
+
+<?php if ($politician->id === $identity->id): ?>
+    <?= $this->element('../Citizen/CommunityContributors/banner') ?>
+<?php endif ?>
 
 <section>
     <div class="row text-center">
@@ -33,7 +35,7 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
                 <?= __('Candidates and elected officials receive matching functionality.') ?>
             </div>
 
-            <?= $this->cell('Profile/ValueMatch', [$politician, $currentUser, 3]) ?>
+            <?= $this->cell('Profile/ValueMatch', [$politician, $identity, 3]) ?>
         </div>
     </div>
 </section>
@@ -54,7 +56,7 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
 <hr>
 
 <section>
-    <h3><?= __('About {name}',  ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
+    <h3><?= __('About {name}', ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
     <div class="row">
         <div class="col-md-8">
             <?= $this->element('Widgets/PoliticianProfile/positions') ?>

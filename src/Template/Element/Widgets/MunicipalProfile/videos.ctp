@@ -9,7 +9,7 @@ if ($isExample) {
     $videos = \OurSociety\Model\Entity\PoliticianVideo::examples(5);
 }
 
-$featuredVideo = array_shift($videos);
+//$featuredVideo = array_shift($videos);
 ?>
 
 <h3>
@@ -46,7 +46,7 @@ $featuredVideo = array_shift($videos);
                     </li>
                 <?php $index++; endforeach ?>
             </ul>
-            <?php if (!$featuredVideo->is_example): ?>
+            <?php if (false && !$featuredVideo->is_example): ?>
                 <a class="carousel-control-next" role="button">
                     <span class="carousel-control-next-icon" href="#" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>

@@ -18,12 +18,12 @@ $this->Breadcrumbs->add($title);
             <div class="card w-100">
                 <?= $this->Html->politicianLink(
                     $politician,
-                    $this->Html->jdenticon($politician->slug, [
+                    $this->Html->image($politician, [
                         'class' => ['card-img-top bg-light'],
                         'alt' => __('Profile picture of {politician_name}', ['politician_name' => $politician->name]),
-                        'height' => '150',
+                        'style' => 'height: 150px; width: auto',
                     ]),
-                    ['escape' => false]
+                    ['class' => ['bg-dark', 'text-center'], 'escape' => false]
                 ) ?>
                 <div class="card-body">
                     <h4 class="card-title"><?= $this->Html->politicianLink($politician) ?></h4>

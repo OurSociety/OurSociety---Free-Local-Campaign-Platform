@@ -27,4 +27,9 @@ class ArticleType extends AppEntity
     {
         return $this->_properties['name'] ?? __('Miscellaneous');
     }
+
+    public function getIcon(): string
+    {
+        return 'folder-o';
+    }
 }

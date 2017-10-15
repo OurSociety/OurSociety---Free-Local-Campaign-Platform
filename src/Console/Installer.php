@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Console;
 
@@ -23,9 +23,8 @@ class Installer
         'tmp/cache',
         'tmp/cache/models',
         'tmp/cache/persistent',
-        'tmp/cache/views',
         'tmp/sessions',
-        'tmp/tests'
+        'tmp/tests',
     ];
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  */
 ?>
 <div class="card mb-3">
@@ -9,7 +9,7 @@
         <?= __('My Municipality') ?>
     </h4>
     <div class="card-body">
-        <?php if ($currentUser->electoral_district === null): ?>
+        <?php if ($identity->electoral_district === null): ?>
             <p>
                 <?= __('By selecting your electoral district, we can show you your municipality profile!') ?>
             </p>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         <?php else: ?>
-            <?= $this->element('Widgets/MunicipalProfile/stats', ['municipality' => $currentUser->electoral_district]) ?>
+            <?= $this->element('Widgets/MunicipalProfile/stats', ['municipality' => $identity->electoral_district]) ?>
 
             <div class="row mt-3">
                 <div class="col-sm-6">

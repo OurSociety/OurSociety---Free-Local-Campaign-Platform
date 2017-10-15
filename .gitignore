@@ -25,4 +25,5 @@
 /.env*
 !/.env.default
 /.phpunit-watcher-cache.php
+/.php_cs.cache
 /hot

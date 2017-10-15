@@ -14,4 +14,8 @@ namespace OurSociety\Model\Entity;
  */
 class Office extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'id-badge';
+    }
 }

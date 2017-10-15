@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Politician;
 
 use OurSociety\Controller\AppController;
+use OurSociety\Model\Questions;
+use OurSociety\Model\Users;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class DashboardController extends AppController
@@ -14,17 +16,16 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        $user = $this->getIdentity();
+
+        if (!$user->hasOnboarded()) {
+            return $this->redirect(['_name' => 'users:onboarding']);
+        }
+
         $this->set([
-            'answers' => $this->loadModel('Answers')
-                ->find()
-                ->contain(['Questions'])
-                ->where(['Answers.user_id' => $this->getCurrentUser()->id])
-                ->orderDesc('Questions.modified')
-                ->all(),
-            'categories' => $this->loadModel('Categories')
-                ->find()
-                ->orderAsc('Categories.name')
-                ->all(),
+            'questionCount' => Questions::instance()->getCount(),
+            'answers' => Users::instance()->getAnswers($user),
+            'categories' => Users::instance()->getCategoriesForPoliticianDashboard($user),
         ]);
 
         return null;

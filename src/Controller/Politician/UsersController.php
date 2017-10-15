@@ -1,11 +1,12 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Politician;
 
 use Cake\Event\Event;
 use OurSociety\Controller\Action\RegisterAction;
 use OurSociety\Controller\CrudController;
+use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -25,7 +26,7 @@ class UsersController extends CrudController
         parent::initialize();
 
         $this->Crud->mapAction('register', RegisterAction::class);
-        $this->Auth->allow(['register']);
+        //$this->Auth->allow(['register']); // TODO: Prevent AuthorizationMiddleware from blocking requests to register action
     }
 
     /**
@@ -36,7 +37,9 @@ class UsersController extends CrudController
     {
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
-                $this->Auth->refreshSession($event->getSubject()->entity);
+                /** @var User $user */
+                $user = $event->getSubject()->entity;
+                $this->authenticateIdentity($user->id);
                 $this->Crud->action()->setConfig(['redirectUrl' => ['_name' => 'politician:profile']]);
             }
         });

@@ -3,7 +3,7 @@
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
+ * @var \OurSociety\Model\Entity\User $identity The currently authenticated user.
  * @var \OurSociety\View\Cell\Profile\PictureCell $picture The profile picture cell.
  * @var \OurSociety\View\Cell\Profile\ValueMatchCell $valueMatch The value match cell.
  * @var bool $edit True if editing profile, false otherwise.
@@ -51,7 +51,7 @@
 <hr>
 
 <section>
-    <h3><?= __('About {name}',  ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
+    <h3><?= __('About {name}', ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
     <div class="row">
         <div class="col-md-8">
             <?= $this->element('Widgets/PoliticianProfile/positions') ?>

@@ -1,10 +1,9 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
@@ -20,18 +19,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 class PagesController extends AppController
 {
     /**
-     * {@inheritdoc}.
-     *
-     * - Grants public access to all static pages.
-     */
-    public function beforeFilter(Event $event): void
-    {
-        parent::beforeFilter($event);
-
-        $this->Auth->allow('display');
-    }
-
-    /**
      * Displays a view
      *
      * @param string|string[] ...$path Path segments.
@@ -44,9 +31,6 @@ class PagesController extends AppController
     {
         if ($path === ['home']) {
             $this->set('containerClass', 'container-fluid');
-            //if (Configure::read('debug') === false) {
-                $this->redirect('https://www.oursociety.org');
-            //}
         }
 
         $count = count($path);

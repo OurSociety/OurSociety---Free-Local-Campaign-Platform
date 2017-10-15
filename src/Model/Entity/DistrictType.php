@@ -20,4 +20,9 @@ class DistrictType extends AppEntity
     {
         return $this->id_vip === 'municipality';
     }
+
+    public function getIcon(): string
+    {
+        return 'map-signs';
+    }
 }

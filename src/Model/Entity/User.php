@@ -13,10 +13,10 @@ use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\ORM\TableRegistry;
 use OurSociety\View\AppView;
 use OurSociety\View\Cell\Profile\PictureCell;
-use OurSociety\View\Scaffold;
+use OurSociety\View\Component\Field;
 
 /**
- * User Entity
+ * User Entity.
  *
  * @property string $id The UUID.
  * @property string $slug The slug.
@@ -66,6 +66,8 @@ use OurSociety\View\Scaffold;
  * @property PoliticianVideo|null $featured_video
  * @property OfficeType $office_type
  * @property bool $is_example
+ * @property string $level_name The name of the current level.
+ * @property string $level_badge_url The badge for the current level.
  */
 class User extends AppEntity implements SearchableEntity
 {
@@ -73,6 +75,32 @@ class User extends AppEntity implements SearchableEntity
 
     public const COUNTRIES = [
         'US' => 'United States of America',
+    ];
+
+    private const LEVEL_NAMES = [
+        1 => 'Citizen',
+        2 => 'Member',
+        3 => 'Participant',
+        4 => 'Informed Voter',
+        5 => 'Community Advocate',
+        6 => 'Community Champion',
+        7 => 'Community Builder',
+        8 => 'Thought Leader',
+        9 => 'Visionary Citizen',
+        10 => 'Enlightened Citizen',
+    ];
+
+    private const LEVEL_BADGE_URLS = [
+        1 => '/img/svg/badge/01-citizen.svg',
+        2 => '/img/svg/badge/02-member.svg',
+        3 => '/img/svg/badge/03-participant.svg',
+        4 => '/img/svg/badge/04-informed-voter.svg',
+        5 => '/img/svg/badge/05-community-advocate.svg',
+        6 => '/img/svg/badge/06-community-champion.svg',
+        7 => '/img/svg/badge/07-community-builder.svg',
+        8 => '/img/svg/badge/08-thought-leader.svg',
+        9 => '/img/svg/badge/09-visionary-citizen.svg',
+        10 => '/img/svg/badge/10-enlightened-citizen.svg',
     ];
 
     public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
@@ -233,7 +261,7 @@ class User extends AppEntity implements SearchableEntity
 
     public function getMunicipalityRoute(): array
     {
-        $municipality = $this->electoral_district;
+        $municipality = $this->electoral_district ?? new ElectoralDistrict();
 
         if ($municipality === null) {
             return ['_name' => 'users:onboarding'];
@@ -243,11 +271,11 @@ class User extends AppEntity implements SearchableEntity
     }
 
     /**
-     * @return Scaffold\FieldList|Scaffold\Field[]
+     * @return Field\FieldList|Field\Field[]
      */
-    public function getScaffoldFieldList(): Scaffold\FieldList
+    public function getScaffoldFieldList(): Field\FieldList
     {
-        return Scaffold\FieldList::fromArray($this->getModel(), [
+        return Field\FieldList::fromArray($this->getModel(), [
             'name' => ['title' => 'Full Name'],
             'role',
             'answer_count' => ['title' => 'Answers'],
@@ -266,22 +294,23 @@ class User extends AppEntity implements SearchableEntity
      */
     public function hasOnboarded(): bool
     {
-        return $this->electoral_district !== null;
+        $electoralDistrictId = $this->_properties['electoral_district_id'] ?? null;
+
+        return $electoralDistrictId !== null;
     }
 
     public function isAdmin(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        $role = $this->_properties['role'] ?? self::ROLE_CITIZEN;
+
+        return $role === self::ROLE_ADMIN;
     }
 
     public function isCitizen(): bool
     {
-        return $this->role === self::ROLE_CITIZEN;
-    }
+        $role = $this->_properties['role'] ?? self::ROLE_CITIZEN;
 
-    public function isInMunicipality(ElectoralDistrict $municipality): bool
-    {
-        return $this->electoral_district->equals($municipality);
+        return $role === self::ROLE_CITIZEN;
     }
 
     public function isCommunityContributor(): bool
@@ -291,9 +320,18 @@ class User extends AppEntity implements SearchableEntity
         return $this->isCitizen() && $isCommunityContributor;
     }
 
+    public function isInMunicipality(ElectoralDistrict $municipality): bool
+    {
+        $electoralDistrict = $this->electoral_district ?? new ElectoralDistrict();
+
+        return $electoralDistrict->equals($municipality);
+    }
+
     public function isPolitician(): bool
     {
-        return $this->role === self::ROLE_POLITICIAN;
+        $role = $this->_properties['role'] ?? self::ROLE_CITIZEN;
+
+        return $role === self::ROLE_POLITICIAN;
     }
 
     /**
@@ -414,11 +452,12 @@ class User extends AppEntity implements SearchableEntity
      */
     public function renderProfilePicture(AppView $view, array $options = null): string
     {
-        $options = $options ?? [
-                'alt' => __('Profile picture of {user_name}', ['user_name' => $this->name]),
-                'class' => ['img-fluid'],
-                'style' => 'min-width: 100%',
-            ];
+        $options = $options ?? [];
+        $options += [
+            'alt' => __('Profile picture of {user_name}', ['user_name' => $this->name]),
+            'class' => ['img-fluid'],
+            'style' => 'min-width: 100%',
+        ];
 
         return $view->Html->image($this, $options);
     }
@@ -438,9 +477,41 @@ class User extends AppEntity implements SearchableEntity
         return 'people';
     }
 
+    public function getIcon(): string
+    {
+        return 'user';
+    }
+
+    public function hasAnsweredQuestions(): bool
+    {
+        return $this->answer_count > 0;
+    }
+
     protected function _getAge(): ?int
     {
-        return $this->born !== null ? $this->born->diffInYears(Time::now()) : null;
+        /** @var \Cake\I18n\FrozenDate|null $born */
+        $born = $this->_properties['born'] ?? null;
+
+        if ($born === null) {
+            return null;
+        }
+
+        return $born->diffInYears(Time::now());
+    }
+
+    protected function _getLevel(): int
+    {
+        return $this->_properties['level'] ?? 1;
+    }
+
+    protected function _getLevelName(): string
+    {
+        return self::LEVEL_NAMES[$this->level];
+    }
+
+    protected function _getLevelBadgeUrl(): string
+    {
+        return self::LEVEL_BADGE_URLS[$this->level];
     }
 
     /**
@@ -456,6 +527,14 @@ class User extends AppEntity implements SearchableEntity
         return mb_strlen($password) > 0 ? (new DefaultPasswordHasher)->hash($password) : null;
     }
 
+    private function withNextLevel()
+    {
+        $user = clone $this;
+        ++$user->level;
+
+        return $user;
+    }
+
     /**
      * With last seen.
      *
@@ -467,14 +546,6 @@ class User extends AppEntity implements SearchableEntity
     {
         $user = clone $this;
         $user->last_seen = Time::now();
-
-        return $user;
-    }
-
-    private function withNextLevel()
-    {
-        $user = clone $this;
-        ++$user->level;
 
         return $user;
     }

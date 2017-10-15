@@ -3,36 +3,43 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Context\System;
 
-use Behat\Mink\Driver\BrowserKitDriver;
-use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Behat\MinkExtension\Context\RawMinkContext;
-use Symfony\Component\BrowserKit\Cookie;
+use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
+use OurSociety\TestSuite\Behat\Page\Guest\SignIn;
+use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
-class AuthContext extends RawMinkContext
+class AuthContext extends PageObjectContext
 {
     /**
-     * @Given I am logged in as :name
+     * @var SignIn
      */
-    public function iAmLoggedInAs(string $name)
+    private $signIn;
+
+    public function __construct(
+        SignIn $login
+    ) {
+        $this->signIn = $login;
+    }
+
+    /**
+     * @Given I am signed in as :name
+     */
+    public function iAmSignedInAs(string $name): void
     {
-        $driver = $this->getSession()->getDriver();
-        if (!$driver instanceof BrowserKitDriver) {
-            throw new UnsupportedDriverActionException('This step is only supported by the BrowserKitDriver', $driver);
-        }
+        $user = $this->findUserByName($name);
 
-        $client = $driver->getClient();
-        $client->getCookieJar()->set(new Cookie(session_name(), true));
+        $this->signIn->open();
+        $this->signIn->signInAs($user->email, 'democracy');
+    }
 
-        $session = $client->getContainer()->get('session');
+    private function findUserByName($name): User
+    {
+        /** @var UsersTable $usersTable */
+        $usersTable = TableRegistry::get('Users');
+        $query = $usersTable->findByName($name);
 
-        $user = $this->kernel->getContainer()->get('fos_user.user_manager')->findUserByUsername($name);
-        $providerKey = $this->kernel->getContainer()->getParameter('fos_user.firewall_name');
-
-        $token = new UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
-        $session->set('_security_'.$providerKey, serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $client->getCookieJar()->set($cookie);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $query->firstOrFail();
     }
 }

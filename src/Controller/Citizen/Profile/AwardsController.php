@@ -37,7 +37,7 @@ class AwardsController extends CrudController
 
         $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query = $event->getSubject()->query->where([
-                'Politicians.slug' => $this->Auth->user('slug'),
+                'Politicians.slug' => $this->getIdentity()->slug,
             ]);
         });
 
@@ -68,14 +68,14 @@ class AwardsController extends CrudController
                     'description' => ['label' => 'Description of Award'],
                     'obtained' => ['label' => 'Date Obtained'] + $this->getFieldOptionsForYearMonth(),
                 ],
-            ]
+            ],
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianAward $award */
             $award = $event->getSubject()->entity;
             $award->id = Text::uuid();
-            $award->politician_id = $this->Auth->user('id');
+            $award->politician_id = $this->getIdentity()->id;
         });
 
         return $this->Crud->execute();

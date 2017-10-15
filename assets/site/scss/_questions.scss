@@ -1,37 +1,51 @@
 .form-question-answers {
-    .form-group.radio {
+    .custom-control {
+        background-color: $os-purple-brand-secondary;
+        border: $card-border-width solid $card-border-color;
+        border-radius: $card-border-radius;
+        padding: $input-btn-padding-y ($input-btn-padding-x + $custom-control-gutter);
+        width: 100%;
+    }
+    .custom-control-description {
+        color: $white;
+        font-size: $blockquote-font-size;
+    }
+    .custom-control-indicator {
+        margin-top: $input-btn-padding-y + 0.175rem;
+        margin-left: $input-btn-padding-x;
+        background-color: scale_color($os-purple-brand-secondary, $lightness: 85%)
+    }
+    .custom-control-input:checked ~ .custom-control-indicator {
+        background-color: scale_color($os-purple-brand-secondary, $lightness: 50%)
+    }
+    .custom-control-input:disabled ~ .custom-control-description {
+        color: $gray-400;
+    }
+    .form-group {
         margin-bottom: 0;
-        .radio {
-            label {
-                background-color: $os-purple-brand-secondary;
-                border: $card-border-width solid $card-border-color;
-                border-radius: $card-border-radius;
-                color: $white;
-                font-size: $blockquote-font-size;
-                padding: $input-btn-padding-y $input-btn-padding-x;
-                width: 100%;
-                input {
-                    margin-right: $input-btn-padding-x;
-                }
-            }
-        }
     }
 }
 
 .form-question-importance {
-    .form-group.radio {
-        margin-bottom: 0;
+    .custom-control {
+        background-color: $card-cap-bg;
+        border: $card-border-width solid $card-border-color;
+        border-radius: $card-border-radius;
+        padding: $input-btn-padding-y ($input-btn-padding-x + $custom-control-gutter);
     }
-    .radio {
-        label {
-            background-color: $card-cap-bg;
-            border: $card-border-width solid $card-border-color;
-            border-radius: $card-border-radius;
-            padding: $input-btn-padding-y $input-btn-padding-x;
-            margin-right: $input-btn-padding-x;
-            input {
-                margin-right: $input-btn-padding-x;
-            }
-        }
+    .custom-control-description {
+        font-size: $blockquote-font-size;
+    }
+    .custom-control-indicator {
+        margin-top: $input-btn-padding-y + 0.175rem;
+        margin-left: $input-btn-padding-x;
+        border: 1px solid $gray-500;
+    }
+    .custom-control-input:checked ~ .custom-control-indicator {
+        background-color: $os-purple-brand-secondary;
+        border: none;
+    }
+    .form-group {
+        margin-bottom: 0;
     }
 }

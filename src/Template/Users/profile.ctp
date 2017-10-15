@@ -9,13 +9,18 @@ $this->Breadcrumbs->add(__('Dashboard'), $user->getDashboardRoute());
 $this->Breadcrumbs->add(__('Profile'), $user->getProfileRoute());
 ?>
 
-<h2><?= $user->name ?></h2>
+<h2>
+    <?= $user->name ?>
+</h2>
 
 <hr>
 
 <div class="media">
     <div class="media-left">
-        <?= $user->renderProfilePicture($this, ['class' => 'img-thumbnail mr-3', 'style' => 'max-width: 100px']) ?>
+        <?= $user->renderProfilePicture($this, [
+            'class' => ['img-thumbnail', 'mr-3'],
+            'style' => 'max-width: 100px',
+        ]) ?>
     </div>
     <div class="media-body">
         <dl>

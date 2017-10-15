@@ -76,4 +76,9 @@ class Event extends AppEntity
             'municipality' => $this->electoral_district->slug,
         ];
     }
+
+    public function getIcon(): string
+    {
+        return 'calendar-o';
+    }
 }

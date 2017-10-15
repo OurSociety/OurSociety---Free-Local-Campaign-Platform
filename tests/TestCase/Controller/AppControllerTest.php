@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Test\TestCase\Controller;
 
@@ -42,7 +42,7 @@ class AppControllerTest extends IntegrationTestCase
             'citizen role can access public prefix' => [
                 'expected' => true,
                 'role' => User::ROLE_CITIZEN,
-                'url' => '/logout',
+                'url' => '/sign-out',
             ],
             'citizen role can access citizen prefix' => [
                 'expected' => true,
@@ -62,7 +62,7 @@ class AppControllerTest extends IntegrationTestCase
             'politician role can access public prefix' => [
                 'expected' => true,
                 'role' => User::ROLE_POLITICIAN,
-                'url' => '/logout',
+                'url' => '/sign-out',
             ],
             'politician role can access citizen prefix' => [
                 'expected' => true,
@@ -82,7 +82,7 @@ class AppControllerTest extends IntegrationTestCase
             'admin role can access public prefix' => [
                 'expected' => true,
                 'role' => User::ROLE_ADMIN,
-                'url' => '/logout',
+                'url' => '/sign-out',
             ],
             'admin role can access citizen prefix' => [
                 'expected' => true,

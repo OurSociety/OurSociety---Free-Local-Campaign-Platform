@@ -1,10 +1,10 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  */
 
-$this->Breadcrumbs->add(__('My Dashboard'), $currentUser->getDashboardRoute());
+$this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
 $this->Breadcrumbs->add(__('My Voice'));
 
 $this->extend('/Common/Questions/index');

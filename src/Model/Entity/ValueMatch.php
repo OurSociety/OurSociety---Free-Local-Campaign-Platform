@@ -21,4 +21,8 @@ namespace OurSociety\Model\Entity;
  */
 class ValueMatch extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'percent';
+    }
 }

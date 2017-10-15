@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Test\TestCase\View\Cell;
+namespace OurSociety\Test\TestCase\View\Cell\Common;
 
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use OurSociety\View\Cell\Common\QuestionCell;
-use Cake\Network\Request;
-use Cake\Network\Response;
 
 /**
  * OurSociety\View\Cell\Common\QuestionCell Test Case
@@ -17,7 +17,7 @@ class QuestionCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
      */
     public $request;
 
@@ -43,7 +43,7 @@ class QuestionCellTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->request = $this->getMockBuilder(Request::class)->getMock();
+        $this->request = $this->getMockBuilder(ServerRequest::class)->getMock();
         $this->response = $this->getMockBuilder(Response::class)->getMock();
         $this->Question = new QuestionCell($this->request, $this->response);
     }

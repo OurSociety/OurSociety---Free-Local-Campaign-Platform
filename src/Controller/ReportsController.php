@@ -29,7 +29,7 @@ abstract class ReportsController extends AppController
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('Your report has been received. We will review it shortly!'));
 
-                return $this->redirect($this->getCurrentUser()->getDashboardRoute());
+                return $this->redirect($this->getIdentity()->getDashboardRoute());
             }
 
             $this->Flash->error(__('There was a problem with your report. Please, try again.'));

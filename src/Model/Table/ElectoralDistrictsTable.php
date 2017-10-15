@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -8,7 +8,6 @@ use Cake\Event\Event;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
 use OurSociety\Model\Behavior\SearchEngineBehavior;
-use OurSociety\Model\Entity\ElectoralDistrict;
 
 /**
  * ElectoralDistrictsTable.
@@ -61,16 +60,20 @@ class ElectoralDistrictsTable extends AppTable
 
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary): void
     {
+        if (count($query->clause('select')) > 0) {
+            return;
+        }
+
         $query
             ->enableAutoFields()
             ->select(array_diff($this->getSchema()->columns(), ['polygon']));
 
         //if ($primary === true) {
-            $aliasedField = $query->repository()->aliasField('polygon');
-            $underscoredAliasedField = str_replace('.', '__', $aliasedField);
-            $polygonAsGeoJSON = $query->newExpr(sprintf('ST_AsGeoJSON(%s)', $aliasedField));
+        $aliasedField = $query->repository()->aliasField('polygon');
+        $underscoredAliasedField = str_replace('.', '__', $aliasedField);
+        $polygonAsGeoJSON = $query->newExpr(sprintf('ST_AsGeoJSON(%s)', $aliasedField));
 
-            $query->select([$underscoredAliasedField => $polygonAsGeoJSON]);
+        $query->select([$underscoredAliasedField => $polygonAsGeoJSON]);
         //}
     }
 
@@ -82,11 +85,6 @@ class ElectoralDistrictsTable extends AppTable
             });
     }
 
-    public function getBySlug(string $slug): ElectoralDistrict
-    {
-        return $this->find('slugged', ['slug' => $slug])->firstOrFail();
-    }
-
     protected function getDefaultOrder(): array
     {
         return [
@@ -96,7 +94,7 @@ class ElectoralDistrictsTable extends AppTable
                     (string)$query->repository()->aliasField('number') => 'ASC',
                     (string)$query->repository()->aliasField('name') => 'ASC',
                 ]);
-            }
+            },
         ];
     }
 }

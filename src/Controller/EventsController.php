@@ -17,13 +17,6 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class EventsController extends CrudController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->Auth->allow(['index', 'view']);
-    }
-
     public function index($municipalitySlug): ?Response
     {
         $this->set([
@@ -35,7 +28,7 @@ class EventsController extends CrudController
             $query = $event->getSubject()->query;
             $query->matching('ElectoralDistricts', function (Query $query) use ($municipalitySlug) {
                 return $query->where(['ElectoralDistricts.slug' => $municipalitySlug]);
-            });
+            })->orderDesc('Events.start');
         });
 
         return $this->Crud->execute();
@@ -58,6 +51,10 @@ class EventsController extends CrudController
 
     private function _form(string $municipalitySlug): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->Crud->action()->setConfig([
             'scaffold' => [
                 'fields' => [
@@ -88,8 +85,7 @@ class EventsController extends CrudController
         $this->Crud->on('beforeSave', function (Event $event) use ($getMunicipalityId) {
             /** @var Entity\Event $event */
             $event = $event->getSubject()->entity;
-            /** @var Entity\User $user */
-            $user = $this->Auth->user();
+            $user = $this->getIdentity();
 
             $event->user_id = $user->id;
             $event->electoral_district_id = $getMunicipalityId();

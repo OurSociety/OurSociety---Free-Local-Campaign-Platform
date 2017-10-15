@@ -6,7 +6,6 @@ use Migrations\AbstractMigration;
 /** @noinspection AutoloadingIssuesInspection */
 class AddElections extends AbstractMigration
 {
-
     public function up(): void
     {
         $this->table('candidate_post_election_statuses', ['id' => false, 'primary_key' => ['id']])

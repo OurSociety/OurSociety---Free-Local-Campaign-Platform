@@ -15,7 +15,6 @@ class CommunityContributorsController extends CrudController
         parent::initialize();
 
         $this->modelClass = 'Users';
-        $this->Auth->allow('view');
     }
 
     public function view($citizenSlug): ?Response

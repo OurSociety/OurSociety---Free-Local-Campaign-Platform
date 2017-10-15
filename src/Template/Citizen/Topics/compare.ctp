@@ -2,17 +2,18 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $politician
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  */
-?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'politicians']) ?></li>
-    <li><?= $this->Html->politicianLink($politician) ?></li>
-    <li>Value Match</li>
-</ol>
 
-<h2>Value Match</h2>
+$this->Breadcrumbs->add(__('My Municipality'), ['_name' => 'municipality:default']);
+$this->Breadcrumbs->add(__('Community Contributor'));
+$this->Breadcrumbs->add($politician->name, $politician->getPublicProfileRoute());
+$this->Breadcrumbs->add(__('Value Match'));
+?>
+
+<h2>
+    <?= __('Value Match') ?>
+</h2>
 
 <hr>
 
@@ -20,4 +21,4 @@
     <?= __('Your values in comparison to politician {politician_name}.', ['politician_name' => $politician->name]) ?>
 </p>
 
-<?= $this->cell('Profile/ValueMatch', [$politician, $currentUser, null]) ?>
+<?= $this->cell('Profile/ValueMatch', [$politician, $identity, 9999]) ?>

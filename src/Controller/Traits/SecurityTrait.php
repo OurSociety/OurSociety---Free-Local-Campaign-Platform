@@ -10,9 +10,9 @@ trait SecurityTrait
      *
      * @link http://book.cakephp.org/3.0/en/controllers/components/security.html
      */
-    protected function loadSecurityComponents(): void
+    protected function enableSecurity(): void
     {
-        //$this->loadComponent('Csrf');
-        //$this->loadComponent('Security');
+        $this->loadComponent('Csrf');
+        $this->loadComponent('Security');
     }
 }

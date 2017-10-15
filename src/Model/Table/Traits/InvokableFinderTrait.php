@@ -37,6 +37,7 @@ trait InvokableFinderTrait
         foreach ($finderClassNames as $finderClassName) {
             if (class_exists($finderClassName)) {
                 $finder = new $finderClassName($this);
+
                 return $finder($query, $options);
             }
         }

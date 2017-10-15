@@ -38,7 +38,7 @@ class QualificationsController extends CrudController
 
         $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query = $event->getSubject()->query->where([
-                'Politicians.slug' => $this->Auth->user('slug'),
+                'Politicians.slug' => $this->getIdentity()->slug,
             ]);
         });
 
@@ -70,14 +70,14 @@ class QualificationsController extends CrudController
                     'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
                     'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
-            ]
+            ],
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianQualification $qualification */
             $qualification = $event->getSubject()->entity;
             $qualification->id = Text::uuid();
-            $qualification->politician_id = $this->Auth->user('id');
+            $qualification->politician_id = $this->getIdentity()->id;
         });
 
         return $this->Crud->execute();

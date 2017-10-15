@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  */
 ?>
 <div class="card mb-3">
@@ -9,7 +9,7 @@
         <?= __('My Virtual Ballot') ?>
     </h4>
     <div class="card-body">
-        <?php if ($currentUser->electoral_district === null): ?>
+        <?php if ($identity->electoral_district === null): ?>
             <p>
                 <?= __('By selecting your electoral district, we can show you your virtual ballot!') ?>
             </p>
@@ -26,9 +26,9 @@
         <?php else: ?>
             <p>
                 <?= __('You have indicated you are in the municipality of {municipality}.', [
-                    'municipality' => $this->Html->link($currentUser->electoral_district->name, [
+                    'municipality' => $this->Html->link($identity->electoral_district->name, [
                         '_name' => 'district',
-                        $currentUser->electoral_district->slug,
+                        $identity->electoral_district->slug,
                     ]),
                 ]) ?>
             </p>

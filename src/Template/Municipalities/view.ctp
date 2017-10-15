@@ -2,12 +2,12 @@
 /**
  * @var \OurSociety\View\AppView $this The view.
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
- * @var \OurSociety\Model\Entity\User|null $currentUser The current user, if any.
+ * @var \OurSociety\Model\Entity\User|null $identity The current user, if any.
  */
 
 $this->set('title', $municipality->display_name);
 
-if ($currentUser && $currentUser->isInMunicipality($municipality)) {
+if ($identity && $identity->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {
     $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());
@@ -26,8 +26,8 @@ if ($currentUser && $currentUser->isInMunicipality($municipality)) {
         </h1>
     </div>
     <div class="col-auto">
-        <?php if ($currentUser): ?>
-            <?php if ($currentUser->canEditMunicipality($municipality)): ?>
+        <?php if ($identity): ?>
+            <?php if ($identity->canEditMunicipality($municipality)): ?>
                 <?= $this->Html->link(
                     __('Edit Municipal Profile'),
                     ['_name' => 'municipality:edit', 'municipality' => $municipality->slug],

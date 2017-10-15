@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -42,6 +42,7 @@ class AnswersTable extends AppTable
         $this->setDisplayField('name');
 
         $this->addBehavior(CounterCacheBehavior::class, [
+            //'CategoriesUsers' => ['answer_count'],
             'Users' => ['answer_count'],
             // TODO: Implement scope for following counter-caches
             'Questions' => ['citizen_answer_count', 'politician_answer_count'],

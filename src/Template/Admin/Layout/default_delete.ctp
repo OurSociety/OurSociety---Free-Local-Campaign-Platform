@@ -3,7 +3,7 @@
  * Admin layout.
  *
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\User $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User $identity The current user.
  * @var bool $disableSidebar True when the CrudView 'scaffold.sidebar_navigation' config is set to `false`.
  */
 //$this->extend('base');

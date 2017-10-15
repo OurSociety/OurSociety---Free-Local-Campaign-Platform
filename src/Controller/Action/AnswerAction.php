@@ -1,20 +1,19 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Action;
 
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
+use Crud\Traits\FindMethodTrait;
+use Crud\Traits\RedirectTrait;
+use Crud\Traits\SaveMethodTrait;
 use OurSociety\Controller\AppController;
 use OurSociety\Model\Entity\Question;
 use OurSociety\Model\Table\QuestionsTable;
 use Psr\Http\Message\ResponseInterface as Response;
-use Crud\Action\BaseAction;
-use Crud\Traits\FindMethodTrait;
-use Crud\Traits\RedirectTrait;
-use Crud\Traits\SaveMethodTrait;
 
-class AnswerAction extends BaseAction
+class AnswerAction extends Action
 {
     use FindMethodTrait;
     use SaveMethodTrait;
@@ -29,7 +28,7 @@ class AnswerAction extends BaseAction
         $controller = $this->_controller();
         $table = $this->_table();
 
-        $user = $controller->Auth->user();
+        $user = $controller->getIdentity();
         $query = $table->find('batch', ['user' => $user]);
         $questions = $controller->paginate($query);
 
@@ -68,7 +67,7 @@ class AnswerAction extends BaseAction
         // server to receive the same answers twice if client refreshes page while there are validation errors.
         $answeredQuestionIds = $table->Answers->find()
             ->where([
-                'user_id' => $this->_controller()->Auth->user()->id,
+                'user_id' => $this->_controller()->getIdentity()->id,
                 'question_id IN' => Hash::extract($data, '{n}.id'),
             ])
             ->all()
@@ -132,9 +131,9 @@ class AnswerAction extends BaseAction
         /** @var AppController $controller */
         $controller = $this->_controller();
 
-        $oldLevel = $controller->getCurrentUser()->level;
-        $controller->Auth->refreshSession();
-        $newLevel = $controller->getCurrentUser()->level;
+        $oldLevel = $controller->getIdentity()->level;
+        $controller->refreshIdentity();
+        $newLevel = $controller->getIdentity()->level;
 
         if ($oldLevel === $newLevel) {
             $controller->Flash->success('Your answers have been saved. Keep answering to improve your score!');

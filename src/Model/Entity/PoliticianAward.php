@@ -21,4 +21,8 @@ use Cake\I18n\Time;
  */
 class PoliticianAward extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'trophy';
+    }
 }

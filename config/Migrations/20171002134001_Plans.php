@@ -6,7 +6,6 @@ use Migrations\AbstractMigration;
 /** @noinspection AutoloadingIssuesInspection */
 class Plans extends AbstractMigration
 {
-
     public function up(): void
     {
         $this->table('users')
@@ -21,4 +20,3 @@ class Plans extends AbstractMigration
             ->update();
     }
 }
-

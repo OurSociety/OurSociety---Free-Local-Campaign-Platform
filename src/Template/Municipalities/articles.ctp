@@ -1,14 +1,14 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\User $currentUser The currently logged in user.
+ * @var \OurSociety\Model\Entity\User $identity The currently logged in user.
  * @var \Cake\ORM\ResultSet|\OurSociety\Model\Entity\Article[] $articles The articles.
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
  */
 
 $this->set('title', sprintf('%s Articles', $municipality->name));
 
-if ($currentUser && $currentUser->isInMunicipality($municipality)) {
+if ($identity && $identity->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {
     $this->Breadcrumbs->add(__('Municipalities'), $municipality->getBrowseRoute());

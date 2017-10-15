@@ -2,7 +2,7 @@
 /**
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The user entity.
- * @var \OurSociety\Model\Entity\User|null $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User|null $identity The current user.
  */
 ?>
 <section class="users form">
@@ -12,7 +12,7 @@
         <?= $this->Form->control('zip', [
             'type' => 'text',
             'required' => true,
-            'label' => __('ZIP code')
+            'label' => __('ZIP code'),
         ]) ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

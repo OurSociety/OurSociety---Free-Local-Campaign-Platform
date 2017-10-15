@@ -42,12 +42,12 @@ class ScreenshotShell extends AppShell
         ],
         [
             'name' => 'user-login',
-            'url' => '/login',
+            'url' => '/sign-in',
             'auth' => false,
         ],
         [
             'name' => 'user-logout',
-            'url' => '/logout',
+            'url' => '/sign-out',
             'auth' => false,
         ],
         [
@@ -62,12 +62,12 @@ class ScreenshotShell extends AppShell
         ],
         [
             'name' => 'user-register',
-            'url' => '/register',
+            'url' => '/join-oursociety',
             'auth' => false,
         ],
         [
             'name' => 'user-reset-password',
-            'url' => '/reset',
+            'url' => '/reset-password',
             'auth' => false,
         ],
         [
@@ -111,7 +111,7 @@ class ScreenshotShell extends AppShell
     {
         return parent::getOptionParser()
             ->addSubcommand('all', [
-                'help' => 'Take screenshots of all pages.'
+                'help' => 'Take screenshots of all pages.',
             ]);
     }
 

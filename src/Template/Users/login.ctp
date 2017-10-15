@@ -57,7 +57,7 @@ $this->set('title', 'OurSociety - Sign In');
                 <div class="col">
                     <?= $this->Form->control(AppController::COOKIE_NAME_REMEMBER_ME, [
                         'type' => 'checkbox',
-                        'label' => __('Keep me logged in'),
+                        'label' => __('Keep me signed in'),
                         'checked' => true,
                     ]) ?>
                 </div>
