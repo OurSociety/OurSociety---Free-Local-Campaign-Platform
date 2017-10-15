@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\TestSuite\Behat\Context;
+namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use Muffin\Slug\Slugger\CakeSlugger;
+use OurSociety\TestSuite\Behat\Context\PageContext;
 use OurSociety\TestSuite\Behat\Page\MunicipalProfile;
 
-class PublicContext extends PageContext
+class GuestContext extends PageContext
 {
     /**
      * @var MunicipalProfile

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c13381e342f3e5a9ff12d1c52dc11340",
+    "content-hash": "4446be40a0fc3b5f50637eb815cbff84",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -140,6 +140,67 @@
                 "enum"
             ],
             "time": "2017-09-01T10:52:39+00:00"
+        },
+        {
+            "name": "cakephp/authentication",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakephp/authentication.git",
+                "reference": "e758af8b820d9d8b5a54982237234e108bd812b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakephp/authentication/zipball/e758af8b820d9d8b5a54982237234e108bd812b7",
+                "reference": "e758af8b820d9d8b5a54982237234e108bd812b7",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/core": "~3.4",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp": "~3.4",
+                "cakephp/cakephp-codesniffer": "^3.0",
+                "firebase/php-jwt": "~4.0",
+                "phpunit/phpunit": "<6.0"
+            },
+            "suggest": {
+                "cakephp/orm": "To use \"OrmResolver\" (Not needed separately if using full CakePHP framework).",
+                "cakephp/utility": "Provides CakePHP security methods. Required for the JWT adapter and Legacy password hasher.",
+                "ext-ldap": "Make sure this php extension is installed and enabled on your system if you want to use the built-in LDAP adapter for \"LdapIdentifier\".",
+                "firebase/php-jwt": "If you want to use the JWT adapter add this dependency"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Authentication\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Krämer",
+                    "homepage": "http://florian-kraemer.net",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Admad",
+                    "homepage": "http://github.com/admad",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Authentication plugin for CakePHP",
+            "keywords": [
+                "Authentication",
+                "auth",
+                "cakephp",
+                "middleware"
+            ],
+            "time": "2017-10-05T08:42:15+00:00"
         },
         {
             "name": "cakephp/cakephp",
@@ -5124,16 +5185,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490"
+                "reference": "c8664b92a6d5bc229e48b0923486c097e45a7877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/2faa791b66bac33ca40031d8bce03b7dc8143490",
-                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/c8664b92a6d5bc229e48b0923486c097e45a7877",
+                "reference": "c8664b92a6d5bc229e48b0923486c097e45a7877",
                 "shasum": ""
             },
             "require": {
@@ -5172,7 +5233,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-09-13T14:47:08+00:00"
+            "time": "2017-10-12T15:24:51+00:00"
         }
     ],
     "packages-dev": [
@@ -9507,6 +9568,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "cakephp/authentication": 20,
         "league/csv": 20,
         "lorenzo/audit-stash": 20,
         "roave/security-advisories": 20,

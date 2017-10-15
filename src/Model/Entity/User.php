@@ -219,7 +219,7 @@ class User extends AppEntity implements SearchableEntity
             case 'politician':
                 return ['_name' => 'politician', 'politician' => $this->slug] + ($params ?? []);
             default:
-                return ['_name' => 'pathway-politician', 'citizen' => $this->slug] + ($params ?? []);
+                return ['_name' => 'community-contributor', 'citizen' => $this->slug] + ($params ?? []);
         }
     }
 

@@ -22,18 +22,15 @@ class CommunityContributorsController extends CrudController
 
     public function view(): ?Response
     {
-        /** @var User $politician */
-        $politician = $this->loadModel('Users')
-            ->find()
-            //->find('communityContributor')
-            ->where(['slug' => $this->Auth->user('slug')])
-            ->firstOrFail();
+        $slug = $this->getCurrentUserSlug();
+        $this->setRequestPassedParam($slug);
 
-        $this->set([
-            'politician' => $politician,
+        $this->Crud->action()->setConfig([
+            'viewVar' => 'politician',
+            'findMethod' => 'communityContributor',
         ]);
 
-        return null;
+        return $this->Crud->execute();
     }
 
     public function edit(string $slug = null): ?Response

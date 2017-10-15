@@ -62,26 +62,38 @@ default:
                 page: [OurSociety\TestSuite\Behat\Page]
                 element: [OurSociety\TestSuite\Behat\Element]
     suites:
-        public:
+        guest:
             paths:
-                - %paths.base%/features/public
+                - %paths.base%/features/guest
             contexts:
-                - OurSociety\TestSuite\Behat\Context\BrowserContext
-                - OurSociety\TestSuite\Behat\Context\PublicContext
+                - Behat\MinkExtension\Context\MinkContext
+                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
+                - OurSociety\TestSuite\Behat\Context\Page\GuestContext
+                - OurSociety\TestSuite\Behat\Context\System\AuthContext
+        citizen:
+            paths:
+                - %paths.base%/features/citizen
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
+                - OurSociety\TestSuite\Behat\Context\Page\CitizenContext
+                - OurSociety\TestSuite\Behat\Context\System\AuthContext
         politician:
             paths:
                 - %paths.base%/features/politician
             contexts:
-#                - OurSociety\TestSuite\Behat\Context\BrowserContext
-#                - OurSociety\TestSuite\Behat\Context\LoggedInContext:
-#                    - role: politician
-                - OurSociety\TestSuite\Behat\Context\PoliticianContext
+                - Behat\MinkExtension\Context\MinkContext
+                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
+                - OurSociety\TestSuite\Behat\Context\Page\PoliticianContext
+                - OurSociety\TestSuite\Behat\Context\System\AuthContext
         admin:
             paths:
                 - %paths.base%/features/admin
             contexts:
-#                - OurSociety\TestSuite\Behat\Context\FeatureContext
-                - OurSociety\TestSuite\Behat\Context\AdminContext
+                - Behat\MinkExtension\Context\MinkContext
+                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
+                - OurSociety\TestSuite\Behat\Context\Page\AdminContext
+                - OurSociety\TestSuite\Behat\Context\System\AuthContext
 debug:
     extensions:
         Behat\MinkExtension:

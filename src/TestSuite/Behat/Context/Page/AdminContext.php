@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\TestSuite\Behat\Context;
+namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Gherkin\Node\TableNode;
 use OurSociety\ORM\TableRegistry;
 use OurSociety\TestSuite\Behat\Page;
+use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
-class AdminContext extends PageContext
+class AdminContext extends PageObjectContext
 {
     /**
      * @var Page\Admin\ListUsersPage
