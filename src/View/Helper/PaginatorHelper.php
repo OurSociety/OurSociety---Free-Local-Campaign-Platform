@@ -31,4 +31,41 @@ class PaginatorHelper extends BootstrapUI\PaginatorHelper
             ],
         ]);
     }
+
+    public function prev($title = 'Previous', array $options = []): string
+    {
+        return parent::prev($title, $options);
+    }
+
+    public function next($title = 'Next', array $options = []): string
+    {
+        return parent::next($title, $options);
+    }
+
+    public function first($first = 'First', array $options = [])
+    {
+        return parent::first($first, $options);
+    }
+
+    public function last($last = 'Last', array $options = [])
+    {
+        return parent::last($last, $options);
+    }
+
+    /**
+     * @param array|string $options
+     * @return string
+     */
+    public function counter($options = []): string
+    {
+        if (is_string($options)) {
+            $options = ['format' => $options];
+        }
+
+        $options += [
+            'format' => __('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total'),
+        ];
+
+        return parent::counter($options);
+    }
 }

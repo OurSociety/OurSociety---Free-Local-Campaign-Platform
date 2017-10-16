@@ -15,6 +15,7 @@
         "TeamTNT/php-stripe-webhook-tester": "^1.1",
         "algolia/algoliasearch-client-php": "^1.20",
         "cakedc/enum": "^1.1",
+        "cakephp/authentication": "dev-master@dev",
         "cakephp/cakephp": "^3.5",
         "cakephp/localized": "^3.3",
         "cakephp/migrations": "^1.0",

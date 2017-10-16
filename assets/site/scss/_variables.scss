@@ -4,7 +4,6 @@
 //
 // ./node_modules/bootstrap/scss/_variables.scss
 
-
 //
 // Color system
 //
@@ -14,22 +13,21 @@ $os-purple-brand-primary: #582c83;
 $os-purple-brand-secondary: #871898;
 
 // Miscellaneous colors
-$os-purple:          #563d7c;
-$os-purple-bright:   lighten(saturate($os-purple, 5%), 15%);
-$os-purple-light:    #cdbfe3;
+$os-purple: #563d7c;
+$os-purple-bright: lighten(saturate($os-purple, 5%), 15%);
+$os-purple-light: #cdbfe3;
 $os-purple-lightest: #f5f2f9;
-$os-graphite:        #2a2730;
-$os-graphite-light:  lighten($os-graphite, 40%);
-$os-yellow:          #ffe484; // Used by header CTA
-$os-danger:          #d9534f;
-$os-warning:         #f0ad4e;
-$os-info:            #5bc0de;
+$os-graphite: #2a2730;
+$os-graphite-light: lighten($os-graphite, 40%);
+$os-yellow: #ffe484; // Used by header CTA
+$os-danger: #d9534f;
+$os-warning: #f0ad4e;
+$os-info: #5bc0de;
 
 $theme-colors: (
     primary: $os-purple-brand-primary,
     secondary: $os-purple-brand-secondary,
 );
-
 
 // Options
 //
@@ -37,8 +35,7 @@ $theme-colors: (
 
 //$enable-shadows:            true;
 //$enable-gradients:          true;
-$enable-hover-media-query:  true;
-
+$enable-hover-media-query: true;
 
 // Grid columns
 //
@@ -46,13 +43,15 @@ $enable-hover-media-query:  true;
 
 $grid-gutter-width: 15px;
 
-
 // Fonts
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$font-default: "Source Sans Pro";
+$font-heading: "Flexo";
 
+$font-family-sans-serif: $font-default, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$headings-font-family: $font-heading, $font-family-sans-serif;
 
 // Carousel
 

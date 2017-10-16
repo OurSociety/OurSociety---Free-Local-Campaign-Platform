@@ -1,11 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\View\Cell\Scaffold;
 
 use Cake\View\Cell;
 use OurSociety\Model\Entity\AppEntity;
-use OurSociety\Model\Table\UsersTable;
 use OurSociety\View\AppView;
 use OurSociety\View\Scaffold\Field;
 
@@ -26,7 +25,7 @@ class TableCellCell extends Cell
         /** @var AppView $view */
         $view = $this->createView();
         $view->set([
-            'displayField' => $entity->getScaffoldDisplayField(),
+            'displayField' => $entity->getDisplayFieldName(),
             'modelSchema' => $field->getModelSchema(),
             'primaryKey' => $field->getPrimaryKey($entity),
         ]);

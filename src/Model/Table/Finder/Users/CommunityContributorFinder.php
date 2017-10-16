@@ -12,12 +12,22 @@ class CommunityContributorFinder extends Finder
 {
     public function __invoke(Query $query, array $options = []): Query
     {
+        $options += ['strictlyCommunityContributors' => true];
+
         $this->table->hasMany('Articles', [
             'className' => Table\ArticlesTable::class,
             'foreignKey' => 'politician_id',
             'finder' => isset($options['role']) && $options['role'] === User::ROLE_CITIZEN ? 'forCitizen' : 'all',
         ]);
 
-        return $query->find('isCommunityContributor')->contain(['Articles']);
+        return $query
+            //->find('isCommunityContributor')
+            ->contain([
+                'Articles' => function (Query $query): Query {
+                    return $query->contain(['ElectoralDistricts' => function (Query $query): Query {
+                        return $query->select(['id', 'slug']);
+                    }]);
+                }
+            ]);
     }
 }

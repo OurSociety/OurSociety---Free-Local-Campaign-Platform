@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var int $citizenCount
+ * @var int $politicianCount
+ * @var int $adminCount
+ */
+?>
+
 <div class="card os-number-widget">
     <canvas id="chart-user-role" width="400" height="400"></canvas>
 </div>
@@ -13,9 +21,9 @@
         grey: 'rgb(201, 203, 207)'
     };
 
-    window.onload = function() {
+    renderRoleChart = function (element) {
         new Chart(
-            document.getElementById('chart-user-role').getContext('2d'),
+            element.getContext('2d'),
             {
                 type: 'doughnut',
                 data: {
@@ -43,5 +51,9 @@
                 }
             }
         );
+    };
+
+    window.onload = function () {
+        renderRoleChart(document.getElementById('chart-user-role'))
     };
 </script>

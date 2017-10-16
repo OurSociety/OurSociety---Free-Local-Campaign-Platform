@@ -1,4 +1,5 @@
 <?php
+
 use OurSociety\Controller\AppController;
 
 /**
@@ -49,7 +50,7 @@ $this->set('title', 'OurSociety - Sign In');
                             __('Forgot password?'),
                             ['_name' => 'users:forgot']
                         )
-                    )
+                    ),
                 ]) ?>
             </fieldset>
             <div class="row">
@@ -57,7 +58,7 @@ $this->set('title', 'OurSociety - Sign In');
                     <?= $this->Form->control(AppController::COOKIE_NAME_REMEMBER_ME, [
                         'type' => 'checkbox',
                         'label' => __('Keep me logged in'),
-                        'checked' => true
+                        'checked' => true,
                     ]) ?>
                 </div>
                 <div class="col col-md-5 col-lg-3">
@@ -76,7 +77,7 @@ $this->set('title', 'OurSociety - Sign In');
             <?= __('Create a more transparent, collaborative, and highly engaged democratic process that empowers grassroots leadership.') ?>
         </h4>
         <h2>
-            <?= $this->element('logo') ?>
+            <?= $this->element('Layout/brand') ?>
         </h2>
     </div>
 </div>

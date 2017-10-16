@@ -1,16 +1,17 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view.
+ * @var \OurSociety\Model\Entity\User $currentUser
  * @var \OurSociety\Model\Entity\Event $event The event.
  */
-?>
 
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><?= $this->Html->link(__('My Municipality'), ['_name' => 'municipality:default']) ?></li>
-    <li class="breadcrumb-item"><?= $this->Html->link($event->electoral_district->name, ['_name' => 'municipality', 'municipality' => $event->electoral_district->slug]) ?></li>
-    <li class="breadcrumb-item"><?= $this->Html->link(__('Events'), ['_name' => 'municipality:events', 'municipality' => $event->electoral_district->slug]) ?></li>
-    <li class="breadcrumb-item active"><?= $event->name ?></li>
-</ol>
+$this->set('title', sprintf('%s (%s)', $event->name, $event->location));
+
+$this->Breadcrumbs->add(__('Municipalities'), $event->electoral_district->getBrowseRoute());
+$this->Breadcrumbs->add($event->electoral_district->name, $event->electoral_district->getViewRoute());
+$this->Breadcrumbs->add(__('Upcoming Events'), $event->electoral_district->getEventsIndexRoute());
+$this->Breadcrumbs->add($event->name);
+?>
 
 <div class="row">
     <div class="col">
@@ -21,13 +22,14 @@
             </small>
         </h1>
     </div>
-    <div class="col col-auto">
-        <?= $this->Html->link(
-            __('Edit Event'),
-            ['_name' => 'municipality:events:edit', 'event' => $event->id, 'municipality' => $event->electoral_district->slug],
-            ['class' => ['btn btn-outline-dark'], 'icon' => 'pencil']
-        ) ?>
-    </div>
+    <?php if ($currentUser && $currentUser->canEditMunicipality($event->electoral_district)): ?>
+        <div class="col col-auto">
+            <?= $this->Html->link(__('Edit Event'), $event->getEditRoute(), [
+                'class' => ['btn btn-outline-dark'],
+                'icon' => 'pencil',
+            ]) ?>
+        </div>
+    <?php endif ?>
 </div>
 
 <h3 class="text-muted">

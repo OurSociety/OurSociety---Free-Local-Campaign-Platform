@@ -70,7 +70,7 @@ $this->set('title', 'Join OurSociety');
             <?= __('Create a more transparent, collaborative, and highly engaged democratic process that empowers grassroots leadership.') ?>
         </h4>
         <h2>
-            <?= $this->element('logo') ?>
+            <?= $this->element('Layout/brand') ?>
         </h2>
     </div>
 </div>

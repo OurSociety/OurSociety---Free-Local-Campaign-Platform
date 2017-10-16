@@ -1,18 +1,13 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
+ * @var \OurSociety\Model\Entity\User $currentUser
  */
 $this->extend('/Common/Questions/index');
 
-$this->start('breadcrumbs');
-?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link(__('Profile'), ['_name' => 'politician:profile']) ?></li>
-    <li><?= __('My Voice') ?></li>
-</ol>
-<?php
-$this->end();
+$this->Breadcrumbs->add(__('My Dashboard'), $currentUser->getDashboardRoute());
+$this->Breadcrumbs->add(__('Profile'), $currentUser->getProfileRoute());
+$this->Breadcrumbs->add(__('My Voice'));
 
 $this->start('actions');
 echo $this->Html->link(__('View Profile'), ['_name' => 'politician:profile'], ['class' => ['btn btn-default pull-right']]);

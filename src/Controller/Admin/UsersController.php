@@ -1,15 +1,16 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Admin;
 
 use Cake\Event\Event;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\Action\DashboardAction;
+use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
 use Psr\Http\Message\ResponseInterface as Response;
-use OurSociety\Controller\CrudController;
 
 /**
  * UsersController.
@@ -33,6 +34,7 @@ class UsersController extends CrudController
             'citizenCount' => $this->Users->findByRole('citizen')->count(),
             'politicianCount' => $this->Users->findByRole('politician')->count(),
             'adminCount' => $this->Users->findByRole('admin')->count(),
+            'cohortTable' => TableRegistry::get('Audits')->getCohorts(),
         ]);
 
         $this->Crud->action()->setConfig([
@@ -41,7 +43,7 @@ class UsersController extends CrudController
                     new Breadcrumb('Users'),
                     new Breadcrumb('Dashboard'),
                 ],
-            ]
+            ],
         ]);
 
         return $this->Crud->execute();
@@ -65,7 +67,7 @@ class UsersController extends CrudController
                     new Breadcrumb('Dashboard', ['_name' => 'admin:users:dashboard']),
                     new Breadcrumb('Home'),
                 ],
-            ]
+            ],
         ]);
 
         return $this->Crud->execute();
@@ -79,6 +81,42 @@ class UsersController extends CrudController
     public function edit(): ?Response
     {
         return $this->_form();
+    }
+
+    public function view(): ?Response
+    {
+        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'verified', 'created', 'modified']);
+
+        return $this->Crud->execute();
+    }
+
+    public function switch(): ?Response
+    {
+        /** @var User $authAdmin */
+        $authAdmin = $this->request->getSession()->read('Auth.Admin');
+
+        /** @var User $user */
+        $slug = $this->request->getData('user');
+        $user = $slug !== null
+            ? $this->loadModel('Users')->find('auth')->where(['slug' => $slug])->firstOrFail()
+            : $authAdmin;
+
+        if ($authAdmin === null) {
+            $this->request->getSession()->write('Auth.Admin', $this->Auth->user());
+            $this->Flash->warning(\__('You have assumed the identity of {name}.', ['name' => $user->name]));
+        } elseif ($user->id === $authAdmin->id) {
+            $this->request->getSession()->delete('Auth.Admin');
+            $this->Flash->info(\__('Your identity has been reverted back to {name}.', ['name' => $user->name]));
+        }
+
+        $this->Auth->setUser($user);
+
+        return $this->redirect(['_name' => \sprintf('%s:dashboard', $user->role)]);
+    }
+
+    public function export(): ?Response
+    {
+        return $this->Crud->execute();
     }
 
     protected function _form(): ?Response
@@ -119,42 +157,6 @@ class UsersController extends CrudController
             ],
         ]);
 
-        return $this->Crud->execute();
-    }
-
-    public function view(): ?Response
-    {
-        $this->Crud->action()->setConfig('scaffold.fields', ['name', 'email', 'verified', 'created', 'modified']);
-
-        return $this->Crud->execute();
-    }
-
-    public function switch(): ?Response
-    {
-        /** @var User $authAdmin */
-        $authAdmin = $this->request->getSession()->read('Auth.Admin');
-
-        /** @var User $user */
-        $slug = $this->request->getData('user');
-        $user = $slug !== null
-            ? $this->loadModel('Users')->find('auth')->where(['slug' => $slug])->firstOrFail()
-            : $authAdmin;
-
-        if ($authAdmin === null) {
-            $this->request->getSession()->write('Auth.Admin', $this->Auth->user());
-            $this->Flash->warning(\__('You have assumed the identity of {name}.', ['name' => $user->name]));
-        } elseif ($user->id === $authAdmin->id) {
-            $this->request->getSession()->delete('Auth.Admin');
-            $this->Flash->info(\__('Your identity has been reverted back to {name}.', ['name' => $user->name]));
-        }
-
-        $this->Auth->setUser($user);
-
-        return $this->redirect(['_name' => \sprintf('%s:dashboard', $user->role)]);
-    }
-
-    public function export(): ?Response
-    {
         return $this->Crud->execute();
     }
 }

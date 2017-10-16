@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Listener;
 
@@ -48,7 +48,8 @@ class ViewListener extends CrudView\ViewListener
 
             $setControllerName = function (array $config): array {
                 switch ($config['controller']) {
-                    case 'Categories': $config['controller'] = 'Aspects';
+                    case 'Categories':
+                        $config['controller'] = 'Aspects';
                 }
 
                 return $config;
@@ -214,7 +215,7 @@ class ViewListener extends CrudView\ViewListener
             return $options + ['empty' => $empty];
         };
 
-        $defaultHelp = function (array $options, string $field) use ($tableSchema){
+        $defaultHelp = function (array $options, string $field) use ($tableSchema) {
             $comment = $tableSchema->getColumn($field)['comment'];
             if ($comment !== '' && !isset($options['help'])) {
                 $options['help'] = $comment ?? null;
@@ -235,7 +236,7 @@ class ViewListener extends CrudView\ViewListener
         $table = parent::_table();
 
         try {
-            if ($table->hasSlugField()) {
+            if (get_class($table) !== \Cake\ORM\Table::class && $table->hasSlugField()) {
                 //$table->setPrimaryKey('slug'); // TODO: This breaks relations or CRUD navigation depending on set/unset
             }
         } catch (DatabaseException $exception) {

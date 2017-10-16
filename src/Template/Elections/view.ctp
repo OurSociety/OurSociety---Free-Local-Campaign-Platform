@@ -5,11 +5,10 @@
  * @var \OurSociety\View\AppView $this The view.
  * @var \OurSociety\Model\Entity\Election $election
  */
+
+$this->Breadcrumbs->add(__('Elections'), $election->getBrowseRoute());
+$this->Breadcrumbs->add($election->name);
 ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Elections'), ['_name' => 'elections']) ?></li>
-    <li><?= $election->name ?></li>
-</ol>
 
 <h1>
     <?= $election->name ?>
@@ -23,11 +22,13 @@
         <?php else: ?>
             <ul>
                 <?php foreach ($election->contests as $contest): ?>
-                    <li><?= $this->Html->link($contest->name, [
-                        '_name' => 'election:contest',
-                        'election' => $election->slug,
-                        'contest' => $contest->slug,
-                    ]) ?></li>
+                    <li>
+                        <?= $this->Html->link($contest->name, [
+                            '_name' => 'election:contest',
+                            'election' => $election->slug,
+                            'contest' => $contest->slug,
+                        ]) ?>
+                    </li>
                 <?php endforeach ?>
             </ul>
         <?php endif ?>
@@ -74,5 +75,3 @@
         </div>
     </div>
 </div>
-<?php
-debug($election);

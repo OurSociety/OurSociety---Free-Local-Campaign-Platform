@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\View\Scaffold;
 
@@ -77,9 +77,14 @@ class Field
         return $options;
     }
 
-    protected function isDisplayField(AppEntity $entity): bool
+    public function hasTitle(): bool
     {
-        return $entity->getScaffoldDisplayField() === $this->_name;
+        return ($this->getOptions()['title'] ?? null) !== null;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->getOptions()['title'];
     }
 
     public function renderTableCell(AppEntity $entity, AppView $view): string
@@ -95,5 +100,10 @@ class Field
     public function getPrimaryKey(AppEntity $entity): string
     {
         return $this->_model->hasSlugField() ? $this->_model->getSlugFieldName() : $this->_model->getPrimaryKey();
+    }
+
+    public function isDisplayField(AppEntity $entity): bool
+    {
+        return $entity->getDisplayFieldName() === $this->_name;
     }
 }

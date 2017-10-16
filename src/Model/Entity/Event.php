@@ -37,7 +37,8 @@ class Event extends AppEntity
 
     public static function example(array $data = null): self
     {
-        $data = ($data ?? []) + [
+        $data = $data ?? [];
+        $data += [
             'name' => 'Example Event',
             'location' => 'Example Location',
             'start' => Time::now()->addDays(random_int(0, 30)),
@@ -65,5 +66,14 @@ class Event extends AppEntity
             'event' => $this->id,
             'municipality' => $this->electoral_district->slug,
         ]);
+    }
+
+    public function getEditRoute(): array
+    {
+        return [
+            '_name' => 'municipality:events:edit',
+            'event' => $this->id,
+            'municipality' => $this->electoral_district->slug,
+        ];
     }
 }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
-use Cake\ORM\Entity;
 use Cake\Utility\Text;
 use Faker\Factory as Example;
 use OurSociety\View\AppView;
@@ -54,7 +53,7 @@ class Article extends AppEntity
     {
         return FieldList::fromArray($this->getModel(), [
             'politician_id',
-            'name' => ['Article Title'],
+            'name' => ['title' => 'Article Title'],
             'approved',
             'published',
         ]);
@@ -94,7 +93,7 @@ class Article extends AppEntity
             'prefix' => 'politician/profile',
             'controller' => 'Articles',
             'action' => 'edit',
-            $this->slug
+            $this->slug,
         ], ['class' => 'btn btn-default']);
     }
 
@@ -125,16 +124,35 @@ class Article extends AppEntity
 
         $imageCount = substr_count($this->body, '<img');
         switch ($imageCount) {
-            case 1: $imageTimeSeconds = 12; break;
-            case 2: $imageTimeSeconds = 11; break;
-            case 3: $imageTimeSeconds = 10; break;
-            case 4: $imageTimeSeconds = 9; break;
-            case 5: $imageTimeSeconds = 8; break;
-            case 6: $imageTimeSeconds = 7; break;
-            case 7: $imageTimeSeconds = 6; break;
-            case 8: $imageTimeSeconds = 5; break;
-            case 9: $imageTimeSeconds = 4; break;
-            default: $imageTimeSeconds = $imageCount * 3;
+            case 1:
+                $imageTimeSeconds = 12;
+                break;
+            case 2:
+                $imageTimeSeconds = 11;
+                break;
+            case 3:
+                $imageTimeSeconds = 10;
+                break;
+            case 4:
+                $imageTimeSeconds = 9;
+                break;
+            case 5:
+                $imageTimeSeconds = 8;
+                break;
+            case 6:
+                $imageTimeSeconds = 7;
+                break;
+            case 7:
+                $imageTimeSeconds = 6;
+                break;
+            case 8:
+                $imageTimeSeconds = 5;
+                break;
+            case 9:
+                $imageTimeSeconds = 4;
+                break;
+            default:
+                $imageTimeSeconds = $imageCount * 3;
         }
         $imageTimeMinutes = $imageTimeSeconds / MINUTE;
 

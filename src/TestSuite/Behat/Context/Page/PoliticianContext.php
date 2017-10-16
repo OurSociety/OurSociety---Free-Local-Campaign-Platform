@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\TestSuite\Behat\Context;
+namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use OurSociety\TestSuite\Behat\Page\Login;
@@ -10,8 +10,6 @@ use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
 class PoliticianContext extends PageObjectContext
 {
-    use Traits\FixturesTrait;
-
     private const VIDEO_ID_EDIT = 'de7040fd-87c4-33ad-9f61-b9e835c91bb8';
 
     /**

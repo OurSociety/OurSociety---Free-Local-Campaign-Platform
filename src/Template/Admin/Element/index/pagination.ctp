@@ -22,7 +22,7 @@
             <?php endif ?>
         </div>
         <div class="col text-right">
-            <?= $this->Paginator->counter('Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total.'); ?>
+            <?= $this->Paginator->counter(); ?>
         </div>
     </div>
 </div>

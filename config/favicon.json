@@ -1,0 +1,70 @@
+{
+  "favicon_generation": {
+    "api_key": "6761627b7f466d33e024b1843cae290cc003bb2c",
+    "master_picture": {
+      "type": "inline",
+      "content": "[replace with base64 encoded image]"
+    },
+    "favicon_design": {
+      "ios": {
+        "picture_aspect": "background_and_margin",
+        "background_color": "#ffffff",
+        "margin": "14%",
+        "assets": {
+          "ios6_and_prior_icons": true,
+          "ios7_and_later_icons": true,
+          "precomposed_icons": true,
+          "declare_only_default_icon": true
+        },
+        "app_name": "OurSociety"
+      },
+      "desktop_browser": [
+      ],
+      "windows": {
+        "picture_aspect": "no_change",
+        "background_color": "#2d89ef",
+        "on_conflict": "override",
+        "assets": {
+          "windows_80_ie_10_tile": false,
+          "windows_10_ie_11_edge_tiles": {
+            "small": false,
+            "medium": true,
+            "big": false,
+            "rectangle": false
+          }
+        },
+        "app_name": "OurSociety"
+      },
+      "android_chrome": {
+        "picture_aspect": "no_change",
+        "theme_color": "#582c83",
+        "manifest": {
+          "name": "OurSociety",
+          "start_url": "http:\/\/www.oursociety.org",
+          "display": "standalone",
+          "orientation": "not_set",
+          "on_conflict": "override",
+          "declared": true
+        },
+        "assets": {
+          "legacy_icon": false,
+          "low_resolution_icons": false
+        }
+      },
+      "safari_pinned_tab": {
+        "picture_aspect": "black_and_white",
+        "threshold": 29.6875,
+        "theme_color": "#582c83"
+      }
+    },
+    "settings": {
+      "compression": 1,
+      "scaling_algorithm": "Lanczos",
+      "error_on_image_too_small": false
+    },
+    "versioning": {
+      "param_name": "v",
+      "param_value": "YAoa4JeP9g"
+    }
+  }
+}

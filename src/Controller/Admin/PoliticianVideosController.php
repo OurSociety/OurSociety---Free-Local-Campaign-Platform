@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace OurSociety\Controller\Admin;
 
 use Cake\Event\Event;
-use Cake\Utility\Text;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\PoliticianVideo;
 use OurSociety\View\AppView;
@@ -33,7 +32,7 @@ class PoliticianVideosController extends CrudController
                                 $video->youtube_video_url,
                                 ['width' => '100%', 'height' => 300, 'failSilently' => true]
                             );
-                        }
+                        },
                     ],
                     'featured' => ['title' => 'Featured?'],
                 ],
@@ -81,10 +80,10 @@ class PoliticianVideosController extends CrudController
                     ],
                     'featured' => [
                         'label' => 'Feature This Video?',
-                        'help' => 'If checked, this video will be displayed first and at full size.'
+                        'help' => 'If checked, this video will be displayed first and at full size.',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         return $this->Crud->execute();

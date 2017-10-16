@@ -17,6 +17,13 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class EventsController extends CrudController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->Auth->allow(['index', 'view']);
+    }
+
     public function index($municipalitySlug): ?Response
     {
         $this->set([

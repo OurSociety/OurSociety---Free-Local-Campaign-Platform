@@ -6,8 +6,8 @@
  * @var \OurSociety\Model\Entity\User $currentUser The current user.
  * @var bool $disableSidebar True when the CrudView 'scaffold.sidebar_navigation' config is set to `false`.
  */
-$this->extend('base');
-$this->set('theme', 'bd-docs')
+//$this->extend('base');
+//$this->set('theme', 'bd-docs')
 ?>
 
 <a id="skippy" class="sr-only sr-only-focusable" href="#content">

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -10,7 +10,7 @@ use Cake\ORM\Association\HasMany;
  * ElectionsTable.
  *
  * @property HasMany|ContestsTable $Contests
- * @property BelongsTo|StatesTable $States
+ * @property BelongsTo|ElectoralDistrictsTable $States
  * @property BelongsTo|ElectoralDistrictsTable $ElectoralDistricts
  */
 class ElectionsTable extends AppTable
@@ -23,7 +23,7 @@ class ElectionsTable extends AppTable
         parent::initialize($config);
 
         $this->hasMany('Contests');
-        $this->belongsTo('States');
+        $this->belongsTo('States', ['className' => ElectoralDistrictsTable::class]);
         $this->belongsTo('ElectoralDistricts');
     }
 }

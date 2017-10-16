@@ -1468,6 +1468,25 @@ LOCK TABLES `incumbencies` WRITE;
 /*!40000 ALTER TABLE `incumbencies` DISABLE KEYS */;
 /*!40000 ALTER TABLE `incumbencies` ENABLE KEYS */;
 UNLOCK TABLES;
+DROP TABLE IF EXISTS `nodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nodes` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foreign_key` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `lft` int(11) DEFAULT NULL,
+  `rght` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `nodes` WRITE;
+/*!40000 ALTER TABLE `nodes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nodes` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `office_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1559,6 +1578,10 @@ INSERT INTO `phinxlog` VALUES (20170907085856,'RenamePoliticianArticles','2017-0
 INSERT INTO `phinxlog` VALUES (20170912091112,'PathwayPolitician','2017-09-12 14:48:57','2017-09-12 14:48:57',0);
 INSERT INTO `phinxlog` VALUES (20171002115258,'Leveling','2017-10-02 17:24:28','2017-10-02 17:24:28',0);
 INSERT INTO `phinxlog` VALUES (20171002134001,'Plans','2017-10-05 10:51:15','2017-10-05 10:51:15',0);
+INSERT INTO `phinxlog` VALUES (20171010081945,'Tree','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
+INSERT INTO `phinxlog` VALUES (20171013111545,'CommunityContributor','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
+INSERT INTO `phinxlog` VALUES (20171014121221,'Submissions','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
+INSERT INTO `phinxlog` VALUES (20171014132230,'Reports','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `politician_awards`;
@@ -2171,6 +2194,25 @@ INSERT INTO `questions` VALUES ('ffbb6b4c-567a-4a76-98ee-9e28cecc023c','1d01b84a
 INSERT INTO `questions` VALUES ('ffcf8904-5284-4ce6-b607-d95f1339a40c','8bf2b519-a6ce-3eda-85ca-699769b69e44',0,NULL,'Prostitution should be legalized - what two consenting adults want to do is their personal prerogative','scale',0,0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
+DROP TABLE IF EXISTS `reports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reports` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `done` tinyint(1) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `reports` WRITE;
+/*!40000 ALTER TABLE `reports` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reports` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2185,6 +2227,24 @@ CREATE TABLE `states` (
 LOCK TABLES `states` WRITE;
 /*!40000 ALTER TABLE `states` DISABLE KEYS */;
 /*!40000 ALTER TABLE `states` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `submissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `submissions` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `done` tinyint(1) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `submissions` WRITE;
+/*!40000 ALTER TABLE `submissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `submissions` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -2216,7 +2276,7 @@ CREATE TABLE `users` (
   `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `office_type_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `incumbent` tinyint(1) DEFAULT NULL,
-  `pathway_politician` tinyint(1) DEFAULT NULL,
+  `community_contributor` tinyint(1) DEFAULT NULL,
   `token` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `token_expires` datetime DEFAULT NULL,
   `last_seen` datetime DEFAULT NULL,
@@ -2231,7 +2291,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES ('46b4b442-75aa-11e7-b7f8-6c4008a68a60','onboarded-citizen','onboarded-citizen@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$RSWPlcxxDIhqkpNfoKOqneE6TgAIOj.fvZr5ypoii8z/U8wB6U5mq','Onboarded Citizen','citizen',NULL,1,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:10:49',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('5205ae34-759e-11e7-9add-6c4008a68a60','oursociety-team','team@oursociety.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$DNoXh.E6tH47LpOyRaTKMOOEwZ3gATey9NWmxAtRP2HH9jEZwjy7e','OurSociety Team','admin',NULL,1,0,'logo.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 07:54:28','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-08-07 02:19:06');
+INSERT INTO `users` VALUES ('5205ae34-759e-11e7-9add-6c4008a68a60','oursociety-team','team@oursociety.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$DNoXh.E6tH47LpOyRaTKMOOEwZ3gATey9NWmxAtRP2HH9jEZwjy7e','OurSociety Team','admin',NULL,1,0,'/img/logo.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-10-16 03:16:33','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-08-07 02:19:06');
 INSERT INTO `users` VALUES ('54064c3e-759e-11e7-b151-6c4008a68a60','community-contributor','community-contributor@example.com',NULL,'12345','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Community Contributor','citizen',NULL,1,11,'abe82ecb-a760-495a-b885-6ab44d0eae0a.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'123456','2017-07-31 08:09:46','2017-09-21 22:25:51','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
 INSERT INTO `users` VALUES ('573111be-759e-11e7-a371-6c4008a68a60','john-doe','politician@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890','$2y$10$13YLuVeJUmQ5Kx2oYnifyev8YLHzFt2LN1G7UHmLzHItSpReJNIBO','John Doe','politician',NULL,1,50,NULL,NULL,NULL,NULL,NULL,'John Doe II','Edison','NJ','US','1984-01-01',NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-18 16:50:56','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
 INSERT INTO `users` VALUES ('847d8844-75aa-11e7-b6b8-6c4008a68a60','new-citizen','new-citizen@example.com',NULL,NULL,'5d62c426-992f-43cf-8cd5-061da7759707',NULL,'$2y$10$.VpADapLFTFOIKALSll9ce1s5U4GKnTJVz9otaCO8b7iRSbRwXeU6','New Citizen','citizen',NULL,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:08:51',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');

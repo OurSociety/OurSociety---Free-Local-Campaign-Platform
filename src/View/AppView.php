@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\View;
 
@@ -19,6 +19,7 @@ use Gourmet\KnpMenu\View\Helper as GourmetKnpMenu;
  * @property Helper\HtmlHelper $Html
  * @property GourmetKnpMenu\MenuHelper $Menu
  * @property Helper\PaginatorHelper $Paginator
+ * @property Helper\TagHelper $Tag
  * @property Helper\TimeHelper $Time
  * @property Helper\UrlHelper $Url
  * @property Helper\VideoHelper $Video
@@ -72,32 +73,20 @@ class AppView extends CrudView\CrudView
     }
 
     /**
-     * Is site?
-     *
-     * Determines if the current request is for a website page, so layout settings can be switched.
-     *
-     * @return bool True if website, false otherwise.
-     */
-    private function isSite(): bool
-    {
-        return $this->getLayout() === 'site';
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function _loadAssets(): void
     {
         // Switch out default assets on embed layout.
-        if ($this->isSite()) {
-            Configure::write('CrudView.css', [mix('css/site.css')]);
-            Configure::write('CrudView.js.script', [
-                mix('js/manifest.js'),
-                mix('js/vendor.js'),
-                mix('js/common.js'),
-                mix('js/site.js'),
-            ]);
-        }
+        //if ($this->isSite()) {
+        Configure::write('CrudView.css', [mix('css/site.css')]);
+        Configure::write('CrudView.js.script', [
+            mix('js/manifest.js'),
+            mix('js/vendor.js'),
+            mix('js/common.js'),
+            mix('js/site.js'),
+        ]);
+        //}
 
         // Switch out default assets on embed layout.
         if ($this->isEmbed()) {
@@ -107,12 +96,14 @@ class AppView extends CrudView\CrudView
 
         // Switch out default assets on admin prefix.
         if ($this->isAdmin()) {
-            Configure::write('CrudView.css', [mix('css/admin.css')]);
+            $this->set(['containerClass' => 'container-fluid px-3 my-3']);
+            Configure::write('CrudView.css', [mix('css/site.css'), mix('css/admin.css')]);
             Configure::write('CrudView.js.script', [
                 mix('js/manifest.js'),
                 mix('js/vendor.js'),
                 mix('js/common.js'),
                 mix('js/admin.js'),
+                mix('js/site.js'),
             ]);
         }
 
@@ -158,7 +149,7 @@ class AppView extends CrudView\CrudView
         }
 
         // Use the current prefixes default template, not the CrudView one.
-        $this->setLayout($this->isAdmin() ? 'default' : 'site');
+        $this->setLayout('site');
     }
 
     /**
@@ -178,5 +169,17 @@ class AppView extends CrudView\CrudView
                 Configure::read('App.paths.templates')
             ));
         }
+    }
+
+    /**
+     * Is site?
+     *
+     * Determines if the current request is for a website page, so layout settings can be switched.
+     *
+     * @return bool True if website, false otherwise.
+     */
+    private function isSite(): bool
+    {
+        return $this->getLayout() === 'site';
     }
 }

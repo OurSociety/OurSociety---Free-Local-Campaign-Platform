@@ -7,7 +7,7 @@ use JeremyHarris\LazyLoad\ORM\LazyLoadEntityTrait;
 use OurSociety\Model\Table\AppTable;
 use OurSociety\View\Scaffold;
 
-trait ScaffoldTrait
+trait TagAware
 {
     use LazyLoadEntityTrait;
 
@@ -17,12 +17,12 @@ trait ScaffoldTrait
         return $this->_repository();
     }
 
-    public function getScaffoldDisplayField(): string
+    public function getDisplayFieldName(): string
     {
         return $this->getModel()->getDisplayField();
     }
 
-    public function getScaffoldFieldList(): Scaffold\FieldList
+    public function getDefaultFieldList(): Scaffold\FieldList
     {
         return Scaffold\FieldList::fromArray($this->getModel(), $this->getModel()->getSchema()->columns());
     }

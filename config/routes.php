@@ -118,7 +118,9 @@ Router::prefix('admin', ['_namePrefix' => 'admin:'], function (RouteBuilder $rou
     $routes->redirect('/politicians/:action/*', ['controller' => 'Users', 'action' => false], ['persist' => true, 'pass' => ['action']]);
     $routes->connect('/users/switch', ['controller' => 'Users', 'action' => 'switch'], ['_name' => 'users:switch']);
     $routes->connect('/users/dashboard', ['controller' => 'Users', 'action' => 'dashboard'], ['_name' => 'users:dashboard']);
+    $routes->connect('/politicians/dashboard', ['controller' => 'Politicians', 'action' => 'dashboard'], ['_name' => 'politicians:dashboard']);
     $routes->connect('/aspects/users', ['controller' => 'AspectsUsers', 'action' => 'index']);
+    $routes->fallbacks(DashedRoute::class);
     $routes->fallbacks(SluggedRoute::class);
 });
 

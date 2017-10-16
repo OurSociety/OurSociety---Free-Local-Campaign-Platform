@@ -1,8 +1,51 @@
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "flexo-regular", $font-family-base;
+.btn {
+    font-family: $headings-font-family;
 }
 
-.display-1, .display-2, .display-3, .display-4, th {
-    font-family: "flexo-light", $font-family-base;
+.navbar-nav {
+    font-family: $headings-font-family;
+}
+
+.font-family-heading {
+    font-family: $headings-font-family;
+}
+
+.font-family-default {
+    font-family: $font-family-sans-serif;
+}
+
+.font-weight-thin {
+    font-weight: 100;
+}
+
+.font-weight-light {
+    font-weight: 300;
+}
+
+.font-weight-regular {
+    font-weight: 400;
+}
+
+.font-weight-medium {
+    font-weight: 500;
+}
+
+.font-weight-demi {
+    font-weight: 600;
+}
+
+.font-weight-bold {
+    font-weight: 700;
+}
+
+.font-weight-black {
+    font-weight: 900;
+}
+
+.font-style-normal {
+    font-style: normal;
+}
+
+.font-style-italic {
+    font-style: italic;
 }

@@ -20,7 +20,10 @@ class CommunityContributorsController extends CrudController
 
     public function view($citizenSlug): ?Response
     {
-        $this->Crud->action()->setConfig(['viewVar' => 'politician', 'findMethod' => 'communityContributor']);
+        $this->Crud->action()->setConfig([
+            'viewVar' => 'politician',
+            'findMethod' => 'communityContributor',
+        ]);
 
         return $this->Crud->execute();
     }
