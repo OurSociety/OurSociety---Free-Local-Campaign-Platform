@@ -5,7 +5,6 @@ namespace OurSociety\View\Helper;
 
 use BootstrapUI\View\Helper as BootstrapUI;
 use Cake\View\View;
-use OurSociety\View\AppView;
 
 /**
  * BreadcrumbsHelper.
@@ -18,13 +17,10 @@ class BreadcrumbsHelper extends BootstrapUI\BreadcrumbsHelper
     {
         parent::__construct($View, $config);
 
-        /** @var AppView $View */
-        if ($View->getBootstrapVersion() === 4) {
-            $this->setConfig('templates', [
-                'wrapper' => '<nav class="breadcrumb" aria-label="Breadcrumb" {{attrs}}>{{content}}</nav>',
-                'item' => '<a class="breadcrumb-item" href="{{url}}" {{attrs}} {{innerAttrs}}>{{title}}</a>',
-                'itemWithoutLink' => '<a class="breadcrumb-item active" aria-current="page" {{attrs}} {{innerAttrs}}>{{title}}</a>',
-            ]);
-        }
+        $this->setConfig('templates', [
+            'wrapper' => '<nav class="breadcrumb" aria-label="Breadcrumb" {{attrs}}>{{content}}</nav>',
+            'item' => '<a class="breadcrumb-item" href="{{url}}" {{attrs}} {{innerAttrs}}>{{title}}</a>',
+            'itemWithoutLink' => '<a class="breadcrumb-item active" aria-current="page" {{attrs}} {{innerAttrs}}>{{title}}</a>',
+        ]);
     }
 }

@@ -27,10 +27,10 @@ class AnswerActionSpec extends ObjectBehavior
         EventManager $eventManager,
         Request $request
     ): void {
-        $request->method()->willReturn('get');
+        $request->getMethod()->willReturn('get');
         $request->referer()->willReturn('/referrer');
 
-        $controller->eventManager()->willReturn($eventManager);
+        $controller->getEventManager()->willReturn($eventManager);
         $controller->request = $request;
 
         $this->beConstructedWith($controller, ['enabled' => true]);
@@ -49,7 +49,7 @@ class AnswerActionSpec extends ObjectBehavior
         $modelType = 'Table';
         $questions = [new Question];
 
-        $request->method()->willReturn('get');
+        $request->getMethod()->willReturn('get');
         $request->referer()->willReturn('/referrer');
 
         $query->count()->willReturn(1);
@@ -61,7 +61,7 @@ class AnswerActionSpec extends ObjectBehavior
 
         $controller->request = $request;
         $controller->Auth = $authComponent;
-        $controller->eventManager()->willReturn($eventManager);
+        $controller->getEventManager()->willReturn($eventManager);
         $controller->loadModel(null, $modelType)->willReturn($table);
         $controller->paginate($query)->willReturn($query);
         $controller->set(['questions' => $questions])->shouldBeCalled();
@@ -87,12 +87,12 @@ class AnswerActionSpec extends ObjectBehavior
 
         $query->count()->willReturn(0);
 
-        $request->method()->willReturn('get');
+        $request->getMethod()->willReturn('get');
         $request->referer()->willReturn('/referrer');
 
         $controller->Auth = $authComponent;
         $controller->request = $request;
-        $controller->eventManager()->willReturn($eventManager);
+        $controller->getEventManager()->willReturn($eventManager);
         $controller->loadModel(null, $modelType)->willReturn($table);
         $controller->paginate($query)->willReturn($query);
         $controller->redirect('/referrer')->shouldBeCalled();

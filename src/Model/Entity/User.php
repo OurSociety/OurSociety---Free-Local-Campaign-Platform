@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
@@ -71,16 +71,20 @@ class User extends AppEntity implements SearchableEntity
 {
     use Traits\SearchableTrait;
 
-    public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
-    public const ROLES_LABELS = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
-    public const ROLE_ADMIN = 'admin';
-    public const ROLE_CITIZEN = 'citizen';
-    public const ROLE_POLITICIAN = 'politician';
-    public const TOKEN_LENGTH = 6;
-    public const TOKEN_EXPIRY_HOURS = 24;
     public const COUNTRIES = [
         'US' => 'United States of America',
     ];
+
+    public const ROLES = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
+
+    public const ROLES_LABELS = [self::ROLE_ADMIN, self::ROLE_CITIZEN, self::ROLE_POLITICIAN];
+
+    public const ROLE_ADMIN = 'admin';
+
+    public const ROLE_CITIZEN = 'citizen';
+
+    public const ROLE_POLITICIAN = 'politician';
+
     public const STATES = [
         'AL' => 'Alabama',
         'AK' => 'Alaska',
@@ -143,6 +147,10 @@ class User extends AppEntity implements SearchableEntity
         'WY' => 'Wyoming',
     ];
 
+    public const TOKEN_EXPIRY_HOURS = 24;
+
+    public const TOKEN_LENGTH = 6;
+
     /**
      * {@inheritdoc}
      */
@@ -197,9 +205,9 @@ class User extends AppEntity implements SearchableEntity
         return ['_name' => 'community-contributor', 'citizen' => 'ron-rivers'];
     }
 
-    public function getDashboardRoute(): array
+    public function getDashboardRoute(string $role = null): array
     {
-        return ['_name' => sprintf('%s:dashboard', $this->role)];
+        return ['_name' => sprintf('%s:dashboard', $role ?? $this->role)];
     }
 
     public function getLogoutRoute(): array
@@ -377,21 +385,6 @@ class User extends AppEntity implements SearchableEntity
     }
 
     /**
-     * With last seen.
-     *
-     * Populates `last_seen` value with current time.
-     *
-     * @return User
-     */
-    private function withLastSeen(): User
-    {
-        $user = clone $this;
-        $user->last_seen = Time::now();
-
-        return $user;
-    }
-
-    /**
      * With token.
      *
      * Generate `token` and `token_expires` values. Token expires in 24 hours.
@@ -422,10 +415,10 @@ class User extends AppEntity implements SearchableEntity
     public function renderProfilePicture(AppView $view, array $options = null): string
     {
         $options = $options ?? [
-            'alt' => __('Profile picture of {user_name}', ['user_name' => $this->name]),
-            'class' => ['img-fluid'],
-            'style' => 'min-width: 100%',
-        ];
+                'alt' => __('Profile picture of {user_name}', ['user_name' => $this->name]),
+                'class' => ['img-fluid'],
+                'style' => 'min-width: 100%',
+            ];
 
         return $view->Html->image($this, $options);
     }
@@ -438,6 +431,11 @@ class User extends AppEntity implements SearchableEntity
         $table->removeBehaviorIfLoaded(CounterCacheBehavior::class);
         $table->removeBehaviorIfLoaded(TimestampBehavior::class);
         $table->saveOrFail($user);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'people';
     }
 
     protected function _getAge(): ?int
@@ -458,6 +456,21 @@ class User extends AppEntity implements SearchableEntity
         return mb_strlen($password) > 0 ? (new DefaultPasswordHasher)->hash($password) : null;
     }
 
+    /**
+     * With last seen.
+     *
+     * Populates `last_seen` value with current time.
+     *
+     * @return User
+     */
+    private function withLastSeen(): User
+    {
+        $user = clone $this;
+        $user->last_seen = Time::now();
+
+        return $user;
+    }
+
     private function withNextLevel()
     {
         $user = clone $this;
@@ -472,10 +485,5 @@ class User extends AppEntity implements SearchableEntity
         $user->plan = $planId;
 
         return $user;
-    }
-
-    public function searchableAs(): string
-    {
-        return 'people';
     }
 }

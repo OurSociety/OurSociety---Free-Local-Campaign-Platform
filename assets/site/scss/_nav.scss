@@ -5,7 +5,9 @@
 .os-navbar {
     min-height: 4rem;
     background-color: $os-purple-brand-primary;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .05), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    flex-direction: row;
+    flex-wrap: wrap; // Wrap if too many items
 
     @include media-breakpoint-down(md) {
         padding-right: .5rem;
@@ -15,7 +17,7 @@
     @supports (position: sticky) {
         position: sticky;
         top: 0;
-        z-index: ($zindex-tooltip + 1); // over everything in bootstrap
+        z-index: ($zindex-dropdown - 1); // Above most things, but under dropdowns (because of admin navbar)
     }
 
     .navbar-brand {

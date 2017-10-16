@@ -21,6 +21,7 @@
     "browser-sync-webpack-plugin": "^1.2.0",
     "cbt_tunnels": "^0.1.0",
     "chart.js": "^2.6.0",
+    "favicons-webpack-plugin": "dgrp/favicons-webpack-plugin",
     "font-awesome": "^4.7.0",
     "holderjs": "^2.9.4",
     "inputmask": "^3.3.7",

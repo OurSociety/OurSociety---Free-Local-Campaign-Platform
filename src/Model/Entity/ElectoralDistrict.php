@@ -134,6 +134,16 @@ JAVASCRIPT;
         ];
     }
 
+    public function getViewRoute(): array
+    {
+        return ['_name' => 'municipality', 'municipality' => $this->slug];
+    }
+
+    public function getEventsIndexRoute(): array
+    {
+        return ['_name' => 'municipality:events', 'municipality' => $this->slug];
+    }
+
     protected function _getName(): ?string
     {
         $name = $this->_properties['name'] ?? null;

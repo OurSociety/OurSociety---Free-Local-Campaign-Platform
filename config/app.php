@@ -39,6 +39,8 @@ return [
      *   paths for plugins, view templates and locale files respectively.
      */
     'App' => [
+        'name' => 'OurSociety',
+        'beta' => true,
         'namespace' => 'OurSociety',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
@@ -327,7 +329,7 @@ return [
         ],
         'timezoneAwareDateTimeWidget' => false,
         'useAssetCompress' => \Cake\Core\Plugin::loaded('AssetCompress'),
-        'tablesBlacklist' => ['phinxlog']
+        'tablesBlacklist' => ['phinxlog'],
     ],
     /**
      * AuditStash configuration

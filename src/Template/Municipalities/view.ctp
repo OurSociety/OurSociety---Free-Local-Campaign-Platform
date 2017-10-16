@@ -5,6 +5,8 @@
  * @var \OurSociety\Model\Entity\User|null $currentUser The current user, if any.
  */
 
+$this->set('title', $municipality->display_name);
+
 if ($currentUser && $currentUser->isInMunicipality($municipality)) {
     $this->Breadcrumbs->add(__('My Municipality'), $municipality->getRoute());
 } else {

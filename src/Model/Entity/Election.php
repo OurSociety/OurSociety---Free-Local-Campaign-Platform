@@ -24,14 +24,24 @@ use OurSociety\View\AppView;
  * @property string $absentee_request_deadline
  * @property string $electoral_district_id
  *
- * @property Entity $state
+ * @property ElectoralDistrict $state
  * @property Contest[] $contests
  * @property ElectoralDistrict[] $electoral_district
  */
 class Election extends AppEntity
 {
+    public function getViewRoute(): array
+    {
+        return ['_name' => 'election', 'election' => $this->slug];
+    }
+
     public function renderLink(AppView $view, $url = null): string
     {
-        return $view->Html->link($this->name, $url ?: ['_name' => 'election', 'election' => $this->slug]);
+        return $view->Html->link($this->name, $url ?: $this->getViewRoute());
+    }
+
+    public function getBrowseRoute(): array
+    {
+        return ['_name' => 'elections'];
     }
 }

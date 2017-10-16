@@ -15,12 +15,21 @@ $ranges = [
 ?>
 
 <script>
-    (function(w,d,s,g,js,fs){
-        g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
-        js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
-        js.src='https://apis.google.com/js/platform.js';
-        fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
-    }(window,document,'script'));
+    (function (w, d, s, g, js, fs) {
+        g = w.gapi || (w.gapi = {});
+        g.analytics = {
+            q: [], ready: function (f) {
+                this.q.push(f);
+            }
+        };
+        js = d.createElement(s);
+        fs = d.getElementsByTagName(s)[0];
+        js.src = 'https://apis.google.com/js/platform.js';
+        fs.parentNode.insertBefore(js, fs);
+        js.onload = function () {
+            g.load('analytics');
+        };
+    }(window, document, 'script'));
 </script>
 
 <?php $this->start('breadcrumb-actions') ?>
@@ -50,7 +59,7 @@ $ranges = [
     </div>
 </div>
 
-<div class="card mb-3 px-3">
+<div class="card mb-3 px-3" style="min-height: 200px">
     <div id="chart-container"></div>
 </div>
 
@@ -83,14 +92,14 @@ $ranges = [
 
 <div class="row">
     <div class="col-6">
-        <div class="card">
+        <div class="card" style="min-height: 200px">
             <div class="card-body">
                 <div id="chart-3-container"></div>
             </div>
         </div>
     </div>
     <div class="col-6">
-        <div class="card">
+        <div class="card" style="min-height: 200px">
             <div class="card-body">
                 <div id="chart-4-container"></div>
             </div>

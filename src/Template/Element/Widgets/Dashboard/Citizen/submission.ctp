@@ -16,18 +16,20 @@ $submission = $submission ?? \OurSociety\ORM\TableRegistry::get('Submissions')->
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    OurSociety functions best when our thoughts and ideas are challenged to grow.
-                    Questions submitted by our Citizen Users may be added to our Societal Value question database and/or
-                    be used when asking candidates with opposing viewpoints to debate specific questions or topics.
+                    <?= __('OurSociety functions best when our thoughts and ideas are challenged to grow.') ?>
+                    <?= __(
+                        'Questions submitted by our Citizen Users may be added to our Societal Value question database ' .
+                        'and/or be used when asking candidates with opposing viewpoints to debate specific questions or topics.'
+                    ) ?>
                 </p>
                 <p>
-                    We encourage thoughtful questions about the challenges you view our society facing.
-                    Please include any source/reference data you feel would contribute to the dialogue.
+                    <?= __('We encourage thoughtful questions about the challenges you view our society facing.') ?>
+                    <?= __('Please include any source/reference data you feel would contribute to the dialogue.') ?>
                 </p>
             </div>
             <div class="col-md-6">
                 <?= $this->Form->create($submission, [
-                    'url' => ['controller' => 'Submissions', 'action' => 'add']
+                    'url' => ['controller' => 'Submissions', 'action' => 'add'],
                 ]) ?>
                 <?= $this->Form->hidden('user_id', ['value' => $currentUser->id]) ?>
                 <?= $this->Form->control('body', [

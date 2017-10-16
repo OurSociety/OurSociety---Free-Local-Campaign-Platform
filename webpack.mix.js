@@ -2,15 +2,16 @@ const mix = require('laravel-mix');
 const path = require('path');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 mix
 
-  // Current themes: (TODO: if possible, merge site/admin/common into single BS4 theme)
-  // - Site: used for frontend, based on Bootstrap 4
+// Current themes: (TODO: if possible, merge site/admin/common into single BS4 theme)
+// - Site: used for frontend, based on Bootstrap 4
   .sass('assets/site/scss/main.scss', 'webroot/css/site.css')
   .js('assets/site/js/main.js', 'webroot/js/site.js')
   // - Admin: used for backend, based on Bootstrap 4
-  .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', { includePaths: ['node_modules'] })
+  .sass('assets/admin/scss/admin.scss', 'webroot/css/admin.css', {includePaths: ['node_modules']})
   .js('assets/admin/js/admin.js', 'webroot/js/admin.js')
   // - Common: Styles and scripts shared between frontend and backend
   .js('assets/common/js/common.js', 'webroot/js/common.js')
@@ -55,7 +56,7 @@ mix
           use: [
             {
               loader: 'svg-sprite-loader',
-              options: { extract: true, spriteFilename: 'img/icons-badges.svg' }
+              options: {extract: true, spriteFilename: 'img/icons-badges.svg'}
             },
             'svgo-loader'
           ]
@@ -66,7 +67,7 @@ mix
           use: [
             {
               loader: 'svg-sprite-loader',
-              options: { extract: true, spriteFilename: 'img/icons-topics.svg' }
+              options: {extract: true, spriteFilename: 'img/icons-topics.svg'}
             },
             'svgo-loader'
           ]
@@ -77,7 +78,7 @@ mix
           use: [
             {
               loader: 'svg-sprite-loader',
-              options: { extract: true, spriteFilename: 'img/sprite-branding.svg' }
+              options: {extract: true, spriteFilename: 'img/sprite-branding.svg'}
             },
             'svgo-loader'
           ]
@@ -88,7 +89,7 @@ mix
           use: [
             {
               loader: 'svg-sprite-loader',
-              options: { extract: true, spriteFilename: 'img/sprite-admin.svg' }
+              options: {extract: true, spriteFilename: 'img/sprite-admin.svg'}
             },
             'svgo-loader'
           ]
@@ -99,7 +100,7 @@ mix
           use: [
             {
               loader: 'svg-sprite-loader',
-              options: { extract: true, spriteFilename: 'img/brand-sprite.svg' }
+              options: {extract: true, spriteFilename: 'img/brand-sprite.svg'}
             },
             'svgo-loader'
           ]
@@ -111,6 +112,27 @@ mix
       // chunkFilename: 'assets/dist/[name].[chunkhash].js',
     },
     plugins: [
+      new FaviconsWebpackPlugin({
+        logo: './assets/img/logo/logo-large.png',
+        prefix: '/',
+        emitStats: true,
+        statsFilename: 'favicon-manifest.json',
+        persistentCache: true,
+        inject: false,
+        title: 'OurSociety',
+        generator: {
+          appDescription: 'Reimagine Democracy',
+          developerName: 'OurSociety Inc.',
+          developerURL: 'https://www.oursociety.org',
+          background: '#fff',
+          theme_color: '#871898',
+          logging: true,
+          version: "1.0",
+          start_url: "/?platform=android",
+          orientation: "portrait",
+          display: "standalone",
+        },
+      }),
       new SpriteLoaderPlugin(),
       new WebpackNotifierPlugin({
         title: 'OurSociety',
@@ -127,16 +149,16 @@ mix
 if (process.env.npm_lifecycle_event === 'hot') {
   // yarn hot
   mix.browserSync({
-      host: 'localhost',
-      port: 3000,
-      proxy: process.env.APP_DOMAIN,
-      files: [
-        // 'src/**/*.php',
-        // 'src/Template/**/*.php',
-        'webroot/js/**/*.js',
-        'webroot/css/**/*.css'
-      ]
-    })
+    host: 'localhost',
+    port: 3000,
+    proxy: process.env.APP_DOMAIN,
+    files: [
+      // 'src/**/*.php',
+      // 'src/Template/**/*.php',
+      'webroot/js/**/*.js',
+      'webroot/css/**/*.css'
+    ]
+  })
 } else {
   // yarn dev|prod|watch
   mix.version() // version does not work in hot mode

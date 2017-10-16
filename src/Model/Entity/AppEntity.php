@@ -9,7 +9,7 @@ use OurSociety\View\AppView;
 
 abstract class AppEntity extends Entity
 {
-    use Traits\ScaffoldTrait;
+    use Traits\TagAware;
 
     public function __construct(array $properties = [], array $options = [])
     {
