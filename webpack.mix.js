@@ -112,27 +112,6 @@ mix
       // chunkFilename: 'assets/dist/[name].[chunkhash].js',
     },
     plugins: [
-      new FaviconsWebpackPlugin({
-        logo: './assets/img/logo/logo-large.png',
-        prefix: '/',
-        emitStats: true,
-        statsFilename: 'favicon-manifest.json',
-        persistentCache: true,
-        inject: false,
-        title: 'OurSociety',
-        generator: {
-          appDescription: 'Reimagine Democracy',
-          developerName: 'OurSociety Inc.',
-          developerURL: 'https://www.oursociety.org',
-          background: '#fff',
-          theme_color: '#871898',
-          logging: true,
-          version: "1.0",
-          start_url: "/?platform=android",
-          orientation: "portrait",
-          display: "standalone",
-        },
-      }),
       new SpriteLoaderPlugin(),
       new WebpackNotifierPlugin({
         title: 'OurSociety',
