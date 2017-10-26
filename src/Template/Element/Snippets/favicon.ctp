@@ -3,7 +3,13 @@
 use Cake\Filesystem\File;
 use function GuzzleHttp\json_decode;
 
-$manifest = json_decode((new File(WWW_ROOT . 'favicon-manifest.json'))->read(), true);
+$file = new File(WWW_ROOT . 'favicon-manifest.json');
+
+if ($file->exists() === false) {
+    return;
+}
+
+$manifest = json_decode($file->read(), true);
 ?>
 
 <link rel="manifest" href="/manifest.json?v=YAoa4JeP9g">
