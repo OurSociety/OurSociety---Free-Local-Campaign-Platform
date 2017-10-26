@@ -15,6 +15,8 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        $this->Auth->refreshSession();
+
         $user = $this->getCurrentUser();
 
         if ($user->answer_count === 0) {
