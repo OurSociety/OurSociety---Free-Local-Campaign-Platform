@@ -308,6 +308,10 @@ return [
     'Session' => [
         'cookie' => 'session_id',
         'defaults' => 'php',
+        'ini' => [
+            'session.cookie_lifetime' => DAY, // Cookie on users computer lasts for a day.
+            'session.gc_maxlifetime' => DAY, // Sessions on PHP server last for a day.
+        ],
     ],
     /**
      * CrudView settings
