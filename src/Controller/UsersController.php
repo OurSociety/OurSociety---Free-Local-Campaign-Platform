@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller;
 
@@ -122,17 +122,22 @@ class UsersController extends CrudController
                 $user->seen();
 
                 // Set redirect URL to correct dashboard
-                $this->Auth->setConfig('loginRedirect', ['_name' => sprintf('%s:dashboard', $user->role)]);
+                $routeName = 'users:onboarding';
+                if ($user->hasOnboarded()) {
+                    $routeName = sprintf('%s:dashboard', $user->role);
+                }
+                $this->Auth->setConfig('loginRedirect', ['_name' => $routeName]);
+
 
                 // Remember me cookie
                 if ((bool)$this->request->getData(self::COOKIE_NAME_REMEMBER_ME) === true) {
                     $this->Cookie->configKey(self::COOKIE_NAME_REMEMBER_ME, [
                         'expires' => '+1 year',
-                        'httpOnly' => true
+                        'httpOnly' => true,
                     ]);
                     $this->Cookie->write(self::COOKIE_NAME_REMEMBER_ME, [
                         'email' => $this->request->getData('email'),
-                        'password' => $this->request->getData('password')
+                        'password' => $this->request->getData('password'),
                     ]);
                 }
             }
@@ -176,7 +181,7 @@ class UsersController extends CrudController
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
                 $this->Auth->refreshSession($event->getSubject()->entity);
-                $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
+                $this->config('redirectUrl', ['_name' => 'users:onboarding']);
             }
         });
 

@@ -28,7 +28,7 @@
                                     <p>
                                         <?= __(implode(' ', [
                                             "Contracts to obtain, retain, profit from, manage, or dispose of one's",
-                                            'private property should be regulated by the government.'
+                                            'private property should be regulated by the government.',
                                         ])) ?>
                                     </p>
                                     <footer class="blockquote-footer">
@@ -44,7 +44,8 @@
                 </article>
 
                 <div class="nav pt-3 pull-right">
-                    <a href="#tutorial-2" aria-controls="tutorial-2" role="tab" data-toggle="tab" class="btn btn-primary">
+                    <a href="#tutorial-2" aria-controls="tutorial-2" role="tab" data-toggle="tab"
+                       class="btn btn-primary">
                         <?= __('Continue') ?>
                     </a>
                 </div>
@@ -75,7 +76,8 @@
                 </article>
 
                 <div class="nav pt-3 pull-right">
-                    <a href="#tutorial-3" aria-controls="tutorial-3" role="tab" data-toggle="tab" class="btn btn-primary">
+                    <a href="#tutorial-3" aria-controls="tutorial-3" role="tab" data-toggle="tab"
+                       class="btn btn-primary">
                         <?= __('Continue') ?>
                     </a>
                     <!--
@@ -111,7 +113,8 @@
                 </article>
 
                 <div class="nav pt-3 pull-right">
-                    <a href="#tutorial-4" aria-controls="tutorial-4" role="tab" data-toggle="tab" class="btn btn-primary">
+                    <a href="#tutorial-4" aria-controls="tutorial-4" role="tab" data-toggle="tab"
+                       class="btn btn-primary">
                         <?= __('Continue') ?>
                     </a>
                     <!--
@@ -159,7 +162,7 @@
 
                 <p>
                     <?= __('By selecting your location we can match you to {role} in your area.', [
-                        'role' => $currentUser->isPolitician() ? __('constituents') : __('politicians')
+                        'role' => $currentUser->isPolitician() ? __('constituents') : __('politicians'),
                     ]) ?>
                 </p>
 
@@ -170,7 +173,6 @@
                     'data-filter-field' => 'name',
                     'data-url' => $this->Url->build(['_name' => 'district:lookup']),
                     'empty' => true,
-                    'required' => true,
                     'label' => false,
                     'placeholder' => __('Select your municipality'),
                 ]) ?>
@@ -178,10 +180,10 @@
                 <?= $this->Form->control('zip', [
                     'type' => 'text',
                     'required' => true,
-                    'label' => __('ZIP code')
+                    'label' => __('ZIP code'),
                 ]) ?>
                 -->
-                <?= $this->Form->button(__('Save'), ['class' => ['btn-primary', 'pull-right']]) ?>
+                <?= $this->Form->button(__('Continue'), ['class' => ['btn-primary', 'pull-right']]) ?>
                 <!--
                 <a href="#tutorial-4" aria-controls="tutorial-4" role="tab" data-toggle="tab" class="btn btn-link">
                     <?= __('Back') ?>
