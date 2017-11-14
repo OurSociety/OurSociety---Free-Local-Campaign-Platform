@@ -19,4 +19,8 @@ namespace OurSociety\Model\Entity;
  */
 class PoliticianQualification extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'certificate';
+    }
 }

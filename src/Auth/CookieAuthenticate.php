@@ -1,12 +1,8 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Auth;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Core\Configure;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Xety\Cake3CookieAuth\Auth as CookieAuth;
 
 /**

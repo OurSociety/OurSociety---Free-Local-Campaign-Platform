@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table\Finder\Questions;
 
@@ -32,10 +32,10 @@ class BatchFinder extends Finder
         return $query
             ->notMatching('Answers', $whereUserHasAnsweredThisQuestion)
             ->where([
-                $this->table->aliasField('level') => $user->level ?? 1,
+                $this->table->aliasField('level') => $user->level,
             ])
             ->contain([
-                'Categories' => ['fields' => ['slug', 'name']]
+                'Categories' => ['fields' => ['slug', 'name']],
             ])
             ->order([
                 $this->table->aliasField('position'),

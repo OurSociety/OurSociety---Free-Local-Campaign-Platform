@@ -2,10 +2,10 @@
 /**
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $user The user entity.
- * @var \OurSociety\Model\Entity\User|null $currentUser The current user.
+ * @var \OurSociety\Model\Entity\User|null $identity The current user.
  */
 
-$this->Breadcrumbs->add(__('Account profile'), $currentUser ? ['_name' => 'users:profile'] : null);
+$this->Breadcrumbs->add(__('Account profile'), $identity ? ['_name' => 'users:profile'] : null);
 $this->Breadcrumbs->add(__('Password reset'));
 ?>
 
@@ -20,24 +20,24 @@ $this->Breadcrumbs->add(__('Password reset'));
                 'maxlength' => \OurSociety\Model\Entity\User::TOKEN_LENGTH,
             ]) ?>
         <?php endif ?>
-        <?php if ($currentUser === null && $this->request->getQuery('email') === null): ?>
+        <?php if ($identity === null && $this->request->getQuery('email') === null): ?>
             <?= $this->Form->control('email', [
                 'type' => 'email',
                 'required' => true,
-                'label' => __('Email')
+                'label' => __('Email'),
             ]) ?>
         <?php endif ?>
-        <?php if ($currentUser !== null): ?>
+        <?php if ($identity !== null): ?>
             <?= $this->Form->control('current_password', [
                 'type' => 'password',
                 'required' => true,
-                'label' => __('Current password')
+                'label' => __('Current password'),
             ]) ?>
         <?php endif ?>
         <?= $this->Form->control('password', [
             'type' => 'password',
             'required' => true,
-            'label' => __('New password')
+            'label' => __('New password'),
         ]) ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

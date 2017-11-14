@@ -31,7 +31,6 @@ class PoliticiansController extends CrudController
         parent::initialize();
 
         $this->modelClass = 'Users';
-        $this->Auth->allow(['index', 'view', 'claim']);
     }
 
     public function index(): ?Response
@@ -57,8 +56,7 @@ class PoliticiansController extends CrudController
 
     public function view(string $slug = null): ?Response
     {
-        /** @var User $user */
-        $user = $this->Auth->user();
+        $user = $this->getIdentity();
         $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
 
         /** @var User $politician */
@@ -77,11 +75,11 @@ class PoliticiansController extends CrudController
                 'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
                     'example_profile' => $link(__('an example profile'), [
                         '_name' => 'politician',
-                        'politician' => UsersFixture::POLITICIAN_SLUG
+                        'politician' => UsersFixture::POLITICIAN_SLUG,
                     ]),
                     'claim_profile' => $link(__('Claim Profile'), [
                         '_name' => 'politician:claim',
-                        'politician' => $politician->slug
+                        'politician' => $politician->slug,
                     ]),
                 ]
             ), ['params' => ['escape' => false]]);
@@ -115,7 +113,7 @@ class PoliticiansController extends CrudController
                 if (empty($entity->getErrors())) {
                     $saved = $this->Users->save($this->Users->patchEntity($politician, $formData));
                     if ($saved) {
-                        $this->Auth->refreshSession($politician);
+                        $this->authenticateIdentity($politician->id);
                         $this->Flash->success(__(
                             'You have claimed the profile of {politician_name} and are now logged in. '
                             . 'Please update the remaining sections and see the {getting_started} guide.',
@@ -125,9 +123,10 @@ class PoliticiansController extends CrudController
                                     '<a href="%s">%s</a>',
                                     '/docs/onboarding',
                                     __('Getting Started')
-                                )
+                                ),
                             ]
                         ), ['params' => ['escape' => false]]);
+
                         return $this->redirect(['_name' => 'politician:profile']);
                     }
                 }
@@ -144,8 +143,7 @@ class PoliticiansController extends CrudController
     public function embed(string $slug = null): ?Response
     {
         // Start same as view()
-        /** @var User $user */
-        $user = $this->Auth->user();
+        $user = $this->getIdentity();
         $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
 
         /** @var User $politician */
@@ -164,11 +162,11 @@ class PoliticiansController extends CrudController
                 'This profile has not been claimed. Click here to see {example_profile} or choose {claim_profile} to create your account.', [
                     'example_profile' => $link(__('an example profile'), [
                         '_name' => 'politician',
-                        'politician' => UsersFixture::POLITICIAN_SLUG
+                        'politician' => UsersFixture::POLITICIAN_SLUG,
                     ]),
                     'claim_profile' => $link(__('Claim Profile'), [
                         '_name' => 'politician:claim',
-                        'politician' => $politician->slug
+                        'politician' => $politician->slug,
                     ]),
                 ]
             ), ['params' => ['escape' => false]]);

@@ -42,7 +42,7 @@ class DistrictSeed extends App\AbstractSeed
 
         $missingZips = [];
         collection($zips)
-            ->each(function (string $zip) use ($http, &$missingZips) {
+            ->each(function (string $zip) use ($http, &$missingZips): void {
                 $json = \Cake\Cache\Cache::remember(sprintf('zip_json_%s', $zip), function () use ($zip, $http) {
                     return $http->get('http://nominatim.openstreetmap.org/', [
                         'addressdetails' => true,
@@ -56,11 +56,12 @@ class DistrictSeed extends App\AbstractSeed
 
                 if (empty($json)) {
                     $missingZips[] = $zip;
+
                     return;
                 }
 
                 collection($json)
-                    ->each(function (array $row) {
+                    ->each(function (array $row): void {
                         $this->getOutput()->writeln(sprintf('"%s"', implode('","', [
                             $row['address']['hamlet'] ?? '',
                             $row['address']['village'] ?? '',

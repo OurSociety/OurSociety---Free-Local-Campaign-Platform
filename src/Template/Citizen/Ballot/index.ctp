@@ -3,7 +3,7 @@
  * Show a citizen's virtual ballot for an election.
  *
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  * @var \OurSociety\Model\Entity\Election[] $elections
  */
 
@@ -22,7 +22,7 @@ $electionCount = count($elections);
 <?php if ($electionCount === 0): ?>
     <p>
         <?= __('There are no upcoming elections for {place}.', [
-            'place' => $currentUser->electoral_district->renderLink($this),
+            'place' => $identity->electoral_district->renderLink($this),
         ]) ?>
     </p>
 <?php else: ?>
@@ -31,7 +31,7 @@ $electionCount = count($elections);
             'There is one upcoming election for {place}.',
             'There are {count} upcoming elections for {place}.',
             $electionCount,
-            ['count' => $electionCount, 'place' => $currentUser->electoral_district->renderLink($this)]
+            ['count' => $electionCount, 'place' => $identity->electoral_district->renderLink($this)]
         ) ?>
     </p>
 
@@ -47,7 +47,7 @@ $electionCount = count($elections);
         <?php foreach ($elections as $election): ?>
             <li>
                 <?= $election->renderSummaryElement($this, [
-                    'url' => ['_name' => 'citizen:ballot', 'election' => $election->slug]
+                    'url' => ['_name' => 'citizen:ballot', 'election' => $election->slug],
                 ]) ?>
             </li>
         <?php endforeach ?>

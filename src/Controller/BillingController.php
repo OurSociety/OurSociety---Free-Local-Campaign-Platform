@@ -21,7 +21,7 @@ class BillingController extends AppController
      */
     public function checkout($planId): Response
     {
-        $user = $this->getCurrentUser();
+        $user = $this->getIdentity();
         $hostedPage = HostedPage::createFromUserAndPlanId($user, $planId);
         $redirectUrl = $hostedPage->getUrl();
 
@@ -39,7 +39,7 @@ class BillingController extends AppController
      */
     public function portal(): Response
     {
-        $user = $this->getCurrentUser();
+        $user = $this->getIdentity();
         $portalSession = PortalSession::createFromUser($user);
         $redirectUrl = $portalSession->getAccessUrl();
 
@@ -73,10 +73,10 @@ class BillingController extends AppController
         }
 
         /** @var User $user */
-        $user = $this->getCurrentUser();
+        $user = $this->getIdentity();
         $user->persistPlan($planId);
 
-        $this->Auth->refreshSession();
+        $this->refreshIdentity();
 
         return $this->redirect(['_name' => 'plans']);
     }

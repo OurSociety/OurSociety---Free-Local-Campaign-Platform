@@ -1,25 +1,15 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  * @var int $levelQuestionTotal The total number of questions in this level.
  * @var \OurSociety\Model\Entity\ValueMatch $politicianMatch
  */
-$levelMap = [
-    1 => ['name' => 'Citizen', 'image' => '/img/svg/badge/01-citizen.svg'],
-    2 => ['name' => 'Member', 'image' => '/img/svg/badge/02-member.svg'],
-    3 => ['name' => 'Participant', 'image' => '/img/svg/badge/03-participant.svg'],
-    4 => ['name' => 'Informed Voter', 'image' => '/img/svg/badge/04-informed-voter.svg'],
-    5 => ['name' => 'Community Advocate', 'image' => '/img/svg/badge/05-community-advocate.svg'],
-    6 => ['name' => 'Community Champion', 'image' => '/img/svg/badge/06-community-champion.svg'],
-    7 => ['name' => 'Community Builder', 'image' => '/img/svg/badge/07-community-builder.svg'],
-    8 => ['name' => 'Thought Leader', 'image' => '/img/svg/badge/08-thought-leader.svg'],
-    9 => ['name' => 'Visionary Citizen', 'image' => '/img/svg/badge/09-visionary-citizen.svg'],
-    10 => ['name' => 'Enlightened Citizen', 'image' => '/img/svg/badge/10-enlightened-citizen.svg'],
-];
-$levelNumber = $currentUser->level ?? 1;
-$level = $levelMap[$levelNumber];
-$percentage = round(($currentUser->answer_count / $levelQuestionTotal) * 100);
+
+use Cake\I18n\Date;
+
+$levelNumber = $identity->level ?? 1;
+$percentage = round(($identity->answer_count / $levelQuestionTotal) * 100);
 $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
 ?>
 
@@ -32,9 +22,13 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
             <div class="col-md-3">
 
                 <div class="media">
-                    <img class="d-flex mr-3" src="<?= $level['image'] ?>" alt="Badge">
+                    <?= $this->Html->image($identity->level_badge_url, [
+                        'class' => ['d-flex', 'mr-3'],
+                        'alt' => __('Badge for level {name}', ['name' => $identity->level_name]),
+                    ]) ?>
+
                     <div class="media-body">
-                        <h5 class="mt-0"><?= $level['name'] ?></h5>
+                        <h5 class="mt-0"><?= $identity->level_name ?></h5>
                         You are currently on level <?= $levelNumber ?>.
                     </div>
                 </div>
@@ -44,7 +38,7 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
 
                 <p>
                     <?= __('You have answered {answer_count} out of {question_total} questions.', [
-                        'answer_count' => $currentUser->answer_count,
+                        'answer_count' => $identity->answer_count,
                         'question_total' => $levelQuestionTotal,
                     ]) ?>
                     <?php if ($ceilingReached === true): ?>
@@ -63,7 +57,7 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
 
                 <div class="row mt-3">
                     <div class="col">
-                        <?php if ($politicianMatch !== null): ?>
+                        <?php if ($politicianMatch !== null && Date::now()->year >= 2018): ?>
                             <?php
                             $politician = $politicianMatch->politician;
                             $profileLink = $this->Html->link($politician->name, $politician->getPublicProfileRoute());
@@ -90,11 +84,23 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
                         <?php endif ?>
                     </div>
                     <div class="col">
-                        <?= $this->Html->link(
-                            __('Answer some more questions!'),
-                            ['_name' => 'citizen:questions'],
-                            ['class' => ['btn', 'btn-primary', 'btn-block', $ceilingReached ? 'disabled' : null]]
-                        ) ?>
+                        <div class="btn-group">
+                            <?= $this->Html->link(__('Review Past Answers'), ['_name' => 'citizen:answers'], [
+                                'class' => [
+                                    'btn',
+                                    'btn-link',
+                                    $identity->answer_count === 0 ? 'disabled' : null,
+                                ],
+                            ]) ?>
+                            <?= $this->Html->link(__('Answer some more questions!'), ['_name' => 'citizen:questions'], [
+                                'class' => [
+                                    'btn',
+                                    'btn-primary',
+                                    'rounded-left',
+                                    $ceilingReached ? 'disabled' : null,
+                                ],
+                            ]) ?>
+                        </div>
                     </div>
                 </div>
 

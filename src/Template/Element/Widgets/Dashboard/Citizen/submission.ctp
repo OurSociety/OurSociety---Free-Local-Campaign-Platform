@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view.
- * @var \OurSociety\Model\Entity\User $currentUser The currently logged in user.
+ * @var \OurSociety\Model\Entity\User $identity The currently logged in user.
  * @var \OurSociety\Model\Entity\Submission|null $submission The entity to use as form context.
  */
 
@@ -31,7 +31,7 @@ $submission = $submission ?? \OurSociety\ORM\TableRegistry::get('Submissions')->
                 <?= $this->Form->create($submission, [
                     'url' => ['controller' => 'Submissions', 'action' => 'add'],
                 ]) ?>
-                <?= $this->Form->hidden('user_id', ['value' => $currentUser->id]) ?>
+                <?= $this->Form->hidden('user_id', ['value' => $identity->id]) ?>
                 <?= $this->Form->control('body', [
                     'type' => 'textarea',
                     'label' => false,

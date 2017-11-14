@@ -28,7 +28,7 @@ class SubmissionsController extends AppController
             if ($this->Submissions->save($submission)) {
                 $this->Flash->success(__('Your submission has been received. We will review it soon!'));
 
-                return $this->redirect($this->getCurrentUser()->getDashboardRoute());
+                return $this->redirect($this->getIdentity()->getDashboardRoute());
             }
 
             $this->Flash->error(__('There was a problem with your submission. Please, try again.'));

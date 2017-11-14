@@ -7,29 +7,20 @@ use Cake\Network\Session;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\ORM\TableRegistry;
 use OurSociety\Shell\ScreenshotShell;
-use OurSociety\Test\Fixture\UsersFixture;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-/**
- * Screenshot middleware
- */
-class ScreenshotMiddleware
+class ScreenshotMiddleware implements MiddlewareInterface
 {
-
-    /**
-     * Invoke method.
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
-     * @param \Psr\Http\Message\ResponseInterface $response The response.
-     * @param callable $next Callback to invoke the next middleware.
-     * @return \Psr\Http\Message\ResponseInterface A response
-     */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
+        if ($request->hasHeader('User-Agent') === false) {
+            return $next($request, $response);
+        }
+
         $userAgent = $request->getHeader('User-Agent')[0];
 
-        if (strpos($userAgent, ScreenshotShell::USER_AGENT) !== 0) {
+        if ($userAgent === null || strpos($userAgent, ScreenshotShell::USER_AGENT) !== 0) {
             return $next($request, $response);
         }
 
@@ -42,7 +33,7 @@ class ScreenshotMiddleware
         /** @var UsersTable $users */
         $users = TableRegistry::get('Users');
         $user = $users->find('auth')->where([
-            'email' => UsersFixture::ADMIN_EMAIL,
+            //'email' => UsersFixture::ADMIN_EMAIL,
             'password' => $password,
         ])->firstOrFail();
 

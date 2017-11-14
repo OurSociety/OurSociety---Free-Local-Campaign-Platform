@@ -13,3 +13,4 @@ import './_onboarding' // onboarding dropdowns
 import './_search'
 import './_flash' // flash/toast notifications
 import './_dropdown'
+import './_vue' // VueJS components

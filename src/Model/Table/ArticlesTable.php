@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -47,7 +47,7 @@ class ArticlesTable extends AppTable
             'ElectoralDistricts' => [
                 'article_factcheck_count' => ['finder' => 'isNotApproved'],
                 'article_year_count' => ['finder' => 'wasApprovedThisYear'],
-            ]
+            ],
         ]);
     }
 
@@ -71,7 +71,7 @@ class ArticlesTable extends AppTable
             ->add($rules->existsIn(['politician_id'], 'Politicians'));
     }
 
-    public function getBySlug(string $slug, string $role = null): Article
+    public function getBySlug(string $slug, string $role = null): Entity
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this

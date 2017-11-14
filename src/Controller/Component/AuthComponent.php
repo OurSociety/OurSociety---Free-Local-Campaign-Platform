@@ -1,13 +1,13 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Component;
 
+use Cake\Controller\Component as Cake;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use OurSociety\Auth as AppAuth;
 use OurSociety\Controller\AppController;
-use Cake\Controller\Component as Cake;
 use OurSociety\Model\Entity\User;
 use Psr\Log\LogLevel;
 
@@ -33,8 +33,8 @@ class AuthComponent extends Cake\AuthComponent
                     //'scope' => ['verified IS NOT' => null], // TODO: verified IS NOT NULL AND created < week(?) ago
                 ],
                 AppAuth\CookieAuthenticate::class => [
-                    'cookie' => ['name' => AppController::COOKIE_NAME_REMEMBER_ME,
-                ]],
+                    'cookie' => ['name' => AppController::COOKIE_NAME_REMEMBER_ME],
+                ],
                 AppAuth\FormAuthenticate::class,
             ],
             'flash' => ['key' => 'flash', 'element' => 'info'],
@@ -46,6 +46,9 @@ class AuthComponent extends Cake\AuthComponent
         parent::initialize($config);
     }
 
+    /**
+     * @deprecated
+     */
     public function refreshSession(?User $user = null): void
     {
         $id = $user !== null ? $user->id : $this->user('id');

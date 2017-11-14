@@ -62,7 +62,7 @@ class Tree extends AbstractMigration
             //
             //$nodesTable->saveMany($nodes);
 
-            $places->each(function (\OurSociety\Model\Entity\ElectoralDistrict $place) use ($nodesTable) {
+            $places->each(function (\OurSociety\Model\Entity\ElectoralDistrict $place) use ($nodesTable): void {
                 $node = $nodesTable->newEntity([
                     'id' => 'help', //$place->id,
                     //'table' => 'electoral_districts',
@@ -72,7 +72,6 @@ class Tree extends AbstractMigration
                 $saved = $nodesTable->save($node);
                 //dd($node->getErrors());
             });
-
         } while ($places->count());
     }
 }

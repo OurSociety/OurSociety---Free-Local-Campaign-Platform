@@ -44,4 +44,9 @@ class Election extends AppEntity
     {
         return ['_name' => 'elections'];
     }
+
+    public function getIcon(): string
+    {
+        return 'bar-chart';
+    }
 }

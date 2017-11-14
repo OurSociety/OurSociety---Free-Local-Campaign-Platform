@@ -88,8 +88,7 @@ return [
      */
     'Cache' => [
         'default' => [
-            'className' => 'File',
-            'path' => CACHE,
+            'className' => \Cake\Cache\Engine\FileEngine::class,
             'url' => env('CACHE_DEFAULT_URL'),
         ],
 
@@ -100,12 +99,8 @@ return [
          * If you set 'className' => 'Null' core cache will be disabled.
          */
         '_cake_core_' => [
-            'className' => 'File',
-            'prefix' => 'oursociety_cake_core_',
-            'path' => CACHE . 'persistent/',
-            'serialize' => true,
-            'duration' => '+1 years',
-            'url' => env('CACHE_CAKECORE_URL'),
+            'className' => \Cake\Cache\Engine\FileEngine::class,
+            'url' => env('CACHE_CAKE_CORE_URL'),
         ],
 
         /**
@@ -115,12 +110,8 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          */
         '_cake_model_' => [
-            'className' => 'File',
-            'prefix' => 'oursociety_cake_model_',
-            'path' => CACHE . 'models/',
-            'serialize' => true,
-            'duration' => '+1 years',
-            'url' => env('CACHE_CAKEMODEL_URL'),
+            'className' => \Cake\Cache\Engine\FileEngine::class,
+            'url' => env('CACHE_CAKE_MODEL_URL'),
         ],
     ],
 
@@ -187,7 +178,7 @@ return [
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL'),
         ],
         'test' => [
-            'className' => 'Test',
+            'className' => \Cake\Mailer\Transport\DebugTransport::class,
         ],
     ],
 
@@ -242,27 +233,16 @@ return [
     'Log' => [
         'debug' => [
             'className' => Cake\Log\Engine\FileLog::class,
-            'path' => LOGS,
-            'file' => 'debug',
-            'url' => env('LOG_DEBUG_URL'),
-            'scopes' => false,
-            'levels' => ['notice', 'info', 'debug'],
+            'url' => str_replace('/LOGS/', LOGS, env('LOG_DEBUG_URL')),
         ],
         'error' => [
             'className' => Cake\Log\Engine\FileLog::class,
-            'path' => LOGS,
-            'file' => 'error',
-            'url' => env('LOG_ERROR_URL'),
-            'scopes' => false,
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            'url' => str_replace('/LOGS/', LOGS, env('LOG_ERROR_URL')),
         ],
         // To enable this dedicated query log, you need set your datasource's log flag to true
         'queries' => [
             'className' => Cake\Log\Engine\FileLog::class,
-            'path' => LOGS,
-            'file' => 'queries',
-            'url' => env('LOG_QUERIES_URL'),
-            'scopes' => ['queriesLog'],
+            'url' => str_replace('/LOGS/', LOGS, env('LOG_QUERIES_URL')),
         ],
     ],
 

@@ -37,7 +37,7 @@ class QuestionCell extends Cell
         $this->set([
             'question' => $question,
             'number' => $number,
-            'currentUser' => $this->request->session()->read('Auth.User'),
+            'identity' => $this->request->getAttribute('identity')->getOriginalData(),
         ]);
     }
 

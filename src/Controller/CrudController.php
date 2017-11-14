@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller;
 
@@ -59,9 +59,11 @@ abstract class CrudController extends AppController
      */
     protected function getFieldOptionsForYearMonth(): array
     {
+        $birthDate = $this->getIdentity()->born;
+
         return [
             'maxYear' => date('Y'),
-            'minYear' => $this->Auth->user('born') ? $this->Auth->user('born')->year : 1900,
+            'minYear' => $birthDate ? $birthDate->year : 1900,
             'empty' => ['month' => 'Month', 'year' => 'Year'],
             'style' => ['year' => 'display: none'],
             'day' => false,

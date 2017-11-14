@@ -14,22 +14,19 @@ use Psr\Http\Message\ResponseInterface as Response;
  * ElectoralDistricts Controller
  *
  * @property ElectoralDistrictsTable $ElectoralDistricts
-*/
+ */
 class ElectoralDistrictsController extends CrudController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->Auth->allow(['view']);
-    }
-
     /**
-     * @route GET /district/lookup
+     * @route GET /place/lookup
      * @routeName district:lookup
      */
     public function lookup(): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $this->Crud->addListener('api', ApiListener::class);
 
         $this->Crud->on('beforeLookup', function (Event $event) {
@@ -37,7 +34,7 @@ class ElectoralDistrictsController extends CrudController
             $query = $event->getSubject()->query;
             $query
                 ->select([
-                    'name'
+                    'name',
                 ])
                 ->where([
                     array_values($query->aliasField('name'))[0] . ' LIKE' => '%' . $this->request->getQuery('name') . '%',
@@ -45,8 +42,9 @@ class ElectoralDistrictsController extends CrudController
                 ->matching('DistrictTypes', function (Query $query) {
                     return $query->where(['id_vip' => 'municipality']);
                 })
-                //->contain(['Parents'])
-            ;
+                ->contain(['Parents' => function (Query $query) {
+                    return $query->select(['name']);
+                }]);
         });
 
         return $this->Crud->execute();
@@ -57,10 +55,11 @@ class ElectoralDistrictsController extends CrudController
         $this->Crud->on('beforeFind', function (Event $event) {
             /** @var Query $query */
             $query = $event->getSubject()->query;
-            $query->contain([
-                'Children' => ['DistrictTypes'],
-                'Contests' => ['Elections'],
-            ]);
+            $query
+                ->contain([
+                    'Children' => ['DistrictTypes'],
+                    'Contests' => ['Elections'],
+                ]);
         });
 
         $this->Crud->on('beforeRender', function (Event $event) {

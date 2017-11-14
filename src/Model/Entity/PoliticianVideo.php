@@ -32,6 +32,11 @@ class PoliticianVideo extends AppEntity
         return $view->Video->embed($this->youtube_video_url);
     }
 
+    public function getIcon(): string
+    {
+        return 'video-camera';
+    }
+
     protected function _getYoutubeVideoThumbnail(): string
     {
         return $this->properties['youtube_video_thumbnail']

@@ -16,7 +16,7 @@ trait FixturesTrait
     private static $fixtureClass;
 
     /** @BeforeSuite */
-    public static function initFixtures(BeforeSuiteScope $scope)
+    public static function initFixtures(BeforeSuiteScope $scope): void
     {
         /** @noinspection PhpIncludeInspection */
         require_once sprintf('%s/tests/bootstrap.php', dirname(__DIR__, 5));
@@ -25,7 +25,7 @@ trait FixturesTrait
     }
 
     /** @BeforeScenario */
-    public function refreshFixtures(BeforeScenarioScope $scope)
+    public function refreshFixtures(BeforeScenarioScope $scope): void
     {
         self::$fixtureClass->loadTestDatabase();
     }

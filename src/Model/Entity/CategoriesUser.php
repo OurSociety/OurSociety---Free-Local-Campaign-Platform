@@ -18,4 +18,8 @@ namespace OurSociety\Model\Entity;
  */
 class CategoriesUser extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'arrows-h';
+    }
 }

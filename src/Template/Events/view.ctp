@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view.
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  * @var \OurSociety\Model\Entity\Event $event The event.
  */
 
@@ -22,7 +22,7 @@ $this->Breadcrumbs->add($event->name);
             </small>
         </h1>
     </div>
-    <?php if ($currentUser && $currentUser->canEditMunicipality($event->electoral_district)): ?>
+    <?php if ($identity && $identity->canEditMunicipality($event->electoral_district)): ?>
         <div class="col col-auto">
             <?= $this->Html->link(__('Edit Event'), $event->getEditRoute(), [
                 'class' => ['btn btn-outline-dark'],

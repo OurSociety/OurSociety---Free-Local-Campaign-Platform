@@ -5,6 +5,7 @@ namespace OurSociety\Controller\Admin;
 
 use Cake\Event\Event;
 use CrudView\Breadcrumb\Breadcrumb;
+use OurSociety\Action\Admin\Users\ImpersonateUserAction;
 use OurSociety\Controller\Action\DashboardAction;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\User;
@@ -92,26 +93,7 @@ class UsersController extends CrudController
 
     public function switch(): ?Response
     {
-        /** @var User $authAdmin */
-        $authAdmin = $this->request->getSession()->read('Auth.Admin');
-
-        /** @var User $user */
-        $slug = $this->request->getData('user');
-        $user = $slug !== null
-            ? $this->loadModel('Users')->find('auth')->where(['slug' => $slug])->firstOrFail()
-            : $authAdmin;
-
-        if ($authAdmin === null) {
-            $this->request->getSession()->write('Auth.Admin', $this->Auth->user());
-            $this->Flash->warning(\__('You have assumed the identity of {name}.', ['name' => $user->name]));
-        } elseif ($user->id === $authAdmin->id) {
-            $this->request->getSession()->delete('Auth.Admin');
-            $this->Flash->info(\__('Your identity has been reverted back to {name}.', ['name' => $user->name]));
-        }
-
-        $this->Auth->setUser($user);
-
-        return $this->redirect(['_name' => \sprintf('%s:dashboard', $user->role)]);
+        return (new ImpersonateUserAction($this))();
     }
 
     public function export(): ?Response

@@ -1,7 +1,7 @@
 <?php
-namespace OurSociety\Model\Entity;
+declare(strict_types=1);
 
-use Cake\ORM\Entity;
+namespace OurSociety\Model\Entity;
 
 /**
  * Report Entity
@@ -17,9 +17,8 @@ use Cake\ORM\Entity;
  * @property \OurSociety\Model\Entity\Question $question
  * @property \OurSociety\Model\Entity\User $user
  */
-class Report extends Entity
+class Report extends AppEntity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -37,6 +36,11 @@ class Report extends Entity
         'created' => true,
         'modified' => true,
         'question' => true,
-        'user' => true
+        'user' => true,
     ];
+
+    public function getIcon(): string
+    {
+        return 'flag';
+    }
 }

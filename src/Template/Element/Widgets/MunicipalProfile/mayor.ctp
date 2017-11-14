@@ -15,11 +15,7 @@ if ($mayor === null) {
 
 <div<?= $mayor->is_example ? ' class="example"' : null ?>>
 
-    <?php if ($mayor->picture !== null): ?>
-        <img class="card-img" src="<?= $mayor->picture ?>" alt="Card image">
-    <?php else: ?>
-        <?= $this->Html->jdenticon($mayor->id) ?>
-    <?php endif ?>
+    <?= $mayor->renderProfilePicture($this) ?>
 
     <p class="h5 mt-2 mb-0">
         <?= $mayor->renderLink($this) ?>

@@ -2,7 +2,7 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  * @var int $levelQuestionTotal The total number of questions in this level.
  * @var \OurSociety\Model\Entity\ValueMatch $politicianMatch
  */

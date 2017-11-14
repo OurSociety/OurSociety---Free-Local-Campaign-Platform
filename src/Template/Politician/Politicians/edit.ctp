@@ -2,8 +2,9 @@
 /**
  * @var \OurSociety\View\AppView $this The view class.
  * @var User $politician The politician.
- * @var User $currentUser The current user.
+ * @var User $identity The current user.
  */
+
 use OurSociety\Model\Entity\User;
 
 ?>
@@ -15,7 +16,7 @@ use OurSociety\Model\Entity\User;
 
 <h2>
     <?= __('Edit Profile') ?>
-    <?php if ($currentUser->isPolitician()): ?>
+    <?php if ($identity->isPolitician()): ?>
         <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-default pull-right']) ?>
     <?php endif ?>
 </h2>

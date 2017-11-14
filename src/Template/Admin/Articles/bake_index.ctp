@@ -1,9 +1,9 @@
 <?php
 
 use OurSociety\ORM\TableRegistry;
-use OurSociety\View\Scaffold\Field;
-use OurSociety\View\Scaffold\FieldList;
-use OurSociety\View\Tag\Action\Index\Table;
+use OurSociety\View\Component\Listing\Table;
+use OurSociety\View\Component\Field\Field;
+use OurSociety\View\Component\Field\FieldList;
 
 /**
  * @var \OurSociety\View\AppView $this
@@ -11,7 +11,7 @@ use OurSociety\View\Tag\Action\Index\Table;
  */
 ?>
 
-<?= $this->Tag->render(new Table($articles, new FieldList([
+<?= $this->Component->render(new Table($articles, new FieldList([
     new Field(TableRegistry::get('Articles'), 'politician_id'),
     new Field(TableRegistry::get('Articles'), 'name', ['title' => 'Article Title']),
     new Field(TableRegistry::get('Articles'), 'approved'),

@@ -7,19 +7,57 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\TestSuite\Behat\Context\PageContext;
-use OurSociety\TestSuite\Behat\Page\MunicipalProfile;
+use OurSociety\TestSuite\Behat\Page;
+use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
 
 class GuestContext extends PageContext
 {
-    /**
-     * @var MunicipalProfile
-     */
+    private $adminDashboard;
+
+    private $citizenDashboard;
+
+    private $homepage;
+
+    private $join;
+
     private $municipalProfile;
 
+    private $onboarding;
+
+    private $politicianDashboard;
+
+    private $signIn;
+
+    private $forgotPassword;
+
     public function __construct(
-        MunicipalProfile $municipalProfile
+        Page\Admin\Dashboard $adminDashboard,
+        Page\Citizen\Dashboard $citizenDashboard,
+        Page\Citizen\Onboarding $onboarding,
+        Page\Guest\ForgotPassword $forgotPassword,
+        Page\Guest\Homepage $homepage,
+        Page\Guest\Join $join,
+        Page\Guest\SignIn $signIn,
+        Page\MunicipalProfile $municipalProfile,
+        Page\Politician\Dashboard $politicianDashboard
     ) {
+        $this->adminDashboard = $adminDashboard;
+        $this->citizenDashboard = $citizenDashboard;
+        $this->homepage = $homepage;
+        $this->join = $join;
         $this->municipalProfile = $municipalProfile;
+        $this->onboarding = $onboarding;
+        $this->politicianDashboard = $politicianDashboard;
+        $this->signIn = $signIn;
+        $this->forgotPassword = $forgotPassword;
+    }
+
+    /**
+     * @Given I am on the homepage
+     */
+    public function iAmOnTheHomepage()
+    {
+        $this->homepage->open();
     }
 
     /**
@@ -89,5 +127,138 @@ class GuestContext extends PageContext
     public function iShouldSeeAButtonThatLinksTo($arg1, $arg2)
     {
         throw new PendingException();
+    }
+
+    /**
+     * @Given I am on the sign in page
+     */
+    public function iAmOnTheSignInPage()
+    {
+        $this->signIn->open();
+    }
+
+    /**
+     * @When I sign in with email :email and password :password
+     */
+    public function iSignInWithEmailAndPassword(string $email, string $password): void
+    {
+        $this->signIn->signInAs($email, $password);
+    }
+
+    ///**
+    // * @Then I should be on the citizen dashboard
+    // */
+    //public function iShouldBeOnTheCitizenDashboard()
+    //{
+    //    $this->citizenDashboard->isOpen();
+    //}
+    //
+    ///**
+    // * @Then I should be on the politician dashboard
+    // */
+    //public function iShouldBeOnThePoliticianDashboard()
+    //{
+    //    $this->politicianDashboard->isOpen();
+    //}
+    //
+    ///**
+    // * @Then I should be on the admin dashboard
+    // */
+    //public function iShouldBeOnTheAdminDashboard()
+    //{
+    //    $this->adminDashboard->isOpen();
+    //}
+    //
+    ///**
+    // * @Then I should be on the onboarding page
+    // */
+    //public function iShouldBeOnTheOnboardingPage(): void
+    //{
+    //    $this->onboarding->isOpen();
+    //}
+    //
+    ///**
+    // * @Then I am on the join page
+    // */
+    //public function iAmOnTheJoinPage()
+    //{
+    //    $this->join->isOpen();
+    //}
+
+    /**
+     * @When I click to join OurSociety
+     */
+    public function clickToJoinOurSociety()
+    {
+        $this->signIn->join();
+    }
+
+    /**
+     * @When I click forgot password
+     */
+    public function iClickForgotPassword()
+    {
+        $this->signIn->forgotPassword();
+    }
+
+    /**
+     * @Then I am on the forgot password page
+     */
+    public function iAmOnTheForgotPasswordPage()
+    {
+        $this->forgotPassword->isOpen();
+    }
+
+    /**
+     * @When my session expires
+     */
+    public function mySessionExpires()
+    {
+        $this->citizenDashboard->expireSession();
+    }
+
+    /**
+     * @Given I visit the citizen dashboard
+     */
+    public function iVisitTheCitizenDashboard()
+    {
+        $this->citizenDashboard->open();
+    }
+
+    /**
+     * @Given I leave keep me signed in checked
+     */
+    public function iLeaveKeepMeSignedInChecked()
+    {
+        $this->signIn->keepMeSignedIn();
+    }
+
+    /**
+     * @Given I uncheck keep me signed in
+     */
+    public function iUncheckKeepMeSignedIn()
+    {
+        $this->signIn->doNotKeepMeSignedIn();
+    }
+
+    /**
+     * @Given I should be redirected to the sign in page when I refresh
+     */
+    public function iShouldBeRedirectedToTheSignInPageWhenIRefresh()
+    {
+        try {
+            $this->citizenDashboard->open();
+        } catch (UnexpectedPageException $exception) {
+            $this->signIn->isOpen();
+        }
+    }
+
+    /**
+     * @When I sign up with name :name, email :email and password :password
+     */
+    public function iSignUpWithNameEmailAndPassword($name, $email, $password)
+    {
+        $this->join->open();
+        $this->join->signUp($name, $email, $password);
     }
 }

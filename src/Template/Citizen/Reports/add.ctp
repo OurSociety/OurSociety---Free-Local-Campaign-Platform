@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this
- * @var \OurSociety\Model\Entity\User $currentUser
+ * @var \OurSociety\Model\Entity\User $identity
  * @var \OurSociety\Model\Entity\Report $report
  * @var \OurSociety\Model\Entity\Question $question
  */
@@ -43,7 +43,7 @@
     <div class="col-md-6 pb-3 order-md-1">
         <?= $this->Form->create($report) ?>
         <?= $this->Form->control('question_id', ['type' => 'hidden', 'value' => $question->id]) ?>
-        <?= $this->Form->control('user_id', ['type' => 'hidden', 'value' => $currentUser->id]) ?>
+        <?= $this->Form->control('user_id', ['type' => 'hidden', 'value' => $identity->id]) ?>
         <?= $this->Form->control('body', ['label' => false, 'placeholder' => __('Let us know why you are reporting this question.')]) ?>
         <?= $this->Form->button(__('Report Question'), ['class' => ['btn-lg', 'btn-secondary', 'btn-block']]) ?>
         <?= $this->Form->end() ?>

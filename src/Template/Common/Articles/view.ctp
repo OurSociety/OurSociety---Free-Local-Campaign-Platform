@@ -2,7 +2,7 @@
 /**
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\Article $article The currently viewed article.
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
+ * @var \OurSociety\Model\Entity\User $identity The currently authenticated user.
  */
 ?>
 <?= $this->fetch('breadcrumbs') ?>

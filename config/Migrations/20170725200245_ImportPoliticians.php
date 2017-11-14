@@ -24,4 +24,3 @@ class ImportPoliticians extends AbstractMigration
             ->update();
     }
 }
-

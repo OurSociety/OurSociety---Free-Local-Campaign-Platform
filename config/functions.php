@@ -51,6 +51,7 @@ if (!function_exists('mix')) {
                 "Unable to locate Mix file: {$path}. Please check your webpack.mix.js output paths and try again."
             );
         }
+
         return (new \Cake\View\Helper\UrlHelper(new Cake\View\View))->assetUrl($manifestDirectory . $manifest[$path]);
     }
 }

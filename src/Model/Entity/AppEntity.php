@@ -7,9 +7,9 @@ use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use OurSociety\View\AppView;
 
-abstract class AppEntity extends Entity
+abstract class AppEntity extends Entity implements RecordInterface
 {
-    use Traits\TagAware;
+    use Traits\ViewComponentAware;
 
     public function __construct(array $properties = [], array $options = [])
     {
@@ -50,5 +50,10 @@ abstract class AppEntity extends Entity
         $viewVariableName = Inflector::variable($className);
 
         return $view->element($elementName, ($viewVariables ?? []) + [$viewVariableName => $this]);
+    }
+
+    protected function _getIdentifier(): ?string
+    {
+        return $this->_properties['slug'] ?? $this->_properties['id'] ?? null;
     }
 }

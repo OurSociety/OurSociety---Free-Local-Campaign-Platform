@@ -12,13 +12,6 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class ContestsController extends CrudController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->Auth->allow(['view']);
-    }
-
     public function view(): ?Response
     {
         $this->Crud->on('beforeFind', function (Event $event) {

@@ -1,3 +1,9 @@
+https://community.algolia.com/vue-instantsearch/getting-started/styling.html
+https://github.com/algolia/vue-instantsearch/blob/master/src/components/TreeMenu.vue
+https://oursociety.dev/place/select
+https://community.algolia.com/places/examples.html#autocompletejs
+https://www.algolia.com/doc/tutorials/getting-started/getting-started-with-laravel-scout-vuejs/
+
 # OurSociety.org
 
 2017 MVP for OurSociety (Ron Rivers)

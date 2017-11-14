@@ -7,7 +7,6 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\Article;
-use OurSociety\Model\Entity\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -27,7 +26,7 @@ class ArticlesController extends CrudController
                     'approved',
                 ],
                 'actions_blacklist' => [
-                    'export'
+                    'export',
                 ],
             ],
         ]);
@@ -35,7 +34,7 @@ class ArticlesController extends CrudController
         $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query = $event->getSubject()->query->matching('Politicians', function (Query $query) {
                 return $query->where([
-                    'Politicians.slug' => $this->Auth->user('slug'),
+                    'Politicians.slug' => $this->getIdentity()->slug,
                 ]);
             });
         });
@@ -66,8 +65,7 @@ class ArticlesController extends CrudController
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var Article $article */
             $article = $event->getSubject()->entity;
-            /** @var User $user */
-            $user = $this->Auth->user();
+            $user = $this->getIdentity();
 
             if ($user->isPolitician()) {
                 $article->politician_id = $user->id;
@@ -97,7 +95,7 @@ class ArticlesController extends CrudController
                         'help' => 'After publishing, it may take up to a day for your article to appear due to moderation.',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         return $this->Crud->execute();

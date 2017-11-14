@@ -7,8 +7,8 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\View\CellTrait;
 use CrudView\Breadcrumb\Breadcrumb;
-use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\Article;
+use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\ArticlesTable;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
@@ -29,13 +29,6 @@ class ArticlesController extends CrudController
      */
     public $Users;
 
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->Auth->allow(['view', 'viewFromMunicipalityProfile']);
-    }
-
     public function index(string $politician): ?Response
     {
         $this->Crud->action()->setConfig([
@@ -43,14 +36,14 @@ class ArticlesController extends CrudController
             'findMethod' => 'forCitizen',
             'scaffold' => [
                 'actions' => [
-                // TODO: They can click the `name` but would be nice if this "View" button worked.
-                //       ... or just switch the template to a non-table one
-                //    'view' => ['title' => 'What', 'url' => [
-                //        '_name' => 'politician:article',
-                //        'article' => 'the-long-road-ahead',
-                //        'politician' => 'augustus-octavius-bacon',
-                //        'id' => ':primaryKey:',
-                //    ]],
+                    // TODO: They can click the `name` but would be nice if this "View" button worked.
+                    //       ... or just switch the template to a non-table one
+                    //    'view' => ['title' => 'What', 'url' => [
+                    //        '_name' => 'politician:article',
+                    //        'article' => 'the-long-road-ahead',
+                    //        'politician' => 'augustus-octavius-bacon',
+                    //        'id' => ':primaryKey:',
+                    //    ]],
                 ],
                 'breadcrumbs' => [
                     new BreadCrumb('Home'),
@@ -64,13 +57,13 @@ class ArticlesController extends CrudController
                                 'politician' => $article->politician->slug,
                                 'article' => $article->slug,
                             ]);
-                        }
+                        },
                     ],
                     'body' => [
                         'title' => 'Article Summary',
                         'formatter' => function ($name, $value, $entity) {
                             return $this->createView()->Text->truncate($value, 100, ['html' => true]);
-                        }
+                        },
                     ],
                     'published' => ['title' => 'Publication Date'],
                     //'politician_id' => ['title' => 'Politician / Author'], // TODO: Only if $politician === null
@@ -94,19 +87,6 @@ class ArticlesController extends CrudController
         return $this->viewFromPoliticianProfile($politicianSlug, $articleSlug);
     }
 
-    protected function viewFromPoliticianProfile(string $politicianSlug, string $articleSlug): ?Response
-    {
-        /** @var UsersTable $users */
-        $users = $this->loadModel('Users');
-        $politician = $users->getBySlug($politicianSlug, $this->Auth->user()->role);
-
-        $this->set([
-            'politician' => $politician,
-        ]);
-
-        return $this->viewFromProfile($articleSlug);
-    }
-
     public function viewFromMunicipalityProfile(string $municipalitySlug, string $articleSlug): ?Response
     {
         /** @var ElectoralDistrictsTable $municipalities */
@@ -122,28 +102,12 @@ class ArticlesController extends CrudController
         return $this->render('view_municipality');
     }
 
-    protected function viewFromProfile(string $articleSlug): ?Response
-    {
-        /** @var ArticlesTable $articles */
-        $articles = $this->loadModel('Articles');
-        $user = $this->getCurrentUser();
-        $role = $user ? $user->role : null;
-        $article = $articles->getBySlug($articleSlug, $role);
-
-        if ($article->approved === null || $article->published === null) {
-            return $this->redirect([
-                '_name' => 'politician:profile:article',
-                'article' => $article->slug,
-            ]);
-        }
-
-        $this->set('article', $article);
-
-        return null;
-    }
-
     public function add($municipalitySlug): ?Response
     {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
         $getMunicipalityId = function () use ($municipalitySlug): string {
             /** @var ArticlesTable $table */
             $table = $this->loadModel();
@@ -156,8 +120,7 @@ class ArticlesController extends CrudController
         $this->Crud->on('beforeSave', function (Event $event) use ($getMunicipalityId) {
             /** @var Article $article */
             $article = $event->getSubject()->entity;
-            /** @var User $user */
-            $user = $this->Auth->user();
+            $user = $this->getIdentity();
 
             $article->politician_id = $user->id;
             $article->electoral_district_id = $getMunicipalityId();
@@ -172,6 +135,38 @@ class ArticlesController extends CrudController
         });
 
         return $this->_form();
+    }
+
+    protected function viewFromPoliticianProfile(string $politicianSlug, string $articleSlug): ?Response
+    {
+        /** @var UsersTable $users */
+        $users = $this->loadModel('Users');
+        $politician = $users->getBySlug($politicianSlug, $this->getIdentity()->role);
+
+        $this->set([
+            'politician' => $politician,
+        ]);
+
+        return $this->viewFromProfile($articleSlug);
+    }
+
+    protected function viewFromProfile(string $articleSlug): ?Response
+    {
+        /** @var ArticlesTable $articles */
+        $articles = $this->loadModel('Articles');
+        $role = $this->hasIdentity() ? $this->getIdentity()->role : null;
+        $article = $articles->getBySlug($articleSlug, $role);
+
+        if ($article->approved === null || $article->published === null) {
+            return $this->redirect([
+                '_name' => 'politician:profile:article',
+                'article' => $article->slug,
+            ]);
+        }
+
+        $this->set('article', $article);
+
+        return null;
     }
 
     private function _form(): ?Response
@@ -193,11 +188,11 @@ class ArticlesController extends CrudController
             ],
             'messages' => [
                 'success' => [
-                    'text' => 'Thanks for submitting! This article is now in the queue for fact-­checking and will be approved soon.'
+                    'text' => 'Thanks for submitting! This article is now in the queue for fact-­checking and will be approved soon.',
                 ],
                 'error' => [
-                    'text' => 'Could not submit article. Please check for errors below, or contact us if the problem persists.'
-                ]
+                    'text' => 'Could not submit article. Please check for errors below, or contact us if the problem persists.',
+                ],
             ],
         ]);
 

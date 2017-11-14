@@ -5,10 +5,11 @@ use OurSociety\Model\Entity\Election;
 use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\User;
 use OurSociety\View\AppView;
+use OurSociety\View\Component\Layout\NavLink;
 
 /**
  * @var AppView $this The view.
- * @var User $currentUser The identity.
+ * @var User $identity The identity.
  */
 
 if ($this->request->getParam('prefix') === 'admin'):
@@ -24,9 +25,9 @@ $callToActionLink = $this->Url->build([
 
 /** @var Collection $links */
 $links = collection([]);
-if ($currentUser !== null):
+if ($identity !== null):
     $links = $links->append([
-        ['title' => __('My Dashboard'), 'url' => $currentUser->getDashboardRoute($currentUser->isAdmin() ? User::ROLE_CITIZEN : null)],
+        ['title' => __('My Dashboard'), 'url' => $identity->getDashboardRoute($identity->isAdmin() ? User::ROLE_CITIZEN : null)],
         ['title' => __('My Municipality'), 'url' => ['_name' => 'municipality:default']],
     ]);
 else:
@@ -37,7 +38,7 @@ endif;
 $links = $links->append([
     ['title' => __('Municipalities'), 'url' => (new ElectoralDistrict)->getBrowseRoute()],
     ['title' => __('Representatives'), 'url' => ['_name' => 'politicians']],
-    ['title' => __('Elections'), 'url' => (new Election)->getBrowseRoute()],
+    //['title' => __('Elections'), 'url' => (new Election)->getBrowseRoute()],
 ]);
 ?>
 
@@ -49,6 +50,7 @@ $links = $links->append([
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav os-navbar-nav flex-wrap">
             <?php foreach ($links as $link): ?>
+
                 <?php
                 $liClasses = ['nav-item'];
                 $requestPath = $this->request->getUri()->getPath();
@@ -58,7 +60,7 @@ $links = $links->append([
                 endif;
                 ?>
                 <li class="<?= implode(' ', $liClasses) ?> text-nowrap">
-                    <?= $this->Html->link($link['title'], $link['url'], ['class' => ['nav-link']]) ?>
+                    <?= $this->Component->render(new NavLink($link['title'], $link['url'])) ?>
                 </li>
             <?php endforeach ?>
         </ul>

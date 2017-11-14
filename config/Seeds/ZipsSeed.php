@@ -94,6 +94,7 @@ class ZipsSeed extends App\AbstractSeed
         $file = new File(self::ZIPS_FILENAME);
         if ($file->exists()) {
             $this->getOutput()->writeln(sprintf('Cached ZCTAs found in %s', self::ZIPS_FILENAME));
+
             return;
         }
 
@@ -110,13 +111,14 @@ class ZipsSeed extends App\AbstractSeed
         $file = new File(sprintf('%s%s.shp', self::ZIPS_EXTRACT_DIRECTORY, self::ZIPS_SOURCE_TABLE));
         if ($file->exists()) {
             $this->getOutput()->writeln(sprintf('Unzipped ZCTAs found in %s', self::ZIPS_EXTRACT_DIRECTORY));
+
             return;
         }
 
         $this->getOutput()->writeln(sprintf('Unzipping files to %s', self::ZIPS_EXTRACT_DIRECTORY));
 
         $zip = new ZipArchive;
-        if ($zip->open(self::ZIPS_FILENAME) === TRUE) {
+        if ($zip->open(self::ZIPS_FILENAME) === true) {
             $zip->extractTo(self::ZIPS_EXTRACT_DIRECTORY);
             $zip->close();
             $this->getOutput()->writeln('Unzipped files.');

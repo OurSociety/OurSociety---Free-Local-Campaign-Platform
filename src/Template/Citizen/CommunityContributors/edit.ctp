@@ -2,28 +2,30 @@
 /**
  * @var \OurSociety\View\AppView $this The view class.
  * @var User $communityContributor The community contributor.
- * @var User $currentUser The current user.
+ * @var User $identity The current user.
  */
+
 use OurSociety\Model\Entity\User;
 
+$this->Breadcrumbs->add(__('My Municipality'), ['_name' => 'municipality:default']);
+$this->Breadcrumbs->add(__('Community Contributor'));
+$this->Breadcrumbs->add(__('My Profile'), $identity->getPublicProfileRoute());
+$this->Breadcrumbs->add(__('Edit Profile'));
 ?>
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><?= $this->Html->dashboardLink() ?></li>
-    <li class="breadcrumb-item"><?= $this->Html->link(__('Profile'), ['_name' => 'citizen:profile']) ?></li>
-    <li class="breadcrumb-item active"><?= __('Edit Profile') ?></li>
-</ol>
 
-<?= $this->Form->create($communityContributor, ['align' => ['sm' => ['left' => 3, 'middle' => 9]], 'type' => 'file']) ?>
+<?= $this->Form->create($communityContributor, ['type' => 'file']) ?>
 
 <h2>
     <?= __('Edit Profile') ?>
-    <?php if ($currentUser->isPolitician()): ?>
+    <?php if ($identity->isPolitician()): ?>
         <?= $this->Html->link(__('Back to Profile'), ['_name' => 'politician:profile'], ['class' => 'btn btn-outline-dark pull-right']) ?>
     <?php endif ?>
     <?= $this->Form->button(__('Save Changes'), ['class' => ['btn', 'btn-secondary', 'pull-right']]); ?>
 </h2>
 
 <hr>
+
+<?= $this->element('../Citizen/CommunityContributors/banner') ?>
 
 <section class="users form">
     <div class="row">

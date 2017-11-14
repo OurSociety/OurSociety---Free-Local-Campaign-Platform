@@ -38,7 +38,7 @@ class PositionsController extends CrudController
 
         $this->Crud->on('beforePaginate', function (Event $event) {
             $event->getSubject()->query = $event->getSubject()->query->where([
-                'Politicians.slug' => $this->Auth->user('slug'),
+                'Politicians.slug' => $this->getIdentity()->slug,
             ]);
         });
 
@@ -70,14 +70,14 @@ class PositionsController extends CrudController
                     'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
                     'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
-            ]
+            ],
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianPosition $position */
             $position = $event->getSubject()->entity;
             $position->id = Text::uuid();
-            $position->politician_id = $this->Auth->user('id');
+            $position->politician_id = $this->getIdentity()->id;
         });
 
         return $this->Crud->execute();

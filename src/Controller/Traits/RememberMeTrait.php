@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Traits;
 
+use Cake\Http\Cookie\Cookie;
+use OurSociety\Model\Entity\User;
+
 trait RememberMeTrait
 {
     protected function rememberMe(): void
@@ -11,11 +14,11 @@ trait RememberMeTrait
             return;
         }
 
-        if ($this->Auth->user() !== null) {
+        if ($this->getCurrentUser() !== null) {
             return;
         }
 
-        if ($this->Cookie->read(self::COOKIE_NAME_REMEMBER_ME) === null) {
+        if ((new Cookie(self::COOKIE_NAME_REMEMBER_ME))->read() === null) {
             return;
         }
 
@@ -23,13 +26,13 @@ trait RememberMeTrait
         $user = $this->Auth->identify();
 
         if ($user === false) {
-            $this->Cookie->delete(self::COOKIE_NAME_REMEMBER_ME);
+            $this->response = $this->response->withExpiredCookie(self::COOKIE_NAME_REMEMBER_ME);
 
             return;
         }
 
         $user->seen();
 
-        $this->Auth->setUser($user);
+        $this->Auth->setUser($user); // TODO: Use controller method setIdentity after merge
     }
 }

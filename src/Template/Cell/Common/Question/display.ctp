@@ -2,9 +2,10 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\Question $question The question being asked.
- * @var \OurSociety\Model\Entity\User $currentUser The currently authenticated user.
+ * @var \OurSociety\Model\Entity\User $identity The currently authenticated user.
  * @var int $number The question number in the current batch of questions.
  */
+
 use Cake\Utility\Text;
 use OurSociety\Model\Entity\Answer;
 
@@ -48,25 +49,24 @@ $answerError = $getError($question, 'answer');
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-sm-auto order-sm-12 text-center">
+                    <div class="row text-primary">
+                        <div class="col-sm-auto order-sm-12 text-center"
+                             title="Category: <?= $question->category->name ?>">
                             <?= $this->Html->icon(
                                 $question->category->slug,
                                 ['iconSet' => 'topic', 'height' => 100, 'width' => 100]
                             ) ?>
+                            <p class="small mb-0" style="margin-top: -1rem; max-width: 8rem;">
+                                <?= $question->category->name ?>
+                            </p>
                         </div>
                         <div class="col-sm">
                             <blockquote class="blockquote">
-                                <p><?= $question->question ?></p>
-                                <footer class="blockquote-footer">
-                                    <?= __('Category') ?>:
-                                    <cite>
-                                        <?= $question->category->name ?>
-                                    </cite>
-                                </footer>
+                                <?= $question->printQuestion() ?>
                             </blockquote>
                         </div>
                     </div>
+                    <hr>
                     <fieldset class="form-question-importance">
                         <legend><?= __('How important is this topic to you?') ?></legend>
                         <div <?= $importanceError !== null ? ' class="has-error"' : null ?>>
@@ -77,7 +77,7 @@ $answerError = $getError($question, 'answer');
                                 'label' => false,
                                 'type' => 'radio',
                                 'class' => ['has-error'],
-                                'options' => Answer::IMPORTANCE
+                                'options' => Answer::IMPORTANCE,
                             ]) ?>
                         </div>
                     </fieldset>
@@ -86,14 +86,14 @@ $answerError = $getError($question, 'answer');
                     <?= $this->Form->hidden(sprintf('%d.id', $index), ['value' => $question->id]) ?>
                     <?= $this->Form->hidden(sprintf('%d.answers.0.id', $index), ['value' => Text::uuid()]) ?>
                     <?= $this->Form->hidden(sprintf('%d.answers.0.question_id', $index), ['value' => $question->id]) ?>
-                    <?= $this->Form->hidden(sprintf('%d.answers.0.user_id', $index), ['value' => $currentUser->id]) ?>
+                    <?= $this->Form->hidden(sprintf('%d.answers.0.user_id', $index), ['value' => $identity->id]) ?>
                     <div <?= $answerError !== null ? ' class="has-error"' : null ?>>
                         <?= $answerError ?>
                         <?= $this->Form->control(sprintf('%d.answers.0.answer', $index), [
                             'required' => false,
                             'label' => false,
                             'type' => 'radio',
-                            'options' => $question->type === 'scale' ? Answer::ANSWERS_SCALE : Answer::ANSWERS_BOOL
+                            'options' => $question->type === 'scale' ? Answer::ANSWERS_SCALE : Answer::ANSWERS_BOOL,
                         ]) ?>
                     </div>
                 </div>

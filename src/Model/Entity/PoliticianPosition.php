@@ -19,4 +19,8 @@ namespace OurSociety\Model\Entity;
  */
 class PoliticianPosition extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'suitcase';
+    }
 }

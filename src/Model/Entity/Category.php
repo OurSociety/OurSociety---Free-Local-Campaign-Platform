@@ -27,4 +27,9 @@ class Category extends AppEntity
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return TableRegistry::get('Categories')->find()->order('RAND()')->firstOrFail();
     }
+
+    public function getIcon(): string
+    {
+        return 'archive';
+    }
 }

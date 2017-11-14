@@ -6,7 +6,7 @@ namespace OurSociety\View\Cell\Scaffold;
 use Cake\View\Cell;
 use OurSociety\Model\Entity\AppEntity;
 use OurSociety\View\AppView;
-use OurSociety\View\Scaffold\Field;
+use OurSociety\View\Component\Field\Field;
 
 /**
  * TableCell cell.
@@ -26,8 +26,8 @@ class TableCellCell extends Cell
         $view = $this->createView();
         $view->set([
             'displayField' => $entity->getDisplayFieldName(),
-            'modelSchema' => $field->getModelSchema(),
-            'primaryKey' => $field->getPrimaryKey($entity),
+            'modelSchema' => $field->getRecord()->getModelSchema(),
+            'primaryKey' => $field->getRecord()->getIdentifierFieldName(),
         ]);
 
         $this->set([

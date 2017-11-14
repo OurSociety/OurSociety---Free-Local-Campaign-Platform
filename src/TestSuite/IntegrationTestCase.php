@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\TestSuite;
 
@@ -45,7 +45,7 @@ class IntegrationTestCase extends Cake\IntegrationTestCase
             $user->{$field} = $value;
         }
 
-        $this->session(['Auth' => ['User' => $user]]);
+        $this->session(['Auth' => $user]);
     }
 
     /**

@@ -1,14 +1,14 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller;
 
+use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Controller\Component\CookieComponent;
 use Cake\Controller\Component\RequestHandlerComponent;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Gourmet\KnpMenu\Controller\Component\MenuComponent;
-use OurSociety\Controller\Component\AuthComponent;
 use OurSociety\Controller\Component\FlashComponent;
 use Psr\Http\Message\ResponseInterface as Response;
 use Search\Controller\Component\PrgComponent;
@@ -19,19 +19,19 @@ use Search\Controller\Component\PrgComponent;
  * Base class for all controllers in the application. Configures essentials such as authentication.
  *
  * @property Component\AuthComponent $Auth
+ * @property AuthenticationComponent $Authentication
  * @property Component\FlashComponent $Flash
  */
 abstract class AppController extends Controller
 {
     const COOKIE_NAME_REMEMBER_ME = 'remember_me';
 
+    use Traits\ActionAwareTrait;
     use Traits\AuditLogTrait;
-    use Traits\AuthorizationTrait;
     use Traits\ClassNameSupportTrait;
-    use Traits\CurrentUserTrait;
+    use Traits\AuthenticationTrait;
     use Traits\RememberMeTrait;
     use Traits\SecurityTrait;
-    use Traits\UserSwitchingTrait;
 
     /**
      * {@inheritdoc}
@@ -40,14 +40,14 @@ abstract class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent(AuthComponent::class);
+        $this->enableAuthentication();
+        //$this->enableSecurity();
+
         $this->loadComponent(CookieComponent::class);
         $this->loadComponent(FlashComponent::class);
         $this->loadComponent(MenuComponent::class);
         $this->loadComponent(PrgComponent::class);
         $this->loadComponent(RequestHandlerComponent::class);
-
-        $this->loadSecurityComponents();
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class AppController extends Controller
     {
         parent::beforeFilter($event);
 
-        $this->rememberMe();
+        //$this->rememberMe();
         $this->setupAuditLog();
     }
 
@@ -66,7 +66,7 @@ abstract class AppController extends Controller
      */
     public function beforeRender(Event $event): ?Response
     {
-        $this->setCurrentUser();
+        $this->setIdentityToView();
 
         return parent::beforeRender($event);
     }

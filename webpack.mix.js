@@ -51,6 +51,14 @@ mix
     module: {
       rules: [
         {
+          test: /\.vue$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'sass-resources-loader',
+          options: {
+            resources: path.resolve(__dirname, 'assets/site/scss/main.scss')
+          }
+        },
+        {
           test: /\.svg((\?.*)?|$)/,
           include: path.resolve(__dirname, 'assets/img/icon/badge'),
           use: [

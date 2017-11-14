@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety;
 
@@ -8,39 +8,39 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use OurSociety\Middleware\AuthenticationMiddleware;
+use OurSociety\Middleware\AuthorizationMiddleware;
 use OurSociety\Middleware\ScreenshotMiddleware;
 
 /**
  * Application setup class.
  *
- * This defines the bootstrapping logic and middleware layers you
- * want to use in your application.
+ * Defines bootstrapping logic and middleware layers in use by the application.
+ *
+ * @see ErrorHandlerMiddleware for error pages due to exceptions that bubble up.
+ * @see AssetMiddleware for plugin/theme assets as documented by CakePHP.
+ * @see RoutingMiddleware for routing of URLs (see `config/routes.php`)
+ * @see ScreenshotMiddleware for how ScreenshotShell bypasses authentication.
+ * @see AuthenticationMiddleware for user authentication throughout the application (e.g. *who* has access).
+ * @see AuthorizationMiddleware for role-based access control (e.g. *what* can be accessed).
  */
 class Application extends BaseApplication
 {
     /**
      * Setup the middleware queue your application will use.
      *
+     * @see \OurSociety\Auth\AuthenticationService
      * @param MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return MiddlewareQueue The updated middleware queue.
      */
     public function middleware($middlewareQueue): MiddlewareQueue
     {
-        $middlewareQueue
-            // Catch any exceptions in the lower layers,
-            // and make an error page/response
+        return $middlewareQueue
             ->add(ErrorHandlerMiddleware::class)
-
-            // Handle plugin/theme assets like CakePHP normally does.
             ->add(AssetMiddleware::class)
-
-            // Add routing middleware.
             ->add(new RoutingMiddleware($this))
-
-            // Allow screenshots into application
             ->add(ScreenshotMiddleware::class)
-        ;
-
-        return $middlewareQueue;
+            ->add(AuthenticationMiddleware::class)
+            ->add(AuthorizationMiddleware::class);
     }
 }

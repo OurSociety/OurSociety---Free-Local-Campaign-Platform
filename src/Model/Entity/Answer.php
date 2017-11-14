@@ -17,17 +17,15 @@ namespace OurSociety\Model\Entity;
  *
  * @property \OurSociety\Model\Entity\Question $question
  * @property \OurSociety\Model\Entity\User $user
+ * @property string $answer_text
+ * @property string $importance_text
  */
 class Answer extends AppEntity
 {
-    public const ANSWER_STRONGLY_AGREE = 100;
-    public const ANSWER_SOMEWHAT_AGREE = 50;
-    public const ANSWER_NEUTRAL = 0;
-    public const ANSWER_SOMEWHAT_DISAGREE = -50;
-    public const ANSWER_STRONGLY_DISAGREE = -100;
-
-    public const ANSWER_YES = 75;
-    public const ANSWER_NO = -75;
+    public const ANSWERS_BOOL = [
+        self::ANSWER_YES => 'Yes',
+        self::ANSWER_NO => 'No',
+    ];
 
     public const ANSWERS_SCALE = [
         self::ANSWER_STRONGLY_AGREE => 'Strongly Agree',
@@ -37,20 +35,31 @@ class Answer extends AppEntity
         self::ANSWER_STRONGLY_DISAGREE => 'Strongly Disagree',
     ];
 
-    public const ANSWERS_BOOL = [
-        self::ANSWER_YES => 'Yes',
-        self::ANSWER_NO => 'No',
-    ];
+    public const ANSWER_NEUTRAL = 0;
 
-    public const IMPORTANCE_LITTLE = 1;
-    public const IMPORTANCE_SOMEWHAT = 10;
-    public const IMPORTANCE_VERY = 250;
+    public const ANSWER_NO = -75;
+
+    public const ANSWER_SOMEWHAT_AGREE = 50;
+
+    public const ANSWER_SOMEWHAT_DISAGREE = -50;
+
+    public const ANSWER_STRONGLY_AGREE = 100;
+
+    public const ANSWER_STRONGLY_DISAGREE = -100;
+
+    public const ANSWER_YES = 75;
 
     public const IMPORTANCE = [
         self::IMPORTANCE_LITTLE => 'A Little',
         self::IMPORTANCE_SOMEWHAT => 'Somewhat',
         self::IMPORTANCE_VERY => 'Very',
     ];
+
+    public const IMPORTANCE_LITTLE = 1;
+
+    public const IMPORTANCE_SOMEWHAT = 10;
+
+    public const IMPORTANCE_VERY = 250;
 
     public function __construct(array $properties = [], array $options = [])
     {
@@ -59,18 +68,26 @@ class Answer extends AppEntity
         $this->setHidden(['answer']);
     }
 
-    //protected function _getImportance(): ?string
-    //{
-    //    if (!isset($this->_properties['importance'])) {
-    //        return null;
-    //    }
-    //
-    //    return self::IMPORTANCE[$this->_properties['importance']];
-    //}
+    public function getIcon(): string
+    {
+        return 'check-square-o';
+    }
 
-    protected function _getName(): string
+    protected function _getImportanceText(): ?string
+    {
+        return $this->_properties['importance']
+            ? self::IMPORTANCE[$this->_properties['importance']]
+            : 'N/A';
+    }
+
+    protected function _getAnswerText(): string
     {
         return self::ANSWERS_SCALE[$this->_properties['answer']]
             ?? self::ANSWERS_BOOL[$this->_properties['answer']];
+    }
+
+    protected function _getName(): string
+    {
+        return $this->answer_text;
     }
 }

@@ -1,12 +1,12 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Citizen;
 
 use Cake\Event\Event;
 use OurSociety\Controller\Action\AnswerAction;
-use OurSociety\Model\Table\QuestionsTable;
 use OurSociety\Controller\CrudController;
+use OurSociety\Model\Table\QuestionsTable;
 
 class QuestionsController extends CrudController
 {

@@ -24,7 +24,8 @@ class UserCell extends Cell
     public function display(array $formOptions = null): void
     {
         /** @var User $user */
-        $user = $this->request->session()->read('Auth.User');
+        //$user = $this->request->getSession()->read('Auth.User');
+        $user = $this->request->getAttribute('identity')->getOriginalData();
 
         $this->set([
             'user' => $user,
@@ -43,7 +44,7 @@ class UserCell extends Cell
      */
     protected function getUsers(User $user): ?Query
     {
-        $actualUser = $this->request->session()->read('Auth.Admin') ?: $user;
+        $actualUser = $this->request->getSession()->read('Auth.Admin') ?: $user;
 
         if (!$actualUser->isAdmin()) {
             return null;

@@ -1,16 +1,16 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
 use Cake\Datasource\EntityInterface as Entity;
 use Cake\ORM\Association;
 use Cake\ORM\Behavior;
+use Cake\ORM\ResultSet;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Entity\Question;
-use OurSociety\Model\Entity\User;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -28,6 +28,8 @@ use OurSociety\Validation\Validator as AppValidator;
  * @method Question findOrCreate($search, callable $callback = null, $options = [])
  * @method static QuestionsTable instance(?string $alias = null, ?array $options = [])
  *
+ * @method Question[]|ResultSet findByLevel($level)
+ *
  * @mixin Behavior\CounterCacheBehavior
  */
 class QuestionsTable extends AppTable
@@ -43,7 +45,9 @@ class QuestionsTable extends AppTable
 
         $this->setDisplayField('question');
 
-        $this->addBehavior(CounterCacheBehavior::class, ['Categories' => ['question_count']]);
+        $this->addBehavior(CounterCacheBehavior::class, [
+            'Categories' => ['question_count'],
+        ]);
 
         $this->belongsTo('Categories');
         $this->hasMany('Answers');
@@ -82,12 +86,5 @@ class QuestionsTable extends AppTable
     {
         return parent::buildRules($rules)
             ->add($rules->existsIn(['category_id'], 'Categories'));
-    }
-
-    public function getLevelQuestionTotal(User $user): int
-    {
-        return $this->find()->where([
-            $this->aliasField('level') => $user->level ?? 1,
-        ])->count();
     }
 }

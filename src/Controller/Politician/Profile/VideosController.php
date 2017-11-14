@@ -39,7 +39,7 @@ class VideosController extends CrudController
                                 $video->youtube_video_url,
                                 ['width' => '100%', 'height' => 300, 'failSilently' => true]
                             );
-                        }
+                        },
                     ],
                     'featured' => ['title' => 'Featured?'],
                 ],
@@ -51,7 +51,7 @@ class VideosController extends CrudController
             $query = $event->getSubject()->query;
             $query->matching('Politicians', function (Query $query) {
                 return $query->where([
-                    'Politicians.slug' => $this->Auth->user('slug'),
+                    'Politicians.slug' => $this->getIdentity()->slug,
                 ]);
             });
         });
@@ -97,16 +97,16 @@ class VideosController extends CrudController
                     ],
                     'featured' => [
                         'label' => 'Feature This Video?',
-                        'help' => 'If checked, this video will be displayed first and at full size.'
+                        'help' => 'If checked, this video will be displayed first and at full size.',
                     ],
                 ],
-            ]
+            ],
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
             /** @var PoliticianVideo $video */
             $video = $event->getSubject()->entity;
-            $video->politician_id = $this->Auth->user('id');
+            $video->politician_id = $this->getIdentity()->id;
         });
 
         return $this->Crud->execute();

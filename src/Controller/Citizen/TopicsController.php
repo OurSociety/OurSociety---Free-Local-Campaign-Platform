@@ -1,4 +1,5 @@
 <?php
+
 namespace OurSociety\Controller\Citizen;
 
 use OurSociety\Controller\AppController;
@@ -17,7 +18,8 @@ class TopicsController extends AppController
     {
         $this->set([
             'politician' => $this->loadModel('Users')
-                ->find('politicianForCitizen')
+                ->find()
+                //->find('politicianForCitizen')
                 ->where(['slug' => $politician])
                 ->firstOrFail(),
         ]);

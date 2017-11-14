@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table;
 
@@ -8,6 +8,7 @@ use Cake\ORM\Association;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Entity\Report;
+use OurSociety\ORM\TableRegistry;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -26,6 +27,12 @@ use OurSociety\Validation\Validator as AppValidator;
  */
 class ReportsTable extends AppTable
 {
+    public static function instance(array $options = null): self
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return TableRegistry::get('Reports', $options ?? []);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -48,7 +55,7 @@ class ReportsTable extends AppTable
             ->requirePresence('body', 'create')
             ->scalar('body')
             // done
-            ->boolean('done')
+            //->boolean('done') // TODO: Determine why Validation::boolean gets wrong $booleanValues argument
             ->notEmpty('done');
     }
 

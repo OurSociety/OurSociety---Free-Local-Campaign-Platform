@@ -6,7 +6,7 @@ namespace OurSociety\Model\Entity;
 use Cake\Utility\Text;
 use Faker\Factory as Example;
 use OurSociety\View\AppView;
-use OurSociety\View\Scaffold\FieldList;
+use OurSociety\View\Component\Field\FieldList;
 
 /**
  * Article Entity
@@ -108,6 +108,11 @@ class Article extends AppEntity
     public function renderProfileLink(AppView $view): string
     {
         return $view->Html->link($this->politician->name, $this->politician->getPublicProfileRoute());
+    }
+
+    public function getIcon(): string
+    {
+        return 'newspaper-o';
     }
 
     /**

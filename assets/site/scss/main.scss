@@ -1,24 +1,19 @@
-// Options
-@import "variables"; // Customize Bootstrap
-
-// Vendor
-@import "~bootstrap/scss/bootstrap"; // Bootstrap v4
-@import "~font-awesome/scss/font-awesome"; // Font Awesome icons
-
-// Custom
-@import "logo"; // Beta ribbon
-@import "background"; // Background Image
-@import "grid"; // Gutters
-@import "fonts"; // Flexo & Source Sans Pro
-@import "type"; // Typography
-@import "nav"; // Branding
-@import "buttons"; // CTA Links
-@import "footer"; // CTA Links
-@import "borders"; // Circle avatar
-@import "carousel"; // Video carousel controls
-@import "example"; // Faded example regions
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/scss/font-awesome";
+@import "logo";
+@import "background";
+@import "grid";
+@import "fonts";
+@import "type";
+@import "nav";
+@import "buttons";
+@import "footer";
+@import "borders";
+@import "carousel";
+@import "example";
 @import "typeahead";
-@import "editor"; // WYSIWYG editor.
+@import "editor";
 @import "masthead";
 @import "featurettes";
 @import "questions";

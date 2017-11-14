@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\User|null $currentUser The currently logged in user, if any.
+ * @var \OurSociety\Model\Entity\User|null $identity The currently logged in user, if any.
  * @var \OurSociety\Model\Entity\User $politician The currently viewed politician.
  */
 ?>
@@ -26,20 +26,20 @@
 </h2>
 
 <?php if ($politician->featured_video !== null): ?>
-<div class="row">
-    <?php if (count($politician->videos) === 0): ?>
-        <div class="col">
-            <?= $politician->featured_video->renderEmbed($this) ?>
-        </div>
-    <?php else: ?>
-        <div class="col">
-            <?= $politician->featured_video->renderEmbed($this) ?>
-        </div>
-        <div class="col">
-            <?= $politician->videos[0]->renderEmbed($this) ?>
-        </div>
-    <?php endif ?>
-</div>
+    <div class="row">
+        <?php if (count($politician->videos) === 0): ?>
+            <div class="col">
+                <?= $politician->featured_video->renderEmbed($this) ?>
+            </div>
+        <?php else: ?>
+            <div class="col">
+                <?= $politician->featured_video->renderEmbed($this) ?>
+            </div>
+            <div class="col">
+                <?= $politician->videos[0]->renderEmbed($this) ?>
+            </div>
+        <?php endif ?>
+    </div>
 <?php endif ?>
 
 <hr>
@@ -69,14 +69,14 @@
         ? $politician->born->toFormattedDateString()
         : $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']) ?>
     <span class="text-muted small">
-        (<?= __('{age} years old', ['age' => $politician->age])?>)
+        (<?= __('{age} years old', ['age' => $politician->age]) ?>)
     </span>
     <br>
     <?= __('{city}, {state}, {country}', [
         'city' => $politician->birth_city ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
         'state' => $politician->birth_state ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
         'country' => $politician->birth_country ?: $this->Html->tag('span', __('Unknown'), ['class' => 'text-muted']),
-    ])?>
+    ]) ?>
 </p>
 
 <?php if (count($politician->positions) > 0): ?>

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace OurSociety\Test\TestCase\View\Cell;
+namespace OurSociety\Test\TestCase\View\Cell\Navbar;
 
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Network\Session;
 use Cake\ORM\TableRegistry;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
 use OurSociety\TestSuite\TestCase;
 use OurSociety\View\Cell\Navbar\UserCell;
-use Cake\Network\Request;
-use Cake\Network\Response;
 
 /**
  * OurSociety\View\Cell\Navbar\UserCell Test Case
@@ -30,7 +30,7 @@ class UserCellTest extends TestCase
         $session = new Session();
         $session->write($sessionData);
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createMock(ServerRequest::class);
         $request->expects(self::any())->method('session')->willReturn($session);
         $request->expects(self::any())->method('getParam')->willReturn([]);
 

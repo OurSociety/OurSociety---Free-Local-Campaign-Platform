@@ -1,10 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Component;
 
-use Psr\Http\Message\ResponseInterface as Response;
 use Crud\Controller\Component as Crud;
+use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Crud component
@@ -36,7 +36,7 @@ class CrudComponent extends Crud\CrudComponent
      */
     public function removeListener($name): ?bool
     {
-        foreach(array_keys($this->getConfig('listeners')) as $key) {
+        foreach (array_keys($this->getConfig('listeners')) as $key) {
             if (strtolower($key) === strtolower($name)) {
                 return parent::removeListener($key);
             }
