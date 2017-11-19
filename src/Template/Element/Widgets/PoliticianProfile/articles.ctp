@@ -7,7 +7,7 @@
 
 <?php if (count($politician->articles) === 0): ?>
     <p>
-        <?= __("This politician hasn't posted any articles.") ?>
+        <?= __("This representative hasn't posted any articles.") ?>
     </p>
 <?php else: ?>
     <?php foreach ($politician->articles as $article): ?>
