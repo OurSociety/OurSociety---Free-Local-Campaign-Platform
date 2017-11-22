@@ -7,7 +7,7 @@
 
 <div class="politician-video politician-video-featured">
     <?php if ($politician->featured_video === null): ?>
-        <p><?= __("This representative hasn't featured a YouTube video.") ?></p>
+        <p><?= __("This politician hasn't featured a YouTube video.") ?></p>
     <?php else: ?>
         <?= $politician->featured_video->renderEmbed($this) ?>
     <?php endif ?>
