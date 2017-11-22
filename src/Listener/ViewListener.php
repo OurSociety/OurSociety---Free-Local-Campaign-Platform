@@ -11,7 +11,7 @@ use Cake\Utility\Hash;
 use Crud\Action\BaseAction;
 use CrudView\Listener as CrudView;
 use CrudView\Menu\MenuItem;
-use OurSociety\Controller\CrudController;
+use OurSociety\Controller\AppController;
 use OurSociety\Model\Table\AppTable;
 use Psr\Log\LogLevel;
 
@@ -72,7 +72,7 @@ class ViewListener extends CrudView\ViewListener
      * @param string|null $name The name of the action.
      * @return BaseAction The action.
      */
-    protected function _controller(): CrudController
+    protected function _controller(): AppController
     {
         return parent::_controller();
     }

@@ -51,6 +51,25 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        $this->loadComponent('Crud', [
+            'actions' => [
+                //'index' => Action\IndexAction::class,
+                //'add' => Action\AddAction::class,
+                //'edit' => Action\EditAction::class,
+                //'view' => Action\ViewAction::class,
+                //'delete' => Action\DeleteAction::class,
+                //'export' => Action\ExportAction::class,
+                //'lookup' => LookupAction::class,
+            ],
+            'listeners' => [
+                //ViewListener::class, // All CrudView configuration inside this class.
+                //ViewSearchListener::class,
+                //SearchListener::class,
+                //RedirectListener::class,
+                //RelatedModelsListener::class,
+            ],
+        ]);
+
         if ($this->Crud === false) {
             return;
         }

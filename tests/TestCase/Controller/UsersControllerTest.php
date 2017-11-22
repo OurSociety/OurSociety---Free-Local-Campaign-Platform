@@ -99,8 +99,8 @@ EMAIL
                     $this->get(parse_url($this->_response->getHeader('Location')[0])['path']);
                 }
                 $this->assertResponseOk();
-                $this->assertResponseContains(LoginAction::MESSAGE_LOGIN_SUCCESS);
-                $this->assertResponseNotContains(LoginAction::MESSAGE_LOGIN_ERROR);
+                $this->assertResponseContains(\OurSociety\Action\Users\LoginAction::MESSAGE_LOGIN_SUCCESS);
+                $this->assertResponseNotContains(\OurSociety\Action\Users\LoginAction::MESSAGE_LOGIN_ERROR);
                 $this->assertResponseContains('Sign Out');
                 $this->assertResponseNotContains('Sign In');
                 $this->resumeSession();
@@ -111,8 +111,8 @@ EMAIL
                 break;
             case 'error':
                 $this->assertResponseOk();
-                $this->assertResponseContains(LoginAction::MESSAGE_LOGIN_ERROR);
-                $this->assertResponseNotContains(LoginAction::MESSAGE_LOGIN_SUCCESS);
+                $this->assertResponseContains(\OurSociety\Action\Users\LoginAction::MESSAGE_LOGIN_ERROR);
+                $this->assertResponseNotContains(\OurSociety\Action\Users\LoginAction::MESSAGE_LOGIN_SUCCESS);
                 break;
         }
     }

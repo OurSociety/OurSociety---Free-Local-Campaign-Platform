@@ -33,7 +33,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/embed/:politician', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'politician:embed', 'pass' => ['politician']]);
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'home']);
-    $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'join'], ['_name' => 'users:register']);
+    $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/sign-out', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
     $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
     $routes->connect('/municipality/:municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality', 'pass' => ['municipality']]);

@@ -8,15 +8,25 @@ use Cake\Core\Configure;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\Utility\Inflector;
+use Crud\Controller as Crud;
 use OurSociety\Controller\Exception\MissingActionClassException;
 
 trait ActionAwareTrait
 {
+    use Crud\ControllerTrait {
+        invokeAction as protected invokeCrudAction;
+    }
+
     //public function invokeAction(): ?Response
+
     /** @noinspection ReturnTypeCanBeDeclaredInspection */
     public function invokeAction() // TODO: Type-hint temporarily dropped for compatibility with \Crud\Controller\ControllerTrait::invokeAction()
     {
-        return $this->invokeActionMethodOrClass();
+        try {
+            return $this->invokeActionMethodOrClass();
+        } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingActionException $exception) {
+            return $this->invokeCrudAction();
+        }
     }
 
     private function getActionClassName(): string
@@ -78,9 +88,9 @@ trait ActionAwareTrait
     private function invokeActionMethodOrClass(): ?Response
     {
         try {
-            return $this->invokeActionMethod();
-        } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingActionException $exception) {
             return $this->invokeActionClass();
+        } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingActionClassException $exception) {
+            return $this->invokeActionMethod();
         }
     }
 
