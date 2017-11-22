@@ -34,6 +34,7 @@ class ElectoralDistrictsController extends CrudController
             $query = $event->getSubject()->query;
             $query
                 ->select([
+                    'id',
                     'name',
                 ])
                 ->where([
