@@ -5,7 +5,7 @@
         </h1>
 
         <p class="mb-0">
-            <?= __('We require reoccurring monthly payments the help us continue to develop our Local Politics Platform.') ?>
+            <?= __('We require reoccurring monthly payments that help us continue to develop our Local Politics Platform.') ?>
         </p>
     </div>
 </div>
@@ -113,7 +113,7 @@
                                     </td>
                                     <td class="text-nowrap bg-light">
                                         <p>
-                                            <strong style="font-size: 1.25rem">$25.00</strong> / <?= __('month') ?>
+                                            <strong style="font-size: 1.25rem">$50.00</strong> / <?= __('month') ?>
                                         </p>
                                         <p class="mb-0">
                                             <?= $this->Html->link(
@@ -243,7 +243,7 @@
                                     </td>
                                     <td class="text-nowrap bg-light">
                                         <p>
-                                            <strong style="font-size: 1.25rem">$45.00</strong> / <?= __('month') ?>
+                                            <strong style="font-size: 1.25rem">$100.00</strong> / <?= __('month') ?>
                                         </p>
                                         <p class="mb-0">
                                             <?= $this->Html->link(
@@ -255,7 +255,7 @@
                                     </td>
                                     <td class="text-nowrap">
                                         <p>
-                                            <strong style="font-size: 1.25rem">$50.00</strong> / <?= __('month') ?>
+                                            <strong style="font-size: 1.25rem">$100.00</strong> / <?= __('month') ?>
                                         </p>
                                         <p class="mb-0">
                                             <?= $this->Html->link(
