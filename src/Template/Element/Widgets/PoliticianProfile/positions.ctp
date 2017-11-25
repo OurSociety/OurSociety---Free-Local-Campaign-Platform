@@ -12,7 +12,7 @@
             <?= $this->fetch('actions_positions') ?>
         </h4>
         <?php if (count($politician->positions) === 0): ?>
-            <p><?= __("This {role} hasn't added any positions.", ['role' => $politician->role]) ?></p>
+            <p><?= __("This representative hasn't added any positions.") ?></p>
         <?php else: ?>
             <ul>
                 <?php foreach ($politician->positions as $position): ?>
