@@ -7,11 +7,14 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\TestSuite\Behat\Context\PageContext;
+use OurSociety\TestSuite\Behat\Context\Traits;
 use OurSociety\TestSuite\Behat\Page;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
 
 class GuestContext extends PageContext
 {
+    use Traits\CommonContextAwareTrait;
+
     private $adminDashboard;
 
     private $citizenDashboard;
@@ -35,7 +38,7 @@ class GuestContext extends PageContext
         Page\Citizen\Dashboard $citizenDashboard,
         Page\Citizen\Onboarding $onboarding,
         Page\Guest\ForgotPassword $forgotPassword,
-        Page\Guest\Homepage $homepage,
+        Page\Guest\BlogRedirect $homepage,
         Page\Guest\Join $join,
         Page\Guest\SignIn $signIn,
         Page\MunicipalProfile $municipalProfile,
@@ -127,14 +130,6 @@ class GuestContext extends PageContext
     public function iShouldSeeAButtonThatLinksTo($arg1, $arg2)
     {
         throw new PendingException();
-    }
-
-    /**
-     * @Given I am on the sign in page
-     */
-    public function iAmOnTheSignInPage()
-    {
-        $this->signIn->open();
     }
 
     /**
@@ -260,5 +255,40 @@ class GuestContext extends PageContext
     {
         $this->join->open();
         $this->join->signUp($name, $email, $password);
+    }
+
+    /**
+     * @When /^I click the logo in the top navigation$/
+     */
+    public function iClickTheLogoInTheTopNavigation()
+    {
+        $this->signIn->open();
+        $this->signIn->clickNavbarLink('OurSociety');
+    }
+
+    /**
+     * @When /^I click "([^"]*)" in the top navigation$/
+     */
+    public function iClickInTheTopNavigation($linkText)
+    {
+        $this->signIn->open();
+        $this->signIn->clickNavbarLink($linkText);
+    }
+
+    /**
+     * @When /^I try to access the root of the application$/
+     */
+    public function iTryToAccessTheRootOfTheApplication()
+    {
+        $this->getCommonContext()->iTryToAccessThePage('root');
+    }
+
+    /**
+     * @Then /^I should be redirected to the blog$/
+     * @throws \Behat\Mink\Exception\DriverException
+     */
+    public function iShouldBeRedirectedToTheBlog()
+    {
+        $this->getCommonContext()->iShouldBeOnThePage('blog redirect');
     }
 }

@@ -5,6 +5,7 @@ namespace OurSociety\TestSuite\Behat\Page;
 
 use Behat\Mink\Element\ElementInterface;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\Flash;
+use OurSociety\TestSuite\Behat\Page\Element\Layout\Navbar;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\UserMenu;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
@@ -31,6 +32,11 @@ abstract class Page extends BasePage
     {
         $this->getFlash()->close();
         $this->getUserMenu()->signOut();
+    }
+
+    public function clickNavbarLink(string $linkText): void
+    {
+        $this->getNavbar()->clickLink($linkText);
     }
 
     protected function assertFieldExists($locator): void
@@ -69,7 +75,7 @@ abstract class Page extends BasePage
 
     protected function assertRedirect(string $url): void
     {
-        $expected = $this->getParameter('base_url') . $url;
+        $expected = strpos($url, '/') === 0 ? $this->getParameter('base_url') . $url : $url;
         $actual = $this->getDriver()->getCurrentUrl();
 
         if ($actual !== $expected) {
@@ -87,5 +93,11 @@ abstract class Page extends BasePage
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->getElement(Flash::class);
+    }
+
+    private function getNavbar(): Navbar
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->getElement(Navbar::class);
     }
 }
