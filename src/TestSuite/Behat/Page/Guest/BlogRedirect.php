@@ -5,15 +5,15 @@ namespace OurSociety\TestSuite\Behat\Page\Guest;
 
 use OurSociety\TestSuite\Behat\Page\Page;
 
-class Homepage extends Page
+class BlogRedirect extends Page
 {
     protected function getPath(): string
     {
-        return '/';
+        return '/blog';
     }
 
     protected function verifyUrl(array $urlParameters = []): void
     {
-        $this->assertRedirect('/sign-in');
+        $this->assertRedirect('https://www.oursociety.org/');
     }
 }

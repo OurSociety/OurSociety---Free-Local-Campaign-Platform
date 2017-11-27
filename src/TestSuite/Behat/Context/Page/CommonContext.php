@@ -5,26 +5,39 @@ namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Mink\Exception\DriverException;
 use Cake\Log\Log;
+use OurSociety\TestSuite\Behat\Context\PageContext;
 use OurSociety\TestSuite\Behat\Page;
-use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
 
-class CommonContext extends PageObjectContext
+class CommonContext extends PageContext
 {
-    private $onboarding;
+    protected $blogRedirect;
 
-    private $signIn;
+    protected $onboarding;
+
+    protected $root;
+
+    protected $signIn;
 
     public function __construct(
-        Page\Guest\SignIn $signIn,
-        Page\Citizen\Onboarding $onboarding
+        Page\Citizen\Onboarding $onboarding,
+        Page\Guest\BlogRedirect $blogRedirect,
+        Page\Guest\Root $root,
+        Page\Guest\SignIn $signIn
     ) {
-        $this->signIn = $signIn;
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->blogRedirect = $blogRedirect;
+        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->onboarding = $onboarding;
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->root = $root;
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->signIn = $signIn;
     }
 
     /**
      * @Then /^I should see the (info|success|warning|error) message "([^"]*)"$/
+     * @throws DriverException
      */
     public function iShouldSeeTheMessage($style, $message)
     {
@@ -40,14 +53,14 @@ class CommonContext extends PageObjectContext
     }
 
     /**
-     * @When I try to access the (!?:page.*) page
+     * @When /^I try to access the (.+?(?= page)) page$/
      */
     public function iTryToAccessThePage(string $page)
     {
-        $page = $this->getPagePropertyName($page);
+        $this->setCurrentPage($page);
 
         try {
-            $this->$page->open();
+            $this->getCurrentPage()->open();
         } catch (UnexpectedPageException $exception) {
             /** @noinspection CompactCanBeUsedInspection */
             Log::debug('Behat: Page could not be opened as expected', ['page' => $page, 'exception' => $exception]);
@@ -55,26 +68,28 @@ class CommonContext extends PageObjectContext
     }
 
     /**
-     * @Given I am on the (!?:page.*) page
-     * @Given /^I am on the "([^"]*)" page$/
+     * @Given /^I am on the (.+?(?= page)) page$/
+     * @throws DriverException
      */
     public function iAmOnThePage(string $page)
     {
-        $page = $this->getPagePropertyName($page);
+        $pageObject = $this->setCurrentPage($page);
+        $pageObject->open();
 
-        if ($this->$page->isOpen() === false) {
+        if ($pageObject->isOpen() === false) {
             $this->throwException(sprintf('Expected the "%s" page to be open.', $page));
         }
     }
 
     /**
-     * @Then /^I should be on the "([^"]*)" page$/
+     * @Then /^I should be on the (.+?(?= page)) page$/
+     * @throws DriverException
      */
     public function iShouldBeOnThePage(string $page)
     {
-        $page = $this->getPagePropertyName($page);
+        $this->setCurrentPage($page);
 
-        if ($this->$page->isOpen() === false) {
+        if ($this->getCurrentPage()->isOpen() === false) {
             $this->throwException(sprintf('Expected the "%s" page to be open.', $page));
         }
     }
@@ -89,15 +104,11 @@ class CommonContext extends PageObjectContext
 
     /**
      * @Given my browser sets a remember me cookie
+     * @throws \Exception
      */
     public function myBrowserSetsARememberMeCookie()
     {
         $this->signIn->isRememberMeCookieSet();
-    }
-
-    private function getPagePropertyName(string $page): string
-    {
-        return lcfirst(str_replace(' ', '', ucwords($page)));
     }
 
     /**

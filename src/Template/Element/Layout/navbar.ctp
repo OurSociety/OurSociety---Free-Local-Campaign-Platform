@@ -1,7 +1,6 @@
 <?php
 
 use Cake\Collection\Collection;
-use OurSociety\Model\Entity\Election;
 use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\User;
 use OurSociety\View\AppView;
@@ -32,7 +31,7 @@ if ($identity !== null):
     ]);
 else:
     $links = $links->append([
-        ['title' => __('Home'), 'url' => ['_name' => 'home']],
+        ['title' => __('Home'), 'url' => ['_name' => 'root']],
     ]);
 endif;
 $links = $links->append([
@@ -50,7 +49,6 @@ $links = $links->append([
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav os-navbar-nav flex-wrap">
             <?php foreach ($links as $link): ?>
-
                 <?php
                 $liClasses = ['nav-item'];
                 $requestPath = $this->request->getUri()->getPath();
@@ -58,9 +56,10 @@ $links = $links->append([
                 if ($requestPath === $linkPath):
                     $liClasses[] = 'active';
                 endif;
+                $link += ['title' => 'Unknown', 'url' => '#', 'options' => []];
                 ?>
                 <li class="<?= implode(' ', $liClasses) ?> text-nowrap">
-                    <?= $this->Component->render(new NavLink($link['title'], $link['url'])) ?>
+                    <?= $this->Component->render(new NavLink($link['title'], $link['url'], $link['options'])) ?>
                 </li>
             <?php endforeach ?>
         </ul>

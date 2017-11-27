@@ -7,5 +7,6 @@ use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
 class PageContext extends PageObjectContext
 {
+    use Traits\CurrentPageAwareTrait;
     use Traits\FixturesTrait;
 }

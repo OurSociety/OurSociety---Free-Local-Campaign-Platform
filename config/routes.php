@@ -4,6 +4,7 @@ declare(strict_types=1);
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use OurSociety\Routing\Route\NamedRedirectRoute;
 use OurSociety\Routing\Route\SluggedRoute;
 
 /**
@@ -17,11 +18,15 @@ Router::defaultRouteClass(DashedRoute::class);
  * Default scope.
  */
 Router::scope('/', function (RouteBuilder $routes): void {
-    $routes->redirect('/', '/login');
-    $routes->redirect('/login', '/sign-in');
-    $routes->redirect('/register', '/join-oursociety');
-    $routes->redirect('/logout', '/sign-out');
-    $routes->redirect('/onboarding', '/tutorial');
+    $routes->redirect('/', '/blog', ['_name' => 'root', 'routeClass' => NamedRedirectRoute::class]);
+    $routes->redirect('/blog', 'https://www.oursociety.org/', ['_name' => 'blog', 'routeClass' => NamedRedirectRoute::class]);
+    $routes->redirect('/home', '/sign-in', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
+
+    // Renamed routes (TODO: these can be deleted after some time)
+    $routes->redirect('/login', '/sign-in'); // 2017-11
+    $routes->redirect('/logout', '/sign-out'); // 2017-11
+    $routes->redirect('/onboarding', '/tutorial'); // 2017-11
+    $routes->redirect('/register', '/join-oursociety'); // 2017-11
 
     $routes->connect('/billing', ['controller' => 'Billing', 'action' => 'portal'], ['_name' => 'billing']);
     $routes->connect('/billing/checkout/:plan', ['controller' => 'Billing', 'action' => 'checkout'], ['_name' => 'billing:checkout', 'pass' => ['plan']]);
@@ -32,7 +37,6 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/elections', ['controller' => 'Elections'], ['_name' => 'elections']);
     $routes->connect('/embed/:politician', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'politician:embed', 'pass' => ['politician']]);
     $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
-    $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'home'], ['_name' => 'home']);
     $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/sign-out', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
     $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
