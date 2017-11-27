@@ -113,7 +113,7 @@
                                     </td>
                                     <td class="text-nowrap bg-light">
                                         <p>
-                                            <strong style="font-size: 1.25rem">$50.00</strong> / <?= __('month') ?>
+                                            <strong style="font-size: 1.25rem"><?= __('Free Forever') ?></strong>
                                         </p>
                                         <p class="mb-0">
                                             <?= $this->Html->link(
@@ -122,7 +122,7 @@
                                                 ['class' => ['btn', 'btn-secondary']
                                             ]) ?>
                                             <br>
-                                            <small class="text-muted">(<?= __('Minimum 3 months') ?>)</small>
+                                            <small class="text-muted">(<?= __('During campaign') ?>)</small>
                                         </p>
                                     </td>
                                     <td class="text-nowrap">
