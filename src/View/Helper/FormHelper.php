@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Helper;
 
+use Cake\View\View;
 use LilHermit\Bootstrap4\View\Helper as Bootstrap4;
+use OurSociety\View\Widget\EditorWidget;
 
 //use Cake\Log\Log;
 //use Cake\Routing\Exception\MissingRouteException;
@@ -17,6 +19,17 @@ use LilHermit\Bootstrap4\View\Helper as Bootstrap4;
  */
 class FormHelper extends Bootstrap4\FormHelper
 {
+    public function __construct(View $View, array $config = [])
+    {
+        $defaultConfig = [
+            'widgets' => [
+                'editor' => [EditorWidget::class],
+            ],
+        ];
+
+        parent::__construct($View, $defaultConfig + $config);
+    }
+
     public function postButton($title, $url = null, array $options = null): string
     {
         $options = $options ?? [];
@@ -116,4 +129,12 @@ class FormHelper extends Bootstrap4\FormHelper
     //
     //        return parent::_inputLabel($fieldName, $label, $options);
     //    }
+
+    protected function _inputContainerTemplate($options): string
+    {
+        // TODO: Undefined index: help [ROOT/vendor/lilhermit/cakephp-plugin-bootstrap4/src/View/Helper/FormHelper.php, line 658]
+        $options['options']['templateVars']['help'] = $options['options']['templateVars']['help'] ?? null;
+
+        return parent::_inputContainerTemplate($options);
+    }
 }
