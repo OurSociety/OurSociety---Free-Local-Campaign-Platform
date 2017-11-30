@@ -38,7 +38,7 @@ class GuestContext extends PageContext
         Page\Citizen\Dashboard $citizenDashboard,
         Page\Citizen\Onboarding $onboarding,
         Page\Guest\ForgotPassword $forgotPassword,
-        Page\Guest\BlogRedirect $homepage,
+        Page\Guest\Home $homepage,
         Page\Guest\Join $join,
         Page\Guest\SignIn $signIn,
         Page\MunicipalProfile $municipalProfile,
@@ -258,37 +258,11 @@ class GuestContext extends PageContext
     }
 
     /**
-     * @When /^I click the logo in the top navigation$/
-     */
-    public function iClickTheLogoInTheTopNavigation()
-    {
-        $this->signIn->open();
-        $this->signIn->clickNavbarLink('OurSociety');
-    }
-
-    /**
-     * @When /^I click "([^"]*)" in the top navigation$/
-     */
-    public function iClickInTheTopNavigation($linkText)
-    {
-        $this->signIn->open();
-        $this->signIn->clickNavbarLink($linkText);
-    }
-
-    /**
-     * @When /^I try to access the root of the application$/
-     */
-    public function iTryToAccessTheRootOfTheApplication()
-    {
-        $this->getCommonContext()->iTryToAccessThePage('root');
-    }
-
-    /**
      * @Then /^I should be redirected to the blog$/
      * @throws \Behat\Mink\Exception\DriverException
      */
     public function iShouldBeRedirectedToTheBlog()
     {
-        $this->getCommonContext()->iShouldBeOnThePage('blog redirect');
+        $this->getCommonContext()->iShouldBeOnThePage('home');
     }
 }

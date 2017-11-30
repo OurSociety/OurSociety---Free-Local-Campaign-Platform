@@ -18,9 +18,8 @@ Router::defaultRouteClass(DashedRoute::class);
  * Default scope.
  */
 Router::scope('/', function (RouteBuilder $routes): void {
-    $routes->redirect('/', '/blog', ['_name' => 'root', 'routeClass' => NamedRedirectRoute::class]);
-    $routes->redirect('/blog', 'https://www.oursociety.org/', ['_name' => 'blog', 'routeClass' => NamedRedirectRoute::class]);
-    $routes->redirect('/home', '/sign-in', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
+    $routes->redirect('/', '/join-oursociety', ['_name' => 'root', 'routeClass' => NamedRedirectRoute::class]);
+    $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
 
     // Renamed routes (TODO: these can be deleted after some time)
     $routes->redirect('/login', '/sign-in'); // 2017-11

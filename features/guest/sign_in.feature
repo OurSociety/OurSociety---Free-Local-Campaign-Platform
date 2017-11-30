@@ -4,6 +4,10 @@ Feature: Guests can sign in
   As the guest
   I want to be able to sign in
 
+  Scenario: The sign in page is at /login
+    When I am on the sign in page
+    Then the URL should be "/login"
+
   Scenario: New citizens must go through the onboarding process
     Given I am on the sign in page
     When I sign in with email "new-citizen@example.com" and password "democracy"
