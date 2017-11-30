@@ -19,10 +19,12 @@ if ($identity && $identity->isInMunicipality($municipality)) {
     <div class="col">
         <h1 class="os-title" id="content">
             <?= $municipality->display_name ?>
-            <small class="text-muted">
-                <?= $municipality->county ? $municipality->county->display_name : 'Unknown County' ?>,
-                <?= $municipality->state ? $municipality->state->display_name : 'Unknown State' ?>
-            </small>
+            <?php if ($municipality->county !== null): ?>
+                <small class="text-muted">
+                    <?= $municipality->county ? $municipality->county->display_name : 'Unknown County' ?>,
+                    <?= $municipality->state ? $municipality->state->display_name : 'Unknown State' ?>
+                </small>
+            <?php endif ?>
         </h1>
     </div>
     <div class="col-auto">
