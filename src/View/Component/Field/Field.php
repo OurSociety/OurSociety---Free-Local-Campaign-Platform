@@ -5,6 +5,7 @@ namespace OurSociety\View\Component\Field;
 
 use Cake\Core\InstanceConfigTrait;
 use Cake\Datasource\EntityInterface;
+use Cake\Utility\Inflector;
 use Cake\View\CellTrait;
 use OurSociety\Model\Entity\RecordInterface;
 use OurSociety\View\AppView;
@@ -26,6 +27,8 @@ abstract class Field extends Component
      * @var array
      */
     protected $_defaultConfig = ['formatter' => null, 'empty' => true];
+
+    private $value;
 
     public function __construct(string $name, ?array $config = null, RecordInterface $record = null)
     {
@@ -80,7 +83,7 @@ abstract class Field extends Component
 
     public function getTitle(): string
     {
-        return $this->getOptions()['title'];
+        return $this->getOptions()['title'] ?? Inflector::humanize($this->name);
     }
 
     public function renderTableCell(RecordInterface $record, AppView $view): string
@@ -109,7 +112,7 @@ abstract class Field extends Component
             return $getValue($entity->get($field), $path);
         };
 
-        return $getValue($this->record, explode('.', $this->getName()));
+        return $this->value ?? $this->value = $getValue($this->record, explode('.', $this->getName()));
     }
 
     private function setName(string $name): void

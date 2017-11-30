@@ -1487,6 +1487,25 @@ LOCK TABLES `nodes` WRITE;
 /*!40000 ALTER TABLE `nodes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `nodes` ENABLE KEYS */;
 UNLOCK TABLES;
+DROP TABLE IF EXISTS `notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `seen` datetime DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `notifications` WRITE;
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `office_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1582,6 +1601,8 @@ INSERT INTO `phinxlog` VALUES (20171010081945,'Tree','2017-10-16 08:17:46','2017
 INSERT INTO `phinxlog` VALUES (20171013111545,'CommunityContributor','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
 INSERT INTO `phinxlog` VALUES (20171014121221,'Submissions','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
 INSERT INTO `phinxlog` VALUES (20171014132230,'Reports','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
+INSERT INTO `phinxlog` VALUES (20171022131012,'Tokens','2017-11-14 04:57:41','2017-11-14 04:57:41',0);
+INSERT INTO `phinxlog` VALUES (20171130111917,'CreateNotifications','2017-11-30 16:16:04','2017-11-30 16:16:04',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `politician_awards`;
@@ -2247,6 +2268,25 @@ LOCK TABLES `submissions` WRITE;
 /*!40000 ALTER TABLE `submissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `submissions` ENABLE KEYS */;
 UNLOCK TABLES;
+DROP TABLE IF EXISTS `tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tokens` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lookup` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hash` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expires` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `tokens` WRITE;
+/*!40000 ALTER TABLE `tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tokens` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2264,6 +2304,7 @@ CREATE TABLE `users` (
   `plan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `level` int(11) unsigned NOT NULL DEFAULT '1',
   `answer_count` int(11) unsigned NOT NULL DEFAULT '0',
+  `unread_notification_count` int(11) unsigned NOT NULL DEFAULT '0',
   `picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address_1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2291,13 +2332,13 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('46b4b442-75aa-11e7-b7f8-6c4008a68a60','onboarded-citizen','onboarded-citizen@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$RSWPlcxxDIhqkpNfoKOqneE6TgAIOj.fvZr5ypoii8z/U8wB6U5mq','Onboarded Citizen','citizen',NULL,1,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:10:49',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('5205ae34-759e-11e7-9add-6c4008a68a60','oursociety-team','team@oursociety.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$DNoXh.E6tH47LpOyRaTKMOOEwZ3gATey9NWmxAtRP2HH9jEZwjy7e','OurSociety Team','admin',NULL,1,0,'/img/logo.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-10-16 03:16:33','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-08-07 02:19:06');
-INSERT INTO `users` VALUES ('54064c3e-759e-11e7-b151-6c4008a68a60','community-contributor','community-contributor@example.com',NULL,'12345','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Community Contributor','citizen',NULL,1,11,'abe82ecb-a760-495a-b885-6ab44d0eae0a.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'123456','2025-01-01 00:00:00','2017-09-21 22:25:51','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('573111be-759e-11e7-a371-6c4008a68a60','john-doe','politician@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890','$2y$10$13YLuVeJUmQ5Kx2oYnifyev8YLHzFt2LN1G7UHmLzHItSpReJNIBO','John Doe','politician',NULL,1,50,NULL,NULL,NULL,NULL,NULL,'John Doe II','Edison','NJ','US','1984-01-01',NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-18 16:50:56','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('847d8844-75aa-11e7-b6b8-6c4008a68a60','new-citizen','new-citizen@example.com',NULL,NULL,NULL,NULL,'$2y$10$.VpADapLFTFOIKALSll9ce1s5U4GKnTJVz9otaCO8b7iRSbRwXeU6','New Citizen','citizen',NULL,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:08:51',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
-INSERT INTO `users` VALUES ('97d7cdae-8907-4880-8c7b-82b478e75810','ron-rivers','ron@oursociety.org',NULL,'08902','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Ron Rivers','citizen',NULL,1,0,'https://www.oursociety.org/img/ronbio.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'2017-09-09 15:45:54',NULL,'2017-08-03 21:58:26','2017-08-16 15:51:21');
-INSERT INTO `users` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','imported-politician','imported-politician@example.com','possible.real.email@example.com',NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890 x1234 / 123-213-2345','$2y$10$uCYX0GpaXkwbJKJaTs6HiOL3cl5C/JAgavF00FLYoV/giiP01PPm6','Imported Politician','politician',NULL,1,0,'/img/example-politician.png','123 Street, Town, ST 01234',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'State Senate District 8',NULL,0,NULL,'123456',NULL,NULL,NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('46b4b442-75aa-11e7-b7f8-6c4008a68a60','onboarded-citizen','onboarded-citizen@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$RSWPlcxxDIhqkpNfoKOqneE6TgAIOj.fvZr5ypoii8z/U8wB6U5mq','Onboarded Citizen','citizen',NULL,1,10,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:10:49',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('5205ae34-759e-11e7-9add-6c4008a68a60','oursociety-team','team@oursociety.org',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$DNoXh.E6tH47LpOyRaTKMOOEwZ3gATey9NWmxAtRP2HH9jEZwjy7e','OurSociety Team','admin',NULL,1,0,0,'/img/logo.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-10-16 03:16:33','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-08-07 02:19:06');
+INSERT INTO `users` VALUES ('54064c3e-759e-11e7-b151-6c4008a68a60','community-contributor','community-contributor@example.com',NULL,'12345','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Community Contributor','citizen',NULL,1,11,0,'abe82ecb-a760-495a-b885-6ab44d0eae0a.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'123456','2025-01-01 00:00:00','2017-09-21 22:25:51','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('573111be-759e-11e7-a371-6c4008a68a60','john-doe','politician@example.com',NULL,NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890','$2y$10$13YLuVeJUmQ5Kx2oYnifyev8YLHzFt2LN1G7UHmLzHItSpReJNIBO','John Doe','politician',NULL,1,50,0,NULL,NULL,NULL,NULL,NULL,'John Doe II','Edison','NJ','US','1984-01-01',NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-18 16:50:56','2017-07-31 07:09:46','2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('847d8844-75aa-11e7-b6b8-6c4008a68a60','new-citizen','new-citizen@example.com',NULL,NULL,NULL,NULL,'$2y$10$.VpADapLFTFOIKALSll9ce1s5U4GKnTJVz9otaCO8b7iRSbRwXeU6','New Citizen','citizen',NULL,1,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-09-22 08:08:51',NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
+INSERT INTO `users` VALUES ('97d7cdae-8907-4880-8c7b-82b478e75810','ron-rivers','ron@oursociety.org',NULL,'08902','50802eba-977a-11e7-b6d8-6c4008a68a60',NULL,'$2y$10$9eRT4n1ubpk1Qp/q0Ebrr.wa/k5Nn3kbX7nPbQBZlRGWEN.6c1vaC','Ron Rivers','citizen',NULL,1,0,0,'https://www.oursociety.org/img/ronbio.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,'2017-09-09 15:45:54',NULL,'2017-08-03 21:58:26','2017-08-16 15:51:21');
+INSERT INTO `users` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','imported-politician','imported-politician@example.com','possible.real.email@example.com',NULL,'50802eba-977a-11e7-b6d8-6c4008a68a60','(123) 456-7890 x1234 / 123-213-2345','$2y$10$uCYX0GpaXkwbJKJaTs6HiOL3cl5C/JAgavF00FLYoV/giiP01PPm6','Imported Politician','politician',NULL,1,0,0,'/img/example-politician.png','123 Street, Town, ST 01234',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'State Senate District 8',NULL,0,NULL,'123456',NULL,NULL,NULL,'2017-07-31 02:09:47','2017-07-31 02:09:47');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `value_matches`;

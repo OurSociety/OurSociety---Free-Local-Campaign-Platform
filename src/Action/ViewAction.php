@@ -10,18 +10,29 @@ class ViewAction extends Action
 {
     public function __invoke(...$params): ?Response
     {
-        $this->setRecordToView($this->getRecord($params[0]));
+        $record = $this->getRecord($this->getRecordIdentifier($params));
+        $this->afterFind($record);
+        $this->setRecordToView($record);
 
         return null;
     }
 
-    public function getRecord(string $identifier): EntityInterface
+    protected function getRecord(string $identifier): EntityInterface
     {
-        return $this->getModel()->getQueryForAction($this)->firstOrFail();
+        return $this->getModel()->getQueryForAction($this, ['identifier' => $identifier])->firstOrFail();
     }
 
     protected function setRecordToView(EntityInterface $entity): void
     {
         $this->setViewVariable('record', $entity);
+    }
+
+    protected function getRecordIdentifier($params): string
+    {
+        return $params[0];
+    }
+
+    protected function afterFind(EntityInterface $record): void
+    {
     }
 }

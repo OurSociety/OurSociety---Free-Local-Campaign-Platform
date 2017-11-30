@@ -5,6 +5,7 @@ namespace OurSociety\Model\Table\Finder;
 
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use OurSociety\Model\Entity\User;
 
 /**
  * Finder.
@@ -57,5 +58,17 @@ abstract class Finder
         }
 
         return $aliasedFieldName;
+    }
+
+    protected function hasIdentity($options): bool
+    {
+        $identity = $options['identity'] ?? null;
+
+        return $identity instanceof User;
+    }
+
+    protected function getIdentity($options): User
+    {
+        return $options['identity'];
     }
 }

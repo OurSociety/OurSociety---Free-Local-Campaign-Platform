@@ -55,6 +55,7 @@ use OurSociety\View\Component\Field;
  * @property Category[] $categories
  * @property ElectoralDistrict $electoral_district
  * @property Article[] $articles
+ * @property Notification[] $notifications
  * @property PoliticianAward[] $awards
  * @property PoliticianPosition[] $positions
  * @property PoliticianQualification[] $qualifications
@@ -485,6 +486,16 @@ class User extends AppEntity implements SearchableEntity
     public function hasAnsweredQuestions(): bool
     {
         return $this->answer_count > 0;
+    }
+
+    public function printUnreadNotificationCount(): int
+    {
+        return $this->_properties['unread_notification_count'] ?? 0;
+    }
+
+    public function getNotificationsRoute(): array
+    {
+        return ['_name' => 'citizen:notifications'];
     }
 
     protected function _getAge(): ?int

@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace OurSociety\Model;
 
 use Cake\Datasource\ResultSetInterface;
+use Cake\Mailer\Email;
 use Cake\ORM\Query;
+use OurSociety\Model\Entity\Notification;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Table\NotificationsTable;
 
 class Users extends Model
 {
@@ -33,11 +36,9 @@ class Users extends Model
     {
         return $this->loadModel('CategoriesUsers')
             ->find()
-            ->select([
-                'CategoriesUsers.answer_count',
-            ])
+            ->select(['CategoriesUsers.answer_count'])
             ->contain([
-                'Categories' => function (Query $query) {
+                'Categories' => function (Query $query): Query {
                     return $query->select([
                         'Categories.name',
                         'Categories.question_count',
@@ -56,10 +57,37 @@ class Users extends Model
 
     public function recalculateAnswerCountAndLevel(User $user): void
     {
-        $user->answer_count = Answers::instance()->getCountForUser($user);
-        $user->level = Questions::instance()->getLevelForUser($user);
+        $this->repository->saveOrFail($this->repository->patchEntity($user, [
+            'answer_count' => Answers::instance()->getCountForUser($user),
+            'level' => Questions::instance()->getLevelForUser($user),
+        ]));
+    }
 
-        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $this->repository->saveOrFail($user);
+    public function notifyUser(User $user, string $title, string $body): void
+    {
+        /** @var NotificationsTable $notifications */
+        $notifications = $this->loadModel('Notifications');
+        $notification = $notifications->newEntity(['user_id' => $user->id, 'title' => $title, 'body' => $body]);
+
+        /** @var Notification $notification */
+        $notification = $notifications->saveOrFail($notification);
+
+        (new Email('default'))
+            //->setFrom(['me@example.com' => 'My Site'])
+            ->setTo([$user->email => $user->name])
+            ->setSubject($notification->title)
+            ->send($notification->body);
+    }
+
+    /**
+     * @return string[] List of UUIDs.
+     */
+    public function getAdminUsers(): ResultSetInterface
+    {
+        return $this->loadModel()
+            ->find()
+            ->select(['Users.id', 'Users.email', 'Users.name'])
+            ->where(['Users.role' => User::ROLE_ADMIN])
+            ->all();
     }
 }

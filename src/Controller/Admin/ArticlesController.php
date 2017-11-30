@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Controller\Admin;
 
@@ -7,11 +7,14 @@ use Cake\Event\Event;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\Action\DashboardAction;
 use OurSociety\Controller\CrudController;
+use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Listener\ViewListener;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ArticlesController extends CrudController
 {
+    use ActionAwareTrait;
+
     public function beforeFilter(Event $event): void
     {
         $this->Crud->mapAction('dashboard', ['className' => DashboardAction::class]);

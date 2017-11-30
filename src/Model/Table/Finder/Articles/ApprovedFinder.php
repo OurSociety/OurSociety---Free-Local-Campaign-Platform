@@ -1,17 +1,26 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table\Finder\Articles;
 
-use Cake\ORM\Query;
-use OurSociety\Model\Table\Finder\Finder;
+use OurSociety\Model\Table\Finder\BooleanDateFinder;
 
-class ApprovedFinder extends Finder
+class ApprovedFinder extends BooleanDateFinder
 {
-    public function __invoke(Query $query, array $options = []): Query
+    protected function getFieldName(): string
     {
-        return $query->where([
-            $this->aliasField($query, 'approved', 'IS NOT') => null,
-        ]);
+        return 'approved';
+    }
+
+    protected function getBypassConditions(): array
+    {
+        return [
+            $this->aliasField($this->query, 'politician_id') => $this->getIdentity($this->options)->id,
+        ];
+    }
+
+    protected function hasBypassConditions(): bool
+    {
+        return $this->hasIdentity($this->options);
     }
 }

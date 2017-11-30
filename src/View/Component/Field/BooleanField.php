@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Component\Field;
 
-final class BooleanField extends Field
+class BooleanField extends Field
 {
     public function isTrue(): bool
     {
@@ -23,13 +23,18 @@ final class BooleanField extends Field
     public function getBadgeTitle(): string
     {
         return $this->booleanSwitch(
-            __('{status}', ['status' => ucfirst($this->getName())]),
-            __('Not {status}', ['status' => $this->getName()]),
-            __('{status} status unknown', ['status' => ucfirst($this->getName())])
+            __('{status}', ['status' => ucfirst($this->getTitle())]),
+            __('Not {status}', ['status' => $this->getTitle()]),
+            __('{status} status unknown', ['status' => ucfirst($this->getTitle())])
         );
     }
 
-    private function booleanSwitch($trueCase, $falseCase, $nullCase): string
+    //protected function getValue(): bool
+    //{
+    //    return (bool)parent::getValue();
+    //}
+
+    protected function booleanSwitch($trueCase, $falseCase, $nullCase): string
     {
         switch ($this->getValue()) {
             case null:

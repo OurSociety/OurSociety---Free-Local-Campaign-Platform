@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table\Finder\Articles;
 
@@ -11,12 +11,19 @@ class ForCitizenFinder extends Finder
 {
     public function __invoke(Query $query, array $options = []): Query
     {
-        $options += ['role' => User::ROLE_CITIZEN];
+        $options += ['user' => null];
 
-        if ($options['role'] === User::ROLE_CITIZEN) {
-            $query->find('approved')->find('published');
+        /** @var User|null $user */
+        $user = $options['user'];
+
+        if ($user !== null && $user->isCitizen()) {
+            $query
+                ->find('approved')
+                ->find('published');
         }
 
-        return $query->find('latest')->contain('ElectoralDistricts')->orderDesc('published');
+        return $query->find('latest')
+            ->contain(['ElectoralDistricts'])
+            ->orderDesc('published');
     }
 }

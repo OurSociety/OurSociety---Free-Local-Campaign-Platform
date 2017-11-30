@@ -5,7 +5,6 @@ namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
-use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\TestSuite\Behat\Context\PageContext;
 use OurSociety\TestSuite\Behat\Context\Traits;
 use OurSociety\TestSuite\Behat\Page;
@@ -15,23 +14,23 @@ class GuestContext extends PageContext
 {
     use Traits\CommonContextAwareTrait;
 
-    private $adminDashboard;
+    protected $adminDashboard;
 
-    private $citizenDashboard;
+    protected $citizenDashboard;
 
-    private $homepage;
+    protected $homepage;
 
-    private $join;
+    protected $join;
 
-    private $municipalProfile;
+    protected $municipalProfile;
 
-    private $onboarding;
+    protected $onboarding;
 
-    private $politicianDashboard;
+    protected $politicianDashboard;
 
-    private $signIn;
+    protected $signIn;
 
-    private $forgotPassword;
+    protected $forgotPassword;
 
     public function __construct(
         Page\Admin\Dashboard $adminDashboard,
@@ -61,16 +60,6 @@ class GuestContext extends PageContext
     public function iAmOnTheHomepage()
     {
         $this->homepage->open();
-    }
-
-    /**
-     * @Given I am on the :name municipal profile
-     */
-    public function iAmOnTheMunicipalProfile($municipality)
-    {
-        $this->municipalProfile->open([
-            'municipality' => (new CakeSlugger)->slug($municipality),
-        ]);
     }
 
     /**

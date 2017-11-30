@@ -23,6 +23,7 @@ use OurSociety\Validation\Validator as AppValidator;
  *
  * @property AnswersTable|Association\HasMany $Answers
  * @property CategoriesTable|Association\BelongsToMany $Categories
+ * @property NotificationsTable|Association\HasMany $Notifications
  * @property ValueMatchesTable|Association\HasMany $ValueMatches
  *
  * @method Query findById(string $name)
@@ -62,6 +63,7 @@ class UsersTable extends AppTable
 
         $this->addBehavior(SearchEngineBehavior::class, ['finder' => 'publicSearch']);
         $this->hasMany('Answers');
+        $this->hasMany('Notifications');
         $this->belongsToMany('Categories');
         $this->belongsTo('OfficeTypes');
         $this->belongsTo('ElectoralDistricts')->setFinder('isMunicipality')->setStrategy('select');

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Context\Page;
 
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\DriverException;
 use Cake\Log\Log;
+use Muffin\Slug\Slugger\CakeSlugger;
 use OurSociety\TestSuite\Behat\Context\PageContext;
 use OurSociety\TestSuite\Behat\Page;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
@@ -16,6 +18,8 @@ class CommonContext extends PageContext
     protected $home;
 
     protected $join;
+
+    protected $municipalProfile;
 
     protected $onboarding;
 
@@ -29,31 +33,29 @@ class CommonContext extends PageContext
         Page\Guest\Home $home,
         Page\Guest\Join $join,
         Page\Guest\Root $root,
-        Page\Guest\SignIn $signIn
+        Page\Guest\SignIn $signIn,
+        Page\MunicipalProfile $municipalProfile
     ) {
-        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->citizenDashboard = $citizenDashboard;
-        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->home = $home;
-        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->join = $join;
-        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->municipalProfile = $municipalProfile;
         $this->onboarding = $onboarding;
-        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->root = $root;
-        /** @noinspection UnusedConstructorDependenciesInspection */
         $this->signIn = $signIn;
     }
 
     /**
      * @Then /^I should see the (info|success|warning|error) message "([^"]*)"$/
+     * @Then /^I should see the (info|success|warning|error) message:$/
      * @throws DriverException
      */
-    public function iShouldSeeTheMessage($style, $message)
+    public function iShouldSeeTheMessage($style, PyStringNode $message)
     {
         $actual = $this->signIn->getFlashMessage();
-        if ($actual !== $message) {
-            $this->throwException(sprintf('Expected message "%s" but got "%s".', $message, $actual));
+        $expected = $message->getRaw();
+        if ($actual !== $expected) {
+            $this->throwException(sprintf('Expected message "%s" but got "%s".', $expected, $actual));
         }
 
         $actual = $this->signIn->getFlashStyle();
@@ -138,16 +140,44 @@ class CommonContext extends PageContext
     }
 
     /**
-     * Throw exception.
-     *
-     * Throws a `Behat\Mink\Exception` so the `Behat\MinkExtension` `show_auto` setting can work.
-     *
-     * @param string $message
-     * @return void
+     * @Given I am on the :name municipal profile
+     */
+    public function iAmOnTheMunicipalProfile($municipality)
+    {
+        $this->page = $this->municipalProfile;
+        $this->page->open([
+            'municipality' => (new CakeSlugger)->slug($municipality),
+        ]);
+    }
+
+    /**
+     * @Then I should be on the :name municipal profile
      * @throws DriverException
      */
-    private function throwException(string $message): void
+    public function iShouldBeOnTheMunicipalProfile(string $name)
     {
-        throw new DriverException($message);
+        if (
+            $this->municipalProfile->isOpen([
+                'municipality' => (new CakeSlugger)->slug($name),
+            ]) === false
+        ) {
+            $this->throwException(sprintf('Expected the "%s" page to be open.', $name));
+        }
+    }
+
+    /**
+     * @When /^I press the "([^"]*)" button$/
+     */
+    public function iPressTheButton($linkText)
+    {
+        $this->page->pressButton($linkText);
+    }
+
+    /**
+     * @Then /^I should see the "([^"]*)" button$/
+     */
+    public function iShouldSeeTheButton($linkText)
+    {
+        $this->page->hasButton($linkText);
     }
 }
