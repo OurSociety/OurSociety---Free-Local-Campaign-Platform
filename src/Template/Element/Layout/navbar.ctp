@@ -1,6 +1,5 @@
 <?php
 
-use Cake\Collection\Collection;
 use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\User;
 use OurSociety\View\AppView;
@@ -21,24 +20,6 @@ $callToActionLink = $this->Url->build([
         'redirect' => $this->Url->build(['_name' => 'citizen:questions']),
     ],
 ]);
-
-/** @var Collection $links */
-$links = collection([]);
-if ($identity !== null):
-    $links = $links->append([
-        ['title' => __('My Dashboard'), 'url' => $identity->getDashboardRoute($identity->isAdmin() ? User::ROLE_CITIZEN : null)],
-        ['title' => __('My Municipality'), 'url' => ['_name' => 'municipality:default']],
-    ]);
-else:
-    $links = $links->append([
-        ['title' => __('Home'), 'url' => ['_name' => 'root']],
-    ]);
-endif;
-$links = $links->append([
-    ['title' => __('Municipalities'), 'url' => (new ElectoralDistrict)->getBrowseRoute()],
-    ['title' => __('Representatives'), 'url' => ['_name' => 'politicians']],
-    //['title' => __('Elections'), 'url' => (new Election)->getBrowseRoute()],
-]);
 ?>
 
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row os-navbar">
@@ -48,20 +29,24 @@ $links = $links->append([
 
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav os-navbar-nav flex-wrap">
-            <?php foreach ($links as $link): ?>
-                <?php
-                $liClasses = ['nav-item'];
-                $requestPath = $this->request->getUri()->getPath();
-                $linkPath = $this->Url->build($link['url']);
-                if ($requestPath === $linkPath):
-                    $liClasses[] = 'active';
-                endif;
-                $link += ['title' => 'Unknown', 'url' => '#', 'options' => []];
-                ?>
-                <li class="<?= implode(' ', $liClasses) ?> text-nowrap">
-                    <?= $this->Component->render(new NavLink($link['title'], $link['url'], $link['options'])) ?>
+            <?php if ($identity !== null): ?>
+                <li class="nav-item text-nowrap">
+                    <?= $this->Component->render(new NavLink(__('My Dashboard'), $identity->getDashboardRoute($identity->isAdmin() ? User::ROLE_CITIZEN : null))) ?>
                 </li>
-            <?php endforeach ?>
+                <li class="nav-item text-nowrap">
+                    <?= $this->Component->render(new NavLink(__('My Municipality'), ['_name' => 'municipality:default'])) ?>
+                </li>
+            <?php else: ?>
+                <li class="nav-item text-nowrap">
+                    <?= $this->Component->render(new NavLink(__('Home'), ['_name' => 'root'])) ?>
+                </li>
+            <?php endif ?>
+            <li class="nav-item text-nowrap">
+                <?= $this->Component->render(new NavLink(__('Municipalities'), (new ElectoralDistrict)->getBrowseRoute())) ?>
+            </li>
+            <li class="nav-item text-nowrap">
+                <?= $this->Component->render(new NavLink(__('Representatives'), ['_name' => 'politicians'])) ?>
+            </li>
         </ul>
     </div>
 
