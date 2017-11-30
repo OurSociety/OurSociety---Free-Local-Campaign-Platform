@@ -48,7 +48,7 @@ abstract class Link extends Component
     {
         $this->title = $title;
         $this->url = $url;
-        $this->options = $options ?? $this->getDefaultOptions();
+        $this->options = $options;
     }
 
     /**
@@ -82,7 +82,9 @@ abstract class Link extends Component
      */
     public function getOptions(ServerRequest $request): array
     {
-        return $this->mergeClasses($this->options, $this->getClasses($request));
+        $options = $this->options ?? $this->getDefaultOptions();
+
+        return $this->mergeClasses($options, $this->getClasses($request));
     }
 
     protected function getDefaultOptions(): array
