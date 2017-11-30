@@ -168,6 +168,12 @@ class UsersController extends AppController
      */
     public function register(): ?Response
     {
+        $this->Crud->on('beforeRender', function (Event $event) {
+            if ($this->hasIdentity()) {
+                return $this->redirect($this->getIdentity()->getDashboardRoute());
+            }
+        });
+
         $this->Crud->on('afterRegister', function (Event $event) {
             if ($event->getSubject()->success === true) {
                 /** @var User $user */

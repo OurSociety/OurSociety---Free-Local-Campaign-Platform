@@ -19,6 +19,10 @@ class JoinAction extends Action
      */
     public function __invoke(...$params): ?Response
     {
+        if ($this->hasIdentity()) {
+            return $this->redirectToDashboard();
+        }
+
         if ($this->isFormSubmission()) {
             try {
                 $this->registerUser($this->getRequestData());
@@ -60,5 +64,10 @@ class JoinAction extends Action
         /** @var Users $model */
         $model = $this->getModel();
         $model->register($requestData);
+    }
+
+    private function redirectToDashboard(): ?Response
+    {
+        return $this->redirect($this->getIdentity()->getDashboardRoute());
     }
 }

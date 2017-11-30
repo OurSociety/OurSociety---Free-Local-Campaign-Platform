@@ -5,11 +5,11 @@ namespace OurSociety\TestSuite\Behat\Page\Guest;
 
 use OurSociety\TestSuite\Behat\Page\Page;
 
-class BlogRedirect extends Page
+class Home extends Page
 {
     protected function getPath(): string
     {
-        return '/blog';
+        return '/home';
     }
 
     protected function verifyUrl(array $urlParameters = []): void

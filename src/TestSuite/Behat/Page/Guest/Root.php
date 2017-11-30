@@ -14,6 +14,6 @@ class Root extends Page
 
     protected function verifyUrl(array $urlParameters = []): void
     {
-        $this->assertRedirect('/blog');
+        $this->assertRedirect('/join-oursociety');
     }
 }

@@ -23,7 +23,7 @@ $callToActionLink = $this->Url->build([
 ?>
 
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row os-navbar">
-    <a href="<?= $this->Url->build(['_name' => 'home']) ?>" aria-label="OurSociety" class="navbar-brand">
+    <a href="<?= $this->Url->build(['_name' => 'root']) ?>" aria-label="OurSociety" class="navbar-brand">
         <?= $this->element('Layout/brand') ?>
     </a>
 
@@ -38,7 +38,7 @@ $callToActionLink = $this->Url->build([
                 </li>
             <?php else: ?>
                 <li class="nav-item text-nowrap">
-                    <?= $this->Component->render(new NavLink(__('Home'), ['_name' => 'root'])) ?>
+                    <?= $this->Component->render(new NavLink(__('Home'), ['_name' => 'home'])) ?>
                 </li>
             <?php endif ?>
             <li class="nav-item text-nowrap">

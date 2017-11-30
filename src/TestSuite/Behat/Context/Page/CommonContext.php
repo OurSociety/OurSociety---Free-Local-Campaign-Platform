@@ -11,7 +11,11 @@ use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageExce
 
 class CommonContext extends PageContext
 {
-    protected $blogRedirect;
+    protected $citizenDashboard;
+
+    protected $home;
+
+    protected $join;
 
     protected $onboarding;
 
@@ -20,13 +24,19 @@ class CommonContext extends PageContext
     protected $signIn;
 
     public function __construct(
+        Page\Citizen\Dashboard $citizenDashboard,
         Page\Citizen\Onboarding $onboarding,
-        Page\Guest\BlogRedirect $blogRedirect,
+        Page\Guest\Home $home,
+        Page\Guest\Join $join,
         Page\Guest\Root $root,
         Page\Guest\SignIn $signIn
     ) {
         /** @noinspection UnusedConstructorDependenciesInspection */
-        $this->blogRedirect = $blogRedirect;
+        $this->citizenDashboard = $citizenDashboard;
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->home = $home;
+        /** @noinspection UnusedConstructorDependenciesInspection */
+        $this->join = $join;
         /** @noinspection UnusedConstructorDependenciesInspection */
         $this->onboarding = $onboarding;
         /** @noinspection UnusedConstructorDependenciesInspection */
@@ -79,6 +89,22 @@ class CommonContext extends PageContext
         if ($pageObject->isOpen() === false) {
             $this->throwException(sprintf('Expected the "%s" page to be open.', $page));
         }
+    }
+
+    /**
+     * @When /^I click "([^"]*)" in the top navigation$/
+     */
+    public function iClickInTheTopNavigation($linkText)
+    {
+        $this->getCurrentPage()->clickNavbarLink($linkText);
+    }
+
+    /**
+     * @When /^I click the logo in the top navigation$/
+     */
+    public function iClickTheLogoInTheTopNavigation()
+    {
+        $this->getCurrentPage()->clickNavbarLink('OurSociety');
     }
 
     /**
