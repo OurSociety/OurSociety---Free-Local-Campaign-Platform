@@ -53,7 +53,20 @@ $callToActionLink = $this->Url->build([
     <div class="flex-row ml-md-auto d-none d-md-flex">
         <?= $this->element('Search/bar') ?>
 
-        <?= $this->element('Layout/user_menu') ?>
+        <ul class="navbar-nav os-navbar-nav ml-3">
+            <?php if ($identity !== null): ?>
+                <li class="nav-item dropdown" id="notificationMenu">
+                    <?= $this->element('Layout/notification_menu') ?>
+                </li>
+                <li class="nav-item dropdown" id="userMenu">
+                    <?= $this->element('Layout/user_menu') ?>
+                </li>
+            <?php else: ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Sign In'), ['_name' => 'users:login'], ['class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3'],]) ?>
+                </li>
+            <?php endif ?>
+        </ul>
     </div>
 
 </header>

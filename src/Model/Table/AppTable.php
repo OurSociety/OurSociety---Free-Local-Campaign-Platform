@@ -9,6 +9,7 @@ use Cake\Datasource\EntityInterface as Entity;
 use Cake\Event\Event;
 use Cake\ORM\Behavior as Cake;
 use Cake\ORM\Exception\PersistenceFailedException;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior as App;
@@ -124,5 +125,20 @@ abstract class AppTable extends Table
     public function getBySlug(string $slug): Entity
     {
         return $this->find('slugged', ['slug' => $slug])->firstOrFail();
+    }
+
+    public function findByIdentifier(Query $query, array $options = null): Query
+    {
+        if (!isset($options['identifier'])) {
+            throw new \InvalidArgumentException('Missing identifier');
+        }
+
+        if ($this->hasSlugField()) {
+            return $query->find('slugged', ['slug' => $options['identifier']]);
+        }
+
+        return $query->where([
+            $this->aliasField($this->getPrimaryKey()) => $options['identifier'],
+        ]);
     }
 }

@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace OurSociety\TestSuite\Behat\Context\Page;
 
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use OurSociety\TestSuite\Behat\Context\PageContext;
+use OurSociety\TestSuite\Behat\Context\Traits\AuthContextAwareTrait;
 use OurSociety\TestSuite\Behat\Page;
-use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
-class CitizenContext extends PageObjectContext
+class CitizenContext extends PageContext
 {
-    private $dashboardPage;
+    use AuthContextAwareTrait;
 
-    private $guestContext;
+    private $dashboardPage;
 
     private $onboardingPage;
 
@@ -44,5 +45,19 @@ class CitizenContext extends PageObjectContext
     public function iClickThroughTheTutorialScreens()
     {
         $this->onboardingPage->doTutorial();
+    }
+
+    /**
+     * @Given /^my selected municipality is "([^"]*)"$/
+     * @throws \Behat\Mink\Exception\DriverException
+     */
+    public function mySelectedMunicipalityIs($municipality)
+    {
+        $expected = $municipality;
+        $actual = $this->getAuthContext()->getIdentity()->electoral_district->name;
+
+        if ($expected !== $actual) {
+            $this->throwException(sprintf('Expected municipality to be "%s". Found "%s"', $expected, $actual));
+        }
     }
 }

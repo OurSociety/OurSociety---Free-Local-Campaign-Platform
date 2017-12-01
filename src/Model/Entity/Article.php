@@ -115,6 +115,32 @@ class Article extends AppEntity
         return 'newspaper-o';
     }
 
+    public function isApproved(): bool
+    {
+        $approved = $this->_properties['approved'] ?? null;
+
+        return $approved === null;
+    }
+
+    public function isPublished(): bool
+    {
+        $published = $this->_properties['published'] ?? null;
+
+        return $published === null;
+    }
+
+    public function isApprovedAndPublished(): bool
+    {
+        return $this->isApproved() && $this->isPublished();
+    }
+
+    public function isAuthor(User $user): bool
+    {
+        $authorId = $this->_properties['politician_id'] ?? null;
+
+        return $authorId === $user->id;
+    }
+
     /**
      * Read time.
      *

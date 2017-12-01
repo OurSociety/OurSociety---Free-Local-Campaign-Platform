@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Datasource\RepositoryInterface;
-use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 use OurSociety\Action\Action;
@@ -30,21 +29,14 @@ abstract class Model
         $this->repository = $this->loadModel();
     }
 
-    public function getByUniqueIdentifier(string $identifier, array $fields = null): Entity
+    public function getByUniqueIdentifier(string $identifier, array $fields = null): EntityInterface
     {
-        $primaryKey = $this->repository->getPrimaryKey();
-        $query = $this->repository->find()->select($primaryKey);
+        $query = $this->repository
+            ->find('byIdentifier', ['identifier' => $identifier])
+            ->select($this->repository->getPrimaryKey());
 
         if ($fields !== null) {
             $query->select($fields);
-        }
-
-        if ($this->repository->hasSlugField()) {
-            $query->find('slugged', ['slug' => $identifier]);
-        } else {
-            $query->where([
-                $this->repository->aliasField($primaryKey) => $identifier,
-            ]);
         }
 
         return $query->firstOrFail();
@@ -67,7 +59,13 @@ abstract class Model
         }
         $finderName = sprintf('for%s%s', $matches[1], $matches[2]);
 
-        return $this->repository->find($finderName, $options);
+        $query = $this->repository->find($finderName, $options ?? []);
+
+        if (isset($options['identifier'])) {
+            $query->find('byIdentifier');
+        }
+
+        return $query;
     }
 
     public function update(EntityInterface $entity, array $data): EntityInterface
@@ -87,6 +85,15 @@ abstract class Model
     public function getContext(): EntityInterface
     {
         return $this->repository->newEntity();
+    }
+
+    public function getSlugFromId(string $id): string
+    {
+        return $this->repository->find()
+            ->select(['slug'])
+            ->where([$this->repository->aliasField('id') => $id])
+            ->firstOrFail()
+            ->slug;
     }
 
     protected function saveField(EntityInterface $entity, string $field, $value): EntityInterface

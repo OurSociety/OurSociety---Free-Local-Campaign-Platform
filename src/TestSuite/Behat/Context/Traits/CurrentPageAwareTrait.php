@@ -7,10 +7,9 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 trait CurrentPageAwareTrait
 {
-    /**
-     * @var Page
-     */
-    protected $page;
+    use CommonContextAwareTrait;
+
+    public $page;
 
     protected function getPagePropertyName(string $page): string
     {
@@ -21,21 +20,13 @@ trait CurrentPageAwareTrait
     {
         $pageObject = $this->{$this->getPagePropertyName($page)};
 
-        if (isset($this->common)) {
-            $this->common->page = $pageObject;
-        } else {
-            $this->page = $pageObject;
-        }
+        $this->getCommonContext()->page = $pageObject;
 
         return $pageObject;
     }
 
     protected function getCurrentPage(): Page
     {
-        if (isset($this->common)) {
-            return $this->common->page;
-        }
-
-        return $this->page;
+        return $this->getCommonContext()->page;
     }
 }

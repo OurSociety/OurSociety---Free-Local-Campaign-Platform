@@ -6,6 +6,7 @@ namespace OurSociety\TestSuite\Behat\Page;
 use Behat\Mink\Element\ElementInterface;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\Flash;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\Navbar;
+use OurSociety\TestSuite\Behat\Page\Element\Layout\NotificationMenu;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\UserMenu;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\ElementNotFoundException;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
@@ -37,6 +38,11 @@ abstract class Page extends BasePage
     public function clickNavbarLink(string $linkText): void
     {
         $this->getNavbar()->clickLink($linkText);
+    }
+
+    public function getUnreadNotificationCount(): int
+    {
+        return $this->getNotificationMenu()->getUnreadNotificationCount();
     }
 
     protected function assertFieldExists($locator): void
@@ -99,5 +105,11 @@ abstract class Page extends BasePage
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->getElement(Navbar::class);
+    }
+
+    private function getNotificationMenu(): NotificationMenu
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->getElement(NotificationMenu::class);
     }
 }

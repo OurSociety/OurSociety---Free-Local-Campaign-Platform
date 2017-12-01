@@ -97,7 +97,11 @@ class ArticlesController extends CrudController
             'municipality' => $municipality,
         ]);
 
-        $this->viewFromProfile($articleSlug);
+        $return = $this->viewFromProfile($articleSlug);
+
+        if ($return !== null) {
+            return $return;
+        }
 
         return $this->render('view_municipality');
     }
@@ -127,6 +131,8 @@ class ArticlesController extends CrudController
         });
 
         $this->Crud->on('beforeRedirect', function (Event $event) use ($municipalitySlug) {
+            $this->refreshIdentity();
+
             if ($event->getSubject()->success !== true) {
                 return null;
             }
@@ -154,15 +160,18 @@ class ArticlesController extends CrudController
     {
         /** @var ArticlesTable $articles */
         $articles = $this->loadModel('Articles');
-        $role = $this->hasIdentity() ? $this->getIdentity()->role : null;
-        $article = $articles->getBySlug($articleSlug, $role);
+        /** @var Article $article */
+        $article = $articles->getBySlug($articleSlug, $this->hasIdentity() ? $this->getIdentity() : null);
 
-        if ($article->approved === null || $article->published === null) {
-            return $this->redirect([
-                '_name' => 'politician:profile:article',
-                'article' => $article->slug,
-            ]);
-        }
+        //$isApprovedAndPublished = $article->isApprovedAndPublished();
+        //$isAuthor = $this->hasIdentity() ? $article->isAuthor($this->getIdentity()) : false;
+        //
+        //if ($isApprovedAndPublished === false && $isAuthor === false) {
+        //    return $this->redirect([
+        //        '_name' => 'politician:profile:article',
+        //        'article' => $article->slug,
+        //    ]);
+        //}
 
         $this->set('article', $article);
 

@@ -9,10 +9,13 @@ use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\ORM\Association;
 use Cake\ORM\RulesChecker;
+use Cake\Routing\Router;
 use Cake\Validation\Validator as CakeValidator;
 use OurSociety\Model\Behavior\CounterCacheBehavior;
 use OurSociety\Model\Entity\Article;
+use OurSociety\Model\Entity\ElectoralDistrict;
 use OurSociety\Model\Entity\User;
+use OurSociety\Model\Users;
 use OurSociety\Validation\Validator as AppValidator;
 
 /**
@@ -51,6 +54,21 @@ class ArticlesTable extends AppTable
         ]);
     }
 
+    /**
+     * After save callback.
+     *
+     * @param Event $event
+     * @param Entity|Article $entity
+     * @param ArrayObject $options
+     * @return void
+     */
+    public function afterSave(Event $event, Entity $entity, $options): void
+    {
+        if ($entity->isNew()) {
+            $this->notifyUserAndAdmins($entity);
+        }
+    }
+
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
     {
         foreach (['published', 'approved'] as $field) {
@@ -71,11 +89,10 @@ class ArticlesTable extends AppTable
             ->add($rules->existsIn(['politician_id'], 'Politicians'));
     }
 
-    public function getBySlug(string $slug, string $role = null): Entity
+    public function getBySlug(string $slug, User $identity = null): Entity
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this
-            ->find('forCitizen', ['role' => $role ?? User::ROLE_CITIZEN])
+            ->find('forCitizen', ['identity' => $identity])
             ->find('slugged', ['slug' => $slug])
             ->firstOrFail();
     }
@@ -101,5 +118,53 @@ class ArticlesTable extends AppTable
             // published
             ->allowEmpty('published')
             ->dateTime('published');
+    }
+
+    private function notifyUserAndAdmins(Article $article): void
+    {
+        $users = Users::instance();
+
+        /** @var User $user */
+        $user = $users->getByUniqueIdentifier($article->politician->slug, ['Users.id', 'Users.email', 'Users.name', 'Users.role']);
+        if ($user->isAdmin()) {
+            return;
+        }
+
+        /** @var ElectoralDistrict $municipality */
+        $municipality = $this->ElectoralDistricts->find()->select(['ElectoralDistricts.slug'])->where([
+            'ElectoralDistricts.id' => $article->electoral_district_id,
+        ])->firstOrFail();
+
+        $url = [
+            '_name' => 'municipality:article',
+            'municipality' => $municipality->slug,
+            'article' => $article->slug,
+        ];
+
+        $body = <<<HTML
+Hi {userName},
+
+Thanks for your submission. We will notify you when fact-checking is complete.
+
+{articleLink}
+
+Thanks,
+
+OurSociety Team.
+HTML;
+
+        $users->notifyUser(
+            $user,
+            __('Article "{name}" undergoing fact-checking.', ['name' => $article->name]),
+            __($body, ['userName' => $user->name, 'articleLink' => Router::reverse($url, true)])
+        );
+
+        foreach ($users->getAdminUsers() as $admin) {
+            $users->notifyUser(
+                $admin,
+                __('Article "{name}" requires fact-checking.', ['name' => $article->name]),
+                __($body, ['userName' => $admin->name, 'articleLink' => Router::reverse($url, true)])
+            );
+        }
     }
 }

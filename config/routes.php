@@ -84,6 +84,8 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
     $routes->connect('/ballots', ['controller' => 'Ballot', 'action' => 'index'], ['_name' => 'ballots']);
     $routes->connect('/ballot/:election', ['controller' => 'Ballot', 'action' => 'view'], ['_name' => 'ballot', 'pass' => ['election']]);
+    $routes->connect('/notifications', ['controller' => 'Notifications', 'action' => 'list'], ['_name' => 'notifications']);
+    $routes->connect('/notification/:notification', ['controller' => 'Notifications', 'action' => 'show'], ['_name' => 'notification', 'pass' => ['notification']]);
     $routes->connect('/profile', ['controller' => 'CommunityContributors', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'CommunityContributors', 'action' => 'edit'], ['_name' => 'profile:edit']);
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);

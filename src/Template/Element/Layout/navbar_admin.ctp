@@ -122,6 +122,12 @@ endif;
 
         <?= $this->cell('Navbar/User') ?>
 
+        <ul class="navbar-nav os-navbar-nav ml-3">
+            <li class="nav-item dropdown" id="notificationMenu">
+                <?= $this->element('Layout/notification_menu') ?>
+            </li>
+        </ul>
+
         <?= $this->Html->link(__('Sign Out'), ['_name' => 'users:logout'], [
             'class' => ['btn', 'btn-os-yellow', 'd-none', 'd-lg-inline-block', 'mb-3', 'mb-md-0', 'ml-md-3'],
         ]) ?>
