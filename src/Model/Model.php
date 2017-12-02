@@ -51,13 +51,16 @@ abstract class Model
 
     public function getQueryForAction(Action $action, array $options = null): Query
     {
-        $actionClassName = get_class($action);
-        $pattern = sprintf('#^%s\\\\Action\\\\(.+)\\\\[^\\\\]+?\\\\([^\\\\]+)$#', Configure::read('App.namespace'));
-        $count = preg_match($pattern, $actionClassName, $matches);
+        $class = get_class($action);
+        $pattern = sprintf('#^%s\\\\Action\\\\((.+)\\\\)?[^\\\\]+?\\\\([^\\\\]+)$#', Configure::read('App.namespace'));
+        $count = preg_match($pattern, $class, $matches);
         if ($count !== 1) {
-            throw new \RuntimeException(sprintf('Regular expression error when parsing class name "%s"', $actionClassName));
+            throw new \RuntimeException(sprintf('Could not get finder name for class name "%s"', $class));
         }
-        $finderName = sprintf('for%s%s', $matches[1], $matches[2]);
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        [$subject, $prefixWithSlash, $prefix, $actionName] = $matches;
+
+        $finderName = sprintf('for%s%s', $prefix, $actionName);
 
         $query = $this->repository->find($finderName, $options ?? []);
 

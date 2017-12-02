@@ -7,6 +7,7 @@ use Cake\Http\Response;
 use Cake\Network\Session;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
 use OurSociety\Controller\AppController;
 use OurSociety\Controller\Component\AuthComponent;
 use OurSociety\Middleware\AuthorizationMiddleware;
@@ -41,8 +42,6 @@ abstract class Action
 
     protected function getRequestData($name = null, $default = null)
     {
-        //dd($this->controller->request->getData());
-
         return $this->controller->request->getData($name, $default);
     }
 
@@ -138,13 +137,7 @@ abstract class Action
 
     protected function getModel(string $modelName = null): Model
     {
-        if ($modelName === null) {
-            $namespaceParts = (array)explode('\\', static::class);
-            $namespaceIndex = (int)count($namespaceParts) - 2;
-            $modelName = $namespaceParts[$namespaceIndex];
-        }
-
-        $modelClass = preg_replace('/Model$/', $modelName, Model::class);
+        $modelClass = $this->getModelClassNameFromModelName($modelName);
 
         return new $modelClass;
     }
@@ -169,6 +162,37 @@ abstract class Action
         $this->setErrorMessage(AuthComponent::ERROR_AUTH_UNAUTHORIZED);
 
         return $this->redirect(AuthorizationMiddleware::UNAUTHORIZED_REDIRECT_URL);
+    }
+
+    protected function setViewTemplate(string $name): void
+    {
+        $this->controller->viewBuilder()->setTemplate($name);
+    }
+
+    protected function getDefaultModelName(): string
+    {
+        $namespaceParts = (array)explode('\\', static::class);
+        $namespaceIndex = (int)count($namespaceParts) - 2;
+
+        return $namespaceParts[$namespaceIndex];
+    }
+
+    protected function getModelClassNameFromModelName(string $modelName = null): string
+    {
+        if ($modelName === null) {
+            $modelName = $this->getDefaultModelName();
+        }
+
+        if (class_exists($modelName)) {
+            return $modelName;
+        }
+
+        return preg_replace('/Model$/', $modelName, Model::class);
+    }
+
+    protected function isRoute(string $name): bool
+    {
+        return $this->controller->request->getUri()->getPath() === Router::reverse(['_name' => $name]);
     }
 
     private function getSession(): Session

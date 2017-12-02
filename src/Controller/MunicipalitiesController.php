@@ -6,6 +6,7 @@ namespace OurSociety\Controller;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Crud\Listener\ApiListener;
+use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Table\ElectoralDistrictsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -16,6 +17,8 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class MunicipalitiesController extends CrudController
 {
+    use ActionAwareTrait;
+
     public function initialize(): void
     {
         parent::initialize();

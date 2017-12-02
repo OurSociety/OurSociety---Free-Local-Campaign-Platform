@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table\Finder\ElectoralDistricts;
 
@@ -11,7 +11,9 @@ class IsMunicipalityFinder extends Finder
     public function __invoke(Query $query, array $options = []): Query
     {
         return $query->matching('DistrictTypes', function (Query $query) {
-            return $query->where(['DistrictTypes.id_vip' => 'municipality']);
+            return $query->where([
+                $this->aliasField($query, 'id_vip') => 'municipality',
+            ]);
         });
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Politician;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Network\Exception\BadRequestException;
 use Cake\ORM\Query;
@@ -29,11 +30,15 @@ class PoliticiansController extends CrudController
 
     public function view(): ?Response
     {
-        /** @var User $politician */
-        $politician = $this->loadModel('Users')
-            ->find('politician')
-            ->where(['slug' => $this->getIdentity()->slug])
-            ->firstOrFail();
+        try {
+            /** @var User $politician */
+            $politician = $this->loadModel('Users')
+                ->find('politician')
+                ->where(['slug' => $this->getIdentity()->slug])
+                ->firstOrFail();
+        } catch (RecordNotFoundException $exception) {
+            return $this->unauthorizedRedirect();
+        }
 
         if ($politician->verified === null) {
             $this->Flash->warning('The email address for this profile has not been verified.');
