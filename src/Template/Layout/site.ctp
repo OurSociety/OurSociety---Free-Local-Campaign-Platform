@@ -14,7 +14,11 @@ $this->extend('base');
 
     <?= $this->element('Layout/navbar') ?>
 
-    <?= $this->Breadcrumbs->render() ?>
+    <?php if ($this->get('showSignUp')): ?>
+        <?= $this->element('../Users/register') ?>
+    <?php else: ?>
+        <?= $this->Breadcrumbs->render() ?>
+    <?php endif ?>
 
     <div class="<?= $containerClass ?? 'container my-4' ?>">
 

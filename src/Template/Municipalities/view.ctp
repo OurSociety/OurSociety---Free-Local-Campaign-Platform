@@ -119,9 +119,6 @@ if ($identity && $identity->isInMunicipality($municipality)) {
 
     <div class="col-md-6">
         <?= $this->element('Widgets/MunicipalProfile/videos', ['videos' => $municipality->videos]) ?>
-
-
-
         <?= $this->element('Widgets/MunicipalProfile/events', ['events' => $municipality->events]) ?>
     </div>
 </div>

@@ -88,6 +88,23 @@ return [
             'action' => '*',
         ],
         [
+            'role' => 'politician',
+            'prefix' => 'politician/profile',
+            'extension' => '*',
+            'plugin' => '*',
+            'controller' => '*',
+            'action' => '*',
+        ],
+        // TODO: Create a src/Controller/Politician/QuestionsController instead of linking to /citizen/your-voice
+        [
+            'role' => 'politician',
+            'prefix' => 'citizen',
+            'extension' => '*',
+            'plugin' => '*',
+            'controller' => 'Questions',
+            'action' => 'index',
+        ],
+        [
             'role' => 'admin',
             'prefix' => '*',
             'extension' => '*',

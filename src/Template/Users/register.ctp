@@ -1,7 +1,10 @@
 <?php
+
+use OurSociety\Model\Entity\User;
+
 /**
  * @var \OurSociety\View\AppView $this The view class.
- * @var \OurSociety\Model\Entity\User $user The user entity.
+ * @var User $user The user entity.
  */
 
 $this->set('title', 'Join OurSociety');
@@ -14,7 +17,7 @@ $this->set('title', 'Join OurSociety');
         </h1>
 
         <section class="users form">
-            <?= $this->Form->create($user) ?>
+            <?= $this->Form->create($user ?? new User, ['url' => ['_name' => 'users:register']]) ?>
             <fieldset>
                 <div class="row">
                     <div class="col">

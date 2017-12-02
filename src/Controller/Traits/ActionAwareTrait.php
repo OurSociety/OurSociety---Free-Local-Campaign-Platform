@@ -25,8 +25,14 @@ trait ActionAwareTrait
         try {
             return $this->invokeActionMethodOrClass();
         } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingActionException $exception) {
-            return $this->invokeCrudAction();
+            try {
+                return $this->invokeActionMethodOrClass();
+            } /** @noinspection BadExceptionsProcessingInspection */ catch (MissingActionException $exception) {
+                $this->throwMissingActionException();
+            }
         }
+
+        return null;
     }
 
     private function getActionClassName(): string

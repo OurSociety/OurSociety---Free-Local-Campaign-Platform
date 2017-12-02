@@ -25,6 +25,10 @@ trait InvokableFinderTrait
         $query->applyOptions($options);
         $options = $query->getOptions();
 
+        if (class_exists($type)) {
+            return (new $type($this))($query, $options);
+        }
+
         $namespace = Configure::read('App.namespace');
         $tableName = preg_replace('#^.*\\\\(.*)Table#', '$1', static::class);
         $finderName = ucfirst($type);

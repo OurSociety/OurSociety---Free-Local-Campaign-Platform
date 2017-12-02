@@ -18,7 +18,7 @@ Router::defaultRouteClass(DashedRoute::class);
  * Default scope.
  */
 Router::scope('/', function (RouteBuilder $routes): void {
-    $routes->redirect('/', '/join-oursociety', ['_name' => 'root', 'routeClass' => NamedRedirectRoute::class]);
+    $routes->connect('/', ['controller' => 'Municipalities', 'action' => 'view', env('EXAMPLE_MUNICIPALITY_SLUG')], ['_name' => 'root']);
     $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
 
     // Renamed routes (TODO: these can be deleted after some time)
