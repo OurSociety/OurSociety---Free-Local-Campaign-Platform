@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\Model\Table\Answers\Callback;
 
@@ -7,6 +7,7 @@ use ArrayObject;
 use Cake\Database\Connection;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
+use Cake\ORM\Association;
 use Cake\ORM\Query;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\User;
@@ -115,8 +116,8 @@ SELECT (SQRT(
         GREATEST(ABS(citizen.answer), ABS(politician.answer))
     ), 1) * politician.importance) / SUM(politician.importance) * 100
 )) AS match_percentage
-FROM answers as citizen
-LEFT JOIN answers as politician
+FROM answers AS citizen
+LEFT JOIN answers AS politician
 ON politician.question_id = citizen.question_id
 AND politician.user_id = ?
 WHERE citizen.user_id = ?

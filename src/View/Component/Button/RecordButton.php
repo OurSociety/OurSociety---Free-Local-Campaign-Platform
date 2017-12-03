@@ -15,6 +15,8 @@ abstract class RecordButton extends Button
 {
     use RecordAwareTrait;
 
+    protected $buttonUrl;
+
     public function __construct(RecordInterface $record = null)
     {
         $this->setRecord($record);
@@ -27,11 +29,18 @@ abstract class RecordButton extends Button
 
     public function getButtonUrl(): array
     {
-        return [
-            'controller' => $this->getControllerName(),
-            'action' => $this->getActionName(),
-            $this->getIdentifier(),
-        ];
+        $defaultUrl = ['controller' => $this->getControllerName(), 'action' => $this->getActionName()];
+        $url = $this->buttonUrl ?? $defaultUrl;
+        $url[] = $this->getRecordIdentifier();
+
+        return $url;
+    }
+
+    public function setButtonUrl(array $url): self
+    {
+        $this->buttonUrl = $url;
+
+        return $this;
     }
 
     abstract protected function getActionName(): string;
@@ -41,7 +50,7 @@ abstract class RecordButton extends Button
         return $this->getRecord()->getModelAlias();
     }
 
-    private function getIdentifier(): string
+    protected function getRecordIdentifier(): string
     {
         return $this->getRecord()->getIdentifierValue();
     }

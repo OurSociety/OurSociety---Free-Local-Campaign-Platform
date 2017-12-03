@@ -18,15 +18,6 @@ Router::defaultRouteClass(DashedRoute::class);
  * Default scope.
  */
 Router::scope('/', function (RouteBuilder $routes): void {
-    $routes->connect('/', ['controller' => 'Municipalities', 'action' => 'view', env('EXAMPLE_MUNICIPALITY_SLUG')], ['_name' => 'root']);
-    $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
-
-    // Renamed routes (TODO: these can be deleted after some time)
-    $routes->redirect('/login', '/sign-in'); // 2017-11
-    $routes->redirect('/logout', '/sign-out'); // 2017-11
-    $routes->redirect('/onboarding', '/tutorial'); // 2017-11
-    $routes->redirect('/register', '/join-oursociety'); // 2017-11
-
     $routes->connect('/billing', ['controller' => 'Billing', 'action' => 'portal'], ['_name' => 'billing']);
     $routes->connect('/billing/checkout/:plan', ['controller' => 'Billing', 'action' => 'checkout'], ['_name' => 'billing:checkout', 'pass' => ['plan']]);
     $routes->connect('/billing/update', ['controller' => 'Billing', 'action' => 'update'], ['_name' => 'billing:update']);
@@ -68,10 +59,18 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
 
     $routes->redirect('/docs/onboarding', 'https://drive.google.com/file/d/0BwuM2zudya6ub0Y2Zm5meWdwN00/view');
+    $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
     $routes->redirect('/participation-guidelines', 'https://www.oursociety.org/knowledge-base/content-creation-question-submission-guidelines/');
     $routes->redirect('/purpose', 'https://www.oursociety.org/faq/purpose/');
     $routes->redirect('/team', 'https://www.oursociety.org/faq/team/');
 
+    // Renamed routes (TODO: these can be deleted after some time)
+    $routes->redirect('/login', '/sign-in'); // 2017-11
+    $routes->redirect('/logout', '/sign-out'); // 2017-11
+    $routes->redirect('/onboarding', '/tutorial'); // 2017-11
+    $routes->redirect('/register', '/join-oursociety'); // 2017-11
+
+    $routes->connect('/', ['controller' => 'Municipalities', 'action' => 'view', env('EXAMPLE_MUNICIPALITY_SLUG')], ['_name' => 'root']);
     $routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
 });
 
@@ -91,6 +90,7 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);
     $routes->connect('/your-voice', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
     $routes->connect('/your-voice/review', ['controller' => 'Answers', 'action' => 'list'], ['_name' => 'answers']);
+    $routes->connect('/your-voice/revise/:answer', ['controller' => 'Answers', 'action' => 'edit'], ['_name' => 'answers:edit', 'pass' => ['answer']]);
 
     $routes->fallbacks(DashedRoute::class);
 });
