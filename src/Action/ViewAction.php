@@ -6,6 +6,7 @@ namespace OurSociety\Action;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Http\Response;
+use Cake\Network\Exception\BadRequestException;
 use Cake\ORM\Query;
 
 class ViewAction extends Action
@@ -31,7 +32,16 @@ class ViewAction extends Action
 
     protected function getRecordIdentifier($params): string
     {
+        if ($this->hasRecordIdentifier($params) === false) {
+            throw new BadRequestException('Missing record identifier');
+        }
+
         return $params[0];
+    }
+
+    protected function hasRecordIdentifier($params): bool
+    {
+        return is_string($params[0] ?? null);
     }
 
     protected function beforeFind(EntityInterface $record): EntityInterface

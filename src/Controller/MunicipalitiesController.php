@@ -54,21 +54,6 @@ class MunicipalitiesController extends CrudController
         return $this->Crud->execute();
     }
 
-    public function view(?string $municipalitySlug = null): ?Response
-    {
-        if ($this->hasIdentity() === false && $this->request->getParam('municipality') === false) {
-            return $this->unauthorizedRedirect();
-        }
-
-        if ($municipalitySlug === null) {
-            return $this->redirectToUserMunicipality();
-        }
-
-        $this->Crud->action()->setConfig('findMethod', 'forMunicipalityProfile');
-
-        return $this->Crud->execute();
-    }
-
     public function articles(string $slug): ?Response
     {
         /** @var ElectoralDistrictsTable $table */
@@ -109,14 +94,5 @@ class MunicipalitiesController extends CrudController
         });
 
         return $this->Crud->execute();
-    }
-
-    private function redirectToUserMunicipality(): Response
-    {
-        if ($this->hasIdentity() === false) {
-            return $this->unauthorizedRedirect();
-        }
-
-        return $this->redirect($this->getIdentity()->getMunicipalityRoute());
     }
 }

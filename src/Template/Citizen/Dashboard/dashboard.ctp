@@ -12,7 +12,7 @@
 
 <div class="card-deck">
     <?= $this->element('Widgets/Dashboard/Citizen/municipality') ?>
-    <?= $this->element('Widgets/Dashboard/Citizen/ballot') ?>
+    <?= ''// $this->element('Widgets/Dashboard/Citizen/ballot')   ?>
 </div>
 
 <?= $this->element('Widgets/Dashboard/Citizen/submission') ?>
