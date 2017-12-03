@@ -24,14 +24,16 @@ class BallotController extends AppController
         /** @var ElectoralDistrict $electoralDistrict */
         $electoralDistrict = $user->electoral_district;
         $elections = [[]];
-        do {
+
+        while ($electoralDistrict->parent_id !== null) {
             $electoralDistrict = $electoralDistrictsTable->find()->where([
                 'id' => $electoralDistrict->parent_id,
             ])->contain(['Elections'])->firstOrFail();
+
             if (count($electoralDistrict->elections) > 0) {
                 $elections[] = $electoralDistrict->elections;
             }
-        } while ($electoralDistrict->parent_id !== null);
+        }
 
         /** @var Election[] $elections */
         $elections = array_merge(...$elections);

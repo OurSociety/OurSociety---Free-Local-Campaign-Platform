@@ -1,6 +1,6 @@
 <?php
 /**
- * Show a citizen's virtual ballot for an election.
+ * List of elections that virtual ballots can be shown for.
  *
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $identity
@@ -8,12 +8,10 @@
  */
 
 $electionCount = count($elections);
-?>
 
-<ol class="breadcrumb">
-    <li><?= $this->Html->link(__('Citizen Dashboard'), ['_name' => 'citizen:dashboard']) ?></li>
-    <li><?= __('Virtual Ballot') ?></li>
-</ol>
+$this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
+$this->Breadcrumbs->add(__('Virtual Ballot'));
+?>
 
 <h1>
     <?= __('Virtual Ballot') ?>

@@ -16,6 +16,10 @@ class ViewAction extends \OurSociety\Action\ViewAction
     {
         $this->showSignUpOnRootExample();
 
+        if ($this->hasRecordIdentifier($params) === false) {
+            return $this->redirectToUserMunicipality();
+        }
+
         return parent::__invoke(...$params);
     }
 
@@ -29,10 +33,21 @@ class ViewAction extends \OurSociety\Action\ViewAction
         return 'municipality';
     }
 
-    protected function showSignUpOnRootExample(): void
+    private function showSignUpOnRootExample(): void
     {
-        if ($this->isRoute('root')) {
-            $this->setViewVariable('showSignUp', true);
+        if ($this->isRoute('root') === false) {
+            return;
         }
+
+        $this->setViewVariable('showSignUp', true);
+    }
+
+    private function redirectToUserMunicipality(): Response
+    {
+        if ($this->hasIdentity() === false) {
+            return $this->unauthorizedRedirect();
+        }
+
+        return $this->redirect($this->getIdentity()->getMunicipalityRoute());
     }
 }

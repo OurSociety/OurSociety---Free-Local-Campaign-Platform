@@ -8,7 +8,7 @@
  * @var \OurSociety\Model\Entity\User $identity
  */
 
-$this->Breadcrumbs->add(__('Citizen Dashboard'), ['_name' => 'citizen:dashboard']);
+$this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
 $this->Breadcrumbs->add(__('Virtual Ballot'));
 $this->Breadcrumbs->add($election->name);
 ?>
