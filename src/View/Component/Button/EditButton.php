@@ -5,14 +5,23 @@ namespace OurSociety\View\Component\Button;
 
 final class EditButton extends RecordButton
 {
+    protected $buttonTitle;
+
     public function getButtonTitle(): string
     {
-        return __('Edit');
+        return $this->buttonTitle ?? __('Edit');
     }
 
     public function getButtonIcon(): string
     {
         return 'pencil';
+    }
+
+    public function setButtonTitle(string $title): self
+    {
+        $this->buttonTitle = $title;
+
+        return $this;
     }
 
     protected function getActionName(): string

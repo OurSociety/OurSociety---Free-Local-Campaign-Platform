@@ -9,14 +9,15 @@ use Cake\ORM\Exception\PersistenceFailedException;
 
 abstract class EditAction extends Action
 {
+    use Traits\RecordIdentifierAwareTrait;
+
     public function __invoke(...$params): ?Response
     {
-        $model = $this->getModel();
-        $entity = $model->getByUniqueIdentifier($params[0]);
+        $record = $this->getRecord($this->getRecordIdentifier($params));
 
         if ($this->isSubmitRequest()) {
             try {
-                $model->update($entity, $this->getRequestData());
+                $this->getModel()->update($record, $this->getRequestData());
                 $this->setSuccessMessage($this->getSuccessMessage());
 
                 return $this->redirect($this->getRedirectUrl());
@@ -25,10 +26,11 @@ abstract class EditAction extends Action
             }
         }
 
-        $questions = $model->Questions->find('list', ['limit' => 200]);
-        $users = $model->Users->find('list', ['limit' => 200]);
-        $this->setViewVariables(compact('entity', 'questions', 'users'));
-        $this->setViewVariable('_serialize', ['report']);
+        $variables = compact('record') + $this->getModel()->getSelectFieldValues($this->getSelectFieldNames());
+
+        $this->setViewVariables($variables);
+        $this->setViewVariable('_serialize', array_keys($variables));
+        $this->setViewTemplate($this->getViewTemplate());
 
         return null;
     }
@@ -46,5 +48,15 @@ abstract class EditAction extends Action
     protected function getRedirectUrl(): array
     {
         return ['action' => 'index'];
+    }
+
+    protected function getSelectFieldNames(): array
+    {
+        return [];
+    }
+
+    protected function getViewTemplate(): string
+    {
+        return 'edit';
     }
 }

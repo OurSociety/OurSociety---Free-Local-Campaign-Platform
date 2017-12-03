@@ -99,6 +99,22 @@ abstract class Model
             ->slug;
     }
 
+    public function getSelectFieldValues(array $fields): array
+    {
+        $values = [];
+        foreach ($fields as $field) {
+            $tableName = Inflector::tableize(str_replace('_id', '', $field));
+            $modelName = Inflector::classify($tableName);
+            $variableName = Inflector::variable($tableName);
+
+            if (isset($model->$modelName)) {
+                $values[$variableName] = $this->$modelName->find('list', ['limit' => 200]);
+            }
+        }
+
+        return $values;
+    }
+
     protected function saveField(EntityInterface $entity, string $field, $value): EntityInterface
     {
         $data = [$field => $value];

@@ -7,6 +7,7 @@ use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\View\Cell;
+use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\Question;
 
 /**
@@ -32,11 +33,12 @@ class QuestionCell extends Cell
      * @param int $number
      * @return void
      */
-    public function display(Question $question, int $number): void
+    public function display(Question $question, int $number = null, Answer $answer = null): void
     {
         $this->set([
             'question' => $question,
             'number' => $number,
+            'answer' => $answer,
             'identity' => $this->request->getAttribute('identity')->getOriginalData(),
         ]);
     }
