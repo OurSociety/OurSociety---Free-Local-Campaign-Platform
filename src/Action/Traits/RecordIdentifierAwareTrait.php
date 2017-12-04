@@ -6,6 +6,8 @@ namespace OurSociety\Action\Traits;
 use Cake\Datasource\EntityInterface;
 use Cake\Network\Exception\BadRequestException;
 use Cake\ORM\Query;
+use OurSociety\Action\Action;
+use OurSociety\Model\Model;
 
 trait RecordIdentifierAwareTrait
 {
@@ -30,14 +32,19 @@ trait RecordIdentifierAwareTrait
 
     protected function getQuery(string $identifier): Query
     {
-        return $this->getModel()->getQueryForAction($this, $this->getDefaultFinderOptions($identifier));
+        /** @var Model $model */
+        $model = $this->getModel();
+        /** @var Action $action */
+        $action = $this;
+
+        return $model->getQueryForAction($action, $this->getDefaultFinderOptions($identifier));
     }
 
     protected function getDefaultFinderOptions(string $identifier): array
     {
         return [
             'identifier' => $identifier,
-            'identity' => $this->getIdentity(),
+            'identity' => $this->hasIdentity() ? $this->getIdentity() : null,
         ];
     }
 }

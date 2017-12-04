@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Fixture;
 
@@ -28,6 +28,7 @@ class DatabaseFixture
         $filename = $this->getFixturesDumpFilename();
 
         DatabaseDumper::create()
+            ->setHost($config['host'])
             ->setDbName($config['database'])
             ->setUserName($config['username'])
             ->setPassword($config['password'])

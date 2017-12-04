@@ -14,12 +14,13 @@ $this->Breadcrumbs->add(__('My Profile'), ['_name' => 'politician:profile']);
 $this->Breadcrumbs->add(__('Embed Your Profile'));
 ?>
 
+<h2>
+    <?= __('Embed Your Profile') ?>
+</h2>
+
 <div class="row">
 
-    <div class="col-xs-6">
-        <h2>
-            <?= __('Embed Your Profile') ?>
-        </h2>
+    <div class="col-6">
         <p>
             <?= __('Feel free to embed your profile as a widget in your own website!') ?>
         </p>
@@ -30,15 +31,15 @@ $this->Breadcrumbs->add(__('Embed Your Profile'));
         </p>
 
         <pre><code><?= h($embedCode) ?></code></pre>
+    </div>
 
+    <div class="col-6">
         <p>
-            <?= __('The script will insert an {iframe} as seen on the right:', [
+            <?= __('The script will insert an {iframe} as seen below:', [
                 'iframe' => $this->Html->tag('kbd', h('<iframe>')),
             ]) ?>
         </p>
-    </div>
 
-    <div class="col-xs-6">
         <?= $embedCode ?>
     </div>
 

@@ -24,6 +24,7 @@
 /webroot/manifest.webapp
 /.env*
 !/.env.default
+!/.env.test.default
 /.phpunit-watcher-cache.php
 /.php_cs.cache
 /hot

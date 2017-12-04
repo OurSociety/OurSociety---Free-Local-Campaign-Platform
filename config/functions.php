@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use Cake\View\Helper\UrlHelper;
+use Cake\View\View;
+
 if (!function_exists('dd')) {
     /** @noinspection PhpFunctionNamingConventionInspection */
     /**
@@ -25,21 +28,25 @@ if (!function_exists('mix')) {
      * @param string $path
      * @param string $manifestDirectory
      * @return string
-     * @throws \Exception
+     * @throws RuntimeException
      */
     function mix($path, $manifestDirectory = null)
     {
         static $manifests = [];
+
         if (strpos($path, '/') !== 0) {
             $path = "/{$path}";
         }
+
         if ($manifestDirectory && !strpos($manifestDirectory, '/') !== 0) {
             $manifestDirectory = "/{$manifestDirectory}";
         }
+
         //if (file_exists(WWW_ROOT . $manifestDirectory.'/hot')) {
         if (file_exists(ROOT . 'hot')) {
             return "//localhost:8080{$path}";
         }
+
         $manifestPath = WWW_ROOT . $manifestDirectory . '/mix-manifest.json';
         if (!isset($manifests[$manifestPath])) {
             if (!file_exists($manifestPath)) {
@@ -47,6 +54,7 @@ if (!function_exists('mix')) {
             }
             $manifests[$manifestPath] = json_decode(file_get_contents($manifestPath), true);
         }
+
         $manifest = $manifests[$manifestPath];
         if (!isset($manifest[$path])) {
             throw new RuntimeException(
@@ -54,6 +62,8 @@ if (!function_exists('mix')) {
             );
         }
 
-        return (new \Cake\View\Helper\UrlHelper(new Cake\View\View))->assetUrl($manifestDirectory . $manifest[$path]);
+        $urlHelper = new UrlHelper(new View);
+
+        return $urlHelper->assetUrl($manifestDirectory . $manifest[$path]);
     }
 }
