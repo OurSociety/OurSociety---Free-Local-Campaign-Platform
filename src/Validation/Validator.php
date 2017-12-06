@@ -25,12 +25,12 @@ class Validator extends Cake\Validator
      * @see \Cake\Validation\Validation::date()
      * @return $this
      */
-    public function yearMonth($field, array $options = [], $message = null, $when = null)
+    public function yearMonth($field, array $options = null, $message = null, $when = null)
     {
         return $this->add($field, 'yearMonth', array_filter([
             'on' => $when,
             'message' => $message,
-            'rule' => ['yearMonth', $options]
+            'rule' => ['yearMonth', $options ?? []],
         ]));
     }
 }

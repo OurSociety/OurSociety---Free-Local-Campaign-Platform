@@ -12,10 +12,10 @@ $this->start('dashboard');
 $numbers = [
     ['name' => 'questions_answered_total', 'label' => '# Answers', 'style' => 'pink', 'icon' => 'question'],
     ['name' => 'questions_answered_citizens', 'label' => '# by Citizen', 'style' => 'green', 'icon' => 'question'],
-    ['name' => 'questions_answered_politicians', 'label' => '# by Politician', 'style' => 'blue', 'icon' => 'question'],
+    ['name' => 'questions_answered_politicians', 'label' => '# by Representative', 'style' => 'blue', 'icon' => 'question'],
     ['name' => 'questions_percentage_total', 'label' => '% Answered', 'style' => 'pink', 'icon' => 'percent'],
     ['name' => 'questions_percentage_citizens', 'label' => '% by Citizens', 'style' => 'green', 'icon' => 'percent'],
-    ['name' => 'questions_percentage_politicians', 'label' => '% by Politicians', 'style' => 'blue', 'icon' => 'percent'],
+    ['name' => 'questions_percentage_politicians', 'label' => '% by Representatives', 'style' => 'blue', 'icon' => 'percent'],
 ];
 ?>
 <div class="row pb-3">

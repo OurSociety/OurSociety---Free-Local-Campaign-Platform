@@ -62,11 +62,12 @@ abstract class CrudController extends AppController
         $birthDate = $this->getIdentity()->born;
 
         return [
-            'maxYear' => date('Y'),
-            'minYear' => $birthDate ? $birthDate->year : 1900,
-            'empty' => ['month' => 'Month', 'year' => 'Year'],
-            'style' => ['year' => 'display: none'],
-            'day' => false,
+            //'maxYear' => date('Y'),
+            //'minYear' => $birthDate ? $birthDate->year : 1900,
+            //'empty' => ['month' => 'Month', 'year' => 'Year'],
+            //'style' => ['year' => 'display: none'],
+            'type' => 'month',
+            //'day' => false,
         ];
     }
 }

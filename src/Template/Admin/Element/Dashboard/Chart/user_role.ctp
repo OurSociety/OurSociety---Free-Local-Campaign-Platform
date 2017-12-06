@@ -33,7 +33,7 @@
                             backgroundColor: [window.chartColors.green, window.chartColors.blue, window.chartColors.red],
                         }
                     ],
-                    labels: ['Citizens', 'Politicians', 'Admins']
+                    labels: ['Citizens', 'Representatives', 'Admins']
                 },
                 options: {
                     responsive: true,

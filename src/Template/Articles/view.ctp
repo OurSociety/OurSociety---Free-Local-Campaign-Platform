@@ -9,7 +9,7 @@
 $this->extend('/Common/Articles/view');
 
 $this->Breadcrumbs->add(__('Dashboard'), $identity->getDashboardRoute());
-$this->Breadcrumbs->add(__('Politicians'), ['_name' => 'politicians']);
+$this->Breadcrumbs->add(__('Representatives'), ['_name' => 'politicians']);
 $this->Breadcrumbs->add($politician->name, $politician->getPublicProfileRoute());
 $this->Breadcrumbs->add(__('Articles'), $politician->getPublicProfileRoute(['#' => 'articles']));
 $this->Breadcrumbs->add($article->name);

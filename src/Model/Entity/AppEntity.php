@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use Cake\I18n\FrozenDate;
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use OurSociety\View\AppView;
@@ -55,5 +56,15 @@ abstract class AppEntity extends Entity implements RecordInterface
     protected function _getIdentifier(): ?string
     {
         return $this->_properties['slug'] ?? $this->_properties['id'] ?? null;
+    }
+
+    protected function setYearMonth($value)
+    {
+        if (is_string($value)) {
+            [$year, $month] = explode('-', $value);
+            $value = FrozenDate::create($year, $month, 1);
+        }
+
+        return $value;
     }
 }

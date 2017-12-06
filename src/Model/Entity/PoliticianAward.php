@@ -25,4 +25,9 @@ class PoliticianAward extends AppEntity
     {
         return 'trophy';
     }
+
+    protected function _setObtained($value)
+    {
+        $this->setYearMonth($value);
+    }
 }
