@@ -32,18 +32,17 @@
 
 <div class="row">
     <div class="col-auto mx-auto">
-        <?php if ($isExample): ?>
-            <?= $this->Html->link(
-                __('Learn More'),
-                ['_name' => 'guide:matching'],
-                ['class' => ['btn', 'btn-primary']]
-            ) ?>
-        <?php elseif ($limit !== null): ?>
+        <?php if ($isExample === false && $limit !== null): ?>
             <?= $this->Html->link(
                 __('View All'),
                 ['_name' => 'citizen:topics:compare', 'politician' => $politician->slug],
                 ['class' => ['btn', 'btn-primary']]
             ) ?>
         <?php endif ?>
+        <?= $this->Html->link(
+            __('Learn More'),
+            ['_name' => 'guide:matching'],
+            ['class' => ['btn', 'btn-warning']]
+        ) ?>
     </div>
 </div>
