@@ -55,7 +55,7 @@ class UsersController extends AppController
             'actions' => [
                 //'index' => Action\IndexAction::class,
                 //'add' => Action\AddAction::class,
-                //'edit' => Action\EditAction::class,
+                'edit' => Action\EditAction::class,
                 //'view' => Action\ViewAction::class,
                 //'delete' => Action\DeleteAction::class,
                 //'export' => Action\ExportAction::class,

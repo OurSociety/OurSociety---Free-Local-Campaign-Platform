@@ -2,31 +2,40 @@
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $politician
+ * @var \OurSociety\Model\Entity\User $identity
  */
 $embedCode = sprintf('<script src="%s"></script>', $this->Url->build(
     sprintf('/js/embed.js?politician=%s', $politician->slug),
     ['fullBase' => true]
 ));
-?>
 
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Profile', ['_name' => 'politician:profile']) ?></li>
-    <li><?= __('Profile') ?></li>
-</ol>
+$this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
+$this->Breadcrumbs->add(__('My Profile'), ['_name' => 'politician:profile']);
+$this->Breadcrumbs->add(__('Embed Your Profile'));
+?>
 
 <div class="row">
 
     <div class="col-xs-6">
-        <h2>Embed Your Profile</h2>
+        <h2>
+            <?= __('Embed Your Profile') ?>
+        </h2>
+        <p>
+            <?= __('Feel free to embed your profile as a widget in your own website!') ?>
+        </p>
+        <p>
+            <?= __('Simply code and paste the {script} tag below into your page:', [
+                'script' => $this->Html->tag('kbd', h('<script>')),
+            ]) ?>
+        </p>
 
-        <p>Feel free to embed your profile as a widget in your own website!</p>
+        <pre><code><?= h($embedCode) ?></code></pre>
 
-        <p>Simply code and paste the <kbd><?= htmlentities('<script>') ?></kbd> tag below into your page:</p>
-
-        <pre><code><?= htmlentities($embedCode) ?></code></pre>
-
-        <p>The script will insert an <kbd><?= htmlentities('<iframe>') ?></kbd> as seen on the right:</p>
+        <p>
+            <?= __('The script will insert an {iframe} as seen on the right:', [
+                'iframe' => $this->Html->tag('kbd', h('<iframe>')),
+            ]) ?>
+        </p>
     </div>
 
     <div class="col-xs-6">

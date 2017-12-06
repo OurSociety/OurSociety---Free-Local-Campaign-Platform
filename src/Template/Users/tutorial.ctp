@@ -20,7 +20,8 @@
     </div>
     <div class="col-md-6 p-5 os-bg-split-light">
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tutorial-1">
+            <div class="tab-pane<?= $this->request->getQuery('screen') !== 'location' ? ' active' : null ?>"
+                 role="tabpanel" id="tutorial-1">
                 <h1 class="pb-3">
                     <?= __('First, we give you a question about your values.') ?>
                 </h1>
@@ -62,7 +63,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="tutorial-2">
+            <div class="tab-pane" role="tabpanel" id="tutorial-2">
                 <h1 class="pb-3">
                     <?= __('Then, you choose whether you agree or disagree.') ?>
                 </h1>
@@ -100,7 +101,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="tutorial-3">
+            <div class="tab-pane" role="tabpanel" id="tutorial-3">
                 <h1 class="pb-3">
                     <?= __('Finally, you tell us how important this topic is to you.') ?>
                 </h1>
@@ -137,7 +138,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="tutorial-4">
+            <div class="tab-pane" role="tabpanel" id="tutorial-4">
                 <h1 class="pb-3">
                     <?= __('If you are unsure, you can always choose to answer later.') ?>
                 </h1>
@@ -168,14 +169,15 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="location">
+            <div class="tab-pane<?= $this->request->getQuery('screen') === 'location' ? ' active' : null ?>"
+                 role="tabpanel" id="location">
                 <h1 class="pb-3">
                     <?= __('Please select your location to continue!') ?>
                 </h1>
 
                 <p>
                     <?= __('By selecting your location we can match you to {role} in your area.', [
-                        'role' => $identity->isPolitician() ? __('constituents') : __('politicians'),
+                        'role' => __($identity->isPolitician() ? 'constituents' : 'politicians'),
                     ]) ?>
                 </p>
 

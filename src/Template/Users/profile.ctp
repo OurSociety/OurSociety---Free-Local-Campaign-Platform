@@ -4,9 +4,14 @@
  * @var \OurSociety\Model\Entity\User $user The user.
  */
 
-$user = \OurSociety\ORM\TableRegistry::get('Users')->get('fadbd13b-35d1-4b62-82e7-f60ee2709467');
 $this->Breadcrumbs->add(__('Dashboard'), $user->getDashboardRoute());
 $this->Breadcrumbs->add(__('Profile'), $user->getProfileRoute());
+
+$actions = [
+    __('Edit details') => ['_name' => 'users:edit'],
+    __('Change password') => ['_name' => 'users:reset'],
+    __('Change municipality') => ['_name' => 'users:onboarding', '?' => ['screen' => 'location']],
+];
 ?>
 
 <h2>
@@ -34,5 +39,6 @@ $this->Breadcrumbs->add(__('Profile'), $user->getProfileRoute());
     </div>
 </div>
 
-<?= $this->Html->link(__('Edit details'), ['_name' => 'users:edit'], ['class' => 'btn btn-sm btn-primary mr-3']) ?>
-<?= $this->Html->link(__('Change password'), ['_name' => 'users:reset'], ['class' => 'btn btn-sm btn-primary mr-3']) ?>
+<?php foreach ($actions as $title => $url): ?>
+    <?= $this->Html->button($title, $url, ['size' => 'sm', 'class' => ['mr-3']]) ?>
+<?php endforeach ?>

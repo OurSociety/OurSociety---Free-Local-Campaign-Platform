@@ -20,13 +20,11 @@ class ArticlesController extends CrudController
     {
         $this->Crud->action()->setConfig([
             'scaffold' => [
+                'actions_blacklist' => ['export'],
                 'fields' => [
                     'name',
                     'published',
                     'approved',
-                ],
-                'actions_blacklist' => [
-                    'export',
                 ],
             ],
         ]);
@@ -84,6 +82,7 @@ class ArticlesController extends CrudController
     {
         $this->Crud->action()->setConfig([
             'scaffold' => [
+                'actions_blacklist' => ['export'],
                 'fields' => [
                     'id' => ['type' => 'hidden'],
                     'politician_id' => ['type' => 'hidden'],

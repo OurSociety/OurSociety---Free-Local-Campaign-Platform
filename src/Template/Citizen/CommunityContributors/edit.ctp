@@ -44,17 +44,11 @@ $this->Breadcrumbs->add(__('Edit Profile'));
         </div>
         <div class="col-md-6">
             <fieldset>
-                <legend><?= __('Birth Information') ?></legend>
-                <?= $this->Form->control('birth_name', ['label' => 'Full Name at Birth', 'help' => 'e.g. John Doe II']) ?>
-                <?= $this->Form->control('birth_city', ['label' => 'City of Birth']) ?>
-                <?= $this->Form->control('birth_state', ['label' => 'State of Birth', 'options' => User::STATES, 'empty' => true]) ?>
-                <?= $this->Form->control('birth_country', ['label' => 'Country of Birth', 'options' => User::COUNTRIES]) ?>
-                <?= $this->Form->control('born', [
-                    'label' => 'Date of Birth',
-                    'type' => 'date',
-                    'empty' => true,
-                    //'default' => '1900-01-01',
-                ]) ?>
+                <legend><?= __('More Information') ?></legend>
+                <?= $this->Form->control('birth_name', ['label' => 'Full Name', 'help' => 'e.g. John Doe II']) ?>
+                <?= $this->Form->control('birth_city', ['label' => 'City']) ?>
+                <?= $this->Form->control('birth_state', ['label' => 'State', 'options' => User::STATES, 'empty' => true]) ?>
+                <?= $this->Form->control('born', ['label' => 'Date of Birth', 'type' => 'date', 'empty' => true]) ?>
             </fieldset>
         </div>
     </div>
