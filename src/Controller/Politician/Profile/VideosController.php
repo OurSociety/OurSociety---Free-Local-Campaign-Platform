@@ -28,6 +28,7 @@ class VideosController extends CrudController
     {
         $this->Crud->action()->setConfig([
             'scaffold' => [
+                'actions_blacklist' => ['export'],
                 'fields' => [
                     'youtube_video_id' => [
                         'title' => 'YouTube Video',
@@ -87,6 +88,7 @@ class VideosController extends CrudController
     {
         $this->Crud->action()->setConfig([
             'scaffold' => [
+                'actions_blacklist' => ['export'],
                 'fields' => [
                     'id',
                     'youtube_video_id' => [

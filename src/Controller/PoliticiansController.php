@@ -56,8 +56,7 @@ class PoliticiansController extends CrudController
 
     public function view(string $slug = null): ?Response
     {
-        $user = $this->getIdentity();
-        $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
+        $slug = $slug ?: $this->getIdentity()->slug; // TODO: Slug should not be optional for this public politician view.
 
         /** @var User $politician */
         $politician = $this->loadModel('Users')
@@ -143,8 +142,7 @@ class PoliticiansController extends CrudController
     public function embed(string $slug = null): ?Response
     {
         // Start same as view()
-        $user = $this->getIdentity();
-        $slug = $slug ?: $user->slug; // TODO: Slug should not be optional for this public politician view.
+        $slug = $slug ?: $this->getIdentity()->slug; // TODO: Slug should not be optional for this public politician view.
 
         /** @var User $politician */
         $politician = $this->loadModel('Users')

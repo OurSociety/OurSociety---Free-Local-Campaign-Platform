@@ -3,13 +3,11 @@
  * @var \OurSociety\View\AppView $this The view class.
  * @var \OurSociety\Model\Entity\User $politician The politician.
  */
+
+$this->Breadcrumbs->add(__('Representatives'), ['_name' => 'politicians']);
+$this->Breadcrumbs->add($politician->name, ['_name' => 'politician', 'politician' => $politician->slug]);
+$this->Breadcrumbs->add(__('Claim Profile'));
 ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link('Politicians', ['_name' => 'politicians']) ?></li>
-    <li><?= $this->Html->politicianLink($politician) ?></li>
-    <li><?= __('Claim Your Profile') ?></li>
-</ol>
 
 <h2>Claim Your Profile</h2>
 
@@ -17,7 +15,7 @@
 
 <p>
     <?= __('To claim the profile for {politician_name}, you must enter the activation code you received through the mail.', [
-        'politician_name' => $this->Html->tag('strong', $politician->name)
+        'politician_name' => $this->Html->tag('strong', $politician->name),
     ]) ?>
 </p>
 

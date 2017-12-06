@@ -4,7 +4,7 @@
  */
 ?>
 
-<footer class="os-footer os-footer-sticky text-muted">
+<footer class="os-footer os-footer-sticky my-5 text-muted">
     <div class="container-fluid p-3 p-md-5">
         <ul class="os-footer-links">
             <li><?= $this->Html->link(__('About'), '/purpose') ?></li>

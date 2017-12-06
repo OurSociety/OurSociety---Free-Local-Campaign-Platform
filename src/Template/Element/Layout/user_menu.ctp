@@ -17,8 +17,8 @@ $isAdminImpersonatingUser = $this->request->getSession()->read(ImpersonateUserAc
         'style' => 'height: 32px; width: 32px; border: 2px solid white',
     ]) ?>
     <span class="d-none d-lg-inline">
-                    <?= $identity->name ?>
-                </span>
+        <?= $identity->name ?>
+    </span>
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuToggle"
      style="min-width: 100%">
@@ -33,6 +33,7 @@ $isAdminImpersonatingUser = $this->request->getSession()->read(ImpersonateUserAc
         <?php endif ?>
         <?= $this->Html->link(__('Tutorial'), ['_name' => 'users:onboarding'], ['class' => ['dropdown-item'], 'icon' => 'question-circle']) ?>
         <?= $this->Html->link(__('Profile'), $identity->getProfileRoute(), ['class' => ['dropdown-item'], 'icon' => 'user']) ?>
+        <?= $this->Html->link(__('Account'), ['_name' => 'users:profile'], ['class' => ['dropdown-item'], 'icon' => 'cog']) ?>
     <?php endif ?>
     <?= $this->Html->link(__('Plans'), ['_name' => 'plans'], ['class' => ['dropdown-item'], 'icon' => 'th-list']) ?>
     <?= $this->Html->link(__('Billing'), $identity->getAccountRoute(), ['class' => ['dropdown-item'], 'icon' => 'credit-card']) ?>

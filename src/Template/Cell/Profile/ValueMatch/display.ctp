@@ -12,7 +12,7 @@
 <?php if ($isExample === true): ?>
 <div class="example" style="display: flex;">
     <div class="watermark" data-watermark="Example Match" style="align-items: stretch; width: 100%">
-<?php endif ?>
+        <?php endif ?>
 
         <h3><?= __('{percentage}% Value Match', ['percentage' => $match]) ?></h3>
 
@@ -25,20 +25,25 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-auto mx-auto">
-                <?php if ($isExample): ?>
-                    <?= $this->Html->link(__('Learn More'), '#', ['class' => ['btn', 'btn-primary', 'disabled']]) ?>
-                <?php elseif ($limit !== null): ?>
-                    <?= $this->Html->link(__('View More'), [
-                        '_name' => 'citizen:topics:compare',
-                        'politician' => $politician->slug,
-                    ], ['class' => ['btn', 'btn-primary']]) ?>
-                <?php endif ?>
-            </div>
-        </div>
-
-<?php if ($isExample === true): ?>
+        <?php if ($isExample === true): ?>
     </div>
 </div>
 <?php endif ?>
+
+<div class="row">
+    <div class="col-auto mx-auto">
+        <?php if ($isExample): ?>
+            <?= $this->Html->link(
+                __('Learn More'),
+                ['_name' => 'guide:matching'],
+                ['class' => ['btn', 'btn-primary']]
+            ) ?>
+        <?php elseif ($limit !== null): ?>
+            <?= $this->Html->link(
+                __('View All'),
+                ['_name' => 'citizen:topics:compare', 'politician' => $politician->slug],
+                ['class' => ['btn', 'btn-primary']]
+            ) ?>
+        <?php endif ?>
+    </div>
+</div>
