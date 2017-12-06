@@ -15,12 +15,22 @@ namespace OurSociety\Model\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \OurSociety\Model\Entity\Politician $politician
+ * @property \OurSociety\Model\Entity\User $politician
  */
 class PoliticianPosition extends AppEntity
 {
     public function getIcon(): string
     {
         return 'suitcase';
+    }
+
+    protected function _setStarted($value)
+    {
+        $this->setYearMonth($value);
+    }
+
+    protected function _setEnded($value)
+    {
+        $this->setYearMonth($value);
     }
 }

@@ -29,15 +29,15 @@
         <div class="bd-toc-item active">
             <a class="bd-toc-link" href="/admin">Dashboards</a>
             <?php if ($this->request->getParam('action') === 'dashboard'): ?>
-            <ul class="nav bd-sidenav">
-                <li><a href="/admin/analytics/dashboard">Analytics</a></li>
-                <li><a href="/admin/aspects/dashboard">Aspects</a></li>
-                <!--<li><a href="/admin/citizens/dashboard">Citizens</a></li>-->
-                <!--<li><a href="/admin/politicians/dashboard">Politicians</a></li>-->
-                <li><a href="/admin/questions/dashboard">Questions</a></li>
-                <li><a href="/admin/users/dashboard">Users</a></li>
-                <li><a href="/admin/value-matches/dashboard">Values</a></li>
-            </ul>
+                <ul class="nav bd-sidenav">
+                    <li><a href="/admin/analytics/dashboard">Analytics</a></li>
+                    <li><a href="/admin/aspects/dashboard">Aspects</a></li>
+                    <!--<li><a href="/admin/citizens/dashboard">Citizens</a></li>-->
+                    <!--<li><a href="/admin/politicians/dashboard">Representatives</a></li>-->
+                    <li><a href="/admin/questions/dashboard">Questions</a></li>
+                    <li><a href="/admin/users/dashboard">Users</a></li>
+                    <li><a href="/admin/value-matches/dashboard">Values</a></li>
+                </ul>
             <?php endif ?>
         </div>
 
@@ -50,10 +50,10 @@
                     <li><a href="/admin/aspects">Aspects</a></li>
                     <li><a href="/admin/aspects/users">Aspects by User</a></li>
                     <li><a href="/admin/events">Events</a></li>
-                    <li><a href="/admin/politician-awards">Politician Awards</a></li>
-                    <li><a href="/admin/politician-positions">Politician Positions</a></li>
-                    <li><a href="/admin/politician-qualifications">Politician Qualifications</a></li>
-                    <li><a href="/admin/politician-videos">Politician Videos</a></li>
+                    <li><a href="/admin/politician-awards">Representative Awards</a></li>
+                    <li><a href="/admin/politician-positions">Representative Positions</a></li>
+                    <li><a href="/admin/politician-qualifications">Representative Qualifications</a></li>
+                    <li><a href="/admin/politician-videos">Representative Videos</a></li>
                     <li><a href="/admin/questions">Questions</a></li>
                     <li><a href="/admin/users">Users</a></li>
                     <li><a href="/admin/value-matches">Value Matches</a></li>

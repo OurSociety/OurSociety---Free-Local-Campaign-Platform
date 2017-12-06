@@ -23,4 +23,14 @@ class PoliticianQualification extends AppEntity
     {
         return 'certificate';
     }
+
+    protected function _setStarted($value)
+    {
+        $this->setYearMonth($value);
+    }
+
+    protected function _setEnded($value)
+    {
+        $this->setYearMonth($value);
+    }
 }

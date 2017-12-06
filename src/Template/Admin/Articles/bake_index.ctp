@@ -28,7 +28,7 @@ use OurSociety\View\Component\Field\FieldList;
         <li><?= $this->Html->link(__('New Article Type'), ['controller' => 'ArticleTypes', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Electoral Districts'), ['controller' => 'ElectoralDistricts', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Electoral District'), ['controller' => 'ElectoralDistricts', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Politicians'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Politician'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Representatives'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Representative'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </nav>

@@ -38,10 +38,10 @@ $this->set('title', 'Users Dashboard');
 $numbers = [
     ['name' => 'users_created', 'label' => 'New Users', 'style' => 'pink', 'icon' => 'user-plus'],
     ['name' => 'citizens_created', 'label' => 'New Citizens', 'style' => 'green', 'icon' => 'user-plus'],
-    ['name' => 'politicians_created', 'label' => 'New Politicians', 'style' => 'blue', 'icon' => 'user-plus'],
+    ['name' => 'politicians_created', 'label' => 'New Representatives', 'style' => 'blue', 'icon' => 'user-plus'],
     ['name' => 'users_seen', 'label' => 'Active Users', 'style' => 'pink', 'icon' => 'sign-in'],
     ['name' => 'citizens_seen', 'label' => 'Active Citizens', 'style' => 'green', 'icon' => 'sign-in'],
-    ['name' => 'politicians_seen', 'label' => 'Active Politicians', 'style' => 'blue', 'icon' => 'sign-in'],
+    ['name' => 'politicians_seen', 'label' => 'Active Representatives', 'style' => 'blue', 'icon' => 'sign-in'],
 ];
 ?>
 <div class="row pb-3">

@@ -20,9 +20,15 @@ class Validation extends Cake\Validation
      * @param array $options The options (e.g. `['past' => true]`).
      * @return bool True on success, false otherwise.
      */
-    public static function yearMonth($check, array $options = []): bool
+    public static function yearMonth($check, array $options = null): bool
     {
+        $options = $options ?? [];
         $options += ['past' => true];
+
+        if (is_string($check)) {
+            [$year, $month] = explode('-', $check);
+            $check = ['year' => $year, 'month' => $month];
+        }
 
         if (is_array($check)) {
             foreach (['year', 'month'] as $key) {

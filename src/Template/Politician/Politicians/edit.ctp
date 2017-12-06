@@ -7,12 +7,10 @@
 
 use OurSociety\Model\Entity\User;
 
+$this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
+$this->Breadcrumbs->add(__('My Profile'), $identity->getProfileRoute());
+$this->Breadcrumbs->add(__('Edit Profile'));
 ?>
-<ol class="breadcrumb">
-    <li><?= $this->Html->dashboardLink() ?></li>
-    <li><?= $this->Html->link(__('Profile'), ['_name' => 'politician:profile']) ?></li>
-    <li><?= __('Edit Profile') ?></li>
-</ol>
 
 <h2>
     <?= __('Edit Profile') ?>
@@ -24,7 +22,15 @@ use OurSociety\Model\Entity\User;
 <hr>
 
 <section class="users form">
-    <?= $this->Form->create($politician, ['align' => ['sm' => ['left' => 3, 'middle' => 9]], 'type' => 'file']) ?>
+    <?= $this->Form->create($politician, [
+        'layout' => [
+            'type' => 'grid',
+            'classes' => [
+                'submitContainer' => ['col-sm-10', 'offset-sm-2', 'p-1'],
+            ],
+        ],
+        'type' => 'file',
+    ]) ?>
     <fieldset>
         <legend><?= __('Account Details') ?></legend>
         <?= $this->Form->control('role', ['value' => User::ROLE_POLITICIAN, 'type' => 'hidden']) ?>
@@ -60,5 +66,3 @@ use OurSociety\Model\Entity\User;
     <?= $this->Form->button(__('Update Profile'), ['class' => ['btn', 'btn-primary', 'pull-right']]); ?>
     <?= $this->Form->end() ?>
 </section>
-
-<br><br>

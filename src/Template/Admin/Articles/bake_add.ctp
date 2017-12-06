@@ -13,8 +13,8 @@
         <li><?= $this->Html->link(__('New Article Type'), ['controller' => 'ArticleTypes', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Electoral Districts'), ['controller' => 'ElectoralDistricts', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Electoral District'), ['controller' => 'ElectoralDistricts', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Politicians'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Politician'), ['controller' => 'Users', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Representatives'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Representative'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="articles form large-9 medium-8 columns content">
@@ -22,16 +22,16 @@
     <fieldset>
         <legend><?= __('Add Article') ?></legend>
         <?php
-            echo $this->Form->control('politician_id', ['options' => $politicians]);
-            echo $this->Form->control('slug');
-            echo $this->Form->control('name');
-            echo $this->Form->control('body');
-            echo $this->Form->control('version');
-            echo $this->Form->control('aspect_id', ['options' => $aspects, 'empty' => true]);
-            echo $this->Form->control('article_type_id', ['options' => $articleTypes, 'empty' => true]);
-            echo $this->Form->control('electoral_district_id', ['options' => $electoralDistricts, 'empty' => true]);
-            echo $this->Form->control('approved', ['empty' => true]);
-            echo $this->Form->control('published', ['empty' => true]);
+        echo $this->Form->control('politician_id', ['options' => $politicians]);
+        echo $this->Form->control('slug');
+        echo $this->Form->control('name');
+        echo $this->Form->control('body');
+        echo $this->Form->control('version');
+        echo $this->Form->control('aspect_id', ['options' => $aspects, 'empty' => true]);
+        echo $this->Form->control('article_type_id', ['options' => $articleTypes, 'empty' => true]);
+        echo $this->Form->control('electoral_district_id', ['options' => $electoralDistricts, 'empty' => true]);
+        echo $this->Form->control('approved', ['empty' => true]);
+        echo $this->Form->control('published', ['empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

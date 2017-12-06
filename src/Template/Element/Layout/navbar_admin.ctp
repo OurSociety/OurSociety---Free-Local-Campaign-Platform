@@ -53,7 +53,7 @@ endif;
                     //new DropdownItem(__('Citizens'), '/admin/citizens/dashboard', [
                     //    'icon' => (new Entity\User)->getIcon(),
                     //]),
-                    //new DropdownItem(__('Politicians'), '/admin/politicians/dashboard', [
+                    //new DropdownItem(__('Representatives'), '/admin/politicians/dashboard', [
                     //    'icon' => (new Entity\User)->getIcon(),
                     //]),
                     new DropdownItem(__('Questions'), '/admin/questions/dashboard', [
@@ -84,16 +84,16 @@ endif;
                     new DropdownItem(__('Events'), '/admin/events', [
                         'icon' => (new Entity\Event)->getIcon(),
                     ]),
-                    new DropdownItem(__('Politician Awards'), '/admin/politician-awards', [
+                    new DropdownItem(__('Representative Awards'), '/admin/politician-awards', [
                         'icon' => (new Entity\PoliticianAward)->getIcon(),
                     ]),
-                    new DropdownItem(__('Politician Positions'), '/admin/politician-positions', [
+                    new DropdownItem(__('Representative Positions'), '/admin/politician-positions', [
                         'icon' => (new Entity\PoliticianPosition)->getIcon(),
                     ]),
-                    new DropdownItem(__('Politician Qualifications'), '/admin/politician-qualifications', [
+                    new DropdownItem(__('Representative Qualifications'), '/admin/politician-qualifications', [
                         'icon' => (new Entity\PoliticianQualification)->getIcon(),
                     ]),
-                    new DropdownItem(__('Politician Videos'), '/admin/politician-videos', [
+                    new DropdownItem(__('Representative Videos'), '/admin/politician-videos', [
                         'icon' => (new Entity\PoliticianVideo)->getIcon(),
                     ]),
                     new DropdownItem(__('Questions'), '/admin/questions', [
