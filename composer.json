@@ -107,8 +107,10 @@
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
         "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
-        "test": "phpunit --colors=always",
-        "watch": "phpunit-watcher watch"
+        "test": [
+            "@test-acceptance"
+        ],
+        "test-acceptance": "behat --no-snippets --stop-on-failure --strict -vv features/guest/navigation.feature"
     },
     "prefer-stable": true
 }

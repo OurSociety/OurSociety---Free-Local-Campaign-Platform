@@ -10,9 +10,9 @@ default:
             snippets: false
     extensions:
         Behat\MinkExtension:
+            base_url: https://oursociety.dev
             default_session: php
             javascript_session: browser
-            base_url: https://oursociety.dev
             sessions:
                 php:
                     goutte: ~
@@ -106,3 +106,7 @@ debug:
                                     - "--window-position=0,-720"
                                     - "--window-size=1280,720"
                                     - "--maximize"
+circleci:
+    extensions:
+        Behat\MinkExtension:
+            base_url: http://oursociety.test
