@@ -5,11 +5,9 @@ namespace OurSociety\Shell;
 
 use Cake\Console\ConsoleOptionParser;
 use Cake\ORM\Table;
-use OurSociety\Model\Entity\Traits\SearchableTrait;
-use OurSociety\ORM\TableRegistry;
 use OurSociety\Lib\Algolia\Algolia;
 use OurSociety\Model\Behavior\SearchEngineBehavior;
-use OurSociety\Model\Entity\AppEntity;
+use OurSociety\ORM\TableRegistry;
 
 class SearchShell extends AppShell
 {
@@ -22,10 +20,10 @@ class SearchShell extends AppShell
                 'default' => 'default',
             ])
             ->addSubcommand('import', [
-                'help' => 'Import searchable data into search engine.'
+                'help' => 'Import searchable data into search engine.',
             ])
             ->addSubcommand('migrate', [
-                'help' => 'Create/migrate search engine indexes.'
+                'help' => 'Create/migrate search engine indexes.',
             ]);
     }
 
@@ -39,6 +37,7 @@ class SearchShell extends AppShell
         $createIndexIfMissing = function (string $name) use ($search) {
             if ($search->hasIndex($name)) {
                 $this->out(sprintf('Index "%s" exists.', $name));
+
                 return;
             }
 
@@ -54,24 +53,27 @@ class SearchShell extends AppShell
     public function import(string $name = null): bool
     {
         if ($name !== null) {
-            $this->importTable(TableRegistry::get($name, ['connection' => $this->params['connection']]));
+            $this->importTable(TableRegistry::get($name, $this->getTableRegistryOptions()));
         } else {
             $this->importTables();
         }
 
         $this->out('<success>Search data imported</success>');
+
         return true;
+    }
+
+    private function getTableRegistryOptions(): array
+    {
+        return ['connection' => $this->params['connection']];
     }
 
     private function importTables(): void
     {
-        $tableCollection = TableRegistry::all(['connection' => $this->params['connection']]);
+        $tableCollection = TableRegistry::all($this->getTableRegistryOptions());
         $tableCollection->each(function (Table $table): void {
             $this->importTable($table);
         });
-        //foreach ($this->getSchema()->listTables() as $table) {
-        //    $this->importTable($table);
-        //}
     }
 
     private function importTable(Table $table): void
@@ -80,18 +82,25 @@ class SearchShell extends AppShell
             return;
         }
 
-        $this->_io->verbose('Importing data for ' . $table->getAlias());
-
         /** @var Table|SearchEngineBehavior $table */
         $searchFinder = $table->getSearchFinder();
+        $tableAlias = $table->getAlias();
+        $algolia = Algolia::createFromEnvironment(Algolia::API_KEY_ADMIN);
+        $pageLimit = 50;
+        $pageNumber = 1;
+        $query = $table->find($searchFinder)->limit($pageLimit);
+        $remaining = $query->count();
 
-        $page = 1;
-        $search = Algolia::createFromEnvironment(Algolia::API_KEY_ADMIN);
+        $this->_io->out(sprintf('Importing %d records into "%s" index in batches of %d...', $remaining, $tableAlias, $pageLimit));
+
         do {
-            $results = $table->find($searchFinder)->limit(50)->page($page++)->all();
-            d($results->count());
-            $search->indexResults($results);
-        } while ($results->count());
+            $page = $query->page($pageNumber++)->all();
+            $count = $page->count();
+            $algolia->indexResults($page);
+            $this->_io->out('.', 0);
+        } while ($count > 0);
+
+        $this->_io->out();
     }
 
     //public function import($model): bool

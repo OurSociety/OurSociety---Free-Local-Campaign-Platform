@@ -61,7 +61,9 @@ class UsersTable extends AppTable
     {
         parent::initialize($config);
 
-        $this->addBehavior(SearchEngineBehavior::class, ['finder' => 'publicSearch']);
+        $this->addBehavior(SearchEngineBehavior::class, [
+            //'finder' => 'publicSearch' // TODO: Caused infinite nesting when running `bin/cake search import users`
+        ]);
         $this->hasMany('Answers');
         $this->hasMany('Notifications');
         $this->belongsToMany('Categories');

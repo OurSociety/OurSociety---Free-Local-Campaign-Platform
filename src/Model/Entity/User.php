@@ -251,12 +251,19 @@ class User extends AppEntity implements SearchableEntity
 
     public function getPublicProfileRoute(array $params = null): array
     {
+        $role = $this->_properties['role'] ?? null;
+        $slug = $this->_properties['slug'] ?? null;
+
+        if ($role === null || $slug === null) {
+            throw new \RuntimeException('Missing role and/or slug field.');
+        }
+
         /** @noinspection DegradedSwitchInspection */
-        switch ($this->role) {
+        switch ($role) {
             case 'politician':
-                return ['_name' => 'politician', 'politician' => $this->slug] + ($params ?? []);
+                return ['_name' => 'politician', 'politician' => $slug] + ($params ?? []);
             default:
-                return ['_name' => 'community-contributor', 'citizen' => $this->slug] + ($params ?? []);
+                return ['_name' => 'community-contributor', 'citizen' => $slug] + ($params ?? []);
         }
     }
 
