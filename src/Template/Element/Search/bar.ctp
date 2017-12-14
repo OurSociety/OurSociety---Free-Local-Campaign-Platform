@@ -176,12 +176,10 @@
 <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
 <script>
     var client = algoliasearch('<?= env('ALGOLIA_APPLICATION_ID') ?>', '<?= env('ALGOLIA_SEARCH_API_KEY') ?>')
-    var people = client.initIndex('people');
-    var places = client.initIndex('places');
 
     autocomplete('#aa-search-input', {}, [
         {
-            source: autocomplete.sources.hits(people, {hitsPerPage: 3}),
+            source: autocomplete.sources.hits(client.initIndex('people'), {hitsPerPage: 3}),
             displayKey: 'name',
             templates: {
                 header: '<div class="aa-suggestions-category">People</div>',
@@ -193,7 +191,7 @@
             }
         },
         {
-            source: autocomplete.sources.hits(places, {hitsPerPage: 3}),
+            source: autocomplete.sources.hits(client.initIndex('places'), {hitsPerPage: 3}),
             displayKey: 'name',
             templates: {
                 header: '<div class="aa-suggestions-category">Places</div>',
@@ -204,5 +202,10 @@
                 //}
             }
         }
-    ]);
+    ]).on('autocomplete:selected', function (dataset, suggestion) {
+        var route = typeof suggestion.role !== 'undefined' ? 'person' : 'place';
+        var identifier = suggestion.slug;
+
+        location.href = '/' + route + '/' + identifier;
+    });
 </script>

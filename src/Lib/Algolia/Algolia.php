@@ -4,12 +4,8 @@ declare(strict_types=1);
 namespace OurSociety\Lib\Algolia;
 
 use AlgoliaSearch\Client;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Entity;
-use Cake\ORM\ResultSet;
 use OurSociety\Model\Entity\SearchableEntity;
-use OurSociety\Model\Entity\Traits\SearchableTrait;
 
 final class Algolia
 {
@@ -21,6 +17,11 @@ final class Algolia
      * @var Client
      */
     private $client;
+
+    private function __construct(string $applicationId, string $apiKey)
+    {
+        $this->client = new Client($applicationId, $apiKey);
+    }
 
     public static function createFromEnvironment(string $apiKeyEnvironmentVariable): self
     {
@@ -41,11 +42,6 @@ final class Algolia
         return $value;
     }
 
-    private function __construct(string $applicationId, string $apiKey)
-    {
-        $this->client = new Client($applicationId, $apiKey);
-    }
-
     public function createIndex($string): void
     {
         $this->client->initIndex('places');
@@ -54,6 +50,7 @@ final class Algolia
     public function hasIndex(string $name): bool
     {
         dd($this->client->listIndexes());
+
         return true;
     }
 
@@ -69,6 +66,6 @@ final class Algolia
             return $entity->toSearchableArray() + ['objectID' => $entity->getKey()];
         });
 
-        $this->client->initIndex($indexName)->addObjects($objects);
+        $this->client->initIndex($indexName)->addObjects($objects->toArray());
     }
 }

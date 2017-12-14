@@ -40,6 +40,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/municipality/:municipality/events', ['controller' => 'Events', 'action' => 'index'], ['_name' => 'municipality:events', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/events/add', ['controller' => 'Events', 'action' => 'add'], ['_name' => 'municipality:events:add', 'pass' => ['municipality']]);
     $routes->connect('/tutorial', ['controller' => 'Users', 'action' => 'tutorial'], ['_name' => 'users:onboarding']);
+    $routes->connect('/person/:person', ['controller' => 'People', 'action' => 'redirect'], ['_name' => 'people', 'pass' => ['person']]);
     $routes->connect('/place/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
     $routes->connect('/place/lookup', ['controller' => 'ElectoralDistricts', 'action' => 'lookup'], ['_name' => 'district:lookup']);
     $routes->connect('/place/select', ['controller' => 'Places', 'action' => 'select'], ['_name' => 'place:select']);

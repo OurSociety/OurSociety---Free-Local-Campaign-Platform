@@ -19,7 +19,7 @@ $email = $politician->verified === null ? $politician->email : $politician->emai
 
 <hr>
 
-<?php if ($politician->id === $identity->id): ?>
+<?php if ($identity !== null && $politician->id === $identity->id): ?>
     <?= $this->element('../Citizen/CommunityContributors/banner') ?>
 <?php endif ?>
 

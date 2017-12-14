@@ -7,7 +7,7 @@ use Cake\Collection\Collection;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM as Cake;
 use OurSociety\Model\Table\AppTable;
-use \RuntimeException;
+use RuntimeException;
 
 class TableRegistry extends Cake\TableRegistry
 {
@@ -25,10 +25,14 @@ class TableRegistry extends Cake\TableRegistry
         }
 
         $tableNames = $connection->schemaCollection()->listTables();
+        $tableNameBlacklist = ['phinxlog'];
 
-        return collection($tableNames)->map(function ($tableName): Cake\Table {
-            return self::get($tableName);
-        });
+        return collection($tableNames)
+            ->filter(function (string $tableName) use ($tableNameBlacklist): bool {
+                return in_array($tableName, $tableNameBlacklist, true) === false;
+            })->map(function ($tableName): Cake\Table {
+                return self::get($tableName);
+            });
     }
 
     public static function get($name, array $options = null): AppTable
@@ -37,7 +41,14 @@ class TableRegistry extends Cake\TableRegistry
             $options['connection'] = ConnectionManager::get($options['connection']);
         }
 
+        $table = parent::get($name, $options ?? []);
+
+        if (!$table instanceof AppTable) {
+            throw new RuntimeException(sprintf('No table class "%s" in application', $name));
+        }
+
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return parent::get($name, $options ?? []);
+
+        return $table;
     }
 }
