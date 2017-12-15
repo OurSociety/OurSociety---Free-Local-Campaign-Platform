@@ -9,7 +9,7 @@ use OurSociety\View\Component\Listing\TableHead;
  */
 ?>
 
-<table class="table table-bordered table-striped table-hover mb-0">
+<table class="listing-table table table-bordered table-striped table-hover mb-0">
     <?= $this->Component->render(new TableHead($table)) ?>
     <?= $this->Component->render(new TableBody($table)) ?>
 </table>

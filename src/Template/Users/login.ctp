@@ -7,33 +7,33 @@ use OurSociety\Controller\AppController;
  * @var \OurSociety\Model\Entity\User $user The user entity.
  */
 
-$this->set('title', 'OurSociety - Sign In');
+$this->set('title', 'Sign In');
 ?>
 
 <div class="row">
     <div class="col-md-6 p-5 bg-light os-bg-split-light">
-        <h1 class="pb-3">
-            <?= __('Enter email and password.') ?>
-        </h1>
+        <div class="row pb-3">
+            <div class="col d-flex align-items-center">
+                <h1 class="text-nowrap mb-0">
+                    <?= __('Sign In') ?>
+                </h1>
+            </div>
+            <div class="col col-auto text-muted mb-2 d-flex align-items-center">
+                <?= __('No account yet?') ?>
+                <?= $this->Html->link(
+                    __('Join OurSociety'),
+                    ['_name' => 'users:register'],
+                    ['class' => ['btn', 'btn-outline-primary', 'btn-sm', 'ml-2']]
+                ) ?>
+            </div>
+        </div>
 
         <section class="users form">
             <?= $this->Form->create('User') ?>
             <fieldset>
-                <div class="row">
-                    <div class="col">
-                        <legend class="text-nowrap">
-                            <?= __('Sign In') ?>
-                        </legend>
-                    </div>
-                    <div class="col col-auto text-muted mb-2">
-                        <?= __('No account yet?') ?>
-                        <?= $this->Html->link(
-                            __('Join OurSociety'),
-                            ['_name' => 'users:register'],
-                            ['class' => ['btn', 'btn-outline-primary', 'btn-sm', 'ml-2']]
-                        ) ?>
-                    </div>
-                </div>
+                <legend class="text-nowrap">
+                    <?= __('Enter email and password') ?>
+                </legend>
                 <?= $this->Form->control('email', [
                     'label' => false,
                     'placeholder' => __('Email Address'),

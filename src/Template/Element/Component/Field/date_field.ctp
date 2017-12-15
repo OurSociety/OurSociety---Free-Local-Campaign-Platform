@@ -5,4 +5,4 @@
  */
 ?>
 
-<?= h($dateField->getDate()) ?>
+<?= h($dateField->getFormattedDate()) ?>

@@ -40,6 +40,7 @@ use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Utility\Security;
+use OurSociety\Database\Type\MonthType;
 
 /*
  * Read configuration file and inject configuration into various
@@ -155,6 +156,17 @@ ServerRequest::addDetector('tablet', function ($request) {
 });
 
 /*
+ * Custom types
+ */
+$types = [
+    MonthType::TYPE_NAME => MonthType::class,
+];
+
+foreach ($types as $typeName => $className) {
+    Type::map($typeName, $className);
+}
+
+/*
  * Enable immutable time objects in the ORM.
  *
  * You can enable default locale format parsing by adding calls
@@ -162,10 +174,10 @@ ServerRequest::addDetector('tablet', function ($request) {
  * locale specific date formats. For details see
  * @link https://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
-foreach (['time', 'date', 'datetime', 'timestamp'] as $name) {
-    /** @var \Cake\Database\Type\DateTimeType $type */
-    $type = Type::build($name);
-    $type->useImmutable();
+foreach ([MonthType::TYPE_NAME, 'time', 'date', 'datetime', 'timestamp'] as $name) {
+    /** @var \Cake\Database\Type\DateTimeType $typeName */
+    $typeName = Type::build($name);
+    $typeName->useImmutable();
 }
 
 /*

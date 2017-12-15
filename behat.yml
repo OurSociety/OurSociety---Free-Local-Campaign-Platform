@@ -10,7 +10,7 @@ default:
             snippets: false
     extensions:
         Behat\MinkExtension:
-            base_url: https://oursociety.dev
+            base_url: https://oursociety.test
             default_session: php
             javascript_session: browser
             sessions:
@@ -81,10 +81,11 @@ default:
             paths:
                 - %paths.base%/features/politician
             contexts:
-                - Behat\MinkExtension\Context\MinkContext
+                - OurSociety\TestSuite\Behat\Context\BrowserContext
                 - OurSociety\TestSuite\Behat\Context\Page\CommonContext
                 - OurSociety\TestSuite\Behat\Context\Page\PoliticianContext
                 - OurSociety\TestSuite\Behat\Context\System\AuthContext
+                - Behatch\Context\DebugContext
         admin:
             paths:
                 - %paths.base%/features/admin

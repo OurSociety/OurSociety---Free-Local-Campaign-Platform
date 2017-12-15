@@ -12,7 +12,7 @@ $isAllAnswered = $identity->answer_count === $questionCount;
 
 <div class="card mb-3">
     <h4 class="card-header">
-        <?= __('My Values') ?>
+        <?= __('My Societal Values') ?>
     </h4>
     <div class="card-body">
 

@@ -34,26 +34,31 @@ $groupByType = function (ElectoralDistrict $child): string {
 $childrenByType = collection($electoralDistrict->children)->groupBy($groupByType);
 ?>
 
-<?= $this->element('map') ?>
+<div class="row">
+    <div class="col">
+        <h1>
+            <?= $electoralDistrict->name ?>
+            <small class="text-muted">
+                <?= $electoralDistrict->district_type->name ?>
+            </small>
+        </h1>
+    </div>
+    <div class="col-auto">
+        <?= $this->element('map') ?>
 
-<div class="pull-right">
-    <p class="small text-right text-muted">
-        OCD ID: <?= $electoralDistrict->id_ocd ?>
-    </p>
-    <?php if ($electoralDistrict->polygon): ?>
-        <div id="zip" class="map pull-right"></div>
-        <script>
-            drawMap('zip', null, <?= $electoralDistrict->polygon ?>)
-        </script>
-    <?php endif ?>
+        <div class="pull-right">
+            <p class="small text-right text-muted">
+                OCD ID: <?= $electoralDistrict->id_ocd ?>
+            </p>
+            <?php if ($electoralDistrict->polygon): ?>
+                <div id="zip" class="map pull-right"></div>
+                <script>
+                    drawMap('zip', null, <?= $electoralDistrict->polygon ?>)
+                </script>
+            <?php endif ?>
+        </div>
+    </div>
 </div>
-
-<h1>
-    <?= $electoralDistrict->name ?>
-    <small class="text-muted">
-        <?= $electoralDistrict->district_type->name ?>
-    </small>
-</h1>
 
 <?php if ($electoralDistrict->parent !== null): ?>
     <p>

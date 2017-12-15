@@ -89,10 +89,10 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
     $routes->connect('/notification/:notification', ['controller' => 'Notifications', 'action' => 'show'], ['_name' => 'notification', 'pass' => ['notification']]);
     $routes->connect('/profile', ['controller' => 'CommunityContributors', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'CommunityContributors', 'action' => 'edit'], ['_name' => 'profile:edit']);
+    $routes->connect('/values', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
+    $routes->connect('/values/review', ['controller' => 'Answers', 'action' => 'list'], ['_name' => 'answers']);
+    $routes->connect('/values/revise/:answer', ['controller' => 'Answers', 'action' => 'edit'], ['_name' => 'answers:edit', 'pass' => ['answer']]);
     $routes->connect('/values/:politician', ['controller' => 'Topics', 'action' => 'compare'], ['_name' => 'topics:compare', 'pass' => ['politician']]);
-    $routes->connect('/your-voice', ['controller' => 'Questions', 'action' => 'index'], ['_name' => 'questions']);
-    $routes->connect('/your-voice/review', ['controller' => 'Answers', 'action' => 'list'], ['_name' => 'answers']);
-    $routes->connect('/your-voice/revise/:answer', ['controller' => 'Answers', 'action' => 'edit'], ['_name' => 'answers:edit', 'pass' => ['answer']]);
 
     $routes->fallbacks(DashedRoute::class);
 });
@@ -114,9 +114,12 @@ Router::prefix('politician', ['path' => '/representative', '_namePrefix' => 'pol
     $routes->prefix('profile', ['_namePrefix' => 'profile:'], function (RouteBuilder $routes): void {
         $routes->connect('/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'article', 'pass' => ['article']]);
         $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'articles']);
-        $routes->connect('/awards', ['controller' => 'Awards', 'action' => 'index'], ['_name' => 'awards']);
-        $routes->connect('/positions', ['controller' => 'Positions', 'action' => 'index'], ['_name' => 'positions']);
-        $routes->connect('/qualifications', ['controller' => 'Qualifications', 'action' => 'index'], ['_name' => 'qualifications']);
+        $routes->connect('/awards', ['controller' => 'Awards', 'action' => 'list'], ['_name' => 'awards']);
+        $routes->connect('/award/:award', ['controller' => 'Awards', 'action' => 'edit'], ['_name' => 'award', 'pass' => ['award']]);
+        $routes->connect('/positions', ['controller' => 'Positions', 'action' => 'list'], ['_name' => 'positions']);
+        $routes->connect('/position/:position', ['controller' => 'Positions', 'action' => 'edit'], ['_name' => 'position', 'pass' => ['position']]);
+        $routes->connect('/qualifications', ['controller' => 'Qualifications', 'action' => 'list'], ['_name' => 'qualifications']);
+        $routes->connect('/qualification/:qualification', ['controller' => 'Qualifications', 'action' => 'edit'], ['_name' => 'qualification', 'pass' => ['qualification']]);
         $routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
 
         $routes->fallbacks(DashedRoute::class);

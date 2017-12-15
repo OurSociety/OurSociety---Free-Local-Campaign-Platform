@@ -41,7 +41,7 @@ use OurSociety\Action\Action;
 
 class {$shortAction} extends Action
 {
-    public function __invoke(...$params): ?Response
+    public function __invoke(...\$params): ?Response
     {
         return null;
     }

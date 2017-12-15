@@ -6,24 +6,17 @@ namespace OurSociety\Controller\Politician\Profile;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianVideo;
+use OurSociety\Model\Entity\Video;
 use OurSociety\View\AppView;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Videos Controller
  *
- * @method PoliticianVideo[] paginate($object = null, array $settings = [])
+ * @method Video[] paginate($object = null, array $settings = [])
  */
 class VideosController extends CrudController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->modelClass = 'PoliticianVideos';
-    }
-
     public function index(): ?Response
     {
         $this->Crud->action()->setConfig([
@@ -32,7 +25,7 @@ class VideosController extends CrudController
                 'fields' => [
                     'youtube_video_id' => [
                         'title' => 'YouTube Video',
-                        'formatter' => function (string $name, string $value, PoliticianVideo $video) {
+                        'formatter' => function (string $name, string $value, Video $video) {
                             /** @var AppView $view */
                             $view = $this->createView();
 
@@ -63,7 +56,7 @@ class VideosController extends CrudController
     public function view(): ?Response
     {
         $this->Crud->on('afterFind', function (Event $event) {
-            /** @var PoliticianVideo $video */
+            /** @var Video $video */
             $video = $event->getSubject()->entity;
 
             return $event->getSubject()->success === true
@@ -106,7 +99,7 @@ class VideosController extends CrudController
         ]);
 
         $this->Crud->on('beforeSave', function (Event $event) {
-            /** @var PoliticianVideo $video */
+            /** @var Video $video */
             $video = $event->getSubject()->entity;
             $video->politician_id = $this->getIdentity()->id;
         });

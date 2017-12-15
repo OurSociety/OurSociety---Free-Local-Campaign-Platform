@@ -15,17 +15,17 @@ class SignIn extends Page
     private const VALUE_EMAIL_POLITICIAN = 'politician@example.org';
     private const VALUE_PASSWORD = 'democracy';
 
-    public function loginAsAdmin(): void
+    public function signInAsAdmin(): void
     {
         $this->signInAs(self::VALUE_EMAIL_ADMIN, self::VALUE_PASSWORD);
     }
 
-    public function loginAsCitizen(): void
+    public function signInAsCitizen(): void
     {
         $this->signInAs(self::VALUE_EMAIL_CITIZEN, self::VALUE_PASSWORD);
     }
 
-    public function loginAsPolitician(): void
+    public function signInAsPolitician(): void
     {
         $this->signInAs(self::VALUE_EMAIL_POLITICIAN, self::VALUE_PASSWORD);
     }

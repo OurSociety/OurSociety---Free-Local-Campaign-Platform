@@ -9,6 +9,9 @@ trait CurrentPageAwareTrait
 {
     use CommonContextAwareTrait;
 
+    /**
+     * @var Page
+     */
     public $page;
 
     protected function getPagePropertyName(string $page): string

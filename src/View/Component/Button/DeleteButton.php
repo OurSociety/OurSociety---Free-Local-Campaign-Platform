@@ -13,9 +13,10 @@ final class DeleteButton extends RecordButton
     public function getButtonOptions(): array
     {
         $options = [
-            'confirm' => __('Are you sure you want to delete :name?', [
+            'confirm' => __('Are you sure you want to delete {name}?', [
                 'name' => $this->getRecord()->getDisplayValue(),
             ]),
+            'escape' => false, // Note: inverse value required to escape quotes in confirmation JS onclick handler.
         ];
 
         return $options + parent::getButtonOptions();

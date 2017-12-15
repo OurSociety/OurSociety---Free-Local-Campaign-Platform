@@ -7,10 +7,16 @@
 
 <div class="media">
     <div class="media-body">
-        <h4 class="media-heading">
-            <?= __('Positions') ?>
-            <?= $this->fetch('actions_positions') ?>
-        </h4>
+        <div class="row">
+            <div class="col">
+                <h4 class="media-heading">
+                    <?= __('Positions') ?>
+                </h4>
+            </div>
+            <div class="col-auto">
+                <?= $this->fetch('actions_positions') ?>
+            </div>
+        </div>
         <?php if (count($politician->positions) === 0): ?>
             <p><?= __("This representative hasn't added any positions.") ?></p>
         <?php else: ?>

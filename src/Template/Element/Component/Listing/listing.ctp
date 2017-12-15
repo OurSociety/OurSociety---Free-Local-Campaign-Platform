@@ -7,9 +7,11 @@ use OurSociety\View\Component\Listing\Table;
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\View\Component\Listing\Listing $listing
  */
+
+$records = $listing->getRecords();
 ?>
 
-<div class="card">
+<div class="listing card">
 
     <h4 class="card-header">
         <?= $this->Html->icon($listing->getIcon(), ['class' => 'fa-fw']) ?>
@@ -19,15 +21,19 @@ use OurSociety\View\Component\Listing\Table;
         </span>
     </h4>
 
-    <div class="card-body p-0">
-
-        <?= $this->Component->render(new Table(
-            $listing->getRecords(),
-            $listing->getFields(),
-            $listing->getRecordButtons()
-        )) ?>
-
-    </div>
+    <?php if (count($records) === 0): ?>
+        <p class="card-body mb-0">
+            <?= $listing->getEmptyMessage() ?>
+        </p>
+    <?php else: ?>
+        <div class="card-body p-0">
+            <?= $this->Component->render(new Table(
+                $records,
+                $listing->getFields(),
+                $listing->getRecordButtons()
+            )) ?>
+        </div>
+    <?php endif ?>
 
     <div class="card-footer text-muted">
         <?= $this->Component->render(new Paginator) ?>

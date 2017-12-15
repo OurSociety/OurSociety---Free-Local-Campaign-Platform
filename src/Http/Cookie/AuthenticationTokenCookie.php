@@ -35,6 +35,6 @@ class AuthenticationTokenCookie extends Cookie
     //    $value = ['email' => $requestData['email'], 'password' => $requestData['password']];
     //    $expiresAt = FrozenTime::now()->addYear();
     //
-    //    return new self($name, $value, $expiresAt, $request->getAttribute('webroot'), 'oursociety.dev', true, true);
+    //    return new self($name, $value, $expiresAt, $request->getAttribute('webroot'), 'oursociety.test', true, true);
     //}
 }

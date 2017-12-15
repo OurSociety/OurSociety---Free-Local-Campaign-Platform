@@ -18,6 +18,8 @@ class GuestContext extends PageContext
 
     protected $citizenDashboard;
 
+    protected $forgotPassword;
+
     protected $homepage;
 
     protected $join;
@@ -28,9 +30,9 @@ class GuestContext extends PageContext
 
     protected $politicianDashboard;
 
-    protected $signIn;
+    protected $representativeProfile;
 
-    protected $forgotPassword;
+    protected $signIn;
 
     public function __construct(
         Page\Admin\Dashboard $adminDashboard,
@@ -39,19 +41,21 @@ class GuestContext extends PageContext
         Page\Guest\ForgotPassword $forgotPassword,
         Page\Guest\Home $homepage,
         Page\Guest\Join $join,
+        Page\Guest\RepresentativeProfile $representativeProfile,
         Page\Guest\SignIn $signIn,
-        Page\MunicipalProfile $municipalProfile,
+        Page\Guest\MunicipalProfile $municipalProfile,
         Page\Politician\Dashboard $politicianDashboard
     ) {
         $this->adminDashboard = $adminDashboard;
         $this->citizenDashboard = $citizenDashboard;
+        $this->forgotPassword = $forgotPassword;
         $this->homepage = $homepage;
         $this->join = $join;
         $this->municipalProfile = $municipalProfile;
         $this->onboarding = $onboarding;
         $this->politicianDashboard = $politicianDashboard;
+        $this->representativeProfile = $representativeProfile;
         $this->signIn = $signIn;
-        $this->forgotPassword = $forgotPassword;
     }
 
     /**

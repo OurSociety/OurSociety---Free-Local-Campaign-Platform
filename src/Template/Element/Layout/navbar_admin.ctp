@@ -85,16 +85,16 @@ endif;
                         'icon' => (new Entity\Event)->getIcon(),
                     ]),
                     new DropdownItem(__('Representative Awards'), '/admin/politician-awards', [
-                        'icon' => (new Entity\PoliticianAward)->getIcon(),
+                        'icon' => (new Entity\Award)->getIcon(),
                     ]),
                     new DropdownItem(__('Representative Positions'), '/admin/politician-positions', [
-                        'icon' => (new Entity\PoliticianPosition)->getIcon(),
+                        'icon' => (new Entity\Position)->getIcon(),
                     ]),
                     new DropdownItem(__('Representative Qualifications'), '/admin/politician-qualifications', [
-                        'icon' => (new Entity\PoliticianQualification)->getIcon(),
+                        'icon' => (new Entity\Qualification)->getIcon(),
                     ]),
                     new DropdownItem(__('Representative Videos'), '/admin/politician-videos', [
-                        'icon' => (new Entity\PoliticianVideo)->getIcon(),
+                        'icon' => (new Entity\Video)->getIcon(),
                     ]),
                     new DropdownItem(__('Questions'), '/admin/questions', [
                         'icon' => (new Entity\Question)->getIcon(),

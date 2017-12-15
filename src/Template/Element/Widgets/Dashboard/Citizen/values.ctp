@@ -15,9 +15,9 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
 
 <div class="card mb-3">
     <h4 class="card-header">
-        <?= __('My Values') ?>
+        <?= __('My Societal Values') ?>
     </h4>
-    <div class="card-body">
+    <div class="card-body pb-0 pb-sm-3">
         <div class="row">
             <div class="col-md-3">
 
@@ -29,7 +29,7 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
 
                     <div class="media-body">
                         <h5 class="mt-0"><?= $identity->level_name ?></h5>
-                        You are currently on level <?= $levelNumber ?>.
+                        <?= __('You are currently on level {number}.', ['number' => $levelNumber]) ?>
                     </div>
                 </div>
 
@@ -37,9 +37,8 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
             <div class="col">
 
                 <p>
-                    <?= __('You have answered {answer_count} out of {question_total} questions.', [
+                    <?= __('You have answered {answer_count} questions.', [
                         'answer_count' => $identity->answer_count,
-                        'question_total' => $levelQuestionTotal,
                     ]) ?>
                     <?php if ($ceilingReached === true): ?>
                         <?= __('You have answered the first level of questions. Come back soon for more!') ?>
@@ -56,7 +55,7 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col">
+                    <div class="col-md">
                         <?php if ($politicianMatch !== null && Date::now()->year >= 2018): ?>
                             <?php
                             $politician = $politicianMatch->politician;
@@ -83,23 +82,28 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
                             </div>
                         <?php endif ?>
                     </div>
-                    <div class="col">
-                        <div class="btn-group">
-                            <?= $this->Html->link(__('Review Past Answers'), ['_name' => 'citizen:answers'], [
-                                'class' => [
-                                    'btn',
-                                    'btn-link',
-                                    $identity->answer_count === 0 ? 'disabled' : null,
-                                ],
-                            ]) ?>
-                            <?= $this->Html->link(__('Answer some more questions!'), ['_name' => 'citizen:questions'], [
-                                'class' => [
-                                    'btn',
-                                    'btn-primary',
-                                    'rounded-left',
-                                    $ceilingReached ? 'disabled' : null,
-                                ],
-                            ]) ?>
+                    <div class="col-md">
+                        <div class="row">
+                            <div class="col order-12-sm">
+                                <?= $this->Html->link(__('Answer questions!'), ['_name' => 'citizen:questions'], [
+                                    'class' => [
+                                        'btn',
+                                        'btn-primary',
+                                        'btn-block',
+                                        $ceilingReached ? 'disabled' : null,
+                                    ],
+                                ]) ?>
+                            </div>
+                            <div class="col">
+                                <?= $this->Html->link(__('Review Answers'), ['_name' => 'citizen:answers'], [
+                                    'class' => [
+                                        'btn',
+                                        'btn-link',
+                                        'btn-block',
+                                        $identity->answer_count === 0 ? 'disabled' : null,
+                                    ],
+                                ]) ?>
+                            </div>
                         </div>
                     </div>
                 </div>

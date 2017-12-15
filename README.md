@@ -1,9 +1,3 @@
-https://community.algolia.com/vue-instantsearch/getting-started/styling.html
-https://github.com/algolia/vue-instantsearch/blob/master/src/components/TreeMenu.vue
-https://oursociety.dev/place/select
-https://community.algolia.com/places/examples.html#autocompletejs
-https://www.algolia.com/doc/tutorials/getting-started/getting-started-with-laravel-scout-vuejs/
-
 # OurSociety.org
 
 2017 MVP for OurSociety (Ron Rivers)
@@ -20,4 +14,4 @@ There is a `Dockerfile` for each service in the `docker/` directory that declare
 
 To start all the services, run `docker-compose up` and open another terminal window. Alternatively, use `docker-compose up -d` to run them in the background, and attach to the log stream with `docker-compose logs -f`.
 
-Finally, add the line `127.0.0.1 mysociety.dev www.mysociety.dev` to your `/etc/hosts` file and visit [http://mysociety.dev](http://mysociety.dev) in your browser.
+Finally, add the line `127.0.0.1 mysociety.test www.mysociety.test` to your `/etc/hosts` file and visit [http://mysociety.test](http://mysociety.test) in your browser.

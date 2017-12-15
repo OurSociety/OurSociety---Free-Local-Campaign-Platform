@@ -3,53 +3,37 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Context\Page;
 
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use OurSociety\TestSuite\Behat\Page\Login;
-use OurSociety\TestSuite\Behat\Page\PoliticianProfile;
+use OurSociety\TestSuite\Behat\Page;
 use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
 class PoliticianContext extends PageObjectContext
 {
-    private const VIDEO_ID_EDIT = 'de7040fd-87c4-33ad-9f61-b9e835c91bb8';
+    private const VIDEO_ID_EDIT = '213e2c94-6f7c-3d58-9f2e-134b9ee3dddd';
 
-    /**
-     * @var PoliticianProfile
-     */
-    private $politicianProfile;
+    private $awardList;
 
-    /**
-     * @var Login
-     */
-    private $login;
+    private $myProfile;
 
     public function __construct(
-        Login $login,
-        PoliticianProfile $politicianProfile
+        Page\Politician\MyProfile $myProfile
     ) {
-        $this->login = $login;
-        $this->politicianProfile = $politicianProfile;
-    }
-
-    /** @BeforeScenario */
-    public function loggedInAsPolitician(BeforeScenarioScope $scope)
-    {
-        $this->login->loginAsPolitician();
+        $this->myProfile = $myProfile;
     }
 
     /**
-     * @Given /^I am on my profile$/
+     * @Given I am on my profile
      */
     public function iAmOnMyProfile()
     {
-        $this->politicianProfile->open();
+        $this->myProfile->open();
     }
 
     /**
-     * @Given /^there is a video$/
+     * @Given there is a video
      */
     public function thereIsAVideo()
     {
-        if (!$this->politicianProfile->hasFeaturedVideo()) {
+        if ($this->myProfile->hasFeaturedVideo() === false) {
             $message = sprintf('Expected to find a featured video.');
 
             throw new \LogicException($message);
@@ -57,11 +41,11 @@ class PoliticianContext extends PageObjectContext
     }
 
     /**
-     * @When /^I edit that video$/
+     * @When I edit that video
      */
     public function iEditThatVideo()
     {
-        $videoList = $this->politicianProfile->clickToEditVideos();
+        $videoList = $this->myProfile->clickToEditVideos();
         $videoEditPage = $videoList->clickToEditVideo(self::VIDEO_ID_EDIT);
         $videoEditPage->setYoutubeVideoId('test');
         $videoEditPage->setAsFeatured(false);
@@ -69,13 +53,25 @@ class PoliticianContext extends PageObjectContext
     }
 
     /**
-     * @Then /^the video is updated$/
+     * @Then the video is updated
      */
     public function theVideoIsUpdated()
     {
-        $videoList = $this->politicianProfile->clickToEditVideos();
+        $videoList = $this->myProfile->clickToEditVideos();
         $videoEditPage = $videoList->clickToEditVideo(self::VIDEO_ID_EDIT);
         $videoEditPage->assertYoutubeVideoId('test');
         $videoEditPage->assertFeatured(false);
+    }
+
+    /**
+     * @Then I should see the award :name
+     */
+    public function iShouldSeeTheAward(string $name)
+    {
+        if ($this->myProfile->hasAwardNamed($name) === false) {
+            $message = sprintf('Expected to find a award with name "%s".', $name);
+
+            throw new \LogicException($message);
+        }
     }
 }
