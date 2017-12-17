@@ -100,6 +100,11 @@ abstract class Field extends Component
         return $record->getDisplayFieldName() === $this->name;
     }
 
+    public function setTitle(string $title): self
+    {
+        return $this->setConfig('title', $title);
+    }
+
     protected function getValue()
     {
         $getValue = function (EntityInterface $entity, array $path) use (&$getValue) {

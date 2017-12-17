@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Database\Type;
+namespace OurSociety\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
@@ -14,6 +14,7 @@ class GeometryType extends Type
         if ($value === null) {
             return null;
         }
+
         return json_decode($value, true);
     }
 
@@ -22,6 +23,7 @@ class GeometryType extends Type
         if (is_array($value) || $value === null) {
             return $value;
         }
+
         return json_decode($value, true);
     }
 
@@ -35,6 +37,7 @@ class GeometryType extends Type
         if ($value === null) {
             return PDO::PARAM_NULL;
         }
+
         return PDO::PARAM_STR;
     }
 }

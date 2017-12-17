@@ -48,6 +48,8 @@ abstract class IndexAction extends Action
 
     protected function getDefaultFinderOptions(): array
     {
-        return [];
+        return [
+            'identity' => $this->hasIdentity() ? $this->getIdentity() : null,
+        ];
     }
 }

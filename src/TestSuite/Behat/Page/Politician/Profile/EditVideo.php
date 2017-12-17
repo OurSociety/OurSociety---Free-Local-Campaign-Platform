@@ -14,8 +14,6 @@ class EditVideo extends Page
     private const LABEL_FIELD_IS_FEATURED = 'Feature This Video?';
     private const LABEL_FIELD_YOUTUBE_VIDEO_ID = 'YouTube Video ID';
 
-    protected $path = '/politician/profile/videos/edit/{videoId}';
-
     public function assertFeatured($isFeatured): void
     {
         $isFeatured
@@ -43,5 +41,10 @@ class EditVideo extends Page
     public function setYoutubeVideoId($youtubeVideoId): void
     {
         $this->fillField(self::LABEL_FIELD_YOUTUBE_VIDEO_ID, $youtubeVideoId);
+    }
+
+    protected function getPath(): string
+    {
+        return '/representative/profile/videos/edit/{videoId}';
     }
 }

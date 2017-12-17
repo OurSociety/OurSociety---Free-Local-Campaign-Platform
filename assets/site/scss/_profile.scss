@@ -1,0 +1,29 @@
+.profile-picture-round {
+    @extend .bg-light;
+    @extend .rounded-circle;
+    @extend .align-middle;
+
+    border: 2px solid $white;
+    display: inline-block;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+
+    img {
+        min-width: auto !important;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        width: auto;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+        &.profile-picture-portrait {
+            width: 100%;
+            height: auto;
+        }
+    }
+}

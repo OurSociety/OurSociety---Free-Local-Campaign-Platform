@@ -7,7 +7,7 @@ $this->extend('/Common/Questions/index');
 
 $this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
 $this->Breadcrumbs->add(__('Profile'), $identity->getProfileRoute());
-$this->Breadcrumbs->add(__('My Voice'));
+$this->Breadcrumbs->add(__('My Societal Values'));
 
 $this->start('actions');
 echo $this->Html->link(__('View Profile'), ['_name' => 'politician:profile'], ['class' => ['btn btn-default pull-right']]);

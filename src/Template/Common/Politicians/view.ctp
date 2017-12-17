@@ -10,12 +10,16 @@
  */
 ?>
 
-<h2>
-    <?= $politician->name ?>
-    <div class="pull-right">
+<div class="row">
+    <div class="col">
+        <h2 id="page-title">
+            <?= $politician->name ?>
+        </h2>
+    </div>
+    <div class="col-auto">
         <?= $this->fetch('actions_heading') ?>
     </div>
-</h2>
+</div>
 
 <hr>
 
@@ -33,11 +37,23 @@
 <hr>
 
 <section>
-    <h3>
-        <?= __('My platform') ?>
-        <?= $this->fetch('actions_videos') ?>
-        <?= $this->fetch('actions_articles') ?>
-    </h3>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h3>
+                        <?= __('My platform') ?>
+                    </h3>
+                </div>
+                <div class="col-auto">
+                    <?= $this->fetch('actions_videos') ?>
+                </div>
+            </div>
+        </div>
+        <div class="col text-right">
+            <?= $this->fetch('actions_articles') ?>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 text-center">
             <?= $this->element('Widgets/PoliticianProfile/videos') ?>
@@ -51,7 +67,11 @@
 <hr>
 
 <section>
-    <h3><?= __('About {name}', ['name' => $this->request->getParam('id') ? $politician->name : __('me')]) ?></h3>
+    <h3>
+        <?= __('About {name}', [
+            'name' => $this->request->getParam('id') ? $politician->name : __('me'),
+        ]) ?>
+    </h3>
     <div class="row">
         <div class="col-md-8">
             <?= $this->element('Widgets/PoliticianProfile/positions') ?>

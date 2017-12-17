@@ -3,16 +3,15 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Admin;
 
-use Cake\Event\Event;
 use CrudView\Breadcrumb\Breadcrumb;
 use OurSociety\Controller\CrudController;
-use OurSociety\Model\Entity\PoliticianQualification;
+use OurSociety\Model\Entity\Qualification;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  * Qualifications Controller
  *
- * @method PoliticianQualification[] paginate($object = null, array $settings = [])
+ * @method Qualification[] paginate($object = null, array $settings = [])
  */
 class PoliticianQualificationsController extends CrudController
 {
@@ -69,7 +68,7 @@ class PoliticianQualificationsController extends CrudController
                     'started' => ['label' => 'Date Started'] + $this->getFieldOptionsForYearMonth(),
                     'ended' => ['label' => 'Date Ended'] + $this->getFieldOptionsForYearMonth(),
                 ],
-            ]
+            ],
         ]);
 
         return $this->Crud->execute();

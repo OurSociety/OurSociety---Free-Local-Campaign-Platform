@@ -23,6 +23,13 @@ class FormHelper extends Bootstrap4\FormHelper
 {
     public function __construct(View $View, array $config = [])
     {
+        $this->_templates = [
+                'inputContainer' => '<div class="form-group{{required}}">{{content}}{{help}}</div>',
+                'inputContainerError' => '<div class="form-group{{required}}">{{content}}{{error}}{{help}}</div>',
+                'inputContainerGrid' => '<div class="form-group row{{required}}">{{content}}{{help}}</div></div>',
+                'inputContainerGridError' => '<div class="form-group row{{required}}">{{content}}{{error}}{{help}}</div></div>',
+            ] + $this->_templates;
+
         $defaultConfig = [
             'widgets' => [
                 'editor' => [EditorWidget::class],
@@ -155,6 +162,13 @@ class FormHelper extends Bootstrap4\FormHelper
             if (is_string($value) && $value !== '') {
                 [$year, $month] = explode('-', $value);
                 $value = FrozenDate::create($year, $month, 1);
+            }
+
+            foreach (['min', 'max'] as $key) {
+                $option = $options[$key] ?? null;
+                if ($option instanceof FrozenDate) {
+                    $options[$key] = $option->format('Y-m');
+                }
             }
 
             return $this->text($fieldName, $options + ['value' => $value ? $value->format('Y-m') : null]);

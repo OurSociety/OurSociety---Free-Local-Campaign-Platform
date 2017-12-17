@@ -1086,6 +1086,26 @@ INSERT INTO `audits` VALUES ('ffb47ec9-e614-45be-bd2d-5f3eb79b9ce7','2017-08-06 
 INSERT INTO `audits` VALUES ('fffad310-c473-4d68-ab44-bce1d93e3ceb','2017-08-06 04:19:32','update','5205ae34-759e-11e7-9add-6c4008a68a60','users',NULL,'{\"last_seen\":\"2017-08-06T02:25:09+00:00\"}','{\"last_seen\":\"2017-08-06T04:19:32+00:00\"}','{\"ip\":\"::1\",\"url\":\"\\/admin\\/users\\/dashboard?range=week\",\"user\":\"5205ae34-759e-11e7-9add-6c4008a68a60\"}');
 /*!40000 ALTER TABLE `audits` ENABLE KEYS */;
 UNLOCK TABLES;
+DROP TABLE IF EXISTS `awards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `awards` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `obtained` date NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `awards` WRITE;
+/*!40000 ALTER TABLE `awards` DISABLE KEYS */;
+INSERT INTO `awards` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','Best Upcoming Representative','Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.','2016-07-21','2017-07-31 02:09:46','2017-07-31 02:09:46');
+/*!40000 ALTER TABLE `awards` ENABLE KEYS */;
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `candidate_post_election_statuses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1384,6 +1404,7 @@ INSERT INTO `electoral_districts` VALUES ('d7cd89c8-3bcb-4503-985a-9d54fea2fc55'
 INSERT INTO `electoral_districts` VALUES ('d8a66795-64dd-4c24-b192-d717fb21ec73','3f65e0b8-58e4-467f-ab36-0c466a6dd0fe','ocd-division/country:us/state:nj/county:cumberland/place:stow_creek','0612',NULL,NULL,'882057','3401171160','Stow Creek township',NULL,'','stow-creek-township',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 05:03:07');
 INSERT INTO `electoral_districts` VALUES ('dc21457e-852b-400b-a756-14b420625432','3f65e0b8-58e4-467f-ab36-0c466a6dd0fe','ocd-division/country:us/state:nj/place:estell_manor','0109',NULL,NULL,'885212','3400121870','Estell Manor city',NULL,'','estell-manor-city',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 04:59:00');
 INSERT INTO `electoral_districts` VALUES ('dd6335a1-14f0-489e-bfe8-0b2042e9fa70','0e965c2d-e5db-4d9b-9479-04a01319c93d','ocd-division/country:us/state:nj/place:absecon','0101',NULL,NULL,'885134','3400100100','Absecon city',NULL,'','absecon-city',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 04:55:45');
+INSERT INTO `electoral_districts` VALUES ('ddf7660a-9d3a-7218-97bb-714bf703c17e',NULL,'ocd-division/country:us/state:nj/place:oursociety',NULL,NULL,NULL,NULL,NULL,'The OurSociety Experiment',NULL,'','oursociety-experiment',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,'45bb1599-816c-4d84-a9fb-8a25c0134634',2,0,3,0,2,0,0,NULL,'2017-11-25 01:57:34','2017-11-25 01:57:34');
 INSERT INTO `electoral_districts` VALUES ('e54be2a6-58a6-46e1-84c2-39220edca569','3f65e0b8-58e4-467f-ab36-0c466a6dd0fe','ocd-division/country:us/state:nj/place:cape_may','0502',NULL,NULL,'885178','3400910270','Cape May city',NULL,'','cape-may-city',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 04:55:45');
 INSERT INTO `electoral_districts` VALUES ('e5845bc0-c02a-4cd8-bc2c-f17f5228b989','3f65e0b8-58e4-467f-ab36-0c466a6dd0fe','ocd-division/country:us/state:nj/county:cape_may/place:lower','0505',NULL,NULL,'882044','3400941610','Lower township',NULL,'','lower-township',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 04:59:29');
 INSERT INTO `electoral_districts` VALUES ('e9911387-14e3-48ea-8803-fc3e3ca24914','0e965c2d-e5db-4d9b-9479-04a01319c93d','ocd-division/country:us/state:nj/place:brigantine','0103',NULL,NULL,'885171','3400107810','Brigantine city',NULL,'','brigantine-city',NULL,'8a51040a-02ad-4773-b3e0-4bf7d5f90cff',NULL,NULL,0,0,0,0,0,0,0,NULL,'2017-08-12 17:46:36','2017-08-13 04:55:45');
@@ -1603,32 +1624,13 @@ INSERT INTO `phinxlog` VALUES (20171014121221,'Submissions','2017-10-16 08:17:46
 INSERT INTO `phinxlog` VALUES (20171014132230,'Reports','2017-10-16 08:17:46','2017-10-16 08:17:46',0);
 INSERT INTO `phinxlog` VALUES (20171022131012,'Tokens','2017-11-14 04:57:41','2017-11-14 04:57:41',0);
 INSERT INTO `phinxlog` VALUES (20171130111917,'CreateNotifications','2017-11-30 16:16:04','2017-11-30 16:16:04',0);
+INSERT INTO `phinxlog` VALUES (20171216152733,'RenamePoliticianTables','2017-12-16 15:29:42','2017-12-16 15:29:42',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 UNLOCK TABLES;
-DROP TABLE IF EXISTS `politician_awards`;
+DROP TABLE IF EXISTS `positions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `politician_awards` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `obtained` date NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `politician_awards` WRITE;
-/*!40000 ALTER TABLE `politician_awards` DISABLE KEYS */;
-INSERT INTO `politician_awards` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','Best Upcoming Politician','Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.','2016-07-21','2017-07-31 02:09:46','2017-07-31 02:09:46');
-/*!40000 ALTER TABLE `politician_awards` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `politician_positions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `politician_positions` (
+CREATE TABLE `positions` (
   `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -1641,16 +1643,16 @@ CREATE TABLE `politician_positions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `politician_positions` WRITE;
-/*!40000 ALTER TABLE `politician_positions` DISABLE KEYS */;
-INSERT INTO `politician_positions` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','Board Member','Super Enterprise Park','2015-01-01',NULL,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_positions` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','City Planner','Super City Council','2012-01-01','2014-12-25','2017-07-31 02:09:46','2017-07-31 02:09:46');
-/*!40000 ALTER TABLE `politician_positions` ENABLE KEYS */;
+LOCK TABLES `positions` WRITE;
+/*!40000 ALTER TABLE `positions` DISABLE KEYS */;
+INSERT INTO `positions` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','Board Member','Super Enterprise Park','2015-01-01',NULL,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `positions` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','City Planner','Super City Council','2012-01-01','2014-12-25','2017-07-31 02:09:46','2017-07-31 02:09:46');
+/*!40000 ALTER TABLE `positions` ENABLE KEYS */;
 UNLOCK TABLES;
-DROP TABLE IF EXISTS `politician_qualifications`;
+DROP TABLE IF EXISTS `qualifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `politician_qualifications` (
+CREATE TABLE `qualifications` (
   `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -1663,35 +1665,10 @@ CREATE TABLE `politician_qualifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `politician_qualifications` WRITE;
-/*!40000 ALTER TABLE `politician_qualifications` DISABLE KEYS */;
-INSERT INTO `politician_qualifications` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','B.S. in Architecture','Some Institution','2008-01-01','2011-12-25','2017-07-31 02:09:46','2017-07-31 02:09:46');
-/*!40000 ALTER TABLE `politician_qualifications` ENABLE KEYS */;
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `politician_videos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `politician_videos` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `electoral_district_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `youtube_video_id` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `featured` tinyint(1) NOT NULL DEFAULT '0',
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `politician_videos` WRITE;
-/*!40000 ALTER TABLE `politician_videos` DISABLE KEYS */;
-INSERT INTO `politician_videos` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','VtVuY3vlnzE',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('23ab4609-26e8-3227-a8a9-41a3e0c66931','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','9AJz3quMPsA',1,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('794e428c-53ca-35df-a09e-111f32ecd7b4','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','mKGvpF2zTXA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('b6141312-a703-3c45-aaa7-c9ce3fc6b676','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','6DLQ_fyFkzA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('db2c8d74-106f-3734-bff1-674d5e045f1b','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','S_mCWnDCSY8',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-INSERT INTO `politician_videos` VALUES ('ff430a43-9376-3ec2-876f-53922c672118','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','WGi9z6UdlUU',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
-/*!40000 ALTER TABLE `politician_videos` ENABLE KEYS */;
+LOCK TABLES `qualifications` WRITE;
+/*!40000 ALTER TABLE `qualifications` DISABLE KEYS */;
+INSERT INTO `qualifications` VALUES ('de7040fd-87c4-33ad-9f61-b9e835c91bb8','573111be-759e-11e7-a371-6c4008a68a60','B.S. in Architecture','Some Institution','2008-01-01','2011-12-25','2017-07-31 02:09:46','2017-07-31 02:09:46');
+/*!40000 ALTER TABLE `qualifications` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `questions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -2361,6 +2338,31 @@ CREATE TABLE `value_matches` (
 LOCK TABLES `value_matches` WRITE;
 /*!40000 ALTER TABLE `value_matches` DISABLE KEYS */;
 /*!40000 ALTER TABLE `value_matches` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `videos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `videos` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `politician_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `electoral_district_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT '',
+  `youtube_video_id` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+INSERT INTO `videos` VALUES ('213e2c94-6f7c-3d58-9f2e-134b9ee3dddd','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','test',0,'2017-07-31 02:09:46','2017-12-15 13:43:17');
+INSERT INTO `videos` VALUES ('23ab4609-26e8-3227-a8a9-41a3e0c66931','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','9AJz3quMPsA',1,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `videos` VALUES ('794e428c-53ca-35df-a09e-111f32ecd7b4','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','mKGvpF2zTXA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `videos` VALUES ('b6141312-a703-3c45-aaa7-c9ce3fc6b676','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','6DLQ_fyFkzA',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `videos` VALUES ('db2c8d74-106f-3734-bff1-674d5e045f1b','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','S_mCWnDCSY8',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+INSERT INTO `videos` VALUES ('ff430a43-9376-3ec2-876f-53922c672118','573111be-759e-11e7-a371-6c4008a68a60','50802eba-977a-11e7-b6d8-6c4008a68a60','WGi9z6UdlUU',0,'2017-07-31 02:09:46','2017-07-31 02:09:46');
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `vote_variations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

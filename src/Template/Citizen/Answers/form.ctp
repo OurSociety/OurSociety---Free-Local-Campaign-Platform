@@ -6,7 +6,7 @@
  */
 
 $this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
-$this->Breadcrumbs->add(__('My Voice'), ['_name' => 'citizen:questions']);
+$this->Breadcrumbs->add(__('My Societal Values'), ['_name' => 'citizen:questions']);
 $this->Breadcrumbs->add(__('Review Answers'), ['_name' => 'citizen:answers']);
 
 $answer = $record;

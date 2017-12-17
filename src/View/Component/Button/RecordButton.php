@@ -17,6 +17,8 @@ abstract class RecordButton extends Button
 
     protected $buttonUrl;
 
+    protected $routeName;
+
     public function __construct(RecordInterface $record = null)
     {
         $this->setRecord($record);
@@ -30,7 +32,12 @@ abstract class RecordButton extends Button
     public function getButtonUrl(): array
     {
         $defaultUrl = ['controller' => $this->getControllerName(), 'action' => $this->getActionName()];
+
         $url = $this->buttonUrl ?? $defaultUrl;
+        if ($this->routeName !== null) {
+            $url = ['_name' => $this->routeName];
+        }
+
         $url[] = $this->getRecordIdentifier();
 
         return $url;
@@ -39,6 +46,13 @@ abstract class RecordButton extends Button
     public function setButtonUrl(array $url): self
     {
         $this->buttonUrl = $url;
+
+        return $this;
+    }
+
+    public function setRouteName($name): self
+    {
+        $this->routeName = $name;
 
         return $this;
     }

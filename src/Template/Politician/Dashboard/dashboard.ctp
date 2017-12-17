@@ -10,22 +10,27 @@
 $this->Breadcrumbs->add(__('My Dashboard'))
 ?>
 
-<div class="btn-group pull-right">
-    <?= $this->Html->link(
-        __('My Profile'),
-        ['_name' => 'politician:profile'],
-        ['class' => 'btn btn-secondary']
-    ) ?>
-    <?= $this->Html->link(
-        __('My Municipality'),
-        ['_name' => 'municipality:default'],
-        ['class' => 'btn btn-info']
-    ) ?>
+<div class="row">
+    <div class="col">
+        <h2>
+            <?= __('My Dashboard') ?>
+        </h2>
+    </div>
+    <div class="col-auto text-center">
+        <div class="btn-group">
+            <?= $this->Html->link(
+                __('My Profile'),
+                ['_name' => 'politician:profile'],
+                ['class' => 'btn btn-secondary']
+            ) ?>
+            <?= $this->Html->link(
+                __('My Municipality'),
+                ['_name' => 'municipality:default'],
+                ['class' => 'btn btn-info']
+            ) ?>
+        </div>
+    </div>
 </div>
-
-<h2>
-    <?= __('My Dashboard') ?>
-</h2>
 
 <hr>
 

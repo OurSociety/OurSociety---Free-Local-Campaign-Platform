@@ -45,7 +45,7 @@ use OurSociety\View\AppView;
  * @property ElectoralDistrict $state
  * @property Article[] $articles
  * @property User[] $elected_officials
- * @property PoliticianVideo[] $videos
+ * @property Video[] $videos
  *
  * @property string $display_name
  */

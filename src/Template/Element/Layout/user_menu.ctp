@@ -7,21 +7,28 @@ use OurSociety\Action\Admin\Users\ImpersonateUserAction;
  * @var \OurSociety\Model\Entity\User $identity The identity.
  */
 
+if ($identity === null) {
+    return;
+}
+
 $isAdminImpersonatingUser = $this->request->getSession()->read(ImpersonateUserAction::SESSION_KEY_ADMIN) !== null;
 ?>
 
 <a class="nav-link dropdown-toggle text-nowrap" href="#" id="userMenuToggle"
    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <?= $identity->renderProfilePicture($this, [
-        'class' => ['align-middle', 'bg-light', 'rounded-circle', 'mr-2'],
-        'style' => 'height: 32px; width: 32px; border: 2px solid white',
-    ]) ?>
+    <div class="profile-picture-round mr-2">
+        <?= $identity->renderProfilePicture($this) ?>
+    </div>
+    <?php /*
     <span class="d-none d-lg-inline">
         <?= $identity->name ?>
     </span>
+    */ ?>
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuToggle"
      style="min-width: 100%">
+    <p class="dropdown-item mb-0"><?= $identity->name ?></p>
+    <div class="dropdown-divider"></div>
     <?php if ($identity->isAdmin()): ?>
         <?= $this->Html->link(__('Admin'), ['_name' => 'admin:dashboard'], ['class' => ['dropdown-item'], 'icon' => 'lock']) ?>
         <div class="dropdown-divider"></div>

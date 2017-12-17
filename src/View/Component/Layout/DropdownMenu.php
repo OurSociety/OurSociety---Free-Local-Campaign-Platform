@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Component\Layout;
 
+use Cake\Utility\Inflector;
 use OurSociety\View\Component\Component;
 
 final class DropdownMenu extends Component
@@ -51,5 +52,10 @@ final class DropdownMenu extends Component
     public function getEntries(): array
     {
         return $this->entries;
+    }
+
+    public function getElementId(): string
+    {
+        return sprintf('%s-menu', Inflector::dasherize($this->getTitle()));
     }
 }

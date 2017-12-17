@@ -56,15 +56,15 @@ use OurSociety\View\Component\Field;
  * @property ElectoralDistrict $electoral_district
  * @property Article[] $articles
  * @property Notification[] $notifications
- * @property PoliticianAward[] $awards
- * @property PoliticianPosition[] $positions
- * @property PoliticianQualification[] $qualifications
- * @property PoliticianVideo[] $videos
+ * @property Award[] $awards
+ * @property Position[] $positions
+ * @property Qualification[] $qualifications
+ * @property Video[] $videos
  * @property ValueMatch[] $politician_matches
  * @property ValueMatch[] $value_matches
  *
  * @property int|null $age The age, if `born` date available.
- * @property PoliticianVideo|null $featured_video
+ * @property Video|null $featured_video
  * @property OfficeType $office_type
  * @property bool $is_example
  * @property string $level_name The name of the current level.

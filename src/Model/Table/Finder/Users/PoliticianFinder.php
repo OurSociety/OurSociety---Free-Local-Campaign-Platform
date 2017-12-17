@@ -18,24 +18,24 @@ class PoliticianFinder extends Finder
             'finder' => isset($options['role']) && $options['role'] === User::ROLE_CITIZEN ? 'forCitizen' : 'all',
         ]);
         $this->table->hasMany('Awards', [
-            'className' => Table\PoliticianAwardsTable::class,
+            'className' => Table\AwardsTable::class,
             'foreignKey' => 'politician_id'
         ]);
         $this->table->hasMany('Positions', [
-            'className' => Table\PoliticianPositionsTable::class,
+            'className' => Table\PositionsTable::class,
             'foreignKey' => 'politician_id'
         ]);
         $this->table->hasMany('Qualifications', [
-            'className' => Table\PoliticianQualificationsTable::class,
+            'className' => Table\QualificationsTable::class,
             'foreignKey' => 'politician_id'
         ]);
         $this->table->hasMany('Videos', [
-            'className' => Table\PoliticianVideosTable::class,
+            'className' => Table\VideosTable::class,
             'foreignKey' => 'politician_id',
             'conditions' => ['featured' => false] // TODO: Move to finder
         ]);
         $this->table->hasOne('FeaturedVideos', [
-            'className' => Table\PoliticianVideosTable::class,
+            'className' => Table\VideosTable::class,
             'foreignKey' => 'politician_id',
             'conditions' => ['featured' => true] // TODO: Move to finder
         ]);

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Traits;
 
@@ -8,13 +8,13 @@ trait FixturesTrait
     public $fixtures = [
         'app.answers',
         'app.articles',
+        'app.awards',
         'app.categories',
         'app.categories_users',
-        'app.politician_awards',
-        'app.politician_positions',
-        'app.politician_qualifications',
-        'app.politician_videos',
+        'app.positions',
+        'app.qualifications',
         'app.questions',
         'app.users',
+        'app.videos',
     ];
 }

@@ -46,7 +46,7 @@ abstract class Model
     {
         $entityClass = preg_replace('/.*\\\\([^\\\\]+)$/', '$1', $this->repository->getEntityClass());
 
-        return Inflector::humanize($entityClass);
+        return mb_strtolower(Inflector::humanize($entityClass));
     }
 
     public function getQueryForAction(Action $action, array $options = null): Query
@@ -59,6 +59,7 @@ abstract class Model
         }
         /** @noinspection PhpUnusedLocalVariableInspection */
         [$subject, $prefixWithSlash, $prefix, $actionName] = $matches;
+        $prefix = str_replace('\\', '', $prefix);
 
         $finderName = sprintf('for%s%s', $prefix, $actionName);
 
@@ -69,6 +70,11 @@ abstract class Model
         }
 
         return $query;
+    }
+
+    public function delete(EntityInterface $entity): void
+    {
+        $this->repository->deleteOrFail($entity);
     }
 
     public function update(EntityInterface $entity, array $data): EntityInterface
@@ -113,6 +119,11 @@ abstract class Model
         }
 
         return $values;
+    }
+
+    public function getNewEntity(): EntityInterface
+    {
+        return $this->repository->newEntity();
     }
 
     protected function saveField(EntityInterface $entity, string $field, $value): EntityInterface

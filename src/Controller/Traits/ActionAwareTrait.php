@@ -37,10 +37,15 @@ trait ActionAwareTrait
 
     private function getActionClassName(): string
     {
+        $parts = explode('/', $this->getRequestPrefixParam());
+        foreach ($parts as &$part) {
+            $part = Inflector::camelize($part);
+        }
+
         return str_replace('\\\\', '\\', sprintf(
             '\%s\Action\%s\%s\%sAction',
             $this->getApplicationNamespace(),
-            Inflector::camelize($this->getRequestPrefixParam()),
+            implode('\\', $parts),
             $this->getControllerName(false),
             ucfirst($this->getRequestActionParam())
         ));

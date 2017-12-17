@@ -94,6 +94,10 @@ trait NestedComponentAwareTrait
 
     private function setComponents(array $components): void
     {
+        if (count($components) === 0) {
+            throw new \InvalidArgumentException('Expected at least one nested component to render.');
+        }
+
         $this->components = $components;
     }
 

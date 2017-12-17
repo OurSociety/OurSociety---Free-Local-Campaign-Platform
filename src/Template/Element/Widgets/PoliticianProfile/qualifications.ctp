@@ -7,10 +7,16 @@
 
 <div class="media">
     <div class="media-body">
-        <h4 class="media-heading">
-            <?= __('Education') ?>
-            <?= $this->fetch('actions_education') ?>
-        </h4>
+        <div class="row">
+            <div class="col">
+                <h4 class="media-heading">
+                    <?= __('Education') ?>
+                </h4>
+            </div>
+            <div class="col-auto">
+                <?= $this->fetch('actions_education') ?>
+            </div>
+        </div>
         <?php if (count($politician->qualifications) === 0): ?>
             <p><?= __("This representative hasn't added any qualifications.") ?></p>
         <?php else: ?>

@@ -24,7 +24,7 @@ use OurSociety\Model\Behavior\SearchEngineBehavior;
  * @property Association\HasMany|EventsTable $Events
  * @property Association\HasMany|OfficesTable $Offices
  * @property Association\HasMany|UsersTable $PathwayPoliticians
- * @property Association\HasMany|PoliticianVideosTable $Videos
+ * @property Association\HasMany|VideosTable $Videos
  * @property Association\HasOne|UsersTable $Mayors
  * @property Association\HasOne|ElectionsTable $UpcomingElections
  *
@@ -53,7 +53,7 @@ class ElectoralDistrictsTable extends AppTable
         $this->hasMany('Events');
         $this->hasMany('Offices');
         $this->hasMany('CommunityContributors', ['className' => UsersTable::class])->setFinder('isCommunityContributor');
-        $this->hasMany('Videos', ['className' => PoliticianVideosTable::class]);
+        $this->hasMany('Videos', ['className' => VideosTable::class]);
         $this->hasOne('Mayors', ['className' => UsersTable::class])->setFinder('isMayor')->setStrategy('select');
         $this->hasOne('UpcomingElections', ['className' => ElectionsTable::class])->setFinder('upcoming');
     }
