@@ -7,8 +7,8 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 class ForgotPassword extends Page
 {
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/forget-password';
+        return 'users:forgot';
     }
 }

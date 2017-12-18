@@ -10,12 +10,15 @@ use OurSociety\TestSuite\Behat\Page\Crud;
  */
 class ListUsersPage extends Crud\IndexPage
 {
-    protected $path = '/admin/users';
-
     protected $elements = [
         'Search form' => 'form#search',
         'Navigation' => ['css' => '.header div.navigation'],
         'Article list' => ['xpath' => '//*[contains(@class, "content")]//ul[contains(@class, "articles")]'],
         'User list' => ['css' => '.scaffold-action-index .table'],
     ];
+
+    protected function getRouteName(): string
+    {
+        return 'admin:users';
+    }
 }

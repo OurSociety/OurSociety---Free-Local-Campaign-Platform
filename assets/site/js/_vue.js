@@ -1,14 +1,16 @@
 import Vue from 'vue'
+import ThumbnailMap from './components/ThumbnailMap.vue';
 import PasswordField from './components/PasswordField.vue';
 import PlaceSearch from './components/PlaceSearch.vue';
 
-window.Vue = Vue;
+Vue.config.productionTip = false;
 
-// Vue.component('PasswordField', require('./components/PasswordField.vue'));
+window.Vue = Vue; // export to browser
 
-const app = new Vue({
+new Vue({
   el: '#app',
   components: {
+    thumbnailMap: ThumbnailMap, // leaflet map
     passwordField: PasswordField, // password strength meter
     placeSearch: PlaceSearch, // password strength meter
   }

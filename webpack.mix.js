@@ -3,6 +3,8 @@ const path = require('path');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 mix
 
@@ -120,6 +122,10 @@ mix
       // chunkFilename: 'assets/dist/[name].[chunkhash].js',
     },
     plugins: [
+      new HardSourceWebpackPlugin(),
+      new SimpleProgressWebpackPlugin({
+        format: process.env.npm_lifecycle_event === 'prod' ? 'expanded' : 'compact'
+      }),
       new SpriteLoaderPlugin(),
       new WebpackNotifierPlugin({
         title: 'OurSociety',

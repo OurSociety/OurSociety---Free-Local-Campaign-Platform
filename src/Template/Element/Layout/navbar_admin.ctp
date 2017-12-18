@@ -81,6 +81,12 @@ endif;
                     new DropdownItem(__('Aspects by User'), '/admin/aspects/users', [
                         'icon' => (new Entity\CategoriesUser)->getIcon(),
                     ]),
+                    new DropdownItem(__('Contests'), '/admin/contests', [
+                        'icon' => (new Entity\Contest)->getIcon(),
+                    ]),
+                    new DropdownItem(__('Elections'), '/admin/elections', [
+                        'icon' => (new Entity\Election)->getIcon(),
+                    ]),
                     new DropdownItem(__('Events'), '/admin/events', [
                         'icon' => (new Entity\Event)->getIcon(),
                     ]),

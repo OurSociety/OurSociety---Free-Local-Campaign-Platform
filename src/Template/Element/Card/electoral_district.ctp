@@ -8,8 +8,8 @@
 <div class="card">
     <?= $electoralDistrict->renderMap($this) ?>
     <div class="card-body">
-        <h4 class="card-title">
-            <?= $this->Html->link($electoralDistrict->name, $electoralDistrict->getRoute()) ?>
+        <h4 class="card-title mb-0">
+            <?= $electoralDistrict->renderLink($this) ?>
         </h4>
         <?php if ($electoralDistrict->hasDescription()): ?>
             <p class="card-text">

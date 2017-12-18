@@ -32,7 +32,7 @@ abstract class IndexAction extends Action
     protected function getSerializedViewVariables(): array
     {
         return [
-            self::VIEW_VARIABLE_RECORDS,
+            $this->getRecordsViewVariable(),
         ];
     }
 
@@ -43,7 +43,12 @@ abstract class IndexAction extends Action
 
     protected function setRecordsToView(ResultSet $records): void
     {
-        $this->setViewVariable(self::VIEW_VARIABLE_RECORDS, $records);
+        $this->setViewVariable($this->getRecordsViewVariable(), $records);
+    }
+
+    protected function getRecordsViewVariable(): string
+    {
+        return self::VIEW_VARIABLE_RECORDS;
     }
 
     protected function getDefaultFinderOptions(): array

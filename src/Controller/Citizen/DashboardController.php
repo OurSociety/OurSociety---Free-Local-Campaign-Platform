@@ -17,6 +17,8 @@ class DashboardController extends AppController
      */
     public function dashboard(): ?Response
     {
+        $this->set('enableVue', false);
+
         $this->refreshIdentity();
 
         $user = $this->getIdentity();

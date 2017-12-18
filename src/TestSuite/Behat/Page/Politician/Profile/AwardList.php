@@ -16,8 +16,8 @@ class AwardList extends Listing
         return $this->getPage(EditVideo::class)->open(['videoId' => $videoId]);
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/representative/profile/awards';
+        return 'politician:profile:awards';
     }
 }

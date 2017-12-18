@@ -41,6 +41,8 @@ final class DateField extends Field
 
         if ($this->format !== null) {
             $date = $date->format($this->format);
+        } else {
+            $date = $date->nice();
         }
 
         return $date;

@@ -7,7 +7,6 @@
 
 use Cake\Core\Configure;
 
-//$this->layout = 'error';
 if (Configure::read('debug') === true) {
     echo $this->element('Error/debug', compact('code', 'message', 'url'));
 

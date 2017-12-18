@@ -3,14 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\Action\Citizen\Notifications;
 
-use OurSociety\Action\IndexAction;
+use OurSociety\Action\Common\Notifications\ListAction as CommonListAction;
 
-class ListAction extends IndexAction
+class ListAction extends CommonListAction
 {
-    protected function getDefaultFinderOptions(): array
-    {
-        return [
-            'user' => $this->getIdentity(),
-        ];
-    }
 }

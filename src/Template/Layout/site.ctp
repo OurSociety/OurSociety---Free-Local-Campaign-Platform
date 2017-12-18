@@ -20,7 +20,7 @@ $this->extend('base');
         <?= $this->Breadcrumbs->render() ?>
     <?php endif ?>
 
-    <div class="<?= $containerClass ?? 'container my-4' ?>">
+    <div class="<?= $containerClass ?? 'container my-4' ?>"<?= $enableVue ?? true ? ' id="app"' : null ?>>
 
         <?= $this->Flash->render(); ?>
 

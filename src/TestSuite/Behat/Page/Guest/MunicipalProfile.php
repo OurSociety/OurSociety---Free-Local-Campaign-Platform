@@ -10,21 +10,6 @@ use OurSociety\TestSuite\Behat\Page\Page;
  */
 class MunicipalProfile extends Page
 {
-    public function hasHeading(string $expectedHeading, ?string $expectedSubheading): bool
-    {
-        $headingElement = $this->find('css', 'h1.os-title');
-        $subheadingElement = $headingElement->find('css', 'small');
-
-        $actualSubheadingText = $subheadingElement->getText();
-        $actualHeadingText = trim(str_replace($actualSubheadingText, '', $headingElement->getText()));
-
-        if ($expectedSubheading !== null && strpos($actualSubheadingText, $expectedSubheading) === false) {
-            return false;
-        }
-
-        return strpos($actualHeadingText, $expectedHeading) !== false;
-    }
-
     public function hasMayor(string $name, string $email): bool
     {
         return false;
@@ -35,8 +20,8 @@ class MunicipalProfile extends Page
         $this->assertHeadingExists('Town information');
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/municipality/{municipality}';
+        return 'municipality';
     }
 }

@@ -16,8 +16,8 @@ class VideoList extends Page
         return $this->getPage(EditVideo::class)->open(['videoId' => $videoId]);
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/representative/profile/videos';
+        return 'politician:profile:videos';
     }
 }

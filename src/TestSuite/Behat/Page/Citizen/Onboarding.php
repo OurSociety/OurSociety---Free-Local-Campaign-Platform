@@ -15,8 +15,8 @@ class Onboarding extends Page
         }
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/tutorial';
+        return 'users:onboarding';
     }
 }

@@ -14,6 +14,7 @@ use CrudUsers\Action\ResetPasswordAction;
 use CrudUsers\Action\VerifyAction;
 use OurSociety\Controller\Action\LoginAction;
 use OurSociety\Controller\Action\RegisterAction;
+use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -23,6 +24,7 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class UsersController extends AppController
 {
+    use ActionAwareTrait;
     use MailerAwareTrait;
 
     const MESSAGE_FORGOT_ERROR = 'Sorry, an account with that email address could not be found.';
@@ -55,7 +57,7 @@ class UsersController extends AppController
             'actions' => [
                 //'index' => Action\IndexAction::class,
                 //'add' => Action\AddAction::class,
-                'edit' => Action\EditAction::class,
+                //'edit' => Action\EditAction::class,
                 //'view' => Action\ViewAction::class,
                 //'delete' => Action\DeleteAction::class,
                 //'export' => Action\ExportAction::class,
@@ -107,7 +109,7 @@ class UsersController extends AppController
     }
 
     /**
-     * @route GET /forgot
+     * @route GET /forgot-password
      * @routeName users:forgot
      */
     public function forgot(): ?Response

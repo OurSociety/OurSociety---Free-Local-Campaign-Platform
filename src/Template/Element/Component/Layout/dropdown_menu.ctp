@@ -8,7 +8,7 @@
    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <?= $dropdownMenu->getTitle() ?>
 </a>
-<div class="dropdown-menu" aria-labelledby="<?= $dropdownMenu->getElementId() ?>" style="min-width: 100%">
+<div class="dropdown-menu" aria-labelledby="<?= $dropdownMenu->getElementId() ?>">
     <?php foreach ($dropdownMenu->getEntries() as $entry): ?>
         <?= $this->Component->render($entry) ?>
     <?php endforeach ?>

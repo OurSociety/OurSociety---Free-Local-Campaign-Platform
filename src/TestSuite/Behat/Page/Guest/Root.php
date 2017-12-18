@@ -7,13 +7,17 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 class Root extends Page
 {
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/';
+        return 'root';
     }
 
     protected function verifyUrl(array $urlParameters = []): void
     {
-        $this->assertRedirect('/join-oursociety');
+        $this->assertHeadingsExist([
+            'Join OurSociety',
+            'Our Purpose',
+            'The OurSociety Experiment',
+        ]);
     }
 }

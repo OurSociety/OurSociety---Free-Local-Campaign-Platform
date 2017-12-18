@@ -26,7 +26,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/election/:election/contest/:contest', ['controller' => 'Contests', 'action' => 'view'], ['_name' => 'election:contest', 'pass' => ['contest']]);
     $routes->connect('/elections', ['controller' => 'Elections'], ['_name' => 'elections']);
     $routes->connect('/embed/:politician', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'politician:embed', 'pass' => ['politician']]);
-    $routes->connect('/forgot', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
+    $routes->connect('/forgot-password', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/sign-out', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
     $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
@@ -51,14 +51,15 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/representative/:politician/claim', ['controller' => 'Politicians', 'action' => 'claim'], ['_name' => 'politician:claim', 'pass' => ['politician']]);
     $routes->connect('/representatives', ['controller' => 'Politicians', 'action' => 'index'], ['_name' => 'politicians']);
     $routes->connect('/representatives/:action', ['controller' => 'Politicians']); // TODO: Implement LookupAction or remove.
-    $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
-    $routes->connect('/profile/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);
+    $routes->connect('/my-account', ['controller' => 'Users', 'action' => 'profile'], ['_name' => 'users:profile']);
+    $routes->connect('/my-account/edit', ['controller' => 'Users', 'action' => 'edit'], ['_name' => 'users:edit']);
     $routes->connect('/reset-password', ['controller' => 'Users', 'action' => 'reset'], ['_name' => 'users:reset']);
     $routes->connect('/search', ['controller' => 'Search', 'action' => 'search'], ['_name' => 'search']);
     $routes->connect('/search/:action/*', ['controller' => 'Search']);
     $routes->connect('/sign-in', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'users:login']);
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
 
+    $routes->redirect('/contact', 'https://www.oursociety.org/contact/', ['_name' => 'contact', 'routeClass' => NamedRedirectRoute::class]);
     $routes->redirect('/docs/onboarding', 'https://drive.google.com/file/d/0BwuM2zudya6ub0Y2Zm5meWdwN00/view');
     $routes->redirect('/guide/matching', 'https://www.oursociety.org/knowledge-base/societal-value-matching-how-does-it-work/', ['_name' => 'guide:matching', 'routeClass' => NamedRedirectRoute::class]);
     $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
@@ -104,6 +105,8 @@ Router::prefix('citizen', ['_namePrefix' => 'citizen:'], function (RouteBuilder 
  */
 Router::prefix('politician', ['path' => '/representative', '_namePrefix' => 'politician:'], function (RouteBuilder $routes): void {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'dashboard'], ['_name' => 'dashboard']);
+    $routes->connect('/notifications', ['controller' => 'Notifications', 'action' => 'list'], ['_name' => 'notifications']);
+    $routes->connect('/notification/:notification', ['controller' => 'Notifications', 'action' => 'show'], ['_name' => 'notification', 'pass' => ['notification']]);
     $routes->connect('/profile', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'profile']);
     $routes->connect('/profile/edit', ['controller' => 'Politicians', 'action' => 'edit'], ['_name' => 'profile:edit']);
     $routes->connect('/profile/embed', ['controller' => 'Politicians', 'action' => 'embed'], ['_name' => 'profile:embed']);
@@ -121,6 +124,7 @@ Router::prefix('politician', ['path' => '/representative', '_namePrefix' => 'pol
         $routes->connect('/qualifications', ['controller' => 'Qualifications', 'action' => 'list'], ['_name' => 'qualifications']);
         $routes->connect('/qualification/:qualification', ['controller' => 'Qualifications', 'action' => 'edit'], ['_name' => 'qualification', 'pass' => ['qualification']]);
         $routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
+        $routes->connect('/video/:video', ['controller' => 'Videos', 'action' => 'edit'], ['_name' => 'video', 'pass' => ['video']]);
 
         $routes->fallbacks(DashedRoute::class);
     });

@@ -7,9 +7,9 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 class Home extends Page
 {
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/home';
+        return 'home';
     }
 
     protected function verifyUrl(array $urlParameters = []): void

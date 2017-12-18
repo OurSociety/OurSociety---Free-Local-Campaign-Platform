@@ -4,8 +4,7 @@
  * @var \OurSociety\Model\Entity\User $user The user.
  */
 
-$this->Breadcrumbs->add(__('Dashboard'), $user->getDashboardRoute());
-$this->Breadcrumbs->add(__('Profile'), $user->getProfileRoute());
+$this->Breadcrumbs->add(__('My Account'));
 
 $actions = [
     __('Edit details') => ['_name' => 'users:edit'],

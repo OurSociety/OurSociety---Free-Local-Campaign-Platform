@@ -502,7 +502,7 @@ class User extends AppEntity implements SearchableEntity
 
     public function getNotificationsRoute(): array
     {
-        return ['_name' => 'citizen:notifications'];
+        return ['_name' => sprintf('%s:notifications', $this->role)];
     }
 
     protected function _getAge(): ?int

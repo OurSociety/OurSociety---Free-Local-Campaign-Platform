@@ -71,10 +71,20 @@ class ElectoralDistrict extends AppEntity implements SearchableEntity
     public function getRoute(): array
     {
         if ($this->district_type->isMunicipality()) {
-            return ['_name' => 'municipality', 'municipality' => $this->slug];
+            return $this->getMunicipalityRoute();
         }
 
+        return $this->getElectoralDistrictRoute();
+    }
+
+    public function getElectoralDistrictRoute(): array
+    {
         return ['_name' => 'district', 'district' => $this->slug];
+    }
+
+    public function getMunicipalityRoute(): array
+    {
+        return ['_name' => 'municipality', 'municipality' => $this->slug];
     }
 
     public function hasDescription(): bool
@@ -159,7 +169,17 @@ JAVASCRIPT;
 
     protected function _getDisplayName(): string
     {
-        return $this->short_name ?: preg_replace('/ (borough|county|district|township)$/i', '', $this->name);
+        return $this->short_name ?: preg_replace(
+            [
+                '/ (borough|county|district|township)$/i',
+                '/( city){2}$/i',
+            ],
+            [
+                '',
+                '$1',
+            ],
+            $this->name
+        );
     }
 
     protected function _getLabel(): string

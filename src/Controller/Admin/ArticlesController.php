@@ -29,41 +29,6 @@ class ArticlesController extends CrudController
         return $this->Crud->execute();
     }
 
-    public function index(): ?Response
-    {
-        $this->Crud->action()->setConfig([
-            'scaffold' => [
-                'fields' => [
-                    'politician_id',
-                    'name' => ['Article Title'],
-                    'approved',
-                    'published',
-                ],
-                'actions' => ['index', 'view', 'add', 'edit', 'delete'],
-                'breadcrumbs' => [
-                    new Breadcrumb('Politicians', '/admin/users?role=politician'),
-                    new Breadcrumb('Articles'),
-                ],
-            ],
-        ]);
-
-        return $this->Crud->execute();
-    }
-
-    public function view(): ?Response
-    {
-        $this->Crud->action()->setConfig([
-            'scaffold' => [
-                'breadcrumbs' => [
-                    new Breadcrumb('Politicians', '/admin/users?role=politician'),
-                    new Breadcrumb('Articles', '/admin/politician-articles'),
-                ],
-            ],
-        ]);
-
-        return $this->Crud->execute();
-    }
-
     public function add(): ?Response
     {
         return $this->_form();

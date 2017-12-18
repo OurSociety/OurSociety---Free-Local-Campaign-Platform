@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace OurSociety\Model\Entity;
 
+use OurSociety\Model\Table\Finder\ElectoralDistricts\IsMunicipalityFinder;
+
 /**
  * DistrictType Entity
  *
@@ -18,7 +20,7 @@ class DistrictType extends AppEntity
 {
     public function isMunicipality()
     {
-        return $this->id_vip === 'municipality';
+        return $this->id_vip === IsMunicipalityFinder::ID_VIP_MUNICIPALITY;
     }
 
     public function getIcon(): string

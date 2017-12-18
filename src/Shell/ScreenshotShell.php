@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace OurSociety\Shell;
 
 use Cake\Console\ConsoleOptionParser;
+use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Imagick;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
@@ -27,82 +29,82 @@ class ScreenshotShell extends AppShell
     private const PAGES = [
         [
             'name' => 'landing',
-            'url' => '/',
+            'url' => ['_name' => 'root'],
             'auth' => false,
         ],
         [
             'name' => 'home',
-            'url' => '/home',
+            'url' => ['_name' => 'home'],
             'auth' => false,
         ],
         [
             'name' => 'user-forgot-password',
-            'url' => '/forgot',
+            'url' => ['_name' => 'users:forgot'],
             'auth' => false,
         ],
         [
             'name' => 'user-login',
-            'url' => '/sign-in',
+            'url' => ['_name' => 'users:login'],
             'auth' => false,
         ],
         [
             'name' => 'user-logout',
-            'url' => '/sign-out',
+            'url' => ['_name' => 'users:logout'],
             'auth' => false,
         ],
         [
             'name' => 'user-profile-edit',
-            'url' => '/profile/edit',
+            'url' => ['_name' => 'citizen:profile:edit'],
             'auth' => true,
         ],
         [
             'name' => 'user-profile',
-            'url' => '/profile',
+            'url' => ['_name' => 'citizen:profile'],
             'auth' => true,
         ],
         [
             'name' => 'user-register',
-            'url' => '/join-oursociety',
+            'url' => ['_name' => 'users:register'],
             'auth' => false,
         ],
         [
             'name' => 'user-reset-password',
-            'url' => '/reset-password',
+            'url' => ['_name' => 'users:reset'],
             'auth' => false,
         ],
         [
             'name' => 'user-onboarding',
-            'url' => '/onboarding',
+            'url' => ['_name' => 'users:onboarding'],
             'auth' => true,
         ],
         [
             'name' => 'citizen-dashboard',
-            'url' => '/citizen',
+            'url' => ['_name' => 'citizen:dashboard'],
             'auth' => true,
         ],
         [
             'name' => 'citizen-questions',
-            'url' => '/citizen/questions',
+            'url' => ['_name' => 'citizen:questions'],
             'auth' => true,
         ],
         [
             'name' => 'politician-dashboard',
-            'url' => '/politician',
+            'url' => ['_name' => 'politician:dashboard'],
             'auth' => true,
         ],
         [
             'name' => 'politician-questions',
-            'url' => '/politician/questions',
+            'url' => ['_name' => 'politician:questions'],
             'auth' => true,
         ],
         [
             'name' => 'admin-dashboard',
-            'url' => '/admin',
+            'url' => ['_name' => 'admin:dashboard'],
             'auth' => true,
         ],
         [
             'name' => 'admin-questions',
-            'url' => '/admin/questions',
+            'url' => ['_name' => 'admin:questions'],
             'auth' => true,
         ],
     ];
@@ -143,7 +145,8 @@ class ScreenshotShell extends AppShell
 
         foreach (self::BREAKPOINTS as $breakpointName => $breakpointWidth) {
             foreach (self::PAGES as $page) {
-                $url = sprintf('http://' . env('APP_DOMAIN') . '/%s', ltrim($page['url'], '/'));
+                Configure::write('App.fullBaseUrl', sprintf('http://%s', env('APP_DOMAIN')));
+                $url = Router::url($page['url'], true);
                 $filename = sprintf(TMP . 'screenshots/%s/%s.png', $breakpointName, $page['name']);
                 //$filename = sprintf('%s/Google Drive/Clients/OurSociety/Screenshots/%s.png', env('HOME'), $filename);
                 new Folder(dirname($filename), true);

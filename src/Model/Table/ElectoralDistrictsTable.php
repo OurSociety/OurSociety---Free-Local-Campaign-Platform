@@ -82,7 +82,8 @@ class ElectoralDistrictsTable extends AppTable
         return $this->Articles->find('forCitizen')
             ->matching('ElectoralDistricts', function (Query $query) use ($slug) {
                 return $query->find('slugged', ['slug' => $slug]);
-            });
+            })
+            ->orderDesc($this->aliasField('created'));
     }
 
     protected function getDefaultOrder(): array

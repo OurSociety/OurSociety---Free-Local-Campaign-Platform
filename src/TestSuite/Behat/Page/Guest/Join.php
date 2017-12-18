@@ -15,8 +15,8 @@ class Join extends Page
         $this->pressButton('Join OurSociety');
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/join-oursociety';
+        return 'users:register';
     }
 }

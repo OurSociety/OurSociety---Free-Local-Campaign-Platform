@@ -1,4 +1,7 @@
 <?php
+
+use OurSociety\View\Component\Layout\ProgressBar;
+
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $identity
@@ -6,26 +9,33 @@
  * @var \OurSociety\Model\Entity\ValueMatch $politicianMatch
  */
 
-use Cake\I18n\Date;
-
 $levelNumber = $identity->level ?? 1;
 $percentage = round(($identity->answer_count / $levelQuestionTotal) * 100);
 $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
+
+$levelBadgeImage = $this->Html->image($identity->level_badge_url, [
+    'class' => ['d-flex', 'mr-3'],
+    'alt' => __('Badge for level {name}', ['name' => $identity->level_name]),
+]);
+$answerQuestionsButton = $this->Html->link(__('Answer questions!'), ['_name' => 'citizen:questions'], [
+    'class' => ['btn', 'btn-primary', 'btn-block', $ceilingReached ? 'disabled' : null],
+]);
+$reviewAnswersButton = $this->Html->link(__('Review Answers'), ['_name' => 'citizen:answers'], [
+    'class' => ['btn', 'btn-link', 'btn-block', $identity->answer_count === 0 ? 'disabled' : null],
+]);
+$valueMatchCard = $politicianMatch->renderCardElement($this);
 ?>
 
 <div class="card mb-3">
     <h4 class="card-header">
         <?= __('My Societal Values') ?>
     </h4>
-    <div class="card-body pb-0 pb-sm-3">
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-lg-4">
 
                 <div class="media">
-                    <?= $this->Html->image($identity->level_badge_url, [
-                        'class' => ['d-flex', 'mr-3'],
-                        'alt' => __('Badge for level {name}', ['name' => $identity->level_name]),
-                    ]) ?>
+                    <?= $levelBadgeImage ?>
 
                     <div class="media-body">
                         <h5 class="mt-0"><?= $identity->level_name ?></h5>
@@ -36,6 +46,8 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
             </div>
             <div class="col">
 
+                <?= $this->Component->render(new ProgressBar($percentage)) ?>
+
                 <p>
                     <?= __('You have answered {answer_count} questions.', [
                         'answer_count' => $identity->answer_count,
@@ -43,70 +55,28 @@ $ceilingReached = $levelNumber === 10 && $percentage === 100.0;
                     <?php if ($ceilingReached === true): ?>
                         <?= __('You have answered the first level of questions. Come back soon for more!') ?>
                     <?php else: ?>
-                        <?= __('Keep answering to improve the accuracy of your matches!') ?>
+                        <?= __('Keep answering to improve the accuracy of your value matches!') ?>
                     <?php endif ?>
                 </p>
 
-                <div class="progress" style="height: 25px;">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<?= $percentage ?>"
-                         aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage ?>%;">
-                        <?= $percentage ?>%
+                <div class="row">
+                    <div class="col-md order-md-11">
+                        <?= $answerQuestionsButton ?>
+                    </div>
+                    <div class="col-md order-md-1">
+                        <?= $reviewAnswersButton ?>
                     </div>
                 </div>
 
+                <?php /*
                 <div class="row mt-3">
                     <div class="col-md">
-                        <?php if ($politicianMatch !== null && Date::now()->year >= 2018): ?>
-                            <?php
-                            $politician = $politicianMatch->politician;
-                            $profileLink = $this->Html->link($politician->name, $politician->getPublicProfileRoute());
-                            ?>
-                            <div class="media">
-                                <div class="media-left pr-2">
-                                    <?= $politician->renderProfilePicture($this, [
-                                        'class' => 'img-thumbnail',
-                                        'style' => 'max-height: 100px',
-                                    ]) ?>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">
-                                        <?= $profileLink ?>
-                                    </h4>
-                                    <p>
-                                        <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
-                                            'percentage_match' => $politicianMatch->true_match_percentage,
-                                            'politician_name' => $profileLink,
-                                        ]) ?>
-                                    </p>
-                                </div>
-                            </div>
-                        <?php endif ?>
+                        <?= $valueMatchCard ?>
                     </div>
                     <div class="col-md">
-                        <div class="row">
-                            <div class="col order-12-sm">
-                                <?= $this->Html->link(__('Answer questions!'), ['_name' => 'citizen:questions'], [
-                                    'class' => [
-                                        'btn',
-                                        'btn-primary',
-                                        'btn-block',
-                                        $ceilingReached ? 'disabled' : null,
-                                    ],
-                                ]) ?>
-                            </div>
-                            <div class="col">
-                                <?= $this->Html->link(__('Review Answers'), ['_name' => 'citizen:answers'], [
-                                    'class' => [
-                                        'btn',
-                                        'btn-link',
-                                        'btn-block',
-                                        $identity->answer_count === 0 ? 'disabled' : null,
-                                    ],
-                                ]) ?>
-                            </div>
-                        </div>
                     </div>
                 </div>
+                */ ?>
 
             </div>
         </div>

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Page\Guest;
 
+use Behat\Mink\Exception\ExpectationException;
 use OurSociety\TestSuite\Behat\Page\Page;
 
 class SignIn extends Page
@@ -60,7 +61,11 @@ class SignIn extends Page
 
     public function doNotKeepMeSignedIn(): void
     {
-        $this->find('css', '.custom-checkbox')->click();
+        if ($this->isLoadedUsingBrowserDriver()) {
+            $this->findByCss('.custom-checkbox')->click();
+        } else {
+            $this->uncheckField('remember_me');
+        }
     }
 
     public function isRememberMeCookieSet(): void
@@ -68,12 +73,12 @@ class SignIn extends Page
         $cookie = $this->getDriver()->getCookie('remember_me');
 
         if ($cookie === null) {
-            throw new \Exception('Expected remember me cookie to be set.');
+            throw new ExpectationException('Expected remember me cookie to be set.', $this->getDriver());
         }
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/sign-in';
+        return 'users:login';
     }
 }

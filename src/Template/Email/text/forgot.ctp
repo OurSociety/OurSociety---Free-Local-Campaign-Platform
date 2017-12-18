@@ -11,7 +11,7 @@
 <?= __('Your verification code is: {token}', ['token' => $token]) ?>
 
 
-<?= __('Alternatively, click or copy the following address into your web browser:') ?>
+<?= __('Alternatively, click or copy the following address into your web browser') ?>:
 
 
 <?= $this->Url->build($url, ['escape' => false]) ?>

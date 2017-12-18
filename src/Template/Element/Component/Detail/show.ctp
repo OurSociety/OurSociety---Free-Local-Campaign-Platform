@@ -30,12 +30,22 @@
             </thead>
             <tbody>
             <?php foreach ($show->getFields() as $field): ?>
+                <?php
+                $field = $show->buildField($field);
+                ?>
                 <tr>
                     <th scope="row">
                         <?= $field->getTitle() ?>
+                        <?php if ($field->hasDescription()): ?>
+                            <?= $this->Html->icon('info-circle', [
+                                'data-placement' => 'top',
+                                'data-toggle' => 'tooltip',
+                                'title' => $field->getDescription(),
+                            ]) ?>
+                        <?php endif ?>
                     </th>
                     <td>
-                        <?= $this->Component->render($show->buildField($field)) ?>
+                        <?= $this->Component->render($field) ?>
                     </td>
                 </tr>
             <?php endforeach ?>

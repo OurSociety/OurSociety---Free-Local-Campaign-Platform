@@ -7,7 +7,6 @@ use BootstrapUI\View\Helper\OptionsAwareTrait;
 use Cake\Log\Log;
 use Cake\Routing\Exception\MissingRouteException;
 use Cake\Utility\Inflector;
-use Kminek\EmailObfuscator;
 use LilHermit\Bootstrap4\View\Helper as Bootstrap4;
 use OurSociety\Model\Entity\User;
 
@@ -233,6 +232,6 @@ class HtmlHelper extends Bootstrap4\HtmlHelper
      */
     public function email(string $email, string $text = null, array $options = null): string
     {
-        return EmailObfuscator::obfuscate($email, $text, $options ?? []);
+        return $this->tag('span', strrev($email), ['style' => 'unicode-bidi: bidi-override; direction: rtl']);
     }
 }

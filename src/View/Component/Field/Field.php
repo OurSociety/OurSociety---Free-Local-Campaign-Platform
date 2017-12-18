@@ -81,9 +81,19 @@ abstract class Field extends Component
         return ($this->getOptions()['title'] ?? null) !== null;
     }
 
+    public function hasDescription(): bool
+    {
+        return strlen($this->getRawDescription() ?? '') > 0;
+    }
+
     public function getTitle(): string
     {
         return $this->getOptions()['title'] ?? Inflector::humanize($this->name);
+    }
+
+    public function getDescription(): string
+    {
+        return $this->getRawDescription() ?? '';
     }
 
     public function renderTableCell(RecordInterface $record, AppView $view): string
@@ -105,6 +115,11 @@ abstract class Field extends Component
         return $this->setConfig('title', $title);
     }
 
+    public function setDescription(string $description): self
+    {
+        return $this->setConfig('description', $description);
+    }
+
     protected function getValue()
     {
         $getValue = function (EntityInterface $entity, array $path) use (&$getValue) {
@@ -123,5 +138,15 @@ abstract class Field extends Component
     private function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    private function getRawDescription(): ?string
+    {
+        $column = $this->getRecord()->getModelSchema()->getColumn($this->getName());
+        if ($column !== null && isset($column['comment'])) {
+            return $column['comment'];
+        }
+
+        return $this->getConfig('description') ?? null;
     }
 }

@@ -4,35 +4,19 @@ declare(strict_types=1);
 namespace OurSociety\Controller;
 
 use Cake\Event\Event;
-use Cake\ORM\Query;
+use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Entity;
 use OurSociety\Model\Table\ArticlesTable;
-use OurSociety\Model\Table\EventsTable;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * EventsController.
+ * Events controller.
  *
- * @property EventsTable $Events
+ * @see \OurSociety\Action\Events\IndexAction
  */
 class EventsController extends CrudController
 {
-    public function index($municipalitySlug): ?Response
-    {
-        $this->set([
-            'municipality' => $this->Events->ElectoralDistricts->find('slugged', ['slug' => $municipalitySlug])->firstOrFail(),
-        ]);
-
-        $this->Crud->on('beforePaginate', function (Event $event) use ($municipalitySlug) {
-            /** @var Query $query */
-            $query = $event->getSubject()->query;
-            $query->matching('ElectoralDistricts', function (Query $query) use ($municipalitySlug) {
-                return $query->where(['ElectoralDistricts.slug' => $municipalitySlug]);
-            })->orderDesc('Events.start');
-        });
-
-        return $this->Crud->execute();
-    }
+    use ActionAwareTrait;
 
     public function view(): ?Response
     {

@@ -141,6 +141,30 @@ class Article extends AppEntity
         return $authorId === $user->id;
     }
 
+    public function renderPublishedDate(AppView $view): string
+    {
+        $published = $this->_properties['published'];
+
+        if ($published === null) {
+            return __('Unpublished');
+        }
+
+        return $view->Time->niceLong($published);
+    }
+
+    public function belongsTo(User $identity): bool
+    {
+        $ownerId = $this->_properties['politician_id'] ?? null;
+
+        if ($ownerId === null) {
+            return false;
+        }
+
+        // TODO: Should also return true if an article is written by another representative in the same municipality?
+
+        return $ownerId === $identity->id;
+    }
+
     /**
      * Read time.
      *

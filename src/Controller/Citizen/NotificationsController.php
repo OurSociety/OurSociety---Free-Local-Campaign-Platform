@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Citizen;
 
-class NotificationsController extends \OurSociety\Controller\NotificationsController
+/**
+ * Citizen notifications controller.
+ */
+class NotificationsController extends \OurSociety\Controller\Common\NotificationsController
 {
 }

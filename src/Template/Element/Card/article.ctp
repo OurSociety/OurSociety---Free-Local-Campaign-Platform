@@ -5,7 +5,7 @@
  */
 ?>
 
-<div class="card<?= $article->is_example ? ' example' : null ?>">
+<div class="card<?= $article->is_example ? ' example' : null ?>" style="overflow: hidden">
 
     <?= $article->renderAspectIcon($this, ['style' => 'opacity: .05', 'height' => '275']) ?>
 
