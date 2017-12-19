@@ -65,7 +65,7 @@ $answerError = $getError($question, 'answer');
             <div <?= $importanceError !== null ? ' class="has-error"' : null ?>>
                 <?= $importanceError ?>
                 <?= $this->Form->control($getFieldName('importance', $index), [
-                    'default' => $index ? null : $answer->importance,
+                    'default' => $answer ? $answer->importance : null,
                     'inline' => true,
                     'required' => false,
                     'label' => false,
@@ -89,7 +89,7 @@ $answerError = $getError($question, 'answer');
             <div <?= $answerError !== null ? ' class="has-error"' : null ?>>
                 <?= $answerError ?>
                 <?= $this->Form->control($getFieldName('answer', $index), [
-                    'default' => $index ? null : $answer->answer,
+                    'default' => $answer ? $answer->answer : null,
                     'required' => false,
                     'label' => false,
                     'type' => 'radio',

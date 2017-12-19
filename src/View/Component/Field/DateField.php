@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Component\Field;
 
+use Cake\I18n\Date;
 use DateTimeInterface;
 
 final class DateField extends Field
@@ -33,17 +34,16 @@ final class DateField extends Field
 
     public function getFormattedDate(): string
     {
+        /** @var Date $date */
         $date = $this->getDate();
 
         if ($date === null) {
             return $this->getEmptyPlaceholder();
         }
 
-        if ($this->format !== null) {
-            $date = $date->format($this->format);
-        }
-
-        return $date;
+        return $this->format !== null
+            ? $date->format($this->format)
+            : $date->nice();
     }
 
     public function setFormat(string $format): self
