@@ -13,7 +13,7 @@ if ($isExample):
 endif;
 ?>
 
-<h3>
+<h3 id="elected_officials">
     <?= __('Elected Officials') ?>
 </h3>
 

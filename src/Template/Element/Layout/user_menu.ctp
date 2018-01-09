@@ -27,8 +27,7 @@ $isAdminImpersonatingUser = $this->request->getSession()->read(ImpersonateUserAc
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuToggle"
      style="min-width: 100%">
-    <p class="dropdown-item mb-0"><?= $identity->name ?></p>
-    <div class="dropdown-divider"></div>
+    <p class="dropdown-header"><?= $identity->name ?></p>
     <?php if ($identity->isAdmin()): ?>
         <?= $this->Html->link(__('Admin'), ['_name' => 'admin:dashboard'], ['class' => ['dropdown-item'], 'icon' => 'lock']) ?>
         <div class="dropdown-divider"></div>

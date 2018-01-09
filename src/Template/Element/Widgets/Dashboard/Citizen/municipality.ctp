@@ -15,7 +15,8 @@
             </p>
 
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col"></div>
+                <div class="col-md-6 col-lg-4">
                     <?= $this->Html->link(
                         __('Select electoral district'),
                         ['_name' => 'users:onboarding'],
@@ -27,7 +28,8 @@
             <?= $this->element('Widgets/MunicipalProfile/stats', ['municipality' => $identity->electoral_district]) ?>
 
             <div class="row mt-3">
-                <div class="col-sm-6">
+                <div class="col"></div>
+                <div class="col-md-6 col-lg-4">
                     <?= $this->Html->link(
                         __('Go to municipal profile'),
                         ['_name' => 'municipality:default'],

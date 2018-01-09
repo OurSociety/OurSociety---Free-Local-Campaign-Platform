@@ -7,6 +7,7 @@ use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Cake\View\CellTrait;
+use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
 use OurSociety\Test\Fixture\UsersFixture;
@@ -19,6 +20,7 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class PoliticiansController extends CrudController
 {
+    use ActionAwareTrait;
     use CellTrait;
 
     /**

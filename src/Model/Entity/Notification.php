@@ -55,7 +55,7 @@ class Notification extends AppEntity
     public function renderLink(AppView $view, array $options = null): string
     {
         return $view->Html->link($this->title, [
-            '_name' => 'citizen:notification',
+            '_name' => sprintf('%s:notification', $view->request->getParam('prefix')),
             'notification' => $this->id,
         ], $options);
     }

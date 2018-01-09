@@ -16,4 +16,8 @@ namespace OurSociety\Model\Entity;
  */
 class VoteVariation extends AppEntity
 {
+    public function getIcon(): string
+    {
+        return 'ticket';
+    }
 }

@@ -7,29 +7,18 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 trait CurrentPageAwareTrait
 {
-    use CommonContextAwareTrait;
-
     /**
      * @var Page
      */
-    public $page;
+    protected $currentPage;
 
-    protected function getPagePropertyName(string $page): string
+    protected function setCurrentPage(string $page): void
     {
-        return lcfirst(str_replace(' ', '', ucwords($page)));
-    }
-
-    protected function setCurrentPage(string $page): Page
-    {
-        $pageObject = $this->{$this->getPagePropertyName($page)};
-
-        $this->getCommonContext()->page = $pageObject;
-
-        return $pageObject;
+        $this->currentPage = $this->{sprintf('get%sPage', str_replace(' ', '', ucwords($page)))}();
     }
 
     protected function getCurrentPage(): Page
     {
-        return $this->getCommonContext()->page;
+        return $this->currentPage;
     }
 }

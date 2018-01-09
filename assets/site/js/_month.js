@@ -12,7 +12,7 @@
     lang = document.documentElement.lang || navigator.language,
     DEFAULT_SPAN = 5;
 
-  if (monthInputs[0].type === 'month') {
+  if (monthInputs.length === 0 || monthInputs[0].type === 'month') {
     // browser supports month input; no need for polyfill
     return true;
   }

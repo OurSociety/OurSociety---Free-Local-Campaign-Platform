@@ -66,34 +66,22 @@ default:
             paths:
                 - %paths.base%/features/guest
             contexts:
-                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
                 - OurSociety\TestSuite\Behat\Context\Page\GuestContext
-                - OurSociety\TestSuite\Behat\Context\System\AuthContext
         citizen:
             paths:
                 - %paths.base%/features/citizen
             contexts:
-                - Behat\MinkExtension\Context\MinkContext
-                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
                 - OurSociety\TestSuite\Behat\Context\Page\CitizenContext
-                - OurSociety\TestSuite\Behat\Context\System\AuthContext
         politician:
             paths:
                 - %paths.base%/features/politician
             contexts:
-                - OurSociety\TestSuite\Behat\Context\BrowserContext
-                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
                 - OurSociety\TestSuite\Behat\Context\Page\PoliticianContext
-                - OurSociety\TestSuite\Behat\Context\System\AuthContext
-                - Behatch\Context\DebugContext
         admin:
             paths:
                 - %paths.base%/features/admin
             contexts:
-                - Behat\MinkExtension\Context\MinkContext
-                - OurSociety\TestSuite\Behat\Context\Page\CommonContext
                 - OurSociety\TestSuite\Behat\Context\Page\AdminContext
-                - OurSociety\TestSuite\Behat\Context\System\AuthContext
 debug:
     extensions:
         Behat\MinkExtension:

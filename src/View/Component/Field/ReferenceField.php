@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 namespace OurSociety\View\Component\Field;
 
+use Cake\Log\LogTrait;
 use OurSociety\Model\Entity\RecordInterface;
+use Psr\Log\LogLevel;
 
 final class ReferenceField extends Field
 {
+    use LogTrait;
+
+    public function hasReference(): bool
+    {
+        try {
+            $this->getReference();
+
+            return true;
+        } catch (\TypeError $typeError) {
+            $this->log('Ignoring missing reference in reference field.', LogLevel::DEBUG, ['exception' => $typeError]);
+
+            return false;
+        }
+    }
+
     /**
      * Get reference title.
      *

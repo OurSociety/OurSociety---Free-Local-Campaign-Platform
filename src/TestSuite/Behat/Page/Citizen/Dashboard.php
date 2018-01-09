@@ -7,8 +7,8 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 class Dashboard extends Page
 {
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/citizen';
+        return 'citizen:dashboard';
     }
 }

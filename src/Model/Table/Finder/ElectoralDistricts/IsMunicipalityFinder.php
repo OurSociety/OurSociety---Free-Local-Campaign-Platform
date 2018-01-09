@@ -8,11 +8,13 @@ use OurSociety\Model\Table\Finder\Finder;
 
 class IsMunicipalityFinder extends Finder
 {
+    public const ID_VIP_MUNICIPALITY = 'municipality';
+
     public function __invoke(Query $query, array $options = []): Query
     {
         return $query->matching('DistrictTypes', function (Query $query) {
             return $query->where([
-                $this->aliasField($query, 'id_vip') => 'municipality',
+                $this->aliasField($query, 'id_vip') => self::ID_VIP_MUNICIPALITY,
             ]);
         });
     }

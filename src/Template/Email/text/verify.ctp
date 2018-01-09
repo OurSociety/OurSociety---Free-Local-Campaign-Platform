@@ -9,4 +9,5 @@
 
 <?= __('Please copy the following address into your web browser') ?>:
 
-<?= $this->Url->build(['_full' => true, '_name' => 'users:verify', $token]) ?>
+
+<?= $this->Url->build($url, ['escape' => false]) ?>

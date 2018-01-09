@@ -16,11 +16,11 @@
 
         <h3><?= __('{percentage}% Value Match', ['percentage' => $match]) ?></h3>
 
-        <div class="row text-left">
-            <div class="col-auto mx-auto">
+        <div class="row justify-content-md-center text-left">
+            <div class="col-auto">
                 <?= $this->cell('Profile/ValueMatch::topics', ['Most Similar', $similarities]) ?>
             </div>
-            <div class="col-auto mx-auto">
+            <div class="col-auto">
                 <?= $this->cell('Profile/ValueMatch::topics', ['Least Similar', $differences]) ?>
             </div>
         </div>

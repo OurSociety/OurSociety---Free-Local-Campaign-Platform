@@ -145,6 +145,14 @@ class FormHelper extends Bootstrap4\FormHelper
     //        return parent::_inputLabel($fieldName, $label, $options);
     //    }
 
+    public function submit($caption = null, array $options = null): string
+    {
+        $options = $options ?? [];
+        $options += ['class' => ['btn-secondary']];
+
+        return parent::submit($caption, $options);
+    }
+
     protected function _inputContainerTemplate($options): string
     {
         // TODO: Undefined index: help [ROOT/vendor/lilhermit/cakephp-plugin-bootstrap4/src/View/Helper/FormHelper.php, line 658]

@@ -20,8 +20,8 @@ class MyProfile extends Profile
         ]);
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/representative/profile';
+        return 'politician:profile';
     }
 }

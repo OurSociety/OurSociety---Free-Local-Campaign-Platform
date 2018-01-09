@@ -43,8 +43,8 @@ class EditVideo extends Page
         $this->fillField(self::LABEL_FIELD_YOUTUBE_VIDEO_ID, $youtubeVideoId);
     }
 
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/representative/profile/videos/edit/{videoId}';
+        return 'politician:profile:video';
     }
 }

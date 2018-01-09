@@ -1,4 +1,7 @@
 <?php
+
+use OurSociety\View\Component\Layout\ProgressBar;
+
 /**
  * @var \OurSociety\View\AppView $this
  * @var \OurSociety\Model\Entity\User $identity
@@ -28,12 +31,7 @@ $isAllAnswered = $identity->answer_count === $questionCount;
             <?php endif ?>
         </p>
 
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<?= $percentage ?>"
-                 aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage ?>%;">
-                <?= $percentage ?>%
-            </div>
-        </div>
+        <?= $this->Component->render(new ProgressBar($percentage)) ?>
 
         <div class="row mt-3">
             <div class="col">

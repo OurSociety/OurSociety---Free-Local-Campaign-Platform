@@ -5,6 +5,8 @@ namespace OurSociety\TestSuite\Behat\Page;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\ElementInterface;
+use Cake\Core\Configure;
+use Cake\Routing\Router;
 use OurSociety\TestSuite\Behat\Page\Element\Layout\{
     Flash, Navbar, NotificationMenu, UserMenu
 };
@@ -14,7 +16,7 @@ use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\{
 };
 use SensioLabs\Behat\PageObjectExtension\PageObject\Page as BasePage;
 
-class Page extends BasePage
+abstract class Page extends BasePage
 {
     use NodeElementAwareTrait;
 
@@ -54,25 +56,53 @@ class Page extends BasePage
         return $this->getDriver() instanceof Selenium2Driver;
     }
 
+    public function hasHeading(string $expectedHeading, ?string $expectedSubheading = null): bool
+    {
+        if ($expectedSubheading !== null) {
+            $headingElement = $this->find('css', 'h1.os-title');
+            $subheadingElement = $headingElement->find('css', 'small');
+
+            $actualSubheadingText = $subheadingElement->getText();
+            $actualHeadingText = trim(str_replace($actualSubheadingText, '', $headingElement->getText()));
+
+            if ($expectedSubheading !== null && strpos($actualSubheadingText, $expectedSubheading) === false) {
+                return false;
+            }
+
+            return strpos($actualHeadingText, $expectedHeading) !== false;
+        }
+
+        foreach ($this->findAll('css', 'h1, h2, h3, h4, h5, h6') as $element) {
+            /** @var ElementInterface $element */
+            if (trim($element->getText()) === $expectedHeading) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected function assertFieldExists($locator): void
     {
         if (!$this->hasField($locator)) {
-            throw new ElementNotFoundException(sprintf('%s page is missing "%s" field', $this->path, $locator));
+            throw new ElementNotFoundException(
+                sprintf('%s page is missing "%s" field', $this->path, $locator)
+            );
         }
     }
 
     protected function assertFieldValue($locator, $expected): void
     {
         $field = $this->findField($locator);
-        $value = $field->getValue();
+        if ($field === null) {
+            $this->assertFieldExists($locator);
+        }
 
+        $value = $field->getValue();
         if ($value !== $expected) {
-            throw new ElementNotFoundException(sprintf(
-                '%s field has incorrect value. Expected "%s", got "%s"',
-                $field,
-                $expected,
-                $value
-            ));
+            throw new ElementNotFoundException(
+                sprintf('%s field has incorrect value. Expected "%s", got "%s"', $field, $expected, $value)
+            );
         }
     }
 
@@ -92,25 +122,24 @@ class Page extends BasePage
             }
         }
 
-        throw new ElementNotFoundException(sprintf('Breadcrumb "%s" not found.', $text));
+        throw new ElementNotFoundException(
+            sprintf('Breadcrumb "%s" not found.', $text)
+        );
     }
 
-    protected function assertHeadingExists($text): void
+    protected function assertHeadingExists($heading): void
     {
-        foreach ($this->findAll('css', 'h1, h2, h3, h4, h5, h6') as $element) {
-            /** @var ElementInterface $element */
-            if (trim($element->getText()) === $text) {
-                return;
-            }
+        if ($this->hasHeading($heading) === false) {
+            throw new ElementNotFoundException(
+                sprintf('Heading "%s" not found.', $heading)
+            );
         }
-
-        throw new ElementNotFoundException(sprintf('Header "%s" not found.', $text));
     }
 
-    protected function assertHeadingsExist(array $headers): void
+    protected function assertHeadingsExist(array $headings): void
     {
-        foreach ($headers as $header) {
-            $this->assertHeadingExists($header);
+        foreach ($headings as $heading) {
+            $this->assertHeadingExists($heading);
         }
     }
 
@@ -120,9 +149,20 @@ class Page extends BasePage
         $actual = $this->getDriver()->getCurrentUrl();
 
         if ($actual !== $expected) {
-            throw new UnexpectedPageException(sprintf('Expected to be redirected to "%s" but found "%s" instead', $expected, $actual));
+            throw new UnexpectedPageException(
+                sprintf('Expected to be redirected to "%s" but found "%s" instead', $expected, $actual)
+            );
         }
     }
+
+    protected function getUrl(array $urlParameters = null): string
+    {
+        Configure::write('App.fullBaseUrl', $this->getParameter('base_url'));
+
+        return Router::url(['_name' => $this->getRouteName()] + ($urlParameters ?? []), true);
+    }
+
+    abstract protected function getRouteName(): string;
 
     private function getUserMenu(): UserMenu
     {

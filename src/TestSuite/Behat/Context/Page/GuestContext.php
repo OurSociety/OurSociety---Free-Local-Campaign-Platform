@@ -6,74 +6,27 @@ namespace OurSociety\TestSuite\Behat\Context\Page;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use OurSociety\TestSuite\Behat\Context\PageContext;
-use OurSociety\TestSuite\Behat\Context\Traits;
-use OurSociety\TestSuite\Behat\Page;
+use Psr\Log\LogLevel;
 use SensioLabs\Behat\PageObjectExtension\PageObject\Exception\UnexpectedPageException;
 
 class GuestContext extends PageContext
 {
-    use Traits\CommonContextAwareTrait;
-
-    protected $adminDashboard;
-
-    protected $citizenDashboard;
-
-    protected $forgotPassword;
-
-    protected $homepage;
-
-    protected $join;
-
-    protected $municipalProfile;
-
-    protected $onboarding;
-
-    protected $politicianDashboard;
-
-    protected $representativeProfile;
-
-    protected $signIn;
-
-    public function __construct(
-        Page\Admin\Dashboard $adminDashboard,
-        Page\Citizen\Dashboard $citizenDashboard,
-        Page\Citizen\Onboarding $onboarding,
-        Page\Guest\ForgotPassword $forgotPassword,
-        Page\Guest\Home $homepage,
-        Page\Guest\Join $join,
-        Page\Guest\RepresentativeProfile $representativeProfile,
-        Page\Guest\SignIn $signIn,
-        Page\Guest\MunicipalProfile $municipalProfile,
-        Page\Politician\Dashboard $politicianDashboard
-    ) {
-        $this->adminDashboard = $adminDashboard;
-        $this->citizenDashboard = $citizenDashboard;
-        $this->forgotPassword = $forgotPassword;
-        $this->homepage = $homepage;
-        $this->join = $join;
-        $this->municipalProfile = $municipalProfile;
-        $this->onboarding = $onboarding;
-        $this->politicianDashboard = $politicianDashboard;
-        $this->representativeProfile = $representativeProfile;
-        $this->signIn = $signIn;
-    }
-
     /**
      * @Given I am on the homepage
      */
     public function iAmOnTheHomepage()
     {
-        $this->homepage->open();
+        $this->pages->getHomePage()->open();
     }
 
     /**
      * @Then I should see the heading :heading
      * @Then I should see the heading :heading with subheading :subheading
      */
-    public function iShouldSeeTheHeadingWithSubheading(string $heading, ?string $subheading = null)
+    public function iShouldSeeTheHeading(string $heading, ?string $subheading = null)
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        expect($this->municipalProfile)->toHaveHeading($heading, $subheading);
+        expect($this->pages->getCurrentPage())->toHaveHeading($heading, $subheading);
     }
 
     /**
@@ -82,7 +35,7 @@ class GuestContext extends PageContext
     public function iShouldSeeTheMayorWithTheEmail($name, $email)
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        expect($this->municipalProfile)->toHaveMayor($name, $email);
+        expect($this->pages->getCurrentPage())->toHaveMayor($name, $email);
     }
 
     /**
@@ -130,55 +83,15 @@ class GuestContext extends PageContext
      */
     public function iSignInWithEmailAndPassword(string $email, string $password): void
     {
-        $this->signIn->signInAs($email, $password);
+        $this->pages->getSignInPage()->signInAs($email, $password);
     }
-
-    ///**
-    // * @Then I should be on the citizen dashboard
-    // */
-    //public function iShouldBeOnTheCitizenDashboard()
-    //{
-    //    $this->citizenDashboard->isOpen();
-    //}
-    //
-    ///**
-    // * @Then I should be on the politician dashboard
-    // */
-    //public function iShouldBeOnThePoliticianDashboard()
-    //{
-    //    $this->politicianDashboard->isOpen();
-    //}
-    //
-    ///**
-    // * @Then I should be on the admin dashboard
-    // */
-    //public function iShouldBeOnTheAdminDashboard()
-    //{
-    //    $this->adminDashboard->isOpen();
-    //}
-    //
-    ///**
-    // * @Then I should be on the onboarding page
-    // */
-    //public function iShouldBeOnTheOnboardingPage(): void
-    //{
-    //    $this->onboarding->isOpen();
-    //}
-    //
-    ///**
-    // * @Then I am on the join page
-    // */
-    //public function iAmOnTheJoinPage()
-    //{
-    //    $this->join->isOpen();
-    //}
 
     /**
      * @When I click to join OurSociety
      */
     public function clickToJoinOurSociety()
     {
-        $this->signIn->join();
+        $this->pages->getSignInPage()->join();
     }
 
     /**
@@ -186,15 +99,7 @@ class GuestContext extends PageContext
      */
     public function iClickForgotPassword()
     {
-        $this->signIn->forgotPassword();
-    }
-
-    /**
-     * @Then I am on the forgot password page
-     */
-    public function iAmOnTheForgotPasswordPage()
-    {
-        $this->forgotPassword->isOpen();
+        $this->pages->getSignInPage()->forgotPassword();
     }
 
     /**
@@ -202,7 +107,7 @@ class GuestContext extends PageContext
      */
     public function mySessionExpires()
     {
-        $this->citizenDashboard->expireSession();
+        $this->pages->getCitizenDashboardPage()->expireSession();
     }
 
     /**
@@ -210,7 +115,7 @@ class GuestContext extends PageContext
      */
     public function iVisitTheCitizenDashboard()
     {
-        $this->citizenDashboard->open();
+        $this->pages->getCitizenDashboardPage()->open();
     }
 
     /**
@@ -218,7 +123,7 @@ class GuestContext extends PageContext
      */
     public function iLeaveKeepMeSignedInChecked()
     {
-        $this->signIn->keepMeSignedIn();
+        $this->pages->getSignInPage()->keepMeSignedIn();
     }
 
     /**
@@ -226,7 +131,7 @@ class GuestContext extends PageContext
      */
     public function iUncheckKeepMeSignedIn()
     {
-        $this->signIn->doNotKeepMeSignedIn();
+        $this->pages->getSignInPage()->doNotKeepMeSignedIn();
     }
 
     /**
@@ -235,19 +140,21 @@ class GuestContext extends PageContext
     public function iShouldBeRedirectedToTheSignInPageWhenIRefresh()
     {
         try {
-            $this->citizenDashboard->open();
+            $this->pages->getCitizenDashboardPage()->open();
         } catch (UnexpectedPageException $exception) {
-            $this->signIn->isOpen();
+            $this->pages->getSignInPage()->isOpen();
+            $this->log('Redirected to sign in page as expected.', LogLevel::DEBUG, ['exception' => $exception]);
         }
     }
 
     /**
-     * @When I sign up with name :name, email :email and password :password
+     * @When I join with name :name, email :email and password :password
      */
-    public function iSignUpWithNameEmailAndPassword($name, $email, $password)
+    public function iJoinWithNameEmailAndPassword($name, $email, $password)
     {
-        $this->join->open();
-        $this->join->signUp($name, $email, $password);
+        $page = $this->pages->getJoinPage();
+        $page->open();
+        $page->signUp($name, $email, $password);
     }
 
     /**
@@ -256,6 +163,6 @@ class GuestContext extends PageContext
      */
     public function iShouldBeRedirectedToTheBlog()
     {
-        $this->getCommonContext()->iShouldBeOnThePage('home');
+        $this->iShouldBeOnThePage('home');
     }
 }

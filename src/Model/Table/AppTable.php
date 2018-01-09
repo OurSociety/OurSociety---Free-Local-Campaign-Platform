@@ -55,10 +55,11 @@ abstract class AppTable extends Table
     {
         /** @var $validator AppValidator */
 
-        $validator
-            // id
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+        // TODO: Prevents ability to save Town Information form.
+        //$validator
+        //    // id
+        //    ->uuid('id')
+        //    ->allowEmpty('id', 'create');
 
 
         if ($this->hasSlugField()) {

@@ -9,7 +9,7 @@ use Ingenerator\BehatTableAssert\AssertTable;
 use Ingenerator\BehatTableAssert\TableParser\HTMLTable;
 use WebDriver\Exception\NoSuchElement;
 
-class Listing extends Component
+abstract class Listing extends Component
 {
     public function containsRecords(TableNode $expected): void
     {

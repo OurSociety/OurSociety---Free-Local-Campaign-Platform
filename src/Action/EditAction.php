@@ -42,7 +42,7 @@ abstract class EditAction extends Action
 
     protected function getErrorMessage(EntityInterface $entity): string
     {
-        return __('The {name} could not be saved. Please, try again.', ['name' => $this->getSingularEntityName()]);
+        return __('The {name} could not be saved.', ['name' => $this->getSingularEntityName()]);
     }
 
     protected function getRedirectUrl(): array

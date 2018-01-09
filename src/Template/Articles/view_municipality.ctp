@@ -1,6 +1,8 @@
 <?php
 
-use OurSociety\View\Component\Button\ToggleButton;
+use OurSociety\View\Component\Button\{
+    ButtonGroup, ToggleButton
+};
 
 /**
  * @var \OurSociety\View\AppView $this The view class.
@@ -22,8 +24,11 @@ $this->Breadcrumbs->add($article->name);
 
 if ($article):
     $this->start('actions');
-    echo $this->Component->render(new \OurSociety\View\Component\Button\ButtonGroup([
-        new ToggleButton($article, [
+
+    $buttons = [];
+
+    if ($article->belongsTo($identity) === true):
+        $buttons[] = new ToggleButton($article, [
             'field' => 'published',
             'title' => ['Publish', 'Unpublish'],
             'url' => [
@@ -32,8 +37,11 @@ if ($article):
                 'action' => 'toggle_published',
                 $article->slug,
             ],
-        ]),
-        new ToggleButton($article, [
+        ]);
+    endif;
+
+    if ($identity->isAdmin() === true):
+        $buttons[] = new ToggleButton($article, [
             'field' => 'approved',
             'title' => ['Approve', 'Reject'],
             'url' => [
@@ -42,7 +50,10 @@ if ($article):
                 'action' => 'toggle_approved',
                 $article->slug,
             ],
-        ]),
-    ]));
+        ]);
+    endif;
+
+    echo $this->Component->render(new ButtonGroup($buttons));
+
     $this->end();
 endif;

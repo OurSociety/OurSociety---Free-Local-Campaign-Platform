@@ -14,7 +14,7 @@ $submission = $submission ?? \OurSociety\ORM\TableRegistry::get('Submissions')->
     </h4>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg">
                 <p>
                     <?= __('OurSociety functions best when our thoughts and ideas are challenged to grow.') ?>
                     <?= __(
@@ -27,7 +27,7 @@ $submission = $submission ?? \OurSociety\ORM\TableRegistry::get('Submissions')->
                     <?= __('Please include any source/reference data you feel would contribute to the dialogue.') ?>
                 </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg">
                 <?= $this->Form->create($submission, [
                     'url' => ['controller' => 'Submissions', 'action' => 'add'],
                 ]) ?>
@@ -37,15 +37,21 @@ $submission = $submission ?? \OurSociety\ORM\TableRegistry::get('Submissions')->
                     'label' => false,
                     'placeholder' => __('Type your question here - be sure to read the participation guidelines!'),
                 ]) ?>
-                <?= $this->Form->submit('Submit your question', ['class' => 'btn-primary pull-right']) ?>
-                <p class="small text-muted">
-                    <?= __('Read our {participation_guidelines} here.', [
-                        'participation_guidelines' => $this->Html->link(
-                            __('participation guidelines'),
-                            '/participation-guidelines'
-                        ),
-                    ]) ?>
-                </p>
+                <div class="row">
+                    <div class="col-sm">
+                        <p class="small text-muted">
+                            <?= __('Read our {participation_guidelines} here.', [
+                                'participation_guidelines' => $this->Html->link(
+                                    __('participation guidelines'),
+                                    '/participation-guidelines'
+                                ),
+                            ]) ?>
+                        </p>
+                    </div>
+                    <div class="col-sm-auto">
+                        <?= $this->Form->submit('Submit your question', ['class' => ['btn-secondary']]) ?>
+                    </div>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

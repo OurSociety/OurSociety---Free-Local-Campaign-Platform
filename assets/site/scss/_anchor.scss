@@ -1,0 +1,12 @@
+//
+// HTML Anchors
+//
+
+// When linking to #anchors, the content appears under the top navbar without this hack:
+// @see https://stackoverflow.com/questions/4086107/html-positionfixed-page-header-and-in-page-anchors/28824157#28824157
+:target:before {
+    content: "";
+    display: block;
+    height: $navbar-min-height; /* fixed header height */
+    margin: -$navbar-min-height 0 0; /* negative fixed header height */
+}

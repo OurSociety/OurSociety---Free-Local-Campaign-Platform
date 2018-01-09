@@ -1,14 +1,20 @@
 <?php
+
+use OurSociety\Model\Entity\Event;
+
 /**
  * @var \OurSociety\View\AppView $this View class.
  * @var \OurSociety\Model\Entity\ElectoralDistrict $municipality The municipality.
- * @var \OurSociety\Model\Entity\Event[] $events The events.
+ * @var Event[] $events The events.
  * @var \OurSociety\Model\Entity\User|null $identity The current user, if any.
  */
 
 $isExample = count($events) === 0;
 if ($isExample):
-    $events = \OurSociety\Model\Entity\Event::examples(5);
+    $events = Event::examples(5);
+    usort($events, function (Event $a, Event $b) {
+        return $a->start->lt($b->start);
+    });
 endif;
 ?>
 

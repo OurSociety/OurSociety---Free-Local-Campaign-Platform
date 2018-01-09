@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace OurSociety\TestSuite\Behat\Context\Page;
 
+use OurSociety\TestSuite\Behat\Context\PageContext;
 use OurSociety\TestSuite\Behat\Page;
-use SensioLabs\Behat\PageObjectExtension\Context\PageObjectContext;
 
-class PoliticianContext extends PageObjectContext
+class PoliticianContext extends PageContext
 {
     private const VIDEO_ID_EDIT = '213e2c94-6f7c-3d58-9f2e-134b9ee3dddd';
 

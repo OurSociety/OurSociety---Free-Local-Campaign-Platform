@@ -11,14 +11,16 @@ use OurSociety\View\Component\Layout\Icon;
 $this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
 $this->Breadcrumbs->add(__('My Profile'), $identity->getProfileRoute());
 $this->Breadcrumbs->add(__('My Qualifications'), ['_name' => 'politician:profile:qualifications']);
-$this->Breadcrumbs->add($record->name);
+if ($record->isNew() === false) {
+    $this->Breadcrumbs->add($record->name);
+}
 ?>
 
 <div class="card">
 
     <h4 class="card-header">
         <?= $this->Component->render(new Icon($record->getIcon())) ?>
-        <?= __('{action} Qualification', ['action' => $record->isNew() ? 'Create' : 'Edit']) ?>
+        <?= __('{action} Qualification', ['action' => $record->isNew() ? 'Add' : 'Edit']) ?>
         <small class="text-muted"><?= $record->name ?></small>
     </h4>
 

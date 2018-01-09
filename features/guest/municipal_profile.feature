@@ -6,7 +6,7 @@ Feature: Public municipal profile
 
   Scenario: Visitors can view aggregate content for a jurisdiction
     When I am on the "Example City" municipal profile
-    Then I should see the heading "Example City"
+    Then I should see the heading "Example City" with subheading "Example, NJ"
 #    And I should see the mayor "Example Mayor" with the email "mayor@example.com"
     And I should see town information containing "Example City was named after the fact that it is an example."
     And I should see a map

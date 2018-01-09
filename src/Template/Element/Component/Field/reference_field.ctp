@@ -5,10 +5,14 @@
  */
 ?>
 
-<?= $this->Html->link(
-    $referenceField->getReferenceTitle(),
-    $referenceField->getReferenceUrl(),
-    [
-        'icon' => $referenceField->getReferenceIcon(),
-    ]
-) ?>
+<?php if ($referenceField->hasReference()): ?>
+    <?= $this->Html->link(
+        $referenceField->getReferenceTitle(),
+        $referenceField->getReferenceUrl(),
+        [
+            'icon' => $referenceField->getReferenceIcon(),
+        ]
+    ) ?>
+<?php else: ?>
+    <?= $this->Html->badge('N/A', ['type' => 'secondary']) ?>
+<?php endif ?>

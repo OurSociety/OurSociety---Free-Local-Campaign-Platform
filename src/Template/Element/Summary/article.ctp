@@ -13,7 +13,9 @@
 
         <h6>
             <span class="text-muted">
-                <?= $article->printArticleType() ?> &ndash; <?= $this->Time->niceLong($article->published) ?>
+                <?= $article->printArticleType() ?>
+                &ndash;
+                <?= $article->renderPublishedDate($this) ?>
             </span>
         </h6>
 

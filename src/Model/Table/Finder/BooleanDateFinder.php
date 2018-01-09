@@ -23,7 +23,7 @@ abstract class BooleanDateFinder extends Finder
         $this->options = $options;
 
         $defaultConditions = [
-            $this->aliasField($this->query, 'published', 'IS NOT') => null,
+            $this->aliasField($this->query, $this->getFieldName(), 'IS NOT') => null,
         ];
 
         if ($this->hasBypassConditions()) {

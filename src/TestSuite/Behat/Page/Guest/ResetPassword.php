@@ -7,8 +7,8 @@ use OurSociety\TestSuite\Behat\Page\Page;
 
 class ResetPassword extends Page
 {
-    protected function getPath(): string
+    protected function getRouteName(): string
     {
-        return '/reset-password';
+        return 'users:reset';
     }
 }

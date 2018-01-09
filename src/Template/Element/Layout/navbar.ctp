@@ -40,7 +40,7 @@ $callToActionLink = $this->Url->build([
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav os-navbar-nav flex-wrap">
             <?php if ($identity !== null): ?>
-                <li class="nav-item text-nowrap">
+                <li class="nav-item dropdown-md text-nowrap">
                     <?= $this->Component->render(new DropdownMenu('Dashboard', [
                         new DropdownItem(
                             __('My Dashboard'),
@@ -59,11 +59,11 @@ $callToActionLink = $this->Url->build([
                     <?= $this->Component->render(new NavLink(__('Home'), ['_name' => 'home'])) ?>
                 </li>
             <?php endif ?>
-            <li class="nav-item text-nowrap">
+            <li class="nav-item dropdown-md text-nowrap">
                 <?= $this->Component->render(new DropdownMenu('People', [
                     new DropdownItem(
                         __('My Representatives'),
-                        ['_name' => 'municipality:default'],
+                        ['_name' => 'municipality:default', '#' => 'elected_officials'],
                         ['icon' => 'street-view']
                     ),
                     new DropdownItem(
@@ -73,7 +73,7 @@ $callToActionLink = $this->Url->build([
                     ),
                 ])) ?>
             </li>
-            <li class="nav-item text-nowrap">
+            <li class="nav-item dropdown-md text-nowrap">
                 <?= $this->Component->render(new DropdownMenu('Places', [
                     new DropdownItem(
                         __('My Municipality'),

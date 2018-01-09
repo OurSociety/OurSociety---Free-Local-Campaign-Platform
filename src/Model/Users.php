@@ -90,4 +90,25 @@ class Users extends Model
             ->where(['Users.role' => User::ROLE_ADMIN])
             ->all();
     }
+
+    public function hasNameAndRole($name, $ROLE_POLITICIAN)
+    {
+        $this->repository->find()->where([
+            $this->repository->aliasField('name') => $name,
+            $this->repository->aliasField('role') => User::ROLE_POLITICIAN,
+        ])->firstOrFail();
+    }
+
+    public function getRepresentativeSlugByName(string $name): string
+    {
+        /** @var User $user */
+        $user = $this->repository->find()->select([
+            $this->repository->aliasField('slug'),
+        ])->where([
+            $this->repository->aliasField('name') => $name,
+            $this->repository->aliasField('role') => User::ROLE_POLITICIAN,
+        ])->firstOrFail();
+
+        return $user->slug;
+    }
 }

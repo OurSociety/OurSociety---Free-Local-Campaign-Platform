@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace OurSociety\View\Component\Button;
 
 use OurSociety\Model\Entity\RecordInterface;
+use OurSociety\View\Component\Exception\MissingRecordIdentifierException;
 use OurSociety\View\Component\RecordAwareTrait;
 
 /**
@@ -66,6 +67,12 @@ abstract class RecordButton extends Button
 
     protected function getRecordIdentifier(): string
     {
-        return $this->getRecord()->getIdentifierValue();
+        $record = $this->getRecord();
+
+        try {
+            return $record->getIdentifierValue();
+        } catch (\TypeError $exception) {
+            throw new MissingRecordIdentifierException($record, $exception);
+        }
     }
 }

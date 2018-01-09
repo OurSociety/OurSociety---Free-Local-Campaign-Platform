@@ -30,6 +30,11 @@ abstract class Action
         $this->controller->authenticateIdentity($user->id);
     }
 
+    protected function disableVueJS(): void
+    {
+        $this->setViewVariable('enableVue', false);
+    }
+
     protected function deleteSession(string $key): void
     {
         $this->getSession()->delete($key);
