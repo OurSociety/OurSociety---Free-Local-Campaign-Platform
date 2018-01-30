@@ -29,7 +29,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/forgot-password', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/sign-out', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
-    $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
+    $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view', env('EXAMPLE_MUNICIPALITY_SLUG')], ['_name' => 'municipality:default']);
     $routes->connect('/municipality/:municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/article/new', ['controller' => 'Articles', 'action' => 'add'], ['_name' => 'municipality:article:new', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/article/:article', ['controller' => 'Articles', 'action' => 'viewFromMunicipalityProfile'], ['_name' => 'municipality:article', 'pass' => ['municipality', 'article']]);

@@ -28,3 +28,4 @@
 /.phpunit-watcher-cache.php
 /.php_cs.cache
 /hot
+/.idea
