@@ -29,3 +29,4 @@
 /.php_cs.cache
 /hot
 /.idea
+.DS_Store
