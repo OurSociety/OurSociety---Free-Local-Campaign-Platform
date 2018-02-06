@@ -4,10 +4,8 @@ workflows:
   build-test-deploy:
     jobs:
       - build
-      - deploy_staging:
-          requires: [ build ]
-          # TODO: Uncomment after finishing CI/CD, but before merging PR to master
-          #filters: { branches: { only: master } }
+      - deploy_staging
+
 jobs:
   build:
     docker:
@@ -110,22 +108,13 @@ jobs:
             vendor/bin/behat --no-snippets --profile=circleci --strict -vv features/guest/navigation.feature
   deploy_staging:
     docker:
-      - image: circleci/php:7.1-fpm-node
+      - image: ansible/ansible:ubuntu1604
     steps:
-      - checkout
       - add_ssh_keys
       - run:
-          name: Fetch ansible recipes
-          command: |
-            # TODO: Coordinate with @benbakelaar to set up GitHub deploy key for access to following repo:
-            # git clone "git@github.com:${CIRCLE_PROJECT_USERNAME}/oursociety-infra.git" /home/circleci/infra
-      - deploy:
-          name: Deploy to Staging Environment
-          command: |
-            # TODO: Coordinate with @jason for exact Ansible commands to run:
-            # ansible-playbook app.yml -i staging
-      - deploy:
-          name: "Notify #development Slack channel"
-          command: |
-            # TODO: Slack notification for successful deploys
-            # curl -X POST -H "Content-type: application/json" --data '{"text":"Successful deployment to <http://dev.oursociety.org\|staging environment>"}' "${SLACK_WEBHOOK_URL}"
+          name: Checkout ansible infrastructure repo
+          command: git clone --recursive git@github.com:OurSociety/oursociety-infra.git ~/
+      - run:
+          name: Install required packages
+          working_directory: ~/oursociety-infra
+          command: bash requirements.sh
