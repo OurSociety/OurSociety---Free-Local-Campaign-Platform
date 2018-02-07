@@ -118,7 +118,7 @@ jobs:
           command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Install necessary packages
-          command: apt-get update && apt-get install git -y
+          command: apt-get update && apt-get install git sudo -y
       - run:
           name: Checkout ansible infrastructure repo
           command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
@@ -133,7 +133,7 @@ jobs:
       - run:
           name: Run setup script
           working_directory: ~/oursociety-infra
-          command: bash requirements.sh $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+          command: touch ~/.bash_profile && bash requirements.sh $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
       - run:
           name: Run a deploy to the test target
           working_directory: ~/oursociety-infra
