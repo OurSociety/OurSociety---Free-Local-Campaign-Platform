@@ -113,17 +113,16 @@ jobs:
     docker:
       - image: williamyeh/ansible:ubuntu16.04
     steps:
-      - add_ssh_keys
       - run:
           name: Add github.com SSH key
-          command: ssh-keyscan github.com >> ~/.ssh/known_hosts
+          command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Checkout ansible infrastructure repo
           command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
       - run:
           name: Drop SSH key for oursociety deployment
           working_directory: ~/oursociety-infra
-          command: ansible-vault view secrets/key > ~/.ssh/oursociety.key
+          command: ansible-vault view secrets/key > ~/.ssh/oursociety.key && chmod 0600 ~/.ssh/oursociety.key
       - run:
           name: Create vault password file
           working_directory: ~/oursociety-infra
