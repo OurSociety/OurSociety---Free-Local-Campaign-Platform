@@ -10,7 +10,7 @@ jobs:
   build:
     docker:
       - image: deizel/circleci-php:7.1-fpm-node-browsers
-      - image: circleci/mysql:5.6-ram
+      - image: circleci/mysql:5.7-ram
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: app
@@ -65,6 +65,9 @@ jobs:
           name: Check MySQL Connection
           command: |
             dockerize -wait tcp://:3306
+      - run:
+          name: Set sql_mode setting on MySQL
+          command: mysql -u root -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,’ONLY_FULL_GROUP_BY’,”));"
       - run:
           name: Configure Hosts
           command: |
