@@ -117,6 +117,9 @@ jobs:
           name: Add github.com SSH key
           command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
+          name: Install necessary packages
+          command: sudo apt-get update && sudo apt-get install git
+      - run:
           name: Checkout ansible infrastructure repo
           command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
       - run:
