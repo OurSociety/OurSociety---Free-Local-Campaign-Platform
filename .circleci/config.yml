@@ -118,7 +118,7 @@ jobs:
           command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Install necessary packages
-          command: apt-get update && apt-get install git
+          command: apt-get update && apt-get install git -y
       - run:
           name: Checkout ansible infrastructure repo
           command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
