@@ -67,7 +67,7 @@ jobs:
             dockerize -wait tcp://:3306
       - run:
           name: Set sql_mode setting on MySQL
-          command: mysql -u root -h 127.0.0.1 -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,’ONLY_FULL_GROUP_BY’,”));"
+          command: mysql -u root -proot -h 127.0.0.1 -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,’ONLY_FULL_GROUP_BY’,”));"
       - run:
           name: Configure Hosts
           command: |
@@ -119,7 +119,7 @@ jobs:
           command: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Checkout ansible infrastructure repo
-          command: git clone --recursive git@github.com:OurSociety/oursociety-infra.git ~/oursociety-infra
+          command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
       - run:
           name: Install required packages
           working_directory: ~/oursociety-infra
