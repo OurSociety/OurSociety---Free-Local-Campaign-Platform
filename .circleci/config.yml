@@ -113,7 +113,7 @@ jobs:
       - add_ssh_keys
       - run:
           name: Checkout ansible infrastructure repo
-          command: git clone --recursive git@github.com:OurSociety/oursociety-infra.git ~/
+          command: git clone --recursive git@github.com:OurSociety/oursociety-infra.git ~/oursociety-infra
       - run:
           name: Install required packages
           working_directory: ~/oursociety-infra
