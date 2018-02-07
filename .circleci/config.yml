@@ -4,7 +4,8 @@ workflows:
   build-test-deploy:
     jobs:
       - build
-      - deploy_staging
+      - deploy_staging:
+          requires: [ build ]
 
 jobs:
   build:
