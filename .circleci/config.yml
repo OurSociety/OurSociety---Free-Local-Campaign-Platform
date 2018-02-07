@@ -131,9 +131,13 @@ jobs:
           working_directory: ~/oursociety-infra
           command: ansible-vault view secrets/key > ~/.ssh/oursociety.key && chmod 0600 ~/.ssh/oursociety.key
       - run:
+          name: Run setup script
+          working_directory: ~/oursociety-infra
+          command: bash requirements.sh $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+      - run:
           name: Run a deploy to the test target
           working_directory: ~/oursociety-infra
           command: ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test"
       - run:
           name: Remove secrets
-          command: rm -rf ~/.ssh
+          command: rm -rf ~/.ssh ~/.bash_profile
