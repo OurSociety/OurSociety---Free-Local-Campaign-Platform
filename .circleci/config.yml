@@ -67,7 +67,7 @@ jobs:
             dockerize -wait tcp://:3306
       - run:
           name: Set sql_mode setting on MySQL
-          command: mysql -u root -proot -h 127.0.0.1 -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,’ONLY_FULL_GROUP_BY’,”));"
+          command: mysql -u root -proot -h 127.0.0.1 -e "SET GLOBAL sql_mode = (SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY',''));"
       - run:
           name: Configure Hosts
           command: |
