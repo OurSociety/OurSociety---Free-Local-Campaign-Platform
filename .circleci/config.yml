@@ -131,4 +131,6 @@ jobs:
           name: Run a deploy to the test target
           working_directory: ~/oursociety-infra
           command: ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test"
-
+      - run:
+          name: Remove secrets
+          command: rm -rf ~/.ssh
