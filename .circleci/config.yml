@@ -118,7 +118,7 @@ jobs:
           command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Install necessary packages
-          command: apt-get update && apt-get install git sudo -y
+          command: apt-get update && apt-get install git sudo python python-pip python-devel -y && pip install -U pip && pip install -U boto
       - run:
           name: Checkout ansible infrastructure repo
           command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
@@ -131,17 +131,19 @@ jobs:
           working_directory: ~/oursociety-infra
           command: ansible-vault view secrets/key > ~/.ssh/oursociety.key && chmod 0600 ~/.ssh/oursociety.key
       - run:
-          name: Run setup script
+          name: Run a deploy to the test vhost 
           working_directory: ~/oursociety-infra
-          command: touch ~/.bash_profile && bash requirements.sh $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test" --skip-tags 'common,iptables,www_php'
+            fi
       - run:
-          name: Run a deploy to the test target
+          name: Run a deploy to the production vhost
           working_directory: ~/oursociety-infra
-          command: /root/oursociety-infra-venv/bin/pip install -U boto && /root/oursociety-infra-venv/bin/ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test"
-      - run:
-          name: Run a deploy to the test target
-          working_directory: ~/oursociety-infra
-          command: pip install -U boto && ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test"
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=prod" --skip-tags 'common,iptables,www_php'
+            fi
       - run:
           name: Remove secrets
           command: rm -rf ~/.ssh ~/.bash_profile
