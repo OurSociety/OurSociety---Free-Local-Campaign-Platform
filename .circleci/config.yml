@@ -6,8 +6,7 @@ workflows:
       - build
       - deploy_staging:
           requires: [ build ]
-          # TODO: Uncomment after finishing CI/CD, but before merging PR to master
-          #filters: { branches: { only: master } }
+
 jobs:
   build:
     docker:
@@ -68,6 +67,9 @@ jobs:
           command: |
             dockerize -wait tcp://:3306
       - run:
+          name: Set sql_mode setting on MySQL
+          command: mysql -u root -proot -h 127.0.0.1 -e "SET GLOBAL sql_mode = (SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY',''));"
+      - run:
           name: Configure Hosts
           command: |
             echo "127.0.0.1 oursociety.test" | sudo tee -a /etc/hosts
@@ -110,22 +112,39 @@ jobs:
             vendor/bin/behat --no-snippets --profile=circleci --strict -vv features/guest/navigation.feature
   deploy_staging:
     docker:
-      - image: circleci/php:7.1-fpm-node
+      - image: williamyeh/ansible:ubuntu16.04
     steps:
-      - checkout
-      - add_ssh_keys
       - run:
-          name: Fetch ansible recipes
+          name: Add github.com SSH key
+          command: mkdir ~/.ssh && chmod 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run:
+          name: Install necessary packages
+          command: apt-get update && apt-get install git sudo python python-pip python-dev -y && pip install -U pip && pip install -U boto
+      - run:
+          name: Checkout ansible infrastructure repo
+          command: git clone --recursive https://$GITHUB_AUTH_TOKEN@github.com/OurSociety/oursociety-infra.git ~/oursociety-infra
+      - run:
+          name: Create vault password file
+          working_directory: ~/oursociety-infra
+          command: echo $ANSIBLE_VAULT_PASS > .vault
+      - run:
+          name: Drop SSH key for oursociety deployment
+          working_directory: ~/oursociety-infra
+          command: ansible-vault view secrets/key > ~/.ssh/oursociety.key && chmod 0600 ~/.ssh/oursociety.key
+      - run:
+          name: Run a deploy to the test vhost 
+          working_directory: ~/oursociety-infra
           command: |
-            # TODO: Coordinate with @benbakelaar to set up GitHub deploy key for access to following repo:
-            # git clone "git@github.com:${CIRCLE_PROJECT_USERNAME}/oursociety-infra.git" /home/circleci/infra
-      - deploy:
-          name: Deploy to Staging Environment
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=test" --skip-tags 'common,iptables,www_php'
+            fi
+      - run:
+          name: Run a deploy to the production vhost
+          working_directory: ~/oursociety-infra
           command: |
-            # TODO: Coordinate with @jason for exact Ansible commands to run:
-            # ansible-playbook app.yml -i staging
-      - deploy:
-          name: "Notify #development Slack channel"
-          command: |
-            # TODO: Slack notification for successful deploys
-            # curl -X POST -H "Content-type: application/json" --data '{"text":"Successful deployment to <http://dev.oursociety.org\|staging environment>"}' "${SLACK_WEBHOOK_URL}"
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ansible-playbook playbooks/deploy_service.yml -e "deploy_env=prod service=www deploy_target=prod" --skip-tags 'common,iptables,www_php'
+            fi
+      - run:
+          name: Remove secrets
+          command: rm -rf ~/.ssh ~/.bash_profile
