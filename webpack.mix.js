@@ -28,7 +28,7 @@ mix
   // - Landing: used for static index.html (deprecated, to be dropped at time of public launch)
   .sass('assets/sass/landing.scss', 'webroot/css')
   .js('assets/js/landing.js', 'webroot/js')
-
+  .sourceMaps()
   // TODO: Fix SVG stuff.
   .copy('assets/img/svg/video-placeholder.svg', 'webroot/img/svg/video-placeholder.svg')
   // Configuration:

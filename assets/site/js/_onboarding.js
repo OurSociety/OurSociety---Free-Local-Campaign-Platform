@@ -43,5 +43,6 @@ let convertToAutocomplete = function (index, element) {
   });
 };
 
-// $('[aria-autocomplete="both"]').each(convertToAutocomplete);
-$('#electoral-district-id').each(convertToAutocomplete);
+$( document ).ready(function() {
+    $('#electoral-district-id').each(convertToAutocomplete);
+});

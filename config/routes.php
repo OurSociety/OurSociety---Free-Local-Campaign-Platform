@@ -29,7 +29,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/forgot-password', ['controller' => 'Users', 'action' => 'forgot'], ['_name' => 'users:forgot']);
     $routes->connect('/join-oursociety', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'users:register']);
     $routes->connect('/sign-out', ['controller' => 'Users', 'action' => 'logout'], ['_name' => 'users:logout']);
-    $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality:default']);
+    $routes->connect('/municipality', ['controller' => 'Municipalities', 'action' => 'view', env('EXAMPLE_MUNICIPALITY_SLUG')], ['_name' => 'municipality:default']);
     $routes->connect('/municipality/:municipality', ['controller' => 'Municipalities', 'action' => 'view'], ['_name' => 'municipality', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/article/new', ['controller' => 'Articles', 'action' => 'add'], ['_name' => 'municipality:article:new', 'pass' => ['municipality']]);
     $routes->connect('/municipality/:municipality/article/:article', ['controller' => 'Articles', 'action' => 'viewFromMunicipalityProfile'], ['_name' => 'municipality:article', 'pass' => ['municipality', 'article']]);
@@ -41,8 +41,9 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/municipality/:municipality/events/add', ['controller' => 'Events', 'action' => 'add'], ['_name' => 'municipality:events:add', 'pass' => ['municipality']]);
     $routes->connect('/tutorial', ['controller' => 'Users', 'action' => 'tutorial'], ['_name' => 'users:onboarding']);
     $routes->connect('/person/:person', ['controller' => 'People', 'action' => 'redirect'], ['_name' => 'people', 'pass' => ['person']]);
-    $routes->connect('/place/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
     $routes->connect('/place/lookup', ['controller' => 'ElectoralDistricts', 'action' => 'lookup'], ['_name' => 'district:lookup']);
+    $routes->connect('/place/:district', ['controller' => 'ElectoralDistricts', 'action' => 'view'], ['_name' => 'district', 'pass' => ['district']]);
+
     $routes->connect('/place/select', ['controller' => 'Places', 'action' => 'select'], ['_name' => 'place:select']);
     $routes->connect('/plans', ['controller' => 'Plans', 'action' => 'index'], ['_name' => 'plans']);
     $routes->connect('/representative/:politician', ['controller' => 'Politicians', 'action' => 'view'], ['_name' => 'politician', 'pass' => ['politician']]);
