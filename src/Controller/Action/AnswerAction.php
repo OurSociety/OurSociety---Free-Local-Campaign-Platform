@@ -33,7 +33,7 @@ class AnswerAction extends Action
         $questions = $controller->paginate($query);
 
         if ($questions->count() === 0) {
-            $message = 'Great job! You have answered all questions that we have for you at this time. 
+            $message = 'Great job! You have answered all questions that we have for you at this time.
                         Please check back later for more or review your answers.';
 
             $controller->Flash->success($message);
