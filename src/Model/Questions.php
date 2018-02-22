@@ -38,6 +38,7 @@ class Questions extends Model
             ->notMatching('Answers', function (Query $query) use ($user): Query {
                 return $query->where(['Answers.user_id' => $user->id]);
             })
+            ->orderAsc('Questions.level')
             ->firstOrFail()
             ->level;
     }
