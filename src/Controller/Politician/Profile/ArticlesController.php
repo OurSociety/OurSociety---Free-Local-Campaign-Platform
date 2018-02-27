@@ -64,6 +64,7 @@ class ArticlesController extends CrudController
             /** @var Article $article */
             $article = $event->getSubject()->entity;
             $user = $this->getIdentity();
+            $article->electoral_district_id = $user->electoral_district->id;
 
             if ($user->isPolitician()) {
                 $article->politician_id = $user->id;
