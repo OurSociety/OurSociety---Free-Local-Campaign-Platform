@@ -42,7 +42,7 @@ class ArticlesController extends CrudController
 
     public function view(): ?Response
     {
-        $this->Crud->on('afterFind', function (Event $event) {
+        $this->Crud->on('beforeRender', function (Event $event) {
             /** @var Article $article */
             $article = $event->getSubject()->entity;
 
