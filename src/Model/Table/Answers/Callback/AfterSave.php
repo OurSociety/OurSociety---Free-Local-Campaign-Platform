@@ -92,7 +92,7 @@ trait AfterSave
             $citizenQuestionIds = $query->where(['user_id' => $datum['citizen_id']])->all()->extract('question_id')->toArray();
             $politicianCommonQuestionCount = $query->where([
                 'user_id' => $datum['politician_id'],
-                'question_id IN' => $citizenQuestionIds,
+                'question_id IN' => $citizenQuestionIds ? $citizenQuestionIds : '()',
             ])->count();
 
             $sampleSize = $politicianCommonQuestionCount;
