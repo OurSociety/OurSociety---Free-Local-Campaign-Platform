@@ -116,8 +116,6 @@ Router::prefix('politician', ['path' => '/representative', '_namePrefix' => 'pol
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register'], ['_name' => 'register']);
 
     $routes->prefix('profile', ['_namePrefix' => 'profile:'], function (RouteBuilder $routes): void {
-        $routes->connect('/article/:article', ['controller' => 'Articles', 'action' => 'view'], ['_name' => 'article', 'pass' => ['article']]);
-        $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'articles']);
         $routes->connect('/awards', ['controller' => 'Awards', 'action' => 'list'], ['_name' => 'awards']);
         $routes->connect('/award/:award', ['controller' => 'Awards', 'action' => 'edit'], ['_name' => 'award', 'pass' => ['award']]);
         $routes->connect('/positions', ['controller' => 'Positions', 'action' => 'list'], ['_name' => 'positions']);
@@ -126,6 +124,10 @@ Router::prefix('politician', ['path' => '/representative', '_namePrefix' => 'pol
         $routes->connect('/qualification/:qualification', ['controller' => 'Qualifications', 'action' => 'edit'], ['_name' => 'qualification', 'pass' => ['qualification']]);
         $routes->connect('/videos', ['controller' => 'Videos', 'action' => 'index'], ['_name' => 'videos']);
         $routes->connect('/video/:video', ['controller' => 'Videos', 'action' => 'edit'], ['_name' => 'video', 'pass' => ['video']]);
+        $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index'], ['_name' => 'articles']);
+        $routes->connect('/article/:article', ['controller' => 'Articles', 'action' => 'edit'], ['_name' => 'article', 'pass' => ['article']]);
+
+
 
         $routes->fallbacks(DashedRoute::class);
     });
