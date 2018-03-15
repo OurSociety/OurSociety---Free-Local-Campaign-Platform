@@ -176,6 +176,7 @@ return [
             'className' => \Cake\Mailer\Transport\SmtpTransport::class,
             // e.g. `smtp://user:password@hostname:port?tls=null&client=null&timeout=30`
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL'),
+            'tls' => true,
         ],
         'test' => [
             'className' => \Cake\Mailer\Transport\DebugTransport::class,
