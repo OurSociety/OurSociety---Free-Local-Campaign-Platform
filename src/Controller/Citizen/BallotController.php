@@ -25,9 +25,9 @@ class BallotController extends AppController
         $electoralDistrict = $user->electoral_district;
         $elections = [[]];
 
-        while ($electoralDistrict->parent_id !== null) {
+        while ($electoralDistrict->parent !== null) {
             $electoralDistrict = $electoralDistrictsTable->find()->where([
-                'id' => $electoralDistrict->parent_id,
+                'id' => $electoralDistrict->parent->id,
             ])->contain(['Elections'])->firstOrFail();
 
             if (count($electoralDistrict->elections) > 0) {
@@ -63,7 +63,7 @@ class BallotController extends AppController
         do {
             $electoralDistrict = $electionsTable->ElectoralDistricts->find()
                 ->where([
-                    'ElectoralDistricts.id' => $electoralDistrict->parent_id,
+                    'ElectoralDistricts.id' => $electoralDistrict->parent->id,
                 ])
                 ->contain([
                     'Contests' => [
@@ -80,7 +80,7 @@ class BallotController extends AppController
             if (count($electoralDistrict->contests) > 0) {
                 $contests[] = $electoralDistrict->contests;
             }
-        } while ($electoralDistrict->parent_id !== null);
+        } while ($electoralDistrict->parent !== null);
 
         /** @var Contest[] $contests */
         $contests = collection(array_merge(...$contests))
