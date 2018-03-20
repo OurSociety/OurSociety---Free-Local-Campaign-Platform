@@ -26,6 +26,8 @@ trait FindMethodTrait
             if(!$query->count()){
                 $notFoundBySlug = true;
             }
+        } else {
+            $notFoundBySlug = true;
         }
 
         if ($notFoundBySlug) {
