@@ -25,9 +25,9 @@ class BallotController extends AppController
         $electoralDistrict = $user->electoral_district;
         $elections = [[]];
 
-        while ($electoralDistrict->parent_id !== null) {
+        while ($electoralDistrict->parent !== null) {
             $electoralDistrict = $electoralDistrictsTable->find()->where([
-                'id' => $electoralDistrict->parent_id,
+                'id' => $electoralDistrict->parent->id,
             ])->contain(['Elections'])->firstOrFail();
 
             if (count($electoralDistrict->elections) > 0) {
