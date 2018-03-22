@@ -20,9 +20,18 @@ trait FindMethodTrait
 
         $query = $repository->find($this->findMethod());
 
+        $notFoundBySlug = false;
         if ($repository->hasSlugField()) {
             $query->find('slugged', ['slug' => $id]);
+            if(!$query->count()){
+                $notFoundBySlug = true;
+            }
         } else {
+            $notFoundBySlug = true;
+        }
+
+        if ($notFoundBySlug) {
+            $query = $repository->find($this->findMethod());
             $query->where([
                 $repository->aliasField($repository->getPrimaryKey()) => $id
             ]);

@@ -86,7 +86,8 @@ class ArticlesTable extends AppTable
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         return parent::buildRules($rules)
-            ->add($rules->existsIn(['politician_id'], 'Politicians'));
+            ->add($rules->existsIn(['politician_id'], 'Politicians'))
+            ->add($rules->existsIn(['electoral_district_id'], 'ElectoralDistricts'));
     }
 
     public function getBySlug(string $slug, User $identity = null): Entity
