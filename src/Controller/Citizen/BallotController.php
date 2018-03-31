@@ -70,7 +70,7 @@ class BallotController extends AppController
                         'Candidates' => [
                             'CandidatePreElectionStatuses',
                             'CandidatePostElectionStatuses',
-                            'Politician',
+                            'Politician'
                         ],
                         'Offices',
                     ],
@@ -88,6 +88,7 @@ class BallotController extends AppController
                 return $contest->election_id === $election->id;
             })
             ->toArray();
+
 
         $this->set(compact('election', 'contests'));
 

@@ -32,3 +32,10 @@
         </ul>
     </div>
 </div>
+
+<?= $this->cell('Ballot/UserPoliticianMatch',
+    [
+        'citizen' => $this->request->getSession()->read('Auth'),
+        'politician' => $user
+    ])
+?>
