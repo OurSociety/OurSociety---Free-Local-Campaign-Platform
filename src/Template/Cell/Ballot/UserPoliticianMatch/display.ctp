@@ -7,5 +7,4 @@
  * Time: 2:26 AM
  */
 ?>
-
-<h1><?= $match?>%</h1>
+<span class="badge badge-warning">Match: <?= $match?>%</span>

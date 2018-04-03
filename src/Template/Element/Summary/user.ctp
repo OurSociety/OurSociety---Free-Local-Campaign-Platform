@@ -18,6 +18,12 @@
         <h6>
             <?= $user->office_type ? $user->office_type->name : __('Unknown Office') ?>
         </h6>
+        <?= $this->cell('Ballot/UserPoliticianMatch',
+            [
+                'citizen' => $this->request->getSession()->read('Auth'),
+                'politician' => $user
+            ])
+        ?>
         <ul class="list-unstyled">
             <?php /*
                 <li><i class="fa fa-fw fa-home"></i> <?= sprintf('%s, %s %s', ucwords($user['location']['street']), ucwords($user['location']['city']), ucwords($user['location']['postcode'])) ?></li>
@@ -33,9 +39,3 @@
     </div>
 </div>
 
-<?= $this->cell('Ballot/UserPoliticianMatch',
-    [
-        'citizen' => $this->request->getSession()->read('Auth'),
-        'politician' => $user
-    ])
-?>
