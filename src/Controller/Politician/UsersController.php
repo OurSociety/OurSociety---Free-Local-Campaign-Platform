@@ -8,6 +8,7 @@ use OurSociety\Controller\Action\RegisterAction;
 use OurSociety\Controller\CrudController;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -44,6 +45,21 @@ class UsersController extends CrudController
             }
         });
 
+        $this->Crud->on('beforeRedirect', function(\Cake\Event\Event $event) {
+            if ($event->getSubject()->created && !$event->getSubject()->entity->incumbent) {
+                $contests = $this->loadModel('Contests')->find('all');
+                $candidatesTable = TableRegistry::get('Candidates');
+                foreach ($contests as $contest){
+
+                    /** @var \OurSociety\Model\Entity\Candidate $candidate */
+                    $candidate = $candidatesTable->newEntity();
+                    $candidate->politician = $event->getSubject()->entity;
+                    $candidate->contest = $contest;
+                    $candidate->is_incumbent = 0;
+                    $candidatesTable->save($candidate);
+                }
+            }
+        });
         return $this->Crud->execute();
     }
 }
