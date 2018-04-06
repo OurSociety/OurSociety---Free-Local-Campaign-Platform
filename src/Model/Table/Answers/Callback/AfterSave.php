@@ -90,6 +90,8 @@ trait AfterSave
             /** @var Query $query */
             $query = $this->find();
             $citizenQuestionIds = $query->where(['user_id' => $datum['citizen_id']])->all()->extract('question_id')->toArray();
+
+            $query = $this->find();
             $politicianCommonQuestionCount = $query->where([
                 'user_id' => $datum['politician_id'],
                 'question_id IN' => $citizenQuestionIds ? $citizenQuestionIds : '()',
@@ -137,7 +139,7 @@ SQL;
             }
 
             $datum += [
-                'true_match_percentage' => $trueMatchPercentage,
+                 'true_match_percentage' => $trueMatchPercentage,
                 'match_percentage' => $matchPercentage,
                 'error_percentage' => $errorPercentage,
                 'sample_size' => $sampleSize,
