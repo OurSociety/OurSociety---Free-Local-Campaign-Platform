@@ -11,7 +11,7 @@
     <?php foreach ($topics as $topic): ?>
         <?php
         $class = !isset($topic->value_match) ? ' text-muted' : null;
-        $percentage = isset($topic->value_match) ? $topic->value_match->true_match_percentage . '%' : 'N/A';
+        $percentage = isset($topic->value_match) ? $topic->value_match->match . '%' : 'N/A';
         ?>
         <li class="topic-item row align-items-center<?= $class ?>">
             <?= $this->Html->icon($topic->slug, ['iconSet' => 'topic', 'height' => 75, 'width' => 75]) ?>

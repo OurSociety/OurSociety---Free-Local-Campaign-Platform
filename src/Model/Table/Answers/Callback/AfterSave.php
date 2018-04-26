@@ -73,7 +73,7 @@ trait AfterSave
         /** @var ValueMatch[] $outdatedMatches */
         $outdatedMatches = $this->Users->ValueMatches->find()->where($conditions)->all();
 
-        foreach ($outdatedMatches as $outdatedMatch) {
+         foreach ($outdatedMatches as $outdatedMatch) {
             foreach ($data as &$datum) {
                 if (
                     $datum['citizen_id'] === $outdatedMatch->citizen_id &&
@@ -89,66 +89,23 @@ trait AfterSave
         foreach ($data as &$datum) {
             /** @var Query $query */
             $query = $this->find();
-            $citizenQuestionIds = $query->where(['user_id' => $datum['citizen_id']])->all()->extract('question_id')->toArray();
-
-            $query = $this->find();
-            $politicianCommonQuestionCount = $query->where([
-                'user_id' => $datum['politician_id'],
-                'question_id IN' => $citizenQuestionIds ? $citizenQuestionIds : '()',
-            ])->count();
-
-            $sampleSize = $politicianCommonQuestionCount;
-            if ($sampleSize === 0) {
-                $errorPercentage = 1.0;
-                $matchPercentage = 0.0;
-                $trueMatchPercentage = 0.0;
-            } else {
-                $errorPercentage = (1 / $sampleSize) * 100;
-
-                /** @var Connection $connection */
-                $query = <<<SQL
-SELECT (SQRT(
-    SUM(IFNULL((
-        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-        GREATEST(ABS(citizen.answer), ABS(politician.answer))
-    ), 1) * citizen.importance) / SUM(citizen.importance) * 100
-    *
-    SUM(IFNULL((
-        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-        GREATEST(ABS(citizen.answer), ABS(politician.answer))
-    ), 1) * politician.importance) / SUM(politician.importance) * 100
-)) AS match_percentage
-FROM answers AS citizen
-LEFT JOIN answers AS politician
-ON politician.question_id = citizen.question_id
-AND politician.user_id = ?
-WHERE citizen.user_id = ?
-ORDER BY citizen.question_id
-SQL;
-
-                $connection = $this->getConnection();
-                $statement = $connection->execute($query, [$datum['citizen_id'], $datum['politician_id']]);
-                $row = $statement->fetch('assoc');
-                if ($row === false) {
-                    throw new NotFoundException();
-                }
-                /** @var array $row */
-                $matchPercentage = $row['match_percentage'];
-
-                $trueMatchPercentage = max($matchPercentage - $errorPercentage, 0);
+            $citizenQuestions = $query->where(['user_id' => $datum['citizen_id']])->all()->toArray();
+            $politicianQuestions = $query->where(['user_id' => $datum['politician_id']])->all()->toArray();
+            $this->calculateMatch($citizenQuestions, $politicianQuestions);
             }
+            
 
-            $datum += [
-                 'true_match_percentage' => $trueMatchPercentage,
-                'match_percentage' => $matchPercentage,
-                'error_percentage' => $errorPercentage,
-                'sample_size' => $sampleSize,
-            ];
-        }
         unset($datum);
 
         $updatedMatches = $this->Users->ValueMatches->patchEntities($outdatedMatches, $data);
 
         $this->Users->ValueMatches->saveMany($updatedMatches);
+    }
+    private function calculateMatch($citizenQuestions, $politicianQuestions){
+        foreach ($citizenQuestions as $politicianQuestion){
+            foreach ($politicianQuestions as $politicianQuestion){
+                //calc
+            }
+        }
     }
 }

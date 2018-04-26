@@ -49,18 +49,14 @@ class ValueMatchesTable extends AppTable
     public function validationDefault(CakeValidator $validator): AppValidator
     {
         return parent::validationDefault($validator)
-            // true_match_percentage
-            //->decimal('true_match_percentage') // TODO: Error validating
-            ->notEmpty('true_match_percentage')
-            ->requirePresence('true_match_percentage', 'create')
-            // match_percentage
-            //->decimal('match_percentage') // TODO: Error validating
-            ->notEmpty('match_percentage')
-            ->requirePresence('match_percentage', 'create')
+            // match
+            //->decimal('match') // TODO: Error validating
+            ->notEmpty('match')
+            ->requirePresence('match', 'create')
+            // match
+            //->decimal('match') // TODO: Error validating
             // error_percentage
             //->decimal('error_percentage') // TODO: Error validating
-            ->notEmpty('error_percentage')
-            ->requirePresence('error_percentage', 'create')
             // sample_size
             ->integer('sample_size')
             ->notEmpty('sample_size')
@@ -82,19 +78,6 @@ class ValueMatchesTable extends AppTable
             ]));
     }
 
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options): void
-    {
-        parent::beforeMarshal($event, $data, $options);
-
-        if (isset($data['sample_size'])) {
-            $data['error_percentage'] = $data['sample_size'] > 0 ? 1 / $data['sample_size'] * 100 : 100;
-        }
-
-        if (isset($data['match_percentage'], $data['error_percentage'])) {
-            $data['true_match_percentage'] = max($data['match_percentage'] - $data['error_percentage'], 0);
-        }
-    }
-
     public function afterSave(Event $event, ValueMatch $entity, ArrayObject $options): void
     {
         if ($entity->category_id !== null) {
@@ -112,11 +95,9 @@ class ValueMatchesTable extends AppTable
             ];
 
             $errorPercentage = $entity->sample_size > 0 ? 1 / $entity->sample_size * 100 : 100;
-            $expression = new QueryExpression(sprintf('GREATEST(match_percentage - %s, 0)', $errorPercentage));
+            $expression = new QueryExpression(sprintf('GREATEST(match - %s, 0)', $errorPercentage));
             $commonData = [
-                'true_match_percentage' => $expression,
-                'error_percentage' => $errorPercentage,
-                'sample_size' => $entity->sample_size,
+                'match' => $expression,
             ];
 
             $this->updateAll($commonData, $conditions);
@@ -125,19 +106,19 @@ class ValueMatchesTable extends AppTable
         $updateTotalForAllCategories = function () use ($entity) {
             $query = $this->find();
             $matchPercentage = $query
-                ->select(['match_percentage' => $query->func()->avg('match_percentage')])->where([
+                ->select(['match' => $query->func()->avg('match')])->where([
                     'citizen_id' => $entity->citizen_id,
                     'politician_id' => $entity->politician_id,
                     'category_id IS NOT' => null,
                 ])
-                ->extract('match_percentage')->first();
+                ->extract('match')->first();
 
             $data = [
                 'citizen_id' => $entity->citizen_id,
                 'politician_id' => $entity->politician_id,
                 'category_id' => null,
                 'sample_size' => $entity->sample_size,
-                'match_percentage' => $matchPercentage,
+                'match' => $matchPercentage,
             ];
 
             try {

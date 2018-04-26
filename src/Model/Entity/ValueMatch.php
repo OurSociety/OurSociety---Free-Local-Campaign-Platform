@@ -10,8 +10,7 @@ namespace OurSociety\Model\Entity;
  * @property string $citizen_id
  * @property string $politician_id
  * @property string $category_id
- * @property float $true_match_percentage
- * @property float $match_percentage
+ * @property float $match
  * @property float $error_percentage
  * @property int $sample_size
  *

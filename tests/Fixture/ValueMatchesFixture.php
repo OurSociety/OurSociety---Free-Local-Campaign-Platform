@@ -21,7 +21,7 @@ class ValueMatchesFixture extends TestFixture
         'citizen_id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'politician_id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'category_id' => ['type' => 'uuid', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'true_match_percentage' => ['type' => 'decimal', 'length' => 5, 'precision' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
+        'match' => ['type' => 'decimal', 'length' => 5, 'precision' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
         'match_percentage' => ['type' => 'decimal', 'length' => 5, 'precision' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
         'error_percentage' => ['type' => 'decimal', 'length' => 5, 'precision' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
         'sample_size' => ['type' => 'integer', 'length' => 11, 'unsigned' => true, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -46,7 +46,7 @@ class ValueMatchesFixture extends TestFixture
             'citizen_id' => '25905564-5af4-4ea0-859f-fca28b98f757',
             'politician_id' => '108003dd-9354-4593-acff-dd3d3808bcfd',
             'category_id' => '7e8a5a2a-c4f2-4599-bdf8-26b9a4b6b9aa',
-            'true_match_percentage' => 1.5,
+            'match' => 1.5,
             'match_percentage' => 1.5,
             'error_percentage' => 1.5,
             'sample_size' => 1

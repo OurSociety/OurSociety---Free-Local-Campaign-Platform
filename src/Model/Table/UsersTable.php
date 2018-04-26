@@ -196,6 +196,6 @@ class UsersTable extends AppTable
             'category_id IS' => null,
         ])->first();
 
-        return $match !== null ? $match->true_match_percentage : 0;
+        return $match !== null ? $match->match : 0;
     }
 }

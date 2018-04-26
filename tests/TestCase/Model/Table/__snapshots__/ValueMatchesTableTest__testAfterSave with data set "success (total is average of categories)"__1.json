@@ -4,7 +4,7 @@
         "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
         "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
         "category_id": null,
-        "true_match_percentage": 70,
+        "match": 70,
         "match_percentage": 90,
         "error_percentage": 20,
         "sample_size": 5
@@ -14,7 +14,7 @@
         "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
         "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
         "category_id": "213e2c94-6f7c-3d58-9f2e-134b9ee3dddd",
-        "true_match_percentage": 80,
+        "match": 80,
         "match_percentage": 100,
         "error_percentage": 20,
         "sample_size": 5
@@ -24,7 +24,7 @@
         "citizen_id": "46b4b442-75aa-11e7-b7f8-6c4008a68a60",
         "politician_id": "573111be-759e-11e7-a371-6c4008a68a60",
         "category_id": "23ab4609-26e8-3227-a8a9-41a3e0c66931",
-        "true_match_percentage": 60,
+        "match": 60,
         "match_percentage": 80,
         "error_percentage": 20,
         "sample_size": 5

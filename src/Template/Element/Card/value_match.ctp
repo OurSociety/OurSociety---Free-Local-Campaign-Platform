@@ -27,7 +27,7 @@ $profileLink = $this->Html->link($politician->name, $politician->getPublicProfil
         </h4>
         <p>
             <?= __('Based on your answers so far, you are an {percentage_match}% match with {politician_name}.', [
-                'percentage_match' => $politicianMatch->true_match_percentage,
+                'percentage_match' => $politicianMatch->match,
                 'politician_name' => $profileLink,
             ]) ?>
         </p>

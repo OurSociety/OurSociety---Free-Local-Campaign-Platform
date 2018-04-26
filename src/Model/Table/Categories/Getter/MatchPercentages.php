@@ -28,7 +28,7 @@ trait MatchPercentages
         ]);
 
         return $this->find()->contain(['ValueMatch'])->order([
-            'ValueMatch.true_match_percentage' => $inverse === false ? 'DESC' : 'ASC',
+            'ValueMatch.match' => $inverse === false ? 'DESC' : 'ASC',
         ])->limit($limit)->all();
     }
 }

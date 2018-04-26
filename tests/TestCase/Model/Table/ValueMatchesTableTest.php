@@ -31,7 +31,7 @@ class ValueMatchesTableTest extends AppTableTest
         $this->table->beforeMarshal($event, $data, $options);
 
         self::assertEquals(25, $data['error_percentage']); // 1 / sample_size * 100 = 1 / 4 * 100 = 25
-        self::assertEquals(50, $data['true_match_percentage']); // match_percentage - error_percentage = 75 - 25 = 50
+        self::assertEquals(50, $data['match']); // match_percentage - error_percentage = 75 - 25 = 50
     }
 
     /**

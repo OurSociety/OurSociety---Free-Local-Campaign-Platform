@@ -37,7 +37,7 @@ class ValueMatchesController extends CrudController
                         },
                     ],
                     'sample_size' => ['title' => '# Common Questions'],
-                    'true_match_percentage' => [
+                    'match' => [
                         'title' => 'Value Match',
                         'formatter' => function (string $name, string $value, ValueMatch $entity) {
                             return $value . '%';
