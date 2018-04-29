@@ -43,6 +43,7 @@ $isAdminImpersonatingUser = $this->request->getSession()->read(ImpersonateUserAc
     <?php endif ?>
     <?= $this->Html->link(__('Plans'), ['_name' => 'plans'], ['class' => ['dropdown-item'], 'icon' => 'th-list']) ?>
     <?= $this->Html->link(__('Billing'), $identity->getAccountRoute(), ['class' => ['dropdown-item'], 'icon' => 'credit-card']) ?>
+    <?= $this->Html->link(__('Contact Us'), ['_name' => 'contact'], ['class' => ['dropdown-item'], 'icon' => 'phone']) ?>
     <div class="dropdown-divider"></div>
     <?= $this->Html->link(__('Sign Out'), $identity->getLogoutRoute(), [
         'class' => ['dropdown-item'],

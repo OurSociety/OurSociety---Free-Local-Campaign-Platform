@@ -33,6 +33,9 @@
             <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
                 <?= $this->Html->link(__('Representatives'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
             </li>
+            <li class="nav-item<?= $this->request->getUri()->getPath() === '/politicians' ? ' active' : null ?>">
+                <?= $this->Html->link(__('Virtual Ballot'), ['_name' => 'politicians'], ['class' => ['nav-link']]) ?>
+            </li>
         </ul>
     </div>
 
