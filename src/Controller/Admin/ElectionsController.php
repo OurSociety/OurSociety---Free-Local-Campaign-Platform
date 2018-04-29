@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace OurSociety\Controller\Admin;
 
-use OurSociety\Controller\AppController;
+use OurSociety\Controller\CrudController;
 
 /**
  * Elections Controller
  */
-class ElectionsController extends AppController
+class ElectionsController extends CrudController
 {
 }

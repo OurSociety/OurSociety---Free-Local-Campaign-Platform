@@ -61,7 +61,7 @@ Router::scope('/', function (RouteBuilder $routes): void {
     $routes->connect('/verify', ['controller' => 'Users', 'action' => 'verify'], ['_name' => 'users:verify']);
 
     $routes->redirect('/contact', 'https://www.oursociety.org/contact/', ['_name' => 'contact', 'routeClass' => NamedRedirectRoute::class]);
-    $routes->redirect('/docs/onboarding', 'https://drive.google.com/file/d/0BwuM2zudya6ub0Y2Zm5meWdwN00/view');
+    $routes->redirect('/docs/onboarding', 'https://www.oursociety.org/knowledge-base/contentbasics');
     $routes->redirect('/guide/matching', 'https://www.oursociety.org/knowledge-base/societal-value-matching-how-does-it-work/', ['_name' => 'guide:matching', 'routeClass' => NamedRedirectRoute::class]);
     $routes->redirect('/home', 'https://www.oursociety.org/', ['_name' => 'home', 'routeClass' => NamedRedirectRoute::class]);
     $routes->redirect('/participation-guidelines', 'https://www.oursociety.org/knowledge-base/content-creation-question-submission-guidelines/');
