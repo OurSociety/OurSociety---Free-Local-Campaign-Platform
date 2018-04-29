@@ -86,6 +86,14 @@ $callToActionLink = $this->Url->build([
                         ['icon' => (new User)->getIcon()]
                     ),
                 ])) ?>
+            <li class="nav-item dropdown-md text-nowrap">
+                <?= $this->Component->render(new DropdownMenu('Virtual Ballot', [
+                    new DropdownItem(
+                        __('New Jersey Congressional Elections'),
+                        ['_name' => 'citizen:ballots'],
+                        ['icon' => 'archive']
+                    )
+                ])) ?>
             </li>
         </ul>
     </div>

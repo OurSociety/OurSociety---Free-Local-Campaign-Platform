@@ -8,6 +8,7 @@
  * @var \OurSociety\Model\Entity\User $identity
  */
 
+$this->set('title', 'Our Society Virtual Ballot');
 $this->Breadcrumbs->add(__('My Dashboard'), $identity->getDashboardRoute());
 $this->Breadcrumbs->add(__('Virtual Ballot'));
 $this->Breadcrumbs->add($election->name);
