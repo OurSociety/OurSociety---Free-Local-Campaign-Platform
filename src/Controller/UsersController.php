@@ -17,6 +17,7 @@ use OurSociety\Controller\Action\RegisterAction;
 use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
+use OurSociety\ORM\TableRegistry;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -170,6 +171,7 @@ class UsersController extends AppController
      */
     public function register(): ?Response
     {
+
         $this->Crud->on('beforeRender', function (Event $event) {
             if ($this->hasIdentity()) {
                 return $this->redirect($this->getIdentity()->getDashboardRoute());
@@ -181,6 +183,21 @@ class UsersController extends AppController
                 /** @var User $user */
                 $user = $event->getSubject()->entity;
                 $this->authenticateIdentity($user->id);
+
+                $this->loadModel('Questions');
+                $questions = $this->Questions->find('all');
+
+                $matchesTable = TableRegistry::get('Matches');
+                foreach($questions as $question){
+                    $match = $matchesTable->newEntity();
+                    $match->question_id = $question->id;
+                    $match->user_id = $user->id;
+                    $match->answer_value = 0;
+                    $match->match_value = 0.00;
+                    $match->importance = 0;
+
+                    $matchesTable->save($match);
+                }
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });

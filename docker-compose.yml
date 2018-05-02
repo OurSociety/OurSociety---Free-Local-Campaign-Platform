@@ -35,6 +35,9 @@ services:
       build: phpdocker/php-fpm
       container_name: oursociety-php-fpm
       working_dir: /application
+      environment:
+          XDEBUG_CONFIG: "remote_host=docker.for.mac.host.internal"
+          PHP_IDE_CONFIG: "serverName=oursociety-Docker"
       volumes:
         - .:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
