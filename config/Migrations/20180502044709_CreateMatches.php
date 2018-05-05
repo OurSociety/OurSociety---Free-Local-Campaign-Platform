@@ -37,6 +37,11 @@ class CreateMatches extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('politician_id', 'string', [
+            'default' => null,
+            'limit' => 255,
+            'null' => false,
+        ]);
         $table->create();
     }
 }

@@ -187,16 +187,22 @@ class UsersController extends AppController
                 $this->loadModel('Questions');
                 $questions = $this->Questions->find('all');
 
-                $matchesTable = TableRegistry::get('Matches');
-                foreach($questions as $question){
-                    $match = $matchesTable->newEntity();
-                    $match->question_id = $question->id;
-                    $match->user_id = $user->id;
-                    $match->answer_value = 0;
-                    $match->match_value = 0.00;
-                    $match->importance = 0;
+                $this->loadModel('Users');
+                $politicians = $this->Users->find('all')->where(['Users.role' => 'politician']);
 
-                    $matchesTable->save($match);
+                $matchesTable = TableRegistry::get('Matches');
+                foreach ($politicians as $politician){
+                    foreach($questions as $question){
+                        $match = $matchesTable->newEntity();
+                        $match->question_id = $question->id;
+                        $match->user_id = $user->id;
+                        $match->politician_id = $politician->id;
+                        $match->answer_value = 0;
+                        $match->match_value = 0.00;
+                        $match->importance = 0;
+
+                        $matchesTable->save($match);
+                    }
                 }
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
