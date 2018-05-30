@@ -138,7 +138,7 @@ SQL;
                 /** @var array $row */
 
                 $cs = new CosineSimilarity();
-                $trueMatchPercentage = $matchPercentage = $cs->similarity($userAnswers,$politicianAnswers) * 100;
+                $trueMatchPercentage = $matchPercentage = ($cs->similarity($userAnswers,$politicianAnswers) + 1) * 50;
             }
 
             $datum += [
