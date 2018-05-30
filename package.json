@@ -30,7 +30,7 @@
     "instantsearch.js": "^2.2.0",
     "jdenticon": "^1.7.2",
     "jquery": "^3.2.1",
-    "laravel-mix": "^2.1",
+    "laravel-mix": "^1.4.2",
     "lodash": "^4.17.4",
     "material-components-web": "^0.16.0",
     "moment": "^2.18.1",
