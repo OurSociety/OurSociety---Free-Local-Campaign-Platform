@@ -10,6 +10,7 @@ use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
 use OurSociety\Model\Entity\Answer;
+use OurSociety\Model\Entity\CosineSimilarity;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Entity\ValueMatch;
 use OurSociety\Model\Table\QuestionsTable;
@@ -86,6 +87,16 @@ trait AfterSave
             unset($datum);
         }
 
+        $query = <<<SQL
+SELECT *
+FROM answers
+WHERE user_id = ?
+ORDER BY question_id
+SQL;
+        $connection = $this->getConnection();
+        $statement = $connection->execute($query, [$userFrom->id]);
+        $userAnswers = $statement->fetchAll('assoc');
+
         foreach ($data as &$datum) {
             /** @var Query $query */
             $query = $this->find();
@@ -106,36 +117,28 @@ trait AfterSave
                 $errorPercentage = (1 / $sampleSize) * 100;
 
                 /** @var Connection $connection */
-                $query = <<<SQL
-SELECT (SQRT(
-    SUM(IFNULL((
-        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-        GREATEST(ABS(citizen.answer), ABS(politician.answer))
-    ), 1) * citizen.importance) / SUM(citizen.importance) * 100
-    *
-    SUM(IFNULL((
-        LEAST(ABS(citizen.answer), ABS(politician.answer)) /
-        GREATEST(ABS(citizen.answer), ABS(politician.answer))
-    ), 1) * politician.importance) / SUM(politician.importance) * 100
-)) AS match_percentage
-FROM answers AS citizen
-LEFT JOIN answers AS politician
-ON politician.question_id = citizen.question_id
-AND politician.user_id = ?
-WHERE citizen.user_id = ?
-ORDER BY citizen.question_id
+                $politicianAnswers = [];
+                foreach ($userAnswers as $userAnswer) {
+                    $query = <<<SQL
+SELECT *
+FROM answers
+WHERE user_id = ?
+AND question_id = ?
+LIMIT 1
 SQL;
 
-                $connection = $this->getConnection();
-                $statement = $connection->execute($query, [$datum['citizen_id'], $datum['politician_id']]);
-                $row = $statement->fetch('assoc');
+                    $connection = $this->getConnection();
+                    $statement = $connection->execute($query, [$datum['politician_id'], $userAnswer['question_id']]);
+                    $row = $statement->fetch('assoc');
+                    array_push($politicianAnswers, $row);
+                }
                 if ($row === false) {
                     throw new NotFoundException();
                 }
                 /** @var array $row */
-                $matchPercentage = $row['match_percentage'];
 
-                $trueMatchPercentage = max($matchPercentage - $errorPercentage, 0);
+                $cs = new CosineSimilarity();
+                $trueMatchPercentage = $matchPercentage = $cs->similarity($userAnswers,$politicianAnswers) * 100;
             }
 
             $datum += [
