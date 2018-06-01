@@ -17,7 +17,6 @@ use OurSociety\Controller\Action\RegisterAction;
 use OurSociety\Controller\Traits\ActionAwareTrait;
 use OurSociety\Model\Entity\User;
 use OurSociety\Model\Table\UsersTable;
-use OurSociety\ORM\TableRegistry;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
@@ -184,26 +183,6 @@ class UsersController extends AppController
                 $user = $event->getSubject()->entity;
                 $this->authenticateIdentity($user->id);
 
-                $this->loadModel('Questions');
-                $questions = $this->Questions->find('all');
-
-                $this->loadModel('Users');
-                $politicians = $this->Users->find('all')->where(['Users.role' => 'politician']);
-
-                $matchesTable = TableRegistry::get('Matches');
-                foreach ($politicians as $politician){
-                    foreach($questions as $question){
-                        $match = $matchesTable->newEntity();
-                        $match->question_id = $question->id;
-                        $match->user_id = $user->id;
-                        $match->politician_id = $politician->id;
-                        $match->answer_value = 0;
-                        $match->match_value = 0.00;
-                        $match->importance = 0;
-
-                        $matchesTable->save($match);
-                    }
-                }
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });

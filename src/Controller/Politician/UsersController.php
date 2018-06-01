@@ -42,21 +42,6 @@ class UsersController extends CrudController
                 $user = $event->getSubject()->entity;
                 $this->authenticateIdentity($user->id);
 
-                $this->loadModel('Answers');
-                $answers = $this->Answers->find('all');
-
-                $matchesTable = TableRegistry::get('Matches');
-                foreach($answers as $answer){
-                    $match = $matchesTable->newEntity();
-                    $match->answer_id = $answer->id;
-                    $match->user_id = $user->id;
-                    $match->answer_value = 0;
-                    $match->match_value = 0.00;
-                    $match->importance = 0;
-
-                    $matchesTable->save($match);
-                }
-
                 $this->Crud->action()->setConfig(['redirectUrl' => ['_name' => 'politician:profile']]);
             }
         });
