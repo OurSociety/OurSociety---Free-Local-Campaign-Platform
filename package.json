@@ -21,6 +21,7 @@
     "browser-sync-webpack-plugin": "^1.2.0",
     "cbt_tunnels": "^0.1.0",
     "chart.js": "^2.6.0",
+    "css-loader": "0.28.11",
     "favicons-webpack-plugin": "dgrp/favicons-webpack-plugin",
     "font-awesome": "^4.7.0",
     "geojson-extent": "^0.3.2",
@@ -49,10 +50,10 @@
     "vue-instantsearch": "^1.2.2",
     "vue-password-strength-meter": "^1.1.1",
     "vue-template-compiler": "^2.4.2",
+    "vue-loader": "^15.2.2",
     "vue2-leaflet": "^0.0.57",
     "webpack-notifier": "^1.5.0",
     "zxcvbn": "^4.4.2",
-    "svgo": "^0.4.0",
     "webpack": "^3.0.0"
   }
 }
