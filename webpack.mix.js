@@ -5,7 +5,6 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 mix
 
@@ -123,7 +122,6 @@ mix
       // chunkFilename: 'assets/dist/[name].[chunkhash].js',
     },
     plugins: [
-      new VueLoaderPlugin(),
       new HardSourceWebpackPlugin(),
       new SimpleProgressWebpackPlugin({
         format: process.env.npm_lifecycle_event === 'prod' ? 'expanded' : 'compact'
