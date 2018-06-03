@@ -87,7 +87,11 @@ class ValueMatchesTable extends AppTable
         parent::beforeMarshal($event, $data, $options);
 
         if (isset($data['sample_size'])) {
-            $data['error_percentage'] = $data['sample_size'] > 0 ? 1 / $data['sample_size'] * 100 : 100;
+            if ($data['sample_size'] > 0) {
+                $errorPercentage = 0;
+            } else {
+                $errorPercentage = 100;
+            }
         }
 
         if (isset($data['match_percentage'], $data['error_percentage'])) {
@@ -111,8 +115,12 @@ class ValueMatchesTable extends AppTable
                 'politician_id' => $entity->politician_id,
             ];
 
-            $errorPercentage = $entity->sample_size > 0 ? 1 / $entity->sample_size * 100 : 100;
-            $expression = new QueryExpression(sprintf('GREATEST(match_percentage - %s, 0)', $errorPercentage));
+            if ($entity->sample_size > 0) {
+                $errorPercentage = 0;
+            } else {
+                $errorPercentage = 100;
+            }
+            $expression = new QueryExpression('GREATEST(match_percentage, 0)');
             $commonData = [
                 'true_match_percentage' => $expression,
                 'error_percentage' => $errorPercentage,
