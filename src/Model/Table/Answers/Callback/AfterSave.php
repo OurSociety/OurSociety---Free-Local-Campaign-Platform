@@ -147,12 +147,10 @@ SQL;
                 // $matchPercentage = $row['match_percentage'];
                 $row2 = array_slice($row2, 0, count($row1), true);
                 $row1 = array_slice($row1, 0, count($row2), true);
-                var_dump($row1, $row2);
                 $cs = new CosineSimilarity();
                 $matchPercentage = ($cs->similarity($row1, $row2) + 1) * 50;
                 $errorPercentage = 0;
                 $trueMatchPercentage = max($matchPercentage - $errorPercentage, 0);
-                var_dump($trueMatchPercentage, $matchPercentage, $errorPercentage);
             }
 
             $datum += [
