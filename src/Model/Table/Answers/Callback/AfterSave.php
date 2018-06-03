@@ -9,6 +9,7 @@ use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Association;
 use Cake\ORM\Query;
+use Cake\ORM\TableRegistry;
 use OurSociety\Model\Entity\Answer;
 use OurSociety\Model\Entity\CosineSimilarity;
 use OurSociety\Model\Entity\User;
@@ -52,8 +53,72 @@ trait AfterSave
             'role' => $userFrom->isPolitician() ? User::ROLE_CITIZEN : User::ROLE_POLITICIAN,
         ])->all();
 
-        $data = [];
+        $CATcondition['slug IS'] = $question->category->slug;
+        $CATtable = TableRegistry::get('categories');
+        $category = $CATtable->find()->where($CATcondition)->first()->id;
+
+        $this->updateValueMatchesAll($userFrom, $usersTo, $question);
+        $this->updateValueMatchesCategory($userFrom, $usersTo, $question, $category);
+    }
+    public function updateValueMatchesAll($userFrom, $usersTo, $question): void
+    {
+        $query = <<<SQL
+SELECT *
+FROM answers
+WHERE user_id = ?
+ORDER BY question_id
+SQL;
+        $connection = $this->getConnection();
+        $statement = $connection->execute($query, [$userFrom->id]);
+        $userFromAnsers = $statement->fetchAll('assoc');
+        $statement->closeCursor();
         foreach ($usersTo as $userTo) {
+            $query = <<<SQL
+SELECT *
+FROM answers
+WHERE user_id = ?
+ORDER BY question_id
+SQL;
+            $connection = $this->getConnection();
+            $statement = $connection->execute($query, [$userTo->id]);
+            $userToAnsers = $statement->fetchAll('assoc');
+            $statement->closeCursor();
+
+            $needleelems = [];
+            $targetelems = [];
+
+            for ($qno=0; $qno < count($userFromAnsers); $qno++) {
+                $qnoid = array_values($userFromAnsers)[$qno]["question_id"];
+                array_push($needleelems,$qnoid);
+            }
+
+            for ($qno=0; $qno < count($userToAnsers); $qno++) {
+                $qnoid = array_values($userToAnsers)[$qno]["question_id"];
+                array_push($targetelems,$qnoid);
+            }
+
+            foreach ($needleelems as $i => $needle) {
+                if (!in_array($needle, $targetelems)) {
+                    unset($userFromAnsers[$i]);
+                }
+            }
+            foreach ($targetelems as $i => $needle) {
+                if (!in_array($needle, $needleelems)) {
+                    unset($userToAnsers[$i]);
+                }
+            }
+
+            if (count($userFromAnsers) > 0 && count($userToAnsers) > 0) {
+                $sampleSize = min(count($userFromAnsers), count($userToAnsers));
+                $cs = new CosineSimilarity();
+                $trueMatchPercentage = $matchPercentage = ($cs->similarity($userFromAnsers, $userToAnsers) + 1) * 50;
+                $errorPercentage = 0;
+            } else {
+                $trueMatchPercentage = $matchPercentage = null;
+                $errorPercentage = 100;
+            }
+
+            $data = [];
             $dataDefault = [
                 'citizen_id' => $userFrom->isPolitician() ? $userTo->id : $userFrom->id,
                 'politician_id' => $userFrom->isPolitician() ? $userFrom->id : $userTo->id,
@@ -61,20 +126,15 @@ trait AfterSave
             $data[] = $dataDefault + [
                 'category_id' => $question->category_id,
             ];
-        }
-
-        $conditions = ['or' => []];
-        foreach ($data as $condition) {
-            if ($condition['category_id'] === null) {
-                unset($condition['category_id']);
-                $condition['category_id IS'] = null;
+            $conditions = ['or' => []];
+            foreach ($data as $condition) {
+                if ($condition['category_id'] === null) {
+                    unset($condition['category_id']);
+                    $condition['category_id IS'] = null;
+                }
+                $conditions['or'][] = $condition;
             }
-            $conditions['or'][] = $condition;
-        }
-        /** @var ValueMatch[] $outdatedMatches */
-        $outdatedMatches = $this->Users->ValueMatches->find()->where($conditions)->all();
-
-        foreach ($outdatedMatches as $outdatedMatch) {
+            $outdatedMatch = $this->Users->ValueMatches->find()->where($conditions)->first();
             foreach ($data as &$datum) {
                 if (
                     $datum['citizen_id'] === $outdatedMatch->citizen_id &&
@@ -84,74 +144,114 @@ trait AfterSave
                     $datum['id'] = $outdatedMatch->id;
                 }
             }
-            unset($datum);
-        }
-
-        $query = <<<SQL
-SELECT *
-FROM answers
-WHERE user_id = ?
-ORDER BY question_id
-SQL;
-        $connection = $this->getConnection();
-        $statement = $connection->execute($query, [$userFrom->id]);
-        $userAnswers = $statement->fetchAll('assoc');
-
-        foreach ($data as &$datum) {
-            /** @var Query $query */
-            $query = $this->find();
-            $citizenQuestionIds = $query->where(['user_id' => $datum['citizen_id']])->all()->extract('question_id')->toArray();
-
-            $query = $this->find();
-            $politicianCommonQuestionCount = $query->where([
-                'user_id' => $datum['politician_id'],
-                'question_id IN' => $citizenQuestionIds ? $citizenQuestionIds : '()',
-            ])->count();
-
-            $sampleSize = $politicianCommonQuestionCount;
-            if ($sampleSize === 0) {
-                $errorPercentage = 1.0;
-                $matchPercentage = 0.0;
-                $trueMatchPercentage = 0.0;
-            } else {
-                $errorPercentage = (1 / $sampleSize) * 100;
-
-                /** @var Connection $connection */
-                $politicianAnswers = [];
-                foreach ($userAnswers as $userAnswer) {
-                    $query = <<<SQL
-SELECT *
-FROM answers
-WHERE user_id = ?
-AND question_id = ?
-LIMIT 1
-SQL;
-
-                    $connection = $this->getConnection();
-                    $statement = $connection->execute($query, [$datum['politician_id'], $userAnswer['question_id']]);
-                    $row = $statement->fetch('assoc');
-                    array_push($politicianAnswers, $row);
-                }
-                if ($row === false) {
-                    throw new NotFoundException();
-                }
-                /** @var array $row */
-
-                $cs = new CosineSimilarity();
-                $trueMatchPercentage = $matchPercentage = ($cs->similarity($userAnswers,$politicianAnswers) + 1) * 50;
-            }
-
             $datum += [
-                 'true_match_percentage' => $trueMatchPercentage,
+                'true_match_percentage' => $trueMatchPercentage,
                 'match_percentage' => $matchPercentage,
                 'error_percentage' => $errorPercentage,
                 'sample_size' => $sampleSize,
             ];
+            $updatedMatches = [];
+            $updatedMatch = $this->Users->ValueMatches->patchEntities($outdatedMatch, $data);
+            $this->Users->ValueMatches->save($updatedMatch[0]);
         }
-        unset($datum);
+    }
+    public function updateValueMatchesCategory($userFrom, $usersTo, $question, $category): void
+    {
+        $query = <<<SQL
+SELECT *
+FROM answers
+LEFT JOIN questions ON answers.question_id = questions.id
+WHERE user_id = ?
+AND questions.category_id = ?
+ORDER BY question_id
+SQL;
+        $connection = $this->getConnection();
+        $statement = $connection->execute($query, [$userFrom->id, $category]);
+        $userFromAnsers = $statement->fetchAll('assoc');
+        $statement->closeCursor();
+        foreach ($usersTo as $userTo) {
+            $query = <<<SQL
+SELECT *
+FROM answers
+LEFT JOIN questions ON answers.question_id = questions.id
+WHERE user_id = ?
+AND questions.category_id = ?
+ORDER BY question_id
+SQL;
+            $connection = $this->getConnection();
+            $statement = $connection->execute($query, [$userTo->id, $category]);
+            $userToAnsers = $statement->fetchAll('assoc');
+            $statement->closeCursor();
 
-        $updatedMatches = $this->Users->ValueMatches->patchEntities($outdatedMatches, $data);
+            $needleelems = [];
+            $targetelems = [];
 
-        $this->Users->ValueMatches->saveMany($updatedMatches);
+            for ($qno=0; $qno < count($userFromAnsers); $qno++) {
+                $qnoid = array_values($userFromAnsers)[$qno]["question_id"];
+                array_push($needleelems,$qnoid);
+            }
+
+            for ($qno=0; $qno < count($userToAnsers); $qno++) {
+                $qnoid = array_values($userToAnsers)[$qno]["question_id"];
+                array_push($targetelems,$qnoid);
+            }
+
+            foreach ($needleelems as $i => $needle) {
+                if (!in_array($needle, $targetelems)) {
+                    unset($userFromAnsers[$i]);
+                }
+            }
+            foreach ($targetelems as $i => $needle) {
+                if (!in_array($needle, $needleelems)) {
+                    unset($userToAnsers[$i]);
+                }
+            }
+
+            if (count($userFromAnsers) > 0 && count($userToAnsers) > 0) {
+                $sampleSize = min(count($userFromAnsers), count($userToAnsers));
+                $cs = new CosineSimilarity();
+                $trueMatchPercentage = $matchPercentage = ($cs->similarity($userFromAnsers, $userToAnsers) + 1) * 50;
+                $errorPercentage = 0;
+            } else {
+                $trueMatchPercentage = $matchPercentage = null;
+                $errorPercentage = 100;
+            }
+
+            $data = [];
+            $dataDefault = [
+                'citizen_id' => $userFrom->isPolitician() ? $userTo->id : $userFrom->id,
+                'politician_id' => $userFrom->isPolitician() ? $userFrom->id : $userTo->id,
+            ];
+            $data[] = $dataDefault + [
+                'category_id' => $category,
+            ];
+            $conditions = ['or' => []];
+            foreach ($data as $condition) {
+                if ($condition['category_id'] === null) {
+                    unset($condition['category_id']);
+                    $condition['category_id IS'] = null;
+                }
+                $conditions['or'][] = $condition;
+            }
+            $outdatedMatch = $this->Users->ValueMatches->find()->where($conditions)->first();
+            foreach ($data as &$datum) {
+                if (
+                    $datum['citizen_id'] === $outdatedMatch->citizen_id &&
+                    $datum['politician_id'] === $outdatedMatch->politician_id &&
+                    $datum['category_id'] === $outdatedMatch->category_id
+                ) {
+                    $datum['id'] = $outdatedMatch->id;
+                }
+            }
+            $datum += [
+                'true_match_percentage' => $trueMatchPercentage,
+                'match_percentage' => $matchPercentage,
+                'error_percentage' => $errorPercentage,
+                'sample_size' => $sampleSize,
+            ];
+            $updatedMatches = [];
+            $updatedMatch = $this->Users->ValueMatches->patchEntities($outdatedMatch, $data);
+            $this->Users->ValueMatches->save($updatedMatch[0]);
+        }
     }
 }
