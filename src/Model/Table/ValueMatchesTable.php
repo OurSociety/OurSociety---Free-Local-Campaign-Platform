@@ -146,6 +146,8 @@ class ValueMatchesTable extends AppTable
                 'category_id' => null,
                 'sample_size' => $entity->sample_size,
                 'match_percentage' => $matchPercentage,
+                'true_match_percentage' => $matchPercentage,
+                'error_percentage' => 0
             ];
 
             try {
