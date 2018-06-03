@@ -27,7 +27,7 @@ class CosineSimilarity {
         foreach ($s2 as $i => $s2elem) {
             $s2[$i] = $s2elem * $w2[$i];
         }
-        return $this->_dotProduct($s1, $s2) / ($this->_absVector($s1) * $this->_absVector($s2));
+        return @($this->_dotProduct($s1, $s2) / ($this->_absVector($s1) * $this->_absVector($s2)));
     }
 
     protected function _dotProduct(array $vec1, array $vec2) {
