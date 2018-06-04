@@ -104,7 +104,6 @@ trait AfterSave
                 $matchPercentage = 0.0;
                 $trueMatchPercentage = 0.0;
             } else {
-                $errorPercentage = (1 / $sampleSize) * 100;
 
                 /** @var Connection $connection */
                 $query = <<<SQL
@@ -144,13 +143,16 @@ SQL;
                     throw new NotFoundException();
                 }
                 /** @var array $row */
-                // $matchPercentage = $row['match_percentage'];
                 $row2 = array_slice($row2, 0, count($row1), true);
                 $row1 = array_slice($row1, 0, count($row2), true);
                 $cs = new CosineSimilarity();
-                $matchPercentage = ($cs->similarity($row1, $row2) + 1) * 50;
-                $errorPercentage = 0;
-                $trueMatchPercentage = max($matchPercentage - $errorPercentage, 0);
+                $trueMatchPercentage = $matchPercentage = ($cs->similarity($row1, $row2) + 1) * 50;
+                if (is_nan($trueMatchPercentage)) {
+                    $trueMatchPercentage = $matchPercentage = 0.0;
+                    $errorPercentage = 1.0;
+                } else {
+                    $errorPercentage = 0.0;
+                }
             }
 
             $datum += [
