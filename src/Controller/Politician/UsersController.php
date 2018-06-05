@@ -41,6 +41,7 @@ class UsersController extends CrudController
                 /** @var User $user */
                 $user = $event->getSubject()->entity;
                 $this->authenticateIdentity($user->id);
+
                 $this->Crud->action()->setConfig(['redirectUrl' => ['_name' => 'politician:profile']]);
             }
         });

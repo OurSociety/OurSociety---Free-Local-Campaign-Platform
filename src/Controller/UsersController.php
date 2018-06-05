@@ -170,6 +170,7 @@ class UsersController extends AppController
      */
     public function register(): ?Response
     {
+
         $this->Crud->on('beforeRender', function (Event $event) {
             if ($this->hasIdentity()) {
                 return $this->redirect($this->getIdentity()->getDashboardRoute());
@@ -181,6 +182,7 @@ class UsersController extends AppController
                 /** @var User $user */
                 $user = $event->getSubject()->entity;
                 $this->authenticateIdentity($user->id);
+
                 $this->config('redirectUrl', ['_name' => 'citizen:dashboard']);
             }
         });
