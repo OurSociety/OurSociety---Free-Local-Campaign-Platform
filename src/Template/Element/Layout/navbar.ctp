@@ -89,7 +89,7 @@ $callToActionLink = $this->Url->build([
             <li class="nav-item dropdown-md text-nowrap">
                 <?= $this->Component->render(new DropdownMenu('Virtual Ballot', [
                     new DropdownItem(
-                        __('New Jersey Congressional Elections'),
+                        __('November 2018 NJ Elections'),
                         ['_name' => 'citizen:ballots'],
                         ['icon' => 'archive']
                     )
