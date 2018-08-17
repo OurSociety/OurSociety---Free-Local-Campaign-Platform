@@ -55,12 +55,6 @@ $this->Breadcrumbs->add($election->name);
 
                     <div class="row">
                         <?php foreach ($contest->candidates as $candidate): ?>
-
-                            <?php
-                            var_dump($candidate->politician->electoral_district_id, 'politician district');
-                            var_dump($candidate->politician->office_type_id, 'politician office type');
-                            var_dump($this->request->session()->read('Auth')->electoral_district_id, 'user district');
-                            ?>
                             <?php if($candidate->politician->electoral_district_id == $this->request->session()->read('Auth')->electoral_district_id || $senate == $candidate->politician->office_type_id) : ?>
                             <div class="col-md-4">
                                 <?= $candidate->renderSummaryElement($this) ?>
