@@ -9,7 +9,7 @@ if ($candidate->politician === null) {
 }
 
 $candidate->politician->office_type = new \OurSociety\Model\Entity\OfficeType([
-    'name' => $candidate->contest->office->name,
+    'name' => isset($candidate->contest->office->name) ? $candidate->contest->office->name : '',
 ]);
 ?>
 
