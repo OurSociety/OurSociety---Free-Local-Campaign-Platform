@@ -16,7 +16,12 @@
             <?= $user->renderLink($this) ?>
         </h5>
         <h6>
-            <?= $user->office_type ? $user->office_type->name : __('Unknown Office') ?>
+            <?php
+                $office = $user->getModel()
+                    ->officetypes->find('list', ['conditions' => ['id' => $user->office_type_id]])
+                    ->toArray();
+            ?>
+            <?= !empty($office) ? reset($office) : __('Unknown Office') ?>
         </h6>
         <?php if($this->request->getSession()->read('Auth')): ?>
         <?= $this->cell('Ballot/UserPoliticianMatch',

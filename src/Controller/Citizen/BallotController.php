@@ -53,6 +53,15 @@ class BallotController extends AppController
 
         $user = $this->getIdentity();
 
+        $senateOfficeType = $electionsTable = $this->loadModel('OfficeTypes')->find('list',
+            [
+                'conditions' => ['name' => 'Senate']
+            ]
+        );
+
+        $senate = array_keys($senateOfficeType->toArray());
+        $senate = reset($senate);
+
         /** @var ElectionsTable $electionsTable */
         $electionsTable = $this->loadModel('Elections');
         $election = $electionsTable->find('slugged', ['slug' => $electionSlug])->firstOrFail();
@@ -90,7 +99,7 @@ class BallotController extends AppController
             ->toArray();
 
 
-        $this->set(compact('election', 'contests'));
+        $this->set(compact('election', 'contests', 'senate'));
 
         return null;
     }
